@@ -36,15 +36,15 @@ const SeasonalityGraph = () => {
       
       <Card>
         <CardContent className="p-6">
-          <div className="h-96">
+          <div className="h-[400px] w-full">
             <ChartContainer config={chartConfig}>
               <LineChart
                 data={seasonalityData}
                 margin={{
                   top: 20,
-                  right: 30,
-                  left: 20,
-                  bottom: 5,
+                  right: 40,
+                  left: 10,
+                  bottom: 20,
                 }}
               >
                 <CartesianGrid strokeDasharray="3 3" />
@@ -53,6 +53,7 @@ const SeasonalityGraph = () => {
                   tick={{ fontSize: 12 }}
                   tickLine={false}
                   axisLine={false}
+                  padding={{ left: 10, right: 10 }}
                 />
                 <YAxis 
                   yAxisId="left"
@@ -60,8 +61,11 @@ const SeasonalityGraph = () => {
                     value: 'Freight Cost Index', 
                     angle: -90, 
                     position: 'insideLeft',
-                    style: { textAnchor: 'middle' }
+                    style: { textAnchor: 'middle' },
+                    offset: 0
                   }}
+                  tickLine={false}
+                  axisLine={false}
                 />
                 <YAxis 
                   yAxisId="right"
@@ -71,8 +75,11 @@ const SeasonalityGraph = () => {
                     value: 'Risk/Congestion (%)', 
                     angle: 90, 
                     position: 'insideRight',
-                    style: { textAnchor: 'middle' }
+                    style: { textAnchor: 'middle' },
+                    offset: 0
                   }}
+                  tickLine={false}
+                  axisLine={false}
                 />
                 <ChartTooltip
                   content={<ChartTooltipContent />}
@@ -80,31 +87,35 @@ const SeasonalityGraph = () => {
                 <ChartLegend 
                   content={<ChartLegendContent />}
                   verticalAlign="top"
+                  height={36}
                 />
                 <Line
                   yAxisId="left"
                   type="monotone"
                   dataKey="freight"
-                  name="freight"
+                  name="Freight"
                   stroke={chartConfig.freight.color}
-                  activeDot={{ r: 8 }}
                   strokeWidth={2}
+                  dot={{ fill: chartConfig.freight.color, r: 4 }}
+                  activeDot={{ r: 6 }}
                 />
                 <Line
                   yAxisId="right"
                   type="monotone"
                   dataKey="congestion"
-                  name="handling"
+                  name="Congestion"
                   stroke={chartConfig.handling.color}
                   strokeWidth={2}
+                  dot={{ fill: chartConfig.handling.color, r: 4 }}
                 />
                 <Line
                   yAxisId="right"
                   type="monotone"
                   dataKey="risk"
-                  name="risk"
+                  name="Risk"
                   stroke={chartConfig.risk.color}
                   strokeWidth={2}
+                  dot={{ fill: chartConfig.risk.color, r: 4 }}
                 />
               </LineChart>
             </ChartContainer>
@@ -112,7 +123,7 @@ const SeasonalityGraph = () => {
         </CardContent>
       </Card>
 
-      <div className="text-sm">
+      <div className="text-sm mt-4">
         <p className="font-medium">Key Seasonal Factors:</p>
         <ul className="list-disc pl-5 pt-2 space-y-1">
           <li>Q4 shipping rates peak during holiday season (October-December)</li>
