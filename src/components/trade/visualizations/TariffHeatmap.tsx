@@ -109,7 +109,7 @@ const TariffHeatmap = () => {
         </div>
         <div className="flex items-center gap-2">
           <div className="w-4 h-4 rounded-full bg-red-500"></div>
-          <span className="text-sm">High Tariff (>15%)</span>
+          <span className="text-sm">High Tariff (&gt;15%)</span>
         </div>
       </div>
 
@@ -126,3 +126,4 @@ const TariffHeatmap = () => {
 };
 
 export default TariffHeatmap;
+
