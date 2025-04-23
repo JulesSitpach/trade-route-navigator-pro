@@ -1,3 +1,4 @@
+
 import * as React from "react"
 import * as SelectPrimitive from "@radix-ui/react-select"
 import { Check, ChevronDown, ChevronUp } from "lucide-react"
@@ -19,9 +20,9 @@ const SelectTrigger = React.forwardRef<
     className={cn(
       "flex h-10 w-full items-center justify-between rounded-md border border-input px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1",
       "bg-white", // Default white background
-      "[&>span[data-placeholder]]:bg-white", // White background with placeholder
+      "[&>span[data-placeholder]]:text-muted-foreground", // Default placeholder text color
       "[&:not(:has(span[data-placeholder]))]:bg-blue-100", // Blue when value selected (not showing placeholder)
-      "data-[state=open]:bg-blue-100", // Blue when dropdown is open
+      "data-[placeholder]:bg-white", // Keep white when showing placeholder
       className
     )}
     {...props}
