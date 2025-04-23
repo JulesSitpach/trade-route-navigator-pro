@@ -15,21 +15,43 @@ const SelectTrigger = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Trigger>,
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger>
 >(({ className, children, ...props }, ref) => {
-  // Create a ref to track if the select has a value
-  const [hasValue, setHasValue] = React.useState(false);
+  // Store a ref to the trigger element
+  const triggerRef = React.useRef<HTMLButtonElement | null>(null);
   
-  // Update the hasValue state when the component mounts or value changes
+  // Combine refs
+  const combinedRef = (node: HTMLButtonElement) => {
+    // Update our local ref
+    triggerRef.current = node;
+    
+    // Forward the ref
+    if (typeof ref === 'function') {
+      ref(node);
+    } else if (ref) {
+      ref.current = node;
+    }
+  };
+  
+  // Check if the select has a selected value (not just the placeholder)
   React.useEffect(() => {
-    const value = props.value;
-    setHasValue(!!value && value.toString().trim() !== "");
-  }, [props.value]);
+    if (!triggerRef.current) return;
+    
+    const hasSelectedValue = 
+      triggerRef.current.querySelector('span:not([data-placeholder])') !== null &&
+      !triggerRef.current.querySelector('span[data-placeholder]');
+      
+    if (hasSelectedValue) {
+      triggerRef.current.classList.add('has-value');
+    } else {
+      triggerRef.current.classList.remove('has-value');
+    }
+  }, [props.value, children]);
 
   return (
     <SelectPrimitive.Trigger
-      ref={ref}
+      ref={combinedRef}
       className={cn(
         "flex h-10 w-full items-center justify-between rounded-md border border-input px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1",
-        hasValue ? "bg-blue-100" : "bg-white", // Blue when has value, white otherwise
+        "bg-white has-value:bg-blue-100", // White by default, blue when has value
         "[&>span[data-placeholder]]:text-muted-foreground", // Default placeholder text color
         className
       )}
