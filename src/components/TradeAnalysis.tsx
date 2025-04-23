@@ -1,3 +1,4 @@
+
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
@@ -63,7 +64,7 @@ const TradeAnalysis = ({ data }: { data: any }) => {
         customerExperience: 'Consistent delivery schedules enable reliable promises to customers'
       },
       complianceComplexity: {
-        level: 'Medium',
+        level: 'Medium' as 'Low' | 'Medium' | 'High',
         documentation: '5-7 documents required, standard filing process',
         simplificationPotential: 'AEO certification could streamline customs'
       }
@@ -122,7 +123,7 @@ const TradeAnalysis = ({ data }: { data: any }) => {
         customerExperience: 'Enhanced customer satisfaction with rapid delivery options'
       },
       complianceComplexity: {
-        level: 'Low',
+        level: 'Low' as 'Low' | 'Medium' | 'High',
         documentation: '3-4 documents with expedited processing',
         simplificationPotential: 'Express customs clearance programs available'
       }
