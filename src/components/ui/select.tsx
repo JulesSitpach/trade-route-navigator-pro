@@ -35,11 +35,16 @@ const SelectTrigger = React.forwardRef<
   React.useEffect(() => {
     if (!triggerRef.current) return;
     
+    // Check if there's actually a selected value
+    // Look for a value span that doesn't have the placeholder attribute
     const hasSelectedValue = 
-      triggerRef.current.querySelector('span:not([data-placeholder])') !== null &&
-      !triggerRef.current.querySelector('span[data-placeholder]');
-      
-    if (hasSelectedValue) {
+      // Check if there's any content other than placeholder
+      triggerRef.current.querySelector('[data-value]') !== null ||
+      // For cases where SelectValue directly contains text
+      (triggerRef.current.textContent && 
+      !triggerRef.current.querySelector('[data-placeholder]'));
+    
+    if (hasSelectedValue && props.value) {
       triggerRef.current.classList.add('has-value');
     } else {
       triggerRef.current.classList.remove('has-value');
@@ -51,8 +56,7 @@ const SelectTrigger = React.forwardRef<
       ref={combinedRef}
       className={cn(
         "flex h-10 w-full items-center justify-between rounded-md border border-input px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1",
-        "bg-white has-value:bg-blue-100", // White by default, blue when has value
-        "[&>span[data-placeholder]]:text-muted-foreground", // Default placeholder text color
+        "bg-white", // Start with white background
         className
       )}
       {...props}
