@@ -34,13 +34,13 @@ const TradeNavigator = () => {
       <main className="max-w-6xl mx-auto px-4 py-8 space-y-8">
         <Card className="shadow-lg">
           <ProductDetailsForm 
-            onChange={(data) => setFormData(prev => ({ ...prev, product: data }))}
+            onChange={(data) => setFormData(prev => ({ ...prev, product: { ...prev.product, ...data } }))}
           />
         </Card>
 
         <Card className="shadow-lg">
           <ShippingDetailsForm 
-            onChange={(data) => setFormData(prev => ({ ...prev, shipping: data }))}
+            onChange={(data) => setFormData(prev => ({ ...prev, shipping: { ...prev.shipping, ...data } }))}
           />
         </Card>
 
