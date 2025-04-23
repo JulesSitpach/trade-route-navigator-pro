@@ -5,13 +5,13 @@ import {
   ChartTooltip, 
   ChartTooltipContent 
 } from "@/components/ui/chart";
-import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, ZAxis, Cell } from "recharts";
+import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, ZAxis, Cell, ResponsiveContainer } from "recharts";
 import { chartConfig } from "./chartConfig";
 
 const RiskAssessmentMatrix = () => {
   // Sample risk assessment data
   const riskData = [
-    { x: 2450, y: 5, z: 100, name: "Shanghai → Panama → LA → Chicago", riskLevel: "medium", label: "Standard Ocean Route" },
+    { x: 2450, y: 7, z: 100, name: "Shanghai → Panama → LA → Chicago", riskLevel: "medium", label: "Standard Ocean Route" },
     { x: 5650, y: 2, z: 80, name: "Shanghai → LA → Chicago (Air)", riskLevel: "low", label: "Express Air Route" },
     { x: 2200, y: 7, z: 90, name: "Vietnam → Singapore → LA → Chicago", riskLevel: "high", label: "Alternative Ocean Route" },
     { x: 3100, y: 4, z: 70, name: "China → Mexico → US (USMCA)", riskLevel: "medium", label: "Triangular Trade Route" },
@@ -21,9 +21,9 @@ const RiskAssessmentMatrix = () => {
   // Function to determine color based on risk level
   const getRiskColor = (riskLevel: string) => {
     switch(riskLevel) {
-      case "high": return chartConfig.highRisk.color;
-      case "medium": return chartConfig.mediumRisk.color;
-      case "low": return chartConfig.lowRisk.color;
+      case "high": return "#ea384c";
+      case "medium": return "#f97316";
+      case "low": return "#22c55e";
       default: return "#ccc";
     }
   };
@@ -37,46 +37,66 @@ const RiskAssessmentMatrix = () => {
       
       <Card>
         <CardContent className="p-6">
-          <div className="h-96">
+          <div className="h-[400px] w-full">
             <ChartContainer config={chartConfig}>
               <ScatterChart
                 margin={{
                   top: 20,
-                  right: 20,
-                  bottom: 30,
-                  left: 20,
+                  right: 40,
+                  left: 10,
+                  bottom: 20,
                 }}
               >
-                <CartesianGrid />
+                <CartesianGrid strokeDasharray="3 3" strokeOpacity={0.5} />
                 <XAxis 
                   type="number"
                   dataKey="x"
                   name="Cost ($)"
-                  label={{ value: 'Cost ($)', position: 'bottom', offset: 0 }}
-                  domain={['dataMin - 500', 'dataMax + 500']}
+                  label={{ 
+                    value: 'Cost ($)', 
+                    position: 'bottom', 
+                    offset: -10,
+                    style: { textAnchor: 'middle' }
+                  }}
+                  domain={[2000, 6000]}
+                  tickCount={5}
+                  tickLine={false}
+                  axisLine={false}
                 />
                 <YAxis
                   type="number"
                   dataKey="y"
                   name="Risk Score"
-                  label={{ value: 'Risk Score (1-10)', angle: -90, position: 'insideLeft' }}
+                  label={{ 
+                    value: 'Risk Score (1-10)', 
+                    angle: -90, 
+                    position: 'insideLeft',
+                    style: { textAnchor: 'middle' },
+                    offset: 0
+                  }}
                   domain={[0, 10]}
+                  tickLine={false}
+                  axisLine={false}
                 />
                 <ZAxis
                   type="number"
                   dataKey="z"
-                  range={[60, 400]}
+                  range={[60, 200]}
                   name="Reliability"
                 />
                 <ChartTooltip
                   content={<ChartTooltipContent />}
                   cursor={{ strokeDasharray: '3 3' }}
                 />
-                <Scatter name="Risk Matrix" data={riskData}>
+                <Scatter 
+                  name="Risk Matrix" 
+                  data={riskData}
+                  shape="circle"
+                >
                   {riskData.map((entry, index) => (
                     <Cell 
                       key={`cell-${index}`} 
-                      fill={getRiskColor(entry.riskLevel)} 
+                      fill={getRiskColor(entry.riskLevel)}
                     />
                   ))}
                 </Scatter>
@@ -88,20 +108,20 @@ const RiskAssessmentMatrix = () => {
 
       <div className="flex items-center justify-center gap-8 mt-2">
         <div className="flex items-center gap-2">
-          <div className="w-4 h-4 rounded-full bg-red-500"></div>
+          <div className="w-3 h-3 rounded-full" style={{ backgroundColor: "#ea384c" }}></div>
           <span className="text-sm">High Risk</span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-4 h-4 rounded-full bg-amber-500"></div>
+          <div className="w-3 h-3 rounded-full" style={{ backgroundColor: "#f97316" }}></div>
           <span className="text-sm">Medium Risk</span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-4 h-4 rounded-full bg-green-500"></div>
+          <div className="w-3 h-3 rounded-full" style={{ backgroundColor: "#22c55e" }}></div>
           <span className="text-sm">Low Risk</span>
         </div>
       </div>
 
-      <div className="text-sm">
+      <div className="text-sm mt-4">
         <p className="font-medium">Risk Assessment Insights:</p>
         <ul className="list-disc pl-5 pt-2 space-y-1">
           <li>Air freight offers the lowest risk profile but at significant cost premium</li>
