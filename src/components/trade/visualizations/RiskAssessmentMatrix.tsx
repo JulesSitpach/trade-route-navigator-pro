@@ -44,7 +44,7 @@ const RiskAssessmentMatrix = () => {
                   top: 20,
                   right: 40,
                   left: 20,
-                  bottom: 20,
+                  bottom: 40, // Increased bottom margin to accommodate X axis labels
                 }}
               >
                 <CartesianGrid strokeDasharray="3 3" strokeOpacity={0.3} />
@@ -56,11 +56,11 @@ const RiskAssessmentMatrix = () => {
                   tickCount={5}
                   tickLine={false}
                   axisLine={false}
-                  tick={{ fontSize: 12 }}
+                  tick={{ fontSize: 12, dy: 10 }} // Added dy to push labels down
                   label={{ 
                     value: 'Cost ($)', 
                     position: 'bottom',
-                    offset: 0,
+                    offset: 20, // Increased offset to position label further below
                     style: { 
                       textAnchor: 'middle',
                       fontSize: 12,
