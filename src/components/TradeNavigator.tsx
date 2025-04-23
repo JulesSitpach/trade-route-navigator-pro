@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -46,9 +45,8 @@ const TradeNavigator = () => {
 
         <div className="text-center">
           <Button 
-            size="lg"
-            onClick={handleCalculate}
             className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-2"
+            onClick={handleCalculate}
           >
             Calculate Costs & Find Opportunities
           </Button>
