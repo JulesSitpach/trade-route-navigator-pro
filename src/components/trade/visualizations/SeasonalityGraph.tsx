@@ -43,15 +43,15 @@ const SeasonalityGraph = () => {
                 top: 20,
                 right: 40,
                 left: 10,
-                bottom: 80, // Increased bottom margin
+                bottom: 80,
               }}
             >
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis 
                 dataKey="month"
                 tick={{ fontSize: 12 }}
-                tickLine={false}
-                axisLine={false}
+                tickLine={true}
+                axisLine={true}
                 padding={{ left: 10, right: 10 }}
               />
               <YAxis 
@@ -63,15 +63,17 @@ const SeasonalityGraph = () => {
                   style: { textAnchor: 'middle' },
                   offset: 0
                 }}
-                tickLine={false}
-                axisLine={false}
-                domain={[0, 250]} // Set explicit domain for freight scale
+                tickLine={true}
+                axisLine={true}
+                domain={[60, 250]}
+                ticks={[60, 90, 120, 150, 180, 210, 240]}
                 padding={{ top: 20, bottom: 20 }}
               />
               <YAxis 
                 yAxisId="right"
                 orientation="right"
                 domain={[0, 100]}
+                ticks={[0, 25, 50, 75, 100]}
                 label={{ 
                   value: 'Risk/Congestion (%)', 
                   angle: 90, 
@@ -79,8 +81,8 @@ const SeasonalityGraph = () => {
                   style: { textAnchor: 'middle' },
                   offset: 0
                 }}
-                tickLine={false}
-                axisLine={false}
+                tickLine={true}
+                axisLine={true}
                 padding={{ top: 20, bottom: 20 }}
               />
               <ChartTooltip
@@ -100,6 +102,7 @@ const SeasonalityGraph = () => {
                 strokeWidth={2}
                 dot={{ fill: chartConfig.freight.color, r: 4 }}
                 activeDot={{ r: 6 }}
+                connectNulls={true}
               />
               <Line
                 yAxisId="right"
@@ -109,6 +112,7 @@ const SeasonalityGraph = () => {
                 stroke={chartConfig.handling.color}
                 strokeWidth={2}
                 dot={{ fill: chartConfig.handling.color, r: 4 }}
+                connectNulls={true}
               />
               <Line
                 yAxisId="right"
@@ -118,6 +122,7 @@ const SeasonalityGraph = () => {
                 stroke={chartConfig.risk.color}
                 strokeWidth={2}
                 dot={{ fill: chartConfig.risk.color, r: 4 }}
+                connectNulls={true}
               />
             </LineChart>
           </ChartContainer>
