@@ -1,9 +1,11 @@
-
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
+import { countryTariffData } from '@/data/countryTariffData';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { InfoCircle } from 'lucide-react';
 
 const ProductDetailsForm = ({ onChange }: { onChange: (data: any) => void }) => {
   return (
@@ -40,10 +42,26 @@ const ProductDetailsForm = ({ onChange }: { onChange: (data: any) => void }) => 
               <SelectValue placeholder="Select Origin Country" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="usa">United States</SelectItem>
-              <SelectItem value="mexico">Mexico</SelectItem>
-              <SelectItem value="canada">Canada</SelectItem>
-              <SelectItem value="china">China</SelectItem>
+              {countryTariffData.map((country) => (
+                <SelectItem key={country.code} value={country.code}>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger className="flex items-center">
+                        {country.name}
+                        <InfoCircle className="ml-2 h-4 w-4" />
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <div className="space-y-2">
+                          <p>Average Tariff: {country.averageTariff}%</p>
+                          {country.specialConsiderations.map((consideration, index) => (
+                            <p key={index}>{consideration}</p>
+                          ))}
+                        </div>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                </SelectItem>
+              ))}
             </SelectContent>
           </Select>
         </div>
@@ -55,10 +73,26 @@ const ProductDetailsForm = ({ onChange }: { onChange: (data: any) => void }) => 
               <SelectValue placeholder="Select Destination Country" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="usa">United States</SelectItem>
-              <SelectItem value="mexico">Mexico</SelectItem>
-              <SelectItem value="canada">Canada</SelectItem>
-              <SelectItem value="china">China</SelectItem>
+              {countryTariffData.map((country) => (
+                <SelectItem key={country.code} value={country.code}>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger className="flex items-center">
+                        {country.name}
+                        <InfoCircle className="ml-2 h-4 w-4" />
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <div className="space-y-2">
+                          <p>Average Tariff: {country.averageTariff}%</p>
+                          {country.specialConsiderations.map((consideration, index) => (
+                            <p key={index}>{consideration}</p>
+                          ))}
+                        </div>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                </SelectItem>
+              ))}
             </SelectContent>
           </Select>
         </div>
