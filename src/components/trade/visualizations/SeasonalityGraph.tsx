@@ -28,116 +28,129 @@ const SeasonalityGraph = () => {
   ];
 
   return (
-    <div className="space-y-2">
-      <h3 className="text-lg font-medium">Seasonality Analysis</h3>
-      <p className="text-sm text-muted-foreground mb-0">
-        Track how shipping costs, transit times, and risks fluctuate throughout the year
-      </p>
+    <div className="space-y-6">
+      <div>
+        <h3 className="text-lg font-medium">Seasonality Analysis</h3>
+        <p className="text-sm text-muted-foreground">
+          Track how shipping costs, transit times, and risks fluctuate throughout the year
+        </p>
+      </div>
       
-      <div className="relative chart-container" style={{ paddingBottom: '40px', overflow: 'visible', marginBottom: '60px' }}>
-        <div className="seasonality-chart" style={{ height: '400px', minHeight: '350px', marginBottom: '30px' }}>
-          <ChartContainer config={chartConfig}>
-            <LineChart
-              data={seasonalityData}
-              margin={{
-                top: 20,
-                right: 40,
-                left: 10,
-                bottom: 80,
-              }}
-            >
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis 
-                dataKey="month"
-                tick={{ fontSize: 12 }}
-                tickLine={true}
-                axisLine={true}
-                padding={{ left: 10, right: 10 }}
-              />
-              <YAxis 
-                yAxisId="left"
-                label={{ 
-                  value: 'Freight Cost Index', 
-                  angle: -90, 
-                  position: 'insideLeft',
-                  style: { textAnchor: 'middle' },
-                  offset: 0
+      <Card>
+        <CardContent className="p-6">
+          <div className="h-[400px]">
+            <ChartContainer config={chartConfig}>
+              <LineChart
+                data={seasonalityData}
+                margin={{
+                  top: 20,
+                  right: 50,
+                  left: 20,
+                  bottom: 20,
                 }}
-                tickLine={true}
-                axisLine={true}
-                domain={[60, 250]}
-                ticks={[60, 90, 120, 150, 180, 210, 240]}
-                padding={{ top: 20, bottom: 20 }}
-              />
-              <YAxis 
-                yAxisId="right"
-                orientation="right"
-                domain={[0, 100]}
-                ticks={[0, 25, 50, 75, 100]}
-                label={{ 
-                  value: 'Risk/Congestion (%)', 
-                  angle: 90, 
-                  position: 'insideRight',
-                  style: { textAnchor: 'middle' },
-                  offset: 0
-                }}
-                tickLine={true}
-                axisLine={true}
-                padding={{ top: 20, bottom: 20 }}
-              />
-              <ChartTooltip
-                content={<ChartTooltipContent />}
-              />
-              <ChartLegend 
-                content={<ChartLegendContent />}
-                verticalAlign="top"
-                height={36}
-              />
-              <Line
-                yAxisId="left"
-                type="monotone"
-                dataKey="freight"
-                name="Freight"
-                stroke={chartConfig.freight.color}
-                strokeWidth={2}
-                dot={{ fill: chartConfig.freight.color, r: 4 }}
-                activeDot={{ r: 6 }}
-                connectNulls={true}
-              />
-              <Line
-                yAxisId="right"
-                type="monotone"
-                dataKey="congestion"
-                name="Congestion"
-                stroke={chartConfig.handling.color}
-                strokeWidth={2}
-                dot={{ fill: chartConfig.handling.color, r: 4 }}
-                connectNulls={true}
-              />
-              <Line
-                yAxisId="right"
-                type="monotone"
-                dataKey="risk"
-                name="Risk"
-                stroke={chartConfig.risk.color}
-                strokeWidth={2}
-                dot={{ fill: chartConfig.risk.color, r: 4 }}
-                connectNulls={true}
-              />
-            </LineChart>
-          </ChartContainer>
-        </div>
+              >
+                <CartesianGrid 
+                  strokeDasharray="3 3" 
+                  stroke="#e6e6e6" 
+                  horizontal={true}
+                  vertical={false}
+                />
+                <XAxis 
+                  dataKey="month"
+                  tick={{ fontSize: 11, fill: '#666' }}
+                  tickLine={{ stroke: '#e6e6e6' }}
+                  axisLine={{ stroke: '#e6e6e6' }}
+                  padding={{ left: 10, right: 10 }}
+                />
+                <YAxis 
+                  yAxisId="left"
+                  label={{ 
+                    value: 'Freight Cost Index', 
+                    angle: -90, 
+                    position: 'insideLeft',
+                    style: { textAnchor: 'middle', fill: '#666', fontSize: 12 },
+                    offset: 0
+                  }}
+                  tickLine={{ stroke: '#e6e6e6' }}
+                  axisLine={{ stroke: '#e6e6e6' }}
+                  tick={{ fontSize: 11, fill: '#666' }}
+                  domain={[90, 240]}
+                  ticks={[90, 120, 150, 180, 210, 240]}
+                  padding={{ top: 20, bottom: 20 }}
+                />
+                <YAxis 
+                  yAxisId="right"
+                  orientation="right"
+                  domain={[0, 100]}
+                  ticks={[0, 25, 50, 75, 100]}
+                  label={{ 
+                    value: 'Risk/Congestion (%)', 
+                    angle: 90, 
+                    position: 'insideRight',
+                    style: { textAnchor: 'middle', fill: '#666', fontSize: 12 },
+                    offset: 0
+                  }}
+                  tickLine={{ stroke: '#e6e6e6' }}
+                  axisLine={{ stroke: '#e6e6e6' }}
+                  tick={{ fontSize: 11, fill: '#666' }}
+                  padding={{ top: 20, bottom: 20 }}
+                />
+                <ChartTooltip
+                  content={<ChartTooltipContent />}
+                />
+                <ChartLegend 
+                  content={<ChartLegendContent />}
+                  verticalAlign="bottom"
+                  height={36}
+                />
+                <Line
+                  yAxisId="left"
+                  type="monotone"
+                  dataKey="freight"
+                  name="Freight"
+                  stroke={chartConfig.freight.color}
+                  strokeWidth={2}
+                  dot={{ fill: chartConfig.freight.color, r: 5 }}
+                  activeDot={{ r: 6 }}
+                  connectNulls={true}
+                />
+                <Line
+                  yAxisId="right"
+                  type="monotone"
+                  dataKey="congestion"
+                  name="Congestion"
+                  stroke={chartConfig.handling.color}
+                  strokeWidth={2}
+                  dot={{ fill: chartConfig.handling.color, r: 5 }}
+                  connectNulls={true}
+                />
+                <Line
+                  yAxisId="right"
+                  type="monotone"
+                  dataKey="risk"
+                  name="Risk"
+                  stroke={chartConfig.risk.color}
+                  strokeWidth={2}
+                  dot={{ fill: chartConfig.risk.color, r: 5 }}
+                  connectNulls={true}
+                />
+              </LineChart>
+            </ChartContainer>
+          </div>
+        </CardContent>
+      </Card>
 
-        <div className="text-sm footer-container" style={{ position: 'relative', zIndex: 1, marginTop: '10px' }}>
-          <p className="font-medium">Key Seasonal Factors:</p>
-          <ul className="list-disc pl-5 pt-1 space-y-1">
+      <Card className="bg-slate-50">
+        <CardContent className="p-4">
+          <p className="font-medium mb-2">Key Seasonal Factors:</p>
+          <ul className="list-disc pl-5 space-y-1 text-sm text-muted-foreground">
             <li>Q4 shipping rates peak during holiday season (October-December)</li>
             <li>Chinese New Year (January-February) causes manufacturing delays</li>
             <li>Summer months show increased port congestion</li>
             <li>Consider shipping in Q2 for optimal balance of cost and efficiency</li>
           </ul>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
     </div>
   );
 };
