@@ -1,3 +1,4 @@
+
 import { useState, useRef } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -20,6 +21,10 @@ const TradeNavigator = () => {
     const requiredProductFields = ['productDescription', 'originCountry', 'destinationCountry', 'productValue'];
     const requiredShippingFields = ['quantity', 'transportMode'];
     
+    // Added console logs for debugging
+    console.log("Product data:", formData.product);
+    console.log("Shipping data:", formData.shipping);
+    
     const missingProductFields = requiredProductFields.filter(
       field => !formData.product[field as keyof typeof formData.product]
     );
@@ -28,11 +33,15 @@ const TradeNavigator = () => {
       field => !formData.shipping[field as keyof typeof formData.shipping]
     );
 
+    console.log("Missing product fields:", missingProductFields);
+    console.log("Missing shipping fields:", missingShippingFields);
+
     if (missingProductFields.length > 0 || missingShippingFields.length > 0) {
+      let missingFields = [...missingProductFields, ...missingShippingFields].join(", ");
       toast({
         variant: "destructive",
         title: "Missing Required Information",
-        description: "Please fill in all required fields marked with *",
+        description: `Please fill in all required fields: ${missingFields}`,
       });
       return false;
     }

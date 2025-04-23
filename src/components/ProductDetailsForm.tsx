@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -8,10 +9,48 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
 const ProductDetailsForm = ({ onChange }: { onChange: (data: any) => void }) => {
-  const [hsCode, setHsCode] = useState('');
-  const [originCountry, setOriginCountry] = useState('');
-  const [destinationCountry, setDestinationCountry] = useState('');
-  const [productCategory, setProductCategory] = useState('');
+  const [values, setValues] = useState({
+    productDescription: '',
+    hsCode: '',
+    originCountry: '',
+    destinationCountry: '',
+    productValue: '',
+    productCategory: ''
+  });
+  
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
+  const updateField = (field: string, value: string) => {
+    // Update the local state
+    setValues(prev => ({ ...prev, [field]: value }));
+    
+    // Clear the error for this field if it has a value
+    if (value) {
+      setErrors(prev => {
+        const newErrors = { ...prev };
+        delete newErrors[field];
+        return newErrors;
+      });
+    }
+    
+    // Update the parent component
+    onChange({ [field]: value });
+  };
+
+  const validateField = (field: string, value: string) => {
+    if (!value || value.trim() === '') {
+      setErrors(prev => ({ ...prev, [field]: 'This field is required' }));
+      return false;
+    }
+    
+    setErrors(prev => {
+      const newErrors = { ...prev };
+      delete newErrors[field];
+      return newErrors;
+    });
+    
+    return true;
+  };
 
   const suggestHsCode = () => {
     // Sample HS codes based on product categories
@@ -24,27 +63,11 @@ const ProductDetailsForm = ({ onChange }: { onChange: (data: any) => void }) => 
     };
     
     // Get the current product category
-    const selectedCategory = productCategory || 'industrial';
+    const selectedCategory = values.productCategory || 'industrial';
     
     // Set the suggested HS code
     const suggestedCode = hsCodes[selectedCategory as keyof typeof hsCodes] || '8479.89';
-    setHsCode(suggestedCode);
-    onChange({ hsCode: suggestedCode });
-  };
-
-  const [errors, setErrors] = useState<Record<string, string>>({});
-
-  const validateField = (field: string, value: string) => {
-    if (!value || value.trim() === '') {
-      setErrors(prev => ({ ...prev, [field]: 'This field is required' }));
-      return false;
-    }
-    setErrors(prev => {
-      const newErrors = { ...prev };
-      delete newErrors[field];
-      return newErrors;
-    });
-    return true;
+    updateField('hsCode', suggestedCode);
   };
 
   return (
@@ -60,9 +83,10 @@ const ProductDetailsForm = ({ onChange }: { onChange: (data: any) => void }) => 
           <Input 
             id="productDescription" 
             placeholder="Enter product description"
+            value={values.productDescription}
             onChange={(e) => {
+              updateField('productDescription', e.target.value);
               validateField('productDescription', e.target.value);
-              onChange({ productDescription: e.target.value });
             }}
             className={cn(
               "bg-white",
@@ -81,11 +105,8 @@ const ProductDetailsForm = ({ onChange }: { onChange: (data: any) => void }) => 
               id="hsCode" 
               placeholder="Enter HS Code"
               className="flex-1 bg-white"
-              value={hsCode}
-              onChange={(e) => {
-                setHsCode(e.target.value);
-                onChange({ hsCode: e.target.value });
-              }}
+              value={values.hsCode}
+              onChange={(e) => updateField('hsCode', e.target.value)}
             />
             <Button 
               variant="secondary" 
@@ -103,11 +124,10 @@ const ProductDetailsForm = ({ onChange }: { onChange: (data: any) => void }) => 
             <span className="text-red-500">*</span>
           </Label>
           <Select 
-            value={originCountry} 
+            value={values.originCountry} 
             onValueChange={(value) => {
+              updateField('originCountry', value);
               validateField('originCountry', value);
-              setOriginCountry(value);
-              onChange({ originCountry: value });
             }}
           >
             <SelectTrigger 
@@ -137,11 +157,10 @@ const ProductDetailsForm = ({ onChange }: { onChange: (data: any) => void }) => 
             <span className="text-red-500">*</span>
           </Label>
           <Select 
-            value={destinationCountry} 
+            value={values.destinationCountry} 
             onValueChange={(value) => {
+              updateField('destinationCountry', value);
               validateField('destinationCountry', value);
-              setDestinationCountry(value);
-              onChange({ destinationCountry: value });
             }}
           >
             <SelectTrigger 
@@ -174,9 +193,10 @@ const ProductDetailsForm = ({ onChange }: { onChange: (data: any) => void }) => 
             id="productValue" 
             type="number" 
             placeholder="Enter product value"
+            value={values.productValue}
             onChange={(e) => {
+              updateField('productValue', e.target.value);
               validateField('productValue', e.target.value);
-              onChange({ productValue: e.target.value });
             }}
             className={cn(
               "bg-white",
@@ -191,11 +211,8 @@ const ProductDetailsForm = ({ onChange }: { onChange: (data: any) => void }) => 
         <div className="space-y-2">
           <Label htmlFor="productCategory">Product Category</Label>
           <Select 
-            value={productCategory} 
-            onValueChange={(value) => {
-              setProductCategory(value);
-              onChange({ productCategory: value });
-            }}
+            value={values.productCategory} 
+            onValueChange={(value) => updateField('productCategory', value)}
           >
             <SelectTrigger id="productCategory">
               <SelectValue placeholder="Select Product Category" />

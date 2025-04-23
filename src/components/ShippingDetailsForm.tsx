@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -6,28 +7,50 @@ import { Textarea } from '@/components/ui/textarea';
 import { cn } from '@/lib/utils';
 
 const ShippingDetailsForm = ({ onChange }: { onChange: (data: any) => void }) => {
-  const [transportMode, setTransportMode] = useState('');
-  const [shipmentType, setShipmentType] = useState('');
-  const [packageType, setPackageType] = useState('');
-  const [dangerousGoods, setDangerousGoods] = useState('');
-  const [quantity, setQuantity] = useState('');
-  const [weight, setWeight] = useState('');
-  const [length, setLength] = useState('');
-  const [width, setWidth] = useState('');
-  const [height, setHeight] = useState('');
-  const [specialRequirements, setSpecialRequirements] = useState('');
+  const [values, setValues] = useState({
+    quantity: '',
+    transportMode: '',
+    shipmentType: '',
+    packageType: '',
+    dangerousGoods: '',
+    weight: '',
+    length: '',
+    width: '',
+    height: '',
+    specialRequirements: ''
+  });
+  
   const [errors, setErrors] = useState<Record<string, string>>({});
+
+  const updateField = (field: string, value: string) => {
+    // Update the local state
+    setValues(prev => ({ ...prev, [field]: value }));
+    
+    // Clear the error for this field if it has a value
+    if (value) {
+      setErrors(prev => {
+        const newErrors = { ...prev };
+        delete newErrors[field];
+        return newErrors;
+      });
+    }
+    
+    // Update the parent component
+    onChange({ [field]: value });
+  };
 
   const validateField = (field: string, value: string) => {
     if (!value || value.trim() === '') {
       setErrors(prev => ({ ...prev, [field]: 'This field is required' }));
       return false;
     }
+    
     setErrors(prev => {
       const newErrors = { ...prev };
       delete newErrors[field];
       return newErrors;
     });
+    
     return true;
   };
 
@@ -45,12 +68,11 @@ const ShippingDetailsForm = ({ onChange }: { onChange: (data: any) => void }) =>
             id="quantity" 
             type="number" 
             min="1"
-            value={quantity}
+            value={values.quantity}
             placeholder="Enter quantity"
             onChange={(e) => {
+              updateField('quantity', e.target.value);
               validateField('quantity', e.target.value);
-              setQuantity(e.target.value);
-              onChange({ quantity: e.target.value });
             }}
             className={cn(
               errors.quantity && "border-red-500 focus-visible:ring-red-500"
@@ -67,11 +89,10 @@ const ShippingDetailsForm = ({ onChange }: { onChange: (data: any) => void }) =>
             <span className="text-red-500">*</span>
           </Label>
           <Select 
-            value={transportMode} 
+            value={values.transportMode} 
             onValueChange={(value) => {
+              updateField('transportMode', value);
               validateField('transportMode', value);
-              setTransportMode(value);
-              onChange({ transportMode: value });
             }}
           >
             <SelectTrigger 
@@ -98,11 +119,8 @@ const ShippingDetailsForm = ({ onChange }: { onChange: (data: any) => void }) =>
         <div className="space-y-2">
           <Label htmlFor="shipmentType">Shipment Type</Label>
           <Select 
-            value={shipmentType} 
-            onValueChange={(value) => {
-              setShipmentType(value);
-              onChange({ shipmentType: value });
-            }}
+            value={values.shipmentType} 
+            onValueChange={(value) => updateField('shipmentType', value)}
           >
             <SelectTrigger id="shipmentType">
               <SelectValue placeholder="Select Shipment Type" />
@@ -122,12 +140,9 @@ const ShippingDetailsForm = ({ onChange }: { onChange: (data: any) => void }) =>
           <Input 
             id="weight" 
             type="number" 
-            value={weight}
+            value={values.weight}
             placeholder="Enter weight in kg"
-            onChange={(e) => {
-              setWeight(e.target.value);
-              onChange({ weight: e.target.value });
-            }}
+            onChange={(e) => updateField('weight', e.target.value)}
           />
         </div>
 
@@ -136,27 +151,18 @@ const ShippingDetailsForm = ({ onChange }: { onChange: (data: any) => void }) =>
           <div className="grid grid-cols-3 gap-4">
             <Input 
               placeholder="Length" 
-              value={length}
-              onChange={(e) => {
-                setLength(e.target.value);
-                onChange({ length: e.target.value });
-              }}
+              value={values.length}
+              onChange={(e) => updateField('length', e.target.value)}
             />
             <Input 
               placeholder="Width" 
-              value={width}
-              onChange={(e) => {
-                setWidth(e.target.value);
-                onChange({ width: e.target.value });
-              }}
+              value={values.width}
+              onChange={(e) => updateField('width', e.target.value)}
             />
             <Input 
               placeholder="Height" 
-              value={height}
-              onChange={(e) => {
-                setHeight(e.target.value);
-                onChange({ height: e.target.value });
-              }}
+              value={values.height}
+              onChange={(e) => updateField('height', e.target.value)}
             />
           </div>
         </div>
@@ -164,11 +170,8 @@ const ShippingDetailsForm = ({ onChange }: { onChange: (data: any) => void }) =>
         <div className="space-y-2">
           <Label htmlFor="packageType">Packaging Type</Label>
           <Select 
-            value={packageType} 
-            onValueChange={(value) => {
-              setPackageType(value);
-              onChange({ packageType: value });
-            }}
+            value={values.packageType} 
+            onValueChange={(value) => updateField('packageType', value)}
           >
             <SelectTrigger id="packageType">
               <SelectValue placeholder="Select Package Type" />
@@ -186,11 +189,8 @@ const ShippingDetailsForm = ({ onChange }: { onChange: (data: any) => void }) =>
         <div className="space-y-2">
           <Label htmlFor="dangerousGoods">Dangerous Goods</Label>
           <Select 
-            value={dangerousGoods} 
-            onValueChange={(value) => {
-              setDangerousGoods(value);
-              onChange({ dangerousGoods: value });
-            }}
+            value={values.dangerousGoods} 
+            onValueChange={(value) => updateField('dangerousGoods', value)}
           >
             <SelectTrigger id="dangerousGoods">
               <SelectValue placeholder="Select Dangerous Goods Status" />
@@ -207,12 +207,9 @@ const ShippingDetailsForm = ({ onChange }: { onChange: (data: any) => void }) =>
           <Textarea 
             id="specialRequirements" 
             placeholder="Enter any special shipping requirements or notes"
-            value={specialRequirements}
+            value={values.specialRequirements}
             className="min-h-[100px]"
-            onChange={(e) => {
-              setSpecialRequirements(e.target.value);
-              onChange({ specialRequirements: e.target.value });
-            }}
+            onChange={(e) => updateField('specialRequirements', e.target.value)}
           />
         </div>
       </div>
