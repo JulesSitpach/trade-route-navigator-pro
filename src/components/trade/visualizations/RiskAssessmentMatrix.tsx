@@ -43,40 +43,50 @@ const RiskAssessmentMatrix = () => {
                 margin={{
                   top: 20,
                   right: 40,
-                  left: 10,
+                  left: 20,
                   bottom: 20,
                 }}
               >
-                <CartesianGrid strokeDasharray="3 3" strokeOpacity={0.5} />
+                <CartesianGrid strokeDasharray="3 3" strokeOpacity={0.3} />
                 <XAxis 
                   type="number"
                   dataKey="x"
                   name="Cost ($)"
-                  label={{ 
-                    value: 'Cost ($)', 
-                    position: 'bottom', 
-                    offset: -10,
-                    style: { textAnchor: 'middle' }
-                  }}
                   domain={[2000, 6000]}
                   tickCount={5}
                   tickLine={false}
                   axisLine={false}
+                  tick={{ fontSize: 12 }}
+                  label={{ 
+                    value: 'Cost ($)', 
+                    position: 'bottom',
+                    offset: 0,
+                    style: { 
+                      textAnchor: 'middle',
+                      fontSize: 12,
+                      fill: '#64748b'
+                    }
+                  }}
                 />
                 <YAxis
                   type="number"
                   dataKey="y"
                   name="Risk Score"
+                  domain={[0, 10]}
+                  tickLine={false}
+                  axisLine={false}
+                  tick={{ fontSize: 12 }}
                   label={{ 
                     value: 'Risk Score (1-10)', 
                     angle: -90, 
                     position: 'insideLeft',
-                    style: { textAnchor: 'middle' },
-                    offset: 0
+                    style: { 
+                      textAnchor: 'middle',
+                      fontSize: 12,
+                      fill: '#64748b'
+                    },
+                    offset: 10
                   }}
-                  domain={[0, 10]}
-                  tickLine={false}
-                  axisLine={false}
                 />
                 <ZAxis
                   type="number"
@@ -85,11 +95,14 @@ const RiskAssessmentMatrix = () => {
                   name="Reliability"
                 />
                 <ChartTooltip
-                  content={<ChartTooltipContent />}
-                  cursor={{ strokeDasharray: '3 3' }}
+                  cursor={false}
+                  content={
+                    <ChartTooltipContent 
+                      className="bg-[#f3f3f3] border border-border/50 shadow-md" 
+                    />
+                  }
                 />
                 <Scatter 
-                  name="Risk Matrix" 
                   data={riskData}
                   shape="circle"
                 >
@@ -97,6 +110,7 @@ const RiskAssessmentMatrix = () => {
                     <Cell 
                       key={`cell-${index}`} 
                       fill={getRiskColor(entry.riskLevel)}
+                      r={6}
                     />
                   ))}
                 </Scatter>
