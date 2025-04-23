@@ -9,6 +9,9 @@ import { Button } from '@/components/ui/button';
 
 const ProductDetailsForm = ({ onChange }: { onChange: (data: any) => void }) => {
   const [hsCode, setHsCode] = useState('');
+  const [originCountry, setOriginCountry] = useState('');
+  const [destinationCountry, setDestinationCountry] = useState('');
+  const [productCategory, setProductCategory] = useState('');
 
   const suggestHsCode = () => {
     // Sample HS codes based on product categories
@@ -20,9 +23,8 @@ const ProductDetailsForm = ({ onChange }: { onChange: (data: any) => void }) => 
       'automobiles': '8703.23',
     };
     
-    // Get the current product category from the form data
-    const category = document.getElementById('productCategory') as HTMLSelectElement;
-    const selectedCategory = category?.value || 'industrial';
+    // Get the current product category
+    const selectedCategory = productCategory || 'industrial';
     
     // Set the suggested HS code
     const suggestedCode = hsCodes[selectedCategory as keyof typeof hsCodes] || '8479.89';
@@ -70,11 +72,17 @@ const ProductDetailsForm = ({ onChange }: { onChange: (data: any) => void }) => 
 
         <div className="space-y-2">
           <Label htmlFor="originCountry">Origin Country</Label>
-          <Select defaultValue="" onValueChange={(value) => onChange({ originCountry: value })}>
-            <SelectTrigger id="originCountry" className="bg-white">
+          <Select 
+            value={originCountry} 
+            onValueChange={(value) => {
+              setOriginCountry(value);
+              onChange({ originCountry: value });
+            }}
+          >
+            <SelectTrigger id="originCountry">
               <SelectValue placeholder="Select Origin Country" />
             </SelectTrigger>
-            <SelectContent className="bg-white">
+            <SelectContent>
               {countryTariffData.map((country) => (
                 <SelectItem key={country.code} value={country.code}>
                   {country.name}
@@ -86,11 +94,17 @@ const ProductDetailsForm = ({ onChange }: { onChange: (data: any) => void }) => 
 
         <div className="space-y-2">
           <Label htmlFor="destinationCountry">Destination Country</Label>
-          <Select defaultValue="" onValueChange={(value) => onChange({ destinationCountry: value })}>
-            <SelectTrigger id="destinationCountry" className="bg-white">
+          <Select 
+            value={destinationCountry} 
+            onValueChange={(value) => {
+              setDestinationCountry(value);
+              onChange({ destinationCountry: value });
+            }}
+          >
+            <SelectTrigger id="destinationCountry">
               <SelectValue placeholder="Select Destination Country" />
             </SelectTrigger>
-            <SelectContent className="bg-white">
+            <SelectContent>
               {countryTariffData.map((country) => (
                 <SelectItem key={country.code} value={country.code}>
                   {country.name}
@@ -113,11 +127,17 @@ const ProductDetailsForm = ({ onChange }: { onChange: (data: any) => void }) => 
 
         <div className="space-y-2">
           <Label htmlFor="productCategory">Product Category</Label>
-          <Select defaultValue="" onValueChange={(value) => onChange({ productCategory: value })}>
-            <SelectTrigger id="productCategory" className="bg-white">
+          <Select 
+            value={productCategory} 
+            onValueChange={(value) => {
+              setProductCategory(value);
+              onChange({ productCategory: value });
+            }}
+          >
+            <SelectTrigger id="productCategory">
               <SelectValue placeholder="Select Product Category" />
             </SelectTrigger>
-            <SelectContent className="bg-white">
+            <SelectContent>
               <SelectItem value="agricultural">Agricultural</SelectItem>
               <SelectItem value="industrial">Industrial</SelectItem>
               <SelectItem value="textiles">Textiles</SelectItem>

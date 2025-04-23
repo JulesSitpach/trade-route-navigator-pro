@@ -18,11 +18,12 @@ const SelectTrigger = React.forwardRef<
   <SelectPrimitive.Trigger
     ref={ref}
     className={cn(
-      "flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1",
-      "data-[state=open]:bg-blue-100",
-      "data-[placeholder]:bg-white data-[placeholder]:text-muted-foreground",
-      "has-[span[data-placeholder]]:bg-white", // White when has placeholder showing
-      "!has-[span[data-placeholder]]:bg-blue-100", // Blue when value is selected (no placeholder)
+      "flex h-10 w-full items-center justify-between rounded-md border border-input px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1",
+      "bg-white", // Default white background
+      "has-[.placeholder]:bg-white", // Keep white when showing placeholder
+      "data-[placeholder]:bg-white",
+      "data-[state=open]:bg-blue-100", // Blue when dropdown is open
+      "data-[value]:bg-blue-100", // Blue when a value is selected
       className
     )}
     {...props}

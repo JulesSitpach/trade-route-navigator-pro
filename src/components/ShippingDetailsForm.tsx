@@ -1,11 +1,16 @@
 
+import { useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
-import { Button } from '@/components/ui/button';
 
 const ShippingDetailsForm = ({ onChange }: { onChange: (data: any) => void }) => {
+  const [transportMode, setTransportMode] = useState('');
+  const [shipmentType, setShipmentType] = useState('');
+  const [packageType, setPackageType] = useState('');
+  const [dangerousGoods, setDangerousGoods] = useState('');
+
   return (
     <div className="p-6">
       <h2 className="text-xl font-semibold text-blue-900 mb-6">Shipping Details</h2>
@@ -25,11 +30,17 @@ const ShippingDetailsForm = ({ onChange }: { onChange: (data: any) => void }) =>
 
         <div className="space-y-2">
           <Label htmlFor="transportMode">Transport Mode</Label>
-          <Select onValueChange={(value) => onChange({ transportMode: value })}>
-            <SelectTrigger id="transportMode" className="bg-white">
+          <Select 
+            value={transportMode} 
+            onValueChange={(value) => {
+              setTransportMode(value);
+              onChange({ transportMode: value });
+            }}
+          >
+            <SelectTrigger id="transportMode">
               <SelectValue placeholder="Select Transport Mode" />
             </SelectTrigger>
-            <SelectContent className="bg-white">
+            <SelectContent>
               <SelectItem value="ocean">Ocean</SelectItem>
               <SelectItem value="air">Air</SelectItem>
               <SelectItem value="road">Road</SelectItem>
@@ -41,11 +52,17 @@ const ShippingDetailsForm = ({ onChange }: { onChange: (data: any) => void }) =>
 
         <div className="space-y-2">
           <Label htmlFor="shipmentType">Shipment Type</Label>
-          <Select onValueChange={(value) => onChange({ shipmentType: value })}>
-            <SelectTrigger id="shipmentType" className="bg-white">
+          <Select 
+            value={shipmentType} 
+            onValueChange={(value) => {
+              setShipmentType(value);
+              onChange({ shipmentType: value });
+            }}
+          >
+            <SelectTrigger id="shipmentType">
               <SelectValue placeholder="Select Shipment Type" />
             </SelectTrigger>
-            <SelectContent className="bg-white">
+            <SelectContent>
               <SelectItem value="fcl">Full Container Load (FCL)</SelectItem>
               <SelectItem value="lcl">Less than Container Load (LCL)</SelectItem>
               <SelectItem value="bulk">Bulk Cargo</SelectItem>
@@ -89,11 +106,17 @@ const ShippingDetailsForm = ({ onChange }: { onChange: (data: any) => void }) =>
 
         <div className="space-y-2">
           <Label htmlFor="packageType">Packaging Type</Label>
-          <Select onValueChange={(value) => onChange({ packageType: value })}>
-            <SelectTrigger id="packageType" className="bg-white">
+          <Select 
+            value={packageType} 
+            onValueChange={(value) => {
+              setPackageType(value);
+              onChange({ packageType: value });
+            }}
+          >
+            <SelectTrigger id="packageType">
               <SelectValue placeholder="Select Package Type" />
             </SelectTrigger>
-            <SelectContent className="bg-white">
+            <SelectContent>
               <SelectItem value="boxes">Boxes</SelectItem>
               <SelectItem value="pallets">Pallets</SelectItem>
               <SelectItem value="drums">Drums</SelectItem>
@@ -105,11 +128,17 @@ const ShippingDetailsForm = ({ onChange }: { onChange: (data: any) => void }) =>
 
         <div className="space-y-2">
           <Label htmlFor="dangerousGoods">Dangerous Goods</Label>
-          <Select onValueChange={(value) => onChange({ dangerousGoods: value })}>
-            <SelectTrigger id="dangerousGoods" className="bg-white">
+          <Select 
+            value={dangerousGoods} 
+            onValueChange={(value) => {
+              setDangerousGoods(value);
+              onChange({ dangerousGoods: value });
+            }}
+          >
+            <SelectTrigger id="dangerousGoods">
               <SelectValue placeholder="Select Dangerous Goods Status" />
             </SelectTrigger>
-            <SelectContent className="bg-white">
+            <SelectContent>
               <SelectItem value="no">No</SelectItem>
               <SelectItem value="yes">Yes</SelectItem>
             </SelectContent>
