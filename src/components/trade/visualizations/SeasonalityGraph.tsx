@@ -36,7 +36,7 @@ const SeasonalityGraph = () => {
       
       <Card>
         <CardContent className="p-6">
-          <div className="h-[400px] w-full">
+          <div className="h-[350px] w-full"> {/* Reduced height from 400px to 350px */}
             <ChartContainer config={chartConfig}>
               <LineChart
                 data={seasonalityData}
@@ -44,13 +44,13 @@ const SeasonalityGraph = () => {
                   top: 20,
                   right: 40,
                   left: 10,
-                  bottom: 60, // Increased bottom margin to create space for month labels
+                  bottom: 5, // Reduced bottom margin to push graph content up
                 }}
               >
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis 
                   dataKey="month"
-                  tick={{ fontSize: 12, dy: 20 }} // Increased dy value to push month labels further down
+                  tick={{ fontSize: 12, dy: 0 }} // Reduced dy to 0 to position labels directly on axis
                   tickLine={false}
                   axisLine={false}
                   padding={{ left: 10, right: 10 }}
@@ -123,7 +123,7 @@ const SeasonalityGraph = () => {
         </CardContent>
       </Card>
 
-      <div className="text-sm mt-4">
+      <div className="text-sm mt-0"> {/* Reduced top margin to bring text closer to chart */}
         <p className="font-medium">Key Seasonal Factors:</p>
         <ul className="list-disc pl-5 pt-2 space-y-1">
           <li>Q4 shipping rates peak during holiday season (October-December)</li>
