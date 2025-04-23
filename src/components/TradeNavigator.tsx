@@ -1,5 +1,4 @@
-
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import ProductDetailsForm from './ProductDetailsForm';
@@ -13,9 +12,13 @@ const TradeNavigator = () => {
   });
   
   const [showAnalysis, setShowAnalysis] = useState(false);
+  const analysisRef = useRef<HTMLDivElement>(null);
 
   const handleCalculate = () => {
     setShowAnalysis(true);
+    setTimeout(() => {
+      analysisRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }, 100);
   };
 
   return (
@@ -54,7 +57,7 @@ const TradeNavigator = () => {
         </div>
 
         {showAnalysis && (
-          <Card className="shadow-lg mt-8">
+          <Card className="shadow-lg mt-8" ref={analysisRef}>
             <TradeAnalysis data={formData} />
           </Card>
         )}
