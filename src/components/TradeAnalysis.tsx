@@ -1,3 +1,4 @@
+
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import AlternativeRoutes from './AlternativeRoutes';
@@ -31,7 +32,7 @@ const TradeAnalysis = ({ data }: { data: any }) => {
       description: 'Sourcing this product from Vietnam instead of China would reduce the tariff rate from 125% to 10%, resulting in significant savings on duty costs.',
       currentRoute: 'China → US (125% tariff)',
       alternativeRoute: 'Vietnam → US (10% tariff)',
-      type: 'savings'
+      type: 'savings' as const
     },
     {
       title: 'Triangular Trade: China → Mexico → US',
@@ -40,7 +41,7 @@ const TradeAnalysis = ({ data }: { data: any }) => {
       description: 'Import components from China to Mexico (15% tariff), perform sufficient processing to meet USMCA requirements, then export to US with 0% tariff.',
       currentRoute: 'China → US (125% tariff)',
       alternativeRoute: 'China → Mexico (15% tariff) → US (0% tariff under USMCA)',
-      type: 'savings'
+      type: 'savings' as const
     }
   ];
 
