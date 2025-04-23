@@ -51,29 +51,31 @@ const RouteComparisonTimeline = () => {
       </p>
       
       <Card>
-        <CardContent className="p-6">
-          <div className="h-96">
+        <CardContent className="pt-4">
+          <div className="h-[400px]"> {/* Adjusted height */}
             <ChartContainer config={chartConfig}>
               <BarChart
-                layout="horizontal"
                 data={routeData}
-                margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
-                barSize={20}
+                margin={{ top: 10, right: 30, left: 40, bottom: 60 }} {/* Adjusted margins */}
+                barSize={30} {/* Increased bar size */}
               >
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis 
                   dataKey="name"
-                  tick={{ fontSize: 12 }}
+                  tick={{ fontSize: 11 }}
                   tickLine={false}
-                  axisLine={false}
+                  height={60} {/* Increased height for labels */}
+                  angle={-25} {/* Angled text for better readability */}
+                  textAnchor="end"
                 />
                 <YAxis 
                   label={{ 
                     value: 'Days', 
                     angle: -90, 
                     position: 'insideLeft',
-                    style: { textAnchor: 'middle' }
+                    offset: -15
                   }}
+                  tickLine={false}
                 />
                 <ChartTooltip
                   content={<ChartTooltipContent />}
@@ -81,17 +83,18 @@ const RouteComparisonTimeline = () => {
                 <ChartLegend 
                   content={<ChartLegendContent />}
                   verticalAlign="top"
+                  height={36}
                 />
-                <Bar dataKey="shipping" stackId="a" name="freight" fill={chartConfig.primaryRoute.color} />
-                <Bar dataKey="customs" stackId="a" name="customs" fill={chartConfig.customs.color} />
-                <Bar dataKey="distribution" stackId="a" name="lastMile" fill={chartConfig.lastMile.color} />
+                <Bar dataKey="shipping" stackId="a" name="Shipping" fill={chartConfig.primaryRoute.color} />
+                <Bar dataKey="customs" stackId="a" name="Customs" fill={chartConfig.customs.color} />
+                <Bar dataKey="distribution" stackId="a" name="Distribution" fill={chartConfig.lastMile.color} />
               </BarChart>
             </ChartContainer>
           </div>
         </CardContent>
       </Card>
 
-      <div className="text-sm">
+      <div className="text-sm mt-4">
         <p className="font-medium">Key Insights:</p>
         <ul className="list-disc pl-5 pt-2 space-y-1">
           <li>Air shipping reduces transit time by 85% but increases costs by 130%</li>
