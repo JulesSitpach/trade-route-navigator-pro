@@ -11,6 +11,11 @@ const ShippingDetailsForm = ({ onChange }: { onChange: (data: any) => void }) =>
   const [packageType, setPackageType] = useState('');
   const [dangerousGoods, setDangerousGoods] = useState('');
   const [quantity, setQuantity] = useState('');
+  const [weight, setWeight] = useState('');
+  const [length, setLength] = useState('');
+  const [width, setWidth] = useState('');
+  const [height, setHeight] = useState('');
+  const [specialRequirements, setSpecialRequirements] = useState('');
 
   return (
     <div className="p-6">
@@ -81,8 +86,12 @@ const ShippingDetailsForm = ({ onChange }: { onChange: (data: any) => void }) =>
           <Input 
             id="weight" 
             type="number" 
+            value={weight}
             placeholder="Enter weight in kg"
-            onChange={(e) => onChange({ weight: e.target.value })}
+            onChange={(e) => {
+              setWeight(e.target.value);
+              onChange({ weight: e.target.value });
+            }}
           />
         </div>
 
@@ -91,15 +100,27 @@ const ShippingDetailsForm = ({ onChange }: { onChange: (data: any) => void }) =>
           <div className="grid grid-cols-3 gap-4">
             <Input 
               placeholder="Length" 
-              onChange={(e) => onChange({ length: e.target.value })}
+              value={length}
+              onChange={(e) => {
+                setLength(e.target.value);
+                onChange({ length: e.target.value });
+              }}
             />
             <Input 
               placeholder="Width" 
-              onChange={(e) => onChange({ width: e.target.value })}
+              value={width}
+              onChange={(e) => {
+                setWidth(e.target.value);
+                onChange({ width: e.target.value });
+              }}
             />
             <Input 
               placeholder="Height" 
-              onChange={(e) => onChange({ height: e.target.value })}
+              value={height}
+              onChange={(e) => {
+                setHeight(e.target.value);
+                onChange({ height: e.target.value });
+              }}
             />
           </div>
         </div>
@@ -150,8 +171,12 @@ const ShippingDetailsForm = ({ onChange }: { onChange: (data: any) => void }) =>
           <Textarea 
             id="specialRequirements" 
             placeholder="Enter any special shipping requirements or notes"
+            value={specialRequirements}
             className="min-h-[100px]"
-            onChange={(e) => onChange({ specialRequirements: e.target.value })}
+            onChange={(e) => {
+              setSpecialRequirements(e.target.value);
+              onChange({ specialRequirements: e.target.value });
+            }}
           />
         </div>
       </div>
