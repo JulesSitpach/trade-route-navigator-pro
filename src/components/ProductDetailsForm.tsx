@@ -5,8 +5,6 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { countryTariffData } from '@/data/countryTariffData';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
-import { Info } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const ProductDetailsForm = ({ onChange }: { onChange: (data: any) => void }) => {
@@ -72,7 +70,7 @@ const ProductDetailsForm = ({ onChange }: { onChange: (data: any) => void }) => 
 
         <div className="space-y-2">
           <Label htmlFor="originCountry">Origin Country</Label>
-          <Select onValueChange={(value) => onChange({ originCountry: value })}>
+          <Select defaultValue="" onValueChange={(value) => onChange({ originCountry: value })}>
             <SelectTrigger id="originCountry" className="bg-white">
               <SelectValue placeholder="Select Origin Country" />
             </SelectTrigger>
@@ -88,7 +86,7 @@ const ProductDetailsForm = ({ onChange }: { onChange: (data: any) => void }) => 
 
         <div className="space-y-2">
           <Label htmlFor="destinationCountry">Destination Country</Label>
-          <Select onValueChange={(value) => onChange({ destinationCountry: value })}>
+          <Select defaultValue="" onValueChange={(value) => onChange({ destinationCountry: value })}>
             <SelectTrigger id="destinationCountry" className="bg-white">
               <SelectValue placeholder="Select Destination Country" />
             </SelectTrigger>
@@ -115,7 +113,7 @@ const ProductDetailsForm = ({ onChange }: { onChange: (data: any) => void }) => 
 
         <div className="space-y-2">
           <Label htmlFor="productCategory">Product Category</Label>
-          <Select onValueChange={(value) => onChange({ productCategory: value })}>
+          <Select defaultValue="" onValueChange={(value) => onChange({ productCategory: value })}>
             <SelectTrigger id="productCategory" className="bg-white">
               <SelectValue placeholder="Select Product Category" />
             </SelectTrigger>
