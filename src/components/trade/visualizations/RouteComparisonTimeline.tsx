@@ -52,20 +52,25 @@ const RouteComparisonTimeline = () => {
       
       <Card>
         <CardContent className="pt-4">
-          <div className="h-[400px]"> {/* Adjusted height */}
+          {/* Adjusted height */}
+          <div className="h-[400px]">
             <ChartContainer config={chartConfig}>
               <BarChart
                 data={routeData}
-                margin={{ top: 10, right: 30, left: 40, bottom: 60 }} {/* Adjusted margins */}
-                barSize={30} {/* Increased bar size */}
+                /* Adjusted margins */
+                margin={{ top: 10, right: 30, left: 40, bottom: 60 }}
+                /* Increased bar size */
+                barSize={30}
               >
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis 
                   dataKey="name"
                   tick={{ fontSize: 11 }}
                   tickLine={false}
-                  height={60} {/* Increased height for labels */}
-                  angle={-25} {/* Angled text for better readability */}
+                  /* Increased height for labels */
+                  height={60}
+                  /* Angled text for better readability */
+                  angle={-25}
                   textAnchor="end"
                 />
                 <YAxis 
