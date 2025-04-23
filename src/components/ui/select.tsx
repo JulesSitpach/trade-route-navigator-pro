@@ -1,3 +1,4 @@
+
 import * as React from "react"
 import * as SelectPrimitive from "@radix-ui/react-select"
 import { Check, ChevronDown, ChevronUp } from "lucide-react"
@@ -14,20 +15,22 @@ const SelectTrigger = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Trigger>,
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger>
 >(({ className, children, ...props }, ref) => {
-  const [hasValue, setHasValue] = React.useState(false);
+  const [hasRealValue, setHasRealValue] = React.useState(false);
   
-  // Effect to check if the select has a value
   React.useEffect(() => {
-    // If there's a value prop, it means something is selected
-    setHasValue(!!props.value && props.value !== "");
-  }, [props.value]);
+    // Check if there's a real selected value by looking at the children
+    const isPlaceholder = React.Children.toArray(children).some(
+      child => React.isValidElement(child) && child.type === SelectPrimitive.Value && !child.props.children
+    );
+    setHasRealValue(!!props.value && !isPlaceholder);
+  }, [props.value, children]);
 
   return (
     <SelectPrimitive.Trigger
       ref={ref}
       className={cn(
         "flex h-10 w-full items-center justify-between rounded-md border border-input px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1",
-        hasValue ? "bg-[#e6f0ff]" : "bg-white", // Blue when has value, white by default
+        hasRealValue ? "bg-[#e6f0ff]" : "bg-white",
         className
       )}
       {...props}
