@@ -60,6 +60,10 @@ export default {
           DEFAULT: "#ffffff",
           foreground: "#2c3e50",
         },
+        'custom-blue': {
+          DEFAULT: '#3498db',
+          hover: '#2980b9'
+        },
       },
       borderRadius: {
         lg: 'var(--radius)',

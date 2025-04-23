@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -45,7 +46,7 @@ const TradeNavigator = () => {
 
         <div className="text-center">
           <Button 
-            className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-2"
+            className="bg-[#3498db] hover:bg-[#2980b9] text-white px-8 py-2"
             onClick={handleCalculate}
           >
             Calculate Costs & Find Opportunities

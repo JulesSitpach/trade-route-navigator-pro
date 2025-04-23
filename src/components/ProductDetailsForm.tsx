@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -62,7 +61,7 @@ const ProductDetailsForm = ({ onChange }: { onChange: (data: any) => void }) => 
             />
             <Button 
               variant="secondary" 
-              className="bg-blue-600 hover:bg-blue-700 text-white"
+              className="bg-[#3498db] hover:bg-[#2980b9] text-white"
               onClick={suggestHsCode}
             >
               Suggest
