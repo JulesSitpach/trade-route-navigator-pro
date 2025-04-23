@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 const ProductDetailsForm = ({ onChange }: { onChange: (data: any) => void }) => {
   return (
     <div className="p-6">
-      <h2 className="text-xl font-semibold text-blue-900 mb-6">Product Details</h2>
+      <h2 className="text-xl font-semibold text-gray-800 mb-6">Product Details</h2>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="space-y-2">
@@ -17,6 +17,7 @@ const ProductDetailsForm = ({ onChange }: { onChange: (data: any) => void }) => 
             id="productDescription" 
             placeholder="Enter product description"
             onChange={(e) => onChange({ productDescription: e.target.value })}
+            className="bg-white"
           />
         </div>
 
@@ -26,7 +27,7 @@ const ProductDetailsForm = ({ onChange }: { onChange: (data: any) => void }) => 
             <Input 
               id="hsCode" 
               placeholder="Enter HS Code"
-              className="flex-1"
+              className="flex-1 bg-white"
             />
             <Button variant="secondary">Suggest</Button>
           </div>
