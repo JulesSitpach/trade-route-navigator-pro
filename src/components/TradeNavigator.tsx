@@ -20,7 +20,7 @@ const TradeNavigator = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <header className="bg-gradient-to-r from-blue-800 to-blue-900 text-white py-12 px-4">
+      <header className="bg-[#3A4756] text-white py-12 px-4">
         <div className="max-w-6xl mx-auto">
           <h1 className="text-3xl md:text-4xl font-bold text-center mb-4">
             Global Trade Strategy Navigator
