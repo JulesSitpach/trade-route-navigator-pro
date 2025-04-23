@@ -10,10 +10,11 @@ const ShippingDetailsForm = ({ onChange }: { onChange: (data: any) => void }) =>
   const [shipmentType, setShipmentType] = useState('');
   const [packageType, setPackageType] = useState('');
   const [dangerousGoods, setDangerousGoods] = useState('');
+  const [quantity, setQuantity] = useState('');
 
   return (
     <div className="p-6">
-      <h2 className="text-xl font-semibold text-blue-900 mb-6">Shipping Details</h2>
+      <h2 className="text-xl font-semibold text-gray-800 mb-6">Shipping Details</h2>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="space-y-2">
@@ -22,9 +23,12 @@ const ShippingDetailsForm = ({ onChange }: { onChange: (data: any) => void }) =>
             id="quantity" 
             type="number" 
             min="1"
+            value={quantity}
             placeholder="Enter quantity"
-            onChange={(e) => onChange({ quantity: e.target.value })}
-            className="bg-white"
+            onChange={(e) => {
+              setQuantity(e.target.value);
+              onChange({ quantity: e.target.value });
+            }}
           />
         </div>
 
@@ -79,7 +83,6 @@ const ShippingDetailsForm = ({ onChange }: { onChange: (data: any) => void }) =>
             type="number" 
             placeholder="Enter weight in kg"
             onChange={(e) => onChange({ weight: e.target.value })}
-            className="bg-white"
           />
         </div>
 
@@ -89,17 +92,14 @@ const ShippingDetailsForm = ({ onChange }: { onChange: (data: any) => void }) =>
             <Input 
               placeholder="Length" 
               onChange={(e) => onChange({ length: e.target.value })}
-              className="bg-white" 
             />
             <Input 
               placeholder="Width" 
               onChange={(e) => onChange({ width: e.target.value })}
-              className="bg-white" 
             />
             <Input 
               placeholder="Height" 
               onChange={(e) => onChange({ height: e.target.value })}
-              className="bg-white" 
             />
           </div>
         </div>
@@ -150,7 +150,7 @@ const ShippingDetailsForm = ({ onChange }: { onChange: (data: any) => void }) =>
           <Textarea 
             id="specialRequirements" 
             placeholder="Enter any special shipping requirements or notes"
-            className="min-h-[100px] bg-white"
+            className="min-h-[100px]"
             onChange={(e) => onChange({ specialRequirements: e.target.value })}
           />
         </div>
