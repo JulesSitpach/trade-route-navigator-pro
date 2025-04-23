@@ -1,3 +1,4 @@
+
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
@@ -5,6 +6,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Card } from '@/components/ui/card';
 import AlternativeRoutes from './AlternativeRoutes';
 import TradeOpportunities from './TradeOpportunities';
+import TariffAnalysis from './TariffAnalysis';
 
 const TradeAnalysis = ({ data }: { data: any }) => {
   const routes = [
@@ -171,7 +173,7 @@ const TradeAnalysis = ({ data }: { data: any }) => {
         </TabsContent>
 
         <TabsContent value="tariffs">
-          <TradeOpportunities opportunities={opportunities} />
+          <TariffAnalysis />
         </TabsContent>
 
         <TabsContent value="regulations">
