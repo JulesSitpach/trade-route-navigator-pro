@@ -1,3 +1,4 @@
+
 import { Card, CardContent } from "@/components/ui/card";
 import { 
   ChartContainer, 
@@ -43,13 +44,13 @@ const SeasonalityGraph = () => {
                   top: 20,
                   right: 40,
                   left: 10,
-                  bottom: 40,
+                  bottom: 60, // Increased bottom margin to create space for month labels
                 }}
               >
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis 
                   dataKey="month"
-                  tick={{ fontSize: 12, dy: 10 }}
+                  tick={{ fontSize: 12, dy: 20 }} // Increased dy value to push month labels further down
                   tickLine={false}
                   axisLine={false}
                   padding={{ left: 10, right: 10 }}
