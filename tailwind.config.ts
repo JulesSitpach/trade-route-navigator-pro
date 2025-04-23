@@ -20,7 +20,7 @@ export default {
     extend: {
       colors: {
         'pro': {
-          'navy': '#141A25',    // Darker navy blue
+          'navy': '#0F1523',    // Even darker navy blue
           'blue': '#3498db',    // Light blue
           'red': '#e74c3c',     // Red/orange
           'green': '#2ecc71',   // Green
@@ -33,7 +33,7 @@ export default {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {
-          DEFAULT: "#141A25",
+          DEFAULT: "#0F1523",
           foreground: "#ffffff",
         },
         secondary: {

@@ -4,16 +4,16 @@
 
 @layer base {
   :root {
-    --background: 220 33% 98%;    /* #f5f7fa */
-    --foreground: 220 33% 8%;     /* #141A25 - darker navy */
+    --background: 220 55% 5%;    /* #0F1523 - extremely dark navy */
+    --foreground: 0 0% 100%;     /* white */
 
-    --card: 0 0% 100%;            /* white */
-    --card-foreground: 220 33% 8%;  /* #141A25 */
+    --card: 220 55% 5%;          /* extremely dark navy */
+    --card-foreground: 0 0% 100%; /* white */
 
-    --popover: 0 0% 100%;         /* white */
-    --popover-foreground: 220 33% 8%;  /* #141A25 */
+    --popover: 220 55% 5%;       /* extremely dark navy */
+    --popover-foreground: 0 0% 100%; /* white */
 
-    --primary: 220 33% 8%;        /* #141A25 */
+    --primary: 220 55% 5%;        /* #0F1523 */
     --primary-foreground: 0 0% 100%;  /* white */
 
     --secondary: 204 70% 53%;     /* #3498db */
@@ -23,7 +23,7 @@
     --muted-foreground: 215 17% 46%;  /* darker gray */
 
     --accent: 37 90% 51%;         /* #f39c12 */
-    --accent-foreground: 0 0% 100%;  /* white */
+    --accent-foreground: 0 0% 100%; /* white */
 
     --destructive: 6 78% 57%;     /* #e74c3c */
     --destructive-foreground: 0 0% 100%;  /* white */
@@ -52,17 +52,17 @@
   }
 
   .dark {
-    --background: 220 33% 8%;     /* #141A25 */
+    --background: 220 55% 5%;     /* #0F1523 */
     --foreground: 0 0% 100%;      /* white */
 
-    --card: 220 33% 12%;          /* slightly lighter dark blue */
+    --card: 220 55% 8%;           /* slightly lighter dark blue */
     --card-foreground: 0 0% 100%; /* white */
 
-    --popover: 220 33% 12%;       /* slightly lighter dark blue */
+    --popover: 220 55% 8%;        /* slightly lighter dark blue */
     --popover-foreground: 0 0% 100%; /* white */
 
     --primary: 0 0% 100%;         /* white */
-    --primary-foreground: 220 33% 8%; /* #141A25 */
+    --primary-foreground: 220 55% 5%; /* #0F1523 */
 
     --secondary: 204 70% 53%;     /* #3498db */
     --secondary-foreground: 0 0% 100%; /* white */
