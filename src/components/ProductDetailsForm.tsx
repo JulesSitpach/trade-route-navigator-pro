@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -78,22 +79,7 @@ const ProductDetailsForm = ({ onChange }: { onChange: (data: any) => void }) => 
             <SelectContent className="bg-white">
               {countryTariffData.map((country) => (
                 <SelectItem key={country.code} value={country.code}>
-                  <TooltipProvider>
-                    <Tooltip>
-                      <TooltipTrigger className="flex items-center">
-                        {country.name}
-                        <Info className="ml-2 h-4 w-4" />
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <div className="space-y-2">
-                          <p>Average Tariff: {country.averageTariff}%</p>
-                          {country.specialConsiderations.map((consideration, index) => (
-                            <p key={index}>{consideration}</p>
-                          ))}
-                        </div>
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
+                  {country.name}
                 </SelectItem>
               ))}
             </SelectContent>
@@ -109,22 +95,7 @@ const ProductDetailsForm = ({ onChange }: { onChange: (data: any) => void }) => 
             <SelectContent className="bg-white">
               {countryTariffData.map((country) => (
                 <SelectItem key={country.code} value={country.code}>
-                  <TooltipProvider>
-                    <Tooltip>
-                      <TooltipTrigger className="flex items-center">
-                        {country.name}
-                        <Info className="ml-2 h-4 w-4" />
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <div className="space-y-2">
-                          <p>Average Tariff: {country.averageTariff}%</p>
-                          {country.specialConsiderations.map((consideration, index) => (
-                            <p key={index}>{consideration}</p>
-                          ))}
-                        </div>
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
+                  {country.name}
                 </SelectItem>
               ))}
             </SelectContent>
