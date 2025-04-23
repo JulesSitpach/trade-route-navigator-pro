@@ -1,9 +1,11 @@
+
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import AlternativeRoutes from './AlternativeRoutes';
 import TradeOpportunities from './TradeOpportunities';
 import TariffAnalysis from './TariffAnalysis';
 import CostAnalysisTab from './trade/CostAnalysisTab';
 import RegulationsTab from './trade/RegulationsTab';
+import VisualizationsTab from './trade/VisualizationsTab';
 
 const TradeAnalysis = ({ data }: { data: any }) => {
   const routes = [
@@ -244,9 +246,7 @@ const TradeAnalysis = ({ data }: { data: any }) => {
         </TabsContent>
 
         <TabsContent value="visualizations">
-          <div className="text-center py-8 text-gray-500">
-            Visualization features will be available in the next version
-          </div>
+          <VisualizationsTab />
         </TabsContent>
       </Tabs>
     </div>
