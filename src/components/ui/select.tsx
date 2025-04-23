@@ -1,4 +1,3 @@
-
 import * as React from "react"
 import * as SelectPrimitive from "@radix-ui/react-select"
 import { Check, ChevronDown, ChevronUp } from "lucide-react"
@@ -15,48 +14,20 @@ const SelectTrigger = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Trigger>,
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger>
 >(({ className, children, ...props }, ref) => {
-  // Store a ref to the trigger element
-  const triggerRef = React.useRef<HTMLButtonElement | null>(null);
+  const [hasValue, setHasValue] = React.useState(false);
   
-  // Combine refs
-  const combinedRef = (node: HTMLButtonElement) => {
-    // Update our local ref
-    triggerRef.current = node;
-    
-    // Forward the ref
-    if (typeof ref === 'function') {
-      ref(node);
-    } else if (ref) {
-      ref.current = node;
-    }
-  };
-  
-  // Check if the select has a selected value (not just the placeholder)
+  // Effect to check if the select has a value
   React.useEffect(() => {
-    if (!triggerRef.current) return;
-    
-    // Check if there's actually a selected value
-    // Look for a value span that doesn't have the placeholder attribute
-    const hasSelectedValue = 
-      // Check if there's any content other than placeholder
-      triggerRef.current.querySelector('[data-value]') !== null ||
-      // For cases where SelectValue directly contains text
-      (triggerRef.current.textContent && 
-      !triggerRef.current.querySelector('[data-placeholder]'));
-    
-    if (hasSelectedValue && props.value) {
-      triggerRef.current.classList.add('has-value');
-    } else {
-      triggerRef.current.classList.remove('has-value');
-    }
-  }, [props.value, children]);
+    // If there's a value prop, it means something is selected
+    setHasValue(!!props.value && props.value !== "");
+  }, [props.value]);
 
   return (
     <SelectPrimitive.Trigger
-      ref={combinedRef}
+      ref={ref}
       className={cn(
         "flex h-10 w-full items-center justify-between rounded-md border border-input px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1",
-        "bg-white", // Start with white background
+        hasValue ? "bg-[#e6f0ff]" : "bg-white", // Blue when has value, white by default
         className
       )}
       {...props}
@@ -113,7 +84,7 @@ const SelectContent = React.forwardRef<
     <SelectPrimitive.Content
       ref={ref}
       className={cn(
-        "relative z-50 max-h-96 min-w-[8rem] overflow-hidden rounded-md border bg-popover text-popover-foreground shadow-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+        "relative z-50 max-h-96 min-w-[8rem] overflow-hidden rounded-md border bg-white text-popover-foreground shadow-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
         position === "popper" &&
           "data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1",
         className
