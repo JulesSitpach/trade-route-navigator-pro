@@ -1,4 +1,3 @@
-
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -11,6 +10,17 @@ const ShippingDetailsForm = ({ onChange }: { onChange: (data: any) => void }) =>
       <h2 className="text-xl font-semibold text-blue-900 mb-6">Shipping Details</h2>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="space-y-2">
+          <Label htmlFor="quantity">Quantity</Label>
+          <Input 
+            id="quantity" 
+            type="number" 
+            min="1"
+            placeholder="Enter quantity"
+            onChange={(e) => onChange({ quantity: e.target.value })}
+          />
+        </div>
+
         <div className="space-y-2">
           <Label htmlFor="transportMode">Transport Mode</Label>
           <Select onValueChange={(value) => onChange({ transportMode: value })}>
