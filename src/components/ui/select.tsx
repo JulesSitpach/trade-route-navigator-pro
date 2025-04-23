@@ -1,4 +1,3 @@
-
 import * as React from "react"
 import * as SelectPrimitive from "@radix-ui/react-select"
 import { Check, ChevronDown, ChevronUp } from "lucide-react"
@@ -15,24 +14,45 @@ const SelectTrigger = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Trigger>,
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger>
 >(({ className, children, ...props }, ref) => {
-  const [hasRealValue, setHasRealValue] = React.useState(false);
+  const triggerRef = React.useRef<HTMLButtonElement>(null);
+  const [hasValue, setHasValue] = React.useState(false);
   
   React.useEffect(() => {
-    // Check if there's a real selected value by looking at the children
-    const isPlaceholder = React.Children.toArray(children).some(
-      child => React.isValidElement(child) && child.type === SelectPrimitive.Value && !child.props.children
-    );
-    setHasRealValue(!!props.value && !isPlaceholder);
-  }, [props.value, children]);
+    if (props.value) {
+      setHasValue(true);
+    }
+  }, [props.value]);
+
+  React.useEffect(() => {
+    const checkContent = () => {
+      if (triggerRef.current) {
+        const valueSpan = triggerRef.current.querySelector('[data-radix-select-value]');
+        if (valueSpan) {
+          const hasRealContent = valueSpan.textContent && valueSpan.textContent.trim() !== '';
+          setHasValue(!!hasRealContent && props.value !== undefined);
+        }
+      }
+    };
+    
+    setTimeout(checkContent, 0);
+  }, [children, props.value]);
 
   return (
     <SelectPrimitive.Trigger
-      ref={ref}
+      ref={(node) => {
+        if (node) triggerRef.current = node;
+        if (typeof ref === 'function') ref(node);
+        else if (ref) ref.current = node;
+      }}
       className={cn(
         "flex h-10 w-full items-center justify-between rounded-md border border-input px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1",
-        hasRealValue ? "bg-[#e6f0ff]" : "bg-white",
+        hasValue ? "bg-[#e6f0ff]" : "bg-white",
         className
       )}
+      style={{
+        backgroundColor: hasValue ? "#e6f0ff" : "#ffffff"
+      }}
+      data-has-value={hasValue}
       {...props}
     >
       {children}
