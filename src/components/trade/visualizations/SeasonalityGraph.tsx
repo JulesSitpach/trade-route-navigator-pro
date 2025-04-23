@@ -34,97 +34,96 @@ const SeasonalityGraph = () => {
         Track how shipping costs, transit times, and risks fluctuate throughout the year
       </p>
       
-      <div className="relative">
-        <Card className="border-0 shadow-none">
-          <CardContent className="p-0">
-            <div className="h-[320px] w-full">
-              <ChartContainer config={chartConfig}>
-                <LineChart
-                  data={seasonalityData}
-                  margin={{
-                    top: 40,
-                    right: 40,
-                    left: 10,
-                    bottom: 60,
-                  }}
-                >
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis 
-                    dataKey="month"
-                    tick={{ fontSize: 12 }}
-                    tickLine={false}
-                    axisLine={false}
-                    padding={{ left: 10, right: 10 }}
-                  />
-                  <YAxis 
-                    yAxisId="left"
-                    label={{ 
-                      value: 'Freight Cost Index', 
-                      angle: -90, 
-                      position: 'insideLeft',
-                      style: { textAnchor: 'middle' },
-                      offset: 0
-                    }}
-                    tickLine={false}
-                    axisLine={false}
-                  />
-                  <YAxis 
-                    yAxisId="right"
-                    orientation="right"
-                    domain={[0, 100]}
-                    label={{ 
-                      value: 'Risk/Congestion (%)', 
-                      angle: 90, 
-                      position: 'insideRight',
-                      style: { textAnchor: 'middle' },
-                      offset: 0
-                    }}
-                    tickLine={false}
-                    axisLine={false}
-                  />
-                  <ChartTooltip
-                    content={<ChartTooltipContent />}
-                  />
-                  <ChartLegend 
-                    content={<ChartLegendContent />}
-                    verticalAlign="top"
-                    height={36}
-                  />
-                  <Line
-                    yAxisId="left"
-                    type="monotone"
-                    dataKey="freight"
-                    name="Freight"
-                    stroke={chartConfig.freight.color}
-                    strokeWidth={2}
-                    dot={{ fill: chartConfig.freight.color, r: 4 }}
-                    activeDot={{ r: 6 }}
-                  />
-                  <Line
-                    yAxisId="right"
-                    type="monotone"
-                    dataKey="congestion"
-                    name="Congestion"
-                    stroke={chartConfig.handling.color}
-                    strokeWidth={2}
-                    dot={{ fill: chartConfig.handling.color, r: 4 }}
-                  />
-                  <Line
-                    yAxisId="right"
-                    type="monotone"
-                    dataKey="risk"
-                    name="Risk"
-                    stroke={chartConfig.risk.color}
-                    strokeWidth={2}
-                    dot={{ fill: chartConfig.risk.color, r: 4 }}
-                  />
-                </LineChart>
-              </ChartContainer>
-            </div>
-          </CardContent>
-        </Card>
+      <div className="relative chart-container" style={{ paddingBottom: '40px', overflow: 'visible', marginBottom: '60px' }}>
+        <div className="seasonality-chart" style={{ height: '400px', minHeight: '350px', marginBottom: '30px' }}>
+          <ChartContainer config={chartConfig}>
+            <LineChart
+              data={seasonalityData}
+              margin={{
+                top: 20,
+                right: 40,
+                left: 10,
+                bottom: 80, // Increased bottom margin
+              }}
+            >
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis 
+                dataKey="month"
+                tick={{ fontSize: 12 }}
+                tickLine={false}
+                axisLine={false}
+                padding={{ left: 10, right: 10 }}
+              />
+              <YAxis 
+                yAxisId="left"
+                label={{ 
+                  value: 'Freight Cost Index', 
+                  angle: -90, 
+                  position: 'insideLeft',
+                  style: { textAnchor: 'middle' },
+                  offset: 0
+                }}
+                tickLine={false}
+                axisLine={false}
+                domain={[0, 250]} // Set explicit domain for freight scale
+                padding={{ top: 20, bottom: 20 }}
+              />
+              <YAxis 
+                yAxisId="right"
+                orientation="right"
+                domain={[0, 100]}
+                label={{ 
+                  value: 'Risk/Congestion (%)', 
+                  angle: 90, 
+                  position: 'insideRight',
+                  style: { textAnchor: 'middle' },
+                  offset: 0
+                }}
+                tickLine={false}
+                axisLine={false}
+                padding={{ top: 20, bottom: 20 }}
+              />
+              <ChartTooltip
+                content={<ChartTooltipContent />}
+              />
+              <ChartLegend 
+                content={<ChartLegendContent />}
+                verticalAlign="top"
+                height={36}
+              />
+              <Line
+                yAxisId="left"
+                type="monotone"
+                dataKey="freight"
+                name="Freight"
+                stroke={chartConfig.freight.color}
+                strokeWidth={2}
+                dot={{ fill: chartConfig.freight.color, r: 4 }}
+                activeDot={{ r: 6 }}
+              />
+              <Line
+                yAxisId="right"
+                type="monotone"
+                dataKey="congestion"
+                name="Congestion"
+                stroke={chartConfig.handling.color}
+                strokeWidth={2}
+                dot={{ fill: chartConfig.handling.color, r: 4 }}
+              />
+              <Line
+                yAxisId="right"
+                type="monotone"
+                dataKey="risk"
+                name="Risk"
+                stroke={chartConfig.risk.color}
+                strokeWidth={2}
+                dot={{ fill: chartConfig.risk.color, r: 4 }}
+              />
+            </LineChart>
+          </ChartContainer>
+        </div>
 
-        <div className="text-sm absolute bottom-10 left-0 right-0 bg-transparent z-10 px-4">
+        <div className="text-sm footer-container" style={{ position: 'relative', zIndex: 1, marginTop: '10px' }}>
           <p className="font-medium">Key Seasonal Factors:</p>
           <ul className="list-disc pl-5 pt-1 space-y-1">
             <li>Q4 shipping rates peak during holiday season (October-December)</li>
