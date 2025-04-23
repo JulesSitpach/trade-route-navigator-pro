@@ -14,27 +14,34 @@ const SelectValue = SelectPrimitive.Value
 const SelectTrigger = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Trigger>,
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger>
->(({ className, children, ...props }, ref) => (
-  <SelectPrimitive.Trigger
-    ref={ref}
-    className={cn(
-      "flex h-10 w-full items-center justify-between rounded-md border border-input px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1",
-      "bg-white", // Default white background
-      "[&>span[data-placeholder]]:text-muted-foreground", // Default placeholder text color
-      "[&:not(:has(span[data-placeholder]))]" + 
-      (props.value && props.value.toString().trim() !== "" 
-        ? " bg-blue-100" 
-        : ""), // Blue only when has a non-empty value
-      className
-    )}
-    {...props}
-  >
-    {children}
-    <SelectPrimitive.Icon asChild>
-      <ChevronDown className="h-4 w-4 opacity-50" />
-    </SelectPrimitive.Icon>
-  </SelectPrimitive.Trigger>
-))
+>(({ className, children, ...props }, ref) => {
+  // Create a ref to track if the select has a value
+  const [hasValue, setHasValue] = React.useState(false);
+  
+  // Update the hasValue state when the component mounts or value changes
+  React.useEffect(() => {
+    const value = props.value;
+    setHasValue(!!value && value.toString().trim() !== "");
+  }, [props.value]);
+
+  return (
+    <SelectPrimitive.Trigger
+      ref={ref}
+      className={cn(
+        "flex h-10 w-full items-center justify-between rounded-md border border-input px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1",
+        hasValue ? "bg-blue-100" : "bg-white", // Blue when has value, white otherwise
+        "[&>span[data-placeholder]]:text-muted-foreground", // Default placeholder text color
+        className
+      )}
+      {...props}
+    >
+      {children}
+      <SelectPrimitive.Icon asChild>
+        <ChevronDown className="h-4 w-4 opacity-50" />
+      </SelectPrimitive.Icon>
+    </SelectPrimitive.Trigger>
+  )
+})
 SelectTrigger.displayName = SelectPrimitive.Trigger.displayName
 
 const SelectScrollUpButton = React.forwardRef<
