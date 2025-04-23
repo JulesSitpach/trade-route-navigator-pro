@@ -1,3 +1,4 @@
+
 import { Card, CardContent } from "@/components/ui/card";
 import { 
   ChartContainer, 
@@ -33,23 +34,23 @@ const SeasonalityGraph = () => {
         Track how shipping costs, transit times, and risks fluctuate throughout the year
       </p>
       
-      <Card>
-        <CardContent className="p-4">
-          <div className="h-[300px] w-full">
+      <Card className="mb-8">
+        <CardContent className="p-0 pt-6">
+          <div className="h-[250px] w-full">
             <ChartContainer config={chartConfig}>
               <LineChart
                 data={seasonalityData}
                 margin={{
-                  top: 10,
+                  top: 25,
                   right: 40,
                   left: 10,
-                  bottom: 0,
+                  bottom: 25,
                 }}
               >
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis 
                   dataKey="month"
-                  tick={{ fontSize: 12, dy: -3 }}
+                  tick={{ fontSize: 12 }}
                   tickLine={false}
                   axisLine={false}
                   padding={{ left: 10, right: 10 }}
@@ -122,7 +123,7 @@ const SeasonalityGraph = () => {
         </CardContent>
       </Card>
 
-      <div className="text-sm mt-0">
+      <div className="text-sm mt-8">
         <p className="font-medium">Key Seasonal Factors:</p>
         <ul className="list-disc pl-5 pt-2 space-y-1">
           <li>Q4 shipping rates peak during holiday season (October-December)</li>
