@@ -3,6 +3,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
+import { cn } from '@/lib/utils';
 
 const ShippingDetailsForm = ({ onChange }: { onChange: (data: any) => void }) => {
   const [transportMode, setTransportMode] = useState('');
@@ -15,6 +16,20 @@ const ShippingDetailsForm = ({ onChange }: { onChange: (data: any) => void }) =>
   const [width, setWidth] = useState('');
   const [height, setHeight] = useState('');
   const [specialRequirements, setSpecialRequirements] = useState('');
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
+  const validateField = (field: string, value: string) => {
+    if (!value || value.trim() === '') {
+      setErrors(prev => ({ ...prev, [field]: 'This field is required' }));
+      return false;
+    }
+    setErrors(prev => {
+      const newErrors = { ...prev };
+      delete newErrors[field];
+      return newErrors;
+    });
+    return true;
+  };
 
   return (
     <div className="p-6">
@@ -22,7 +37,10 @@ const ShippingDetailsForm = ({ onChange }: { onChange: (data: any) => void }) =>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="space-y-2">
-          <Label htmlFor="quantity">Quantity</Label>
+          <Label htmlFor="quantity" className="flex items-center gap-1">
+            Quantity
+            <span className="text-red-500">*</span>
+          </Label>
           <Input 
             id="quantity" 
             type="number" 
@@ -30,22 +48,38 @@ const ShippingDetailsForm = ({ onChange }: { onChange: (data: any) => void }) =>
             value={quantity}
             placeholder="Enter quantity"
             onChange={(e) => {
+              validateField('quantity', e.target.value);
               setQuantity(e.target.value);
               onChange({ quantity: e.target.value });
             }}
+            className={cn(
+              errors.quantity && "border-red-500 focus-visible:ring-red-500"
+            )}
           />
+          {errors.quantity && (
+            <p className="text-sm text-red-500 mt-1">{errors.quantity}</p>
+          )}
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="transportMode">Transport Mode</Label>
+          <Label htmlFor="transportMode" className="flex items-center gap-1">
+            Transport Mode
+            <span className="text-red-500">*</span>
+          </Label>
           <Select 
             value={transportMode} 
             onValueChange={(value) => {
+              validateField('transportMode', value);
               setTransportMode(value);
               onChange({ transportMode: value });
             }}
           >
-            <SelectTrigger id="transportMode">
+            <SelectTrigger 
+              id="transportMode"
+              className={cn(
+                errors.transportMode && "border-red-500 focus-visible:ring-red-500"
+              )}
+            >
               <SelectValue placeholder="Select Transport Mode" />
             </SelectTrigger>
             <SelectContent>
@@ -56,6 +90,9 @@ const ShippingDetailsForm = ({ onChange }: { onChange: (data: any) => void }) =>
               <SelectItem value="multimodal">Multimodal</SelectItem>
             </SelectContent>
           </Select>
+          {errors.transportMode && (
+            <p className="text-sm text-red-500 mt-1">{errors.transportMode}</p>
+          )}
         </div>
 
         <div className="space-y-2">

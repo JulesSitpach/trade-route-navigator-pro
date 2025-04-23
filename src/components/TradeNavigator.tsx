@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { useToast } from '@/hooks/use-toast';
 import ProductDetailsForm from './ProductDetailsForm';
 import ShippingDetailsForm from './ShippingDetailsForm';
 import TradeAnalysis from './TradeAnalysis';
@@ -11,14 +12,40 @@ const TradeNavigator = () => {
     shipping: {}
   });
   
+  const { toast } = useToast();
   const [showAnalysis, setShowAnalysis] = useState(false);
   const analysisRef = useRef<HTMLDivElement>(null);
 
+  const validateMandatoryFields = () => {
+    const requiredProductFields = ['productDescription', 'originCountry', 'destinationCountry', 'productValue'];
+    const requiredShippingFields = ['quantity', 'transportMode'];
+    
+    const missingProductFields = requiredProductFields.filter(
+      field => !formData.product[field as keyof typeof formData.product]
+    );
+    
+    const missingShippingFields = requiredShippingFields.filter(
+      field => !formData.shipping[field as keyof typeof formData.shipping]
+    );
+
+    if (missingProductFields.length > 0 || missingShippingFields.length > 0) {
+      toast({
+        variant: "destructive",
+        title: "Missing Required Information",
+        description: "Please fill in all required fields marked with *",
+      });
+      return false;
+    }
+    return true;
+  };
+
   const handleCalculate = () => {
-    setShowAnalysis(true);
-    setTimeout(() => {
-      analysisRef.current?.scrollIntoView({ behavior: 'smooth' });
-    }, 100);
+    if (validateMandatoryFields()) {
+      setShowAnalysis(true);
+      setTimeout(() => {
+        analysisRef.current?.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    }
   };
 
   return (

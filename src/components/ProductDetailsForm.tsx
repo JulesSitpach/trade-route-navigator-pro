@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -6,6 +5,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { countryTariffData } from '@/data/countryTariffData';
 import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
 const ProductDetailsForm = ({ onChange }: { onChange: (data: any) => void }) => {
   const [hsCode, setHsCode] = useState('');
@@ -32,19 +32,46 @@ const ProductDetailsForm = ({ onChange }: { onChange: (data: any) => void }) => 
     onChange({ hsCode: suggestedCode });
   };
 
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
+  const validateField = (field: string, value: string) => {
+    if (!value || value.trim() === '') {
+      setErrors(prev => ({ ...prev, [field]: 'This field is required' }));
+      return false;
+    }
+    setErrors(prev => {
+      const newErrors = { ...prev };
+      delete newErrors[field];
+      return newErrors;
+    });
+    return true;
+  };
+
   return (
     <div className="p-6">
       <h2 className="text-xl font-semibold text-gray-800 mb-6">Product Details</h2>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="space-y-2">
-          <Label htmlFor="productDescription">Product Description</Label>
+          <Label htmlFor="productDescription" className="flex items-center gap-1">
+            Product Description
+            <span className="text-red-500">*</span>
+          </Label>
           <Input 
             id="productDescription" 
             placeholder="Enter product description"
-            onChange={(e) => onChange({ productDescription: e.target.value })}
-            className="bg-white"
+            onChange={(e) => {
+              validateField('productDescription', e.target.value);
+              onChange({ productDescription: e.target.value });
+            }}
+            className={cn(
+              "bg-white",
+              errors.productDescription && "border-red-500 focus-visible:ring-red-500"
+            )}
           />
+          {errors.productDescription && (
+            <p className="text-sm text-red-500 mt-1">{errors.productDescription}</p>
+          )}
         </div>
 
         <div className="space-y-2">
@@ -71,15 +98,24 @@ const ProductDetailsForm = ({ onChange }: { onChange: (data: any) => void }) => 
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="originCountry">Origin Country</Label>
+          <Label htmlFor="originCountry" className="flex items-center gap-1">
+            Origin Country
+            <span className="text-red-500">*</span>
+          </Label>
           <Select 
             value={originCountry} 
             onValueChange={(value) => {
+              validateField('originCountry', value);
               setOriginCountry(value);
               onChange({ originCountry: value });
             }}
           >
-            <SelectTrigger id="originCountry">
+            <SelectTrigger 
+              id="originCountry"
+              className={cn(
+                errors.originCountry && "border-red-500 focus-visible:ring-red-500"
+              )}
+            >
               <SelectValue placeholder="Select Origin Country" />
             </SelectTrigger>
             <SelectContent>
@@ -90,18 +126,30 @@ const ProductDetailsForm = ({ onChange }: { onChange: (data: any) => void }) => 
               ))}
             </SelectContent>
           </Select>
+          {errors.originCountry && (
+            <p className="text-sm text-red-500 mt-1">{errors.originCountry}</p>
+          )}
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="destinationCountry">Destination Country</Label>
+          <Label htmlFor="destinationCountry" className="flex items-center gap-1">
+            Destination Country
+            <span className="text-red-500">*</span>
+          </Label>
           <Select 
             value={destinationCountry} 
             onValueChange={(value) => {
+              validateField('destinationCountry', value);
               setDestinationCountry(value);
               onChange({ destinationCountry: value });
             }}
           >
-            <SelectTrigger id="destinationCountry">
+            <SelectTrigger 
+              id="destinationCountry"
+              className={cn(
+                errors.destinationCountry && "border-red-500 focus-visible:ring-red-500"
+              )}
+            >
               <SelectValue placeholder="Select Destination Country" />
             </SelectTrigger>
             <SelectContent>
@@ -112,17 +160,32 @@ const ProductDetailsForm = ({ onChange }: { onChange: (data: any) => void }) => 
               ))}
             </SelectContent>
           </Select>
+          {errors.destinationCountry && (
+            <p className="text-sm text-red-500 mt-1">{errors.destinationCountry}</p>
+          )}
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="productValue">Product Value (USD)</Label>
+          <Label htmlFor="productValue" className="flex items-center gap-1">
+            Product Value (USD)
+            <span className="text-red-500">*</span>
+          </Label>
           <Input 
             id="productValue" 
             type="number" 
             placeholder="Enter product value"
-            onChange={(e) => onChange({ productValue: e.target.value })}
-            className="bg-white"
+            onChange={(e) => {
+              validateField('productValue', e.target.value);
+              onChange({ productValue: e.target.value });
+            }}
+            className={cn(
+              "bg-white",
+              errors.productValue && "border-red-500 focus-visible:ring-red-500"
+            )}
           />
+          {errors.productValue && (
+            <p className="text-sm text-red-500 mt-1">{errors.productValue}</p>
+          )}
         </div>
 
         <div className="space-y-2">
