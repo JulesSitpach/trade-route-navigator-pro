@@ -6,7 +6,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Button } from '@/components/ui/button';
 import { countryTariffData } from '@/data/countryTariffData';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
-import { Info } from 'lucide-react';  // Changed from InfoCircle to Info
+import { Info } from 'lucide-react';
 
 const ProductDetailsForm = ({ onChange }: { onChange: (data: any) => void }) => {
   return (
@@ -39,17 +39,17 @@ const ProductDetailsForm = ({ onChange }: { onChange: (data: any) => void }) => 
         <div className="space-y-2">
           <Label htmlFor="originCountry">Origin Country</Label>
           <Select onValueChange={(value) => onChange({ originCountry: value })}>
-            <SelectTrigger id="originCountry">
+            <SelectTrigger id="originCountry" className="bg-white">
               <SelectValue placeholder="Select Origin Country" />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="bg-white">
               {countryTariffData.map((country) => (
                 <SelectItem key={country.code} value={country.code}>
                   <TooltipProvider>
                     <Tooltip>
                       <TooltipTrigger className="flex items-center">
                         {country.name}
-                        <Info className="ml-2 h-4 w-4" />  {/* Changed from InfoCircle to Info */}
+                        <Info className="ml-2 h-4 w-4" />
                       </TooltipTrigger>
                       <TooltipContent>
                         <div className="space-y-2">
@@ -70,17 +70,17 @@ const ProductDetailsForm = ({ onChange }: { onChange: (data: any) => void }) => 
         <div className="space-y-2">
           <Label htmlFor="destinationCountry">Destination Country</Label>
           <Select onValueChange={(value) => onChange({ destinationCountry: value })}>
-            <SelectTrigger id="destinationCountry">
+            <SelectTrigger id="destinationCountry" className="bg-white">
               <SelectValue placeholder="Select Destination Country" />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="bg-white">
               {countryTariffData.map((country) => (
                 <SelectItem key={country.code} value={country.code}>
                   <TooltipProvider>
                     <Tooltip>
                       <TooltipTrigger className="flex items-center">
                         {country.name}
-                        <Info className="ml-2 h-4 w-4" />  {/* Changed from InfoCircle to Info */}
+                        <Info className="ml-2 h-4 w-4" />
                       </TooltipTrigger>
                       <TooltipContent>
                         <div className="space-y-2">
@@ -105,16 +105,17 @@ const ProductDetailsForm = ({ onChange }: { onChange: (data: any) => void }) => 
             type="number" 
             placeholder="Enter product value"
             onChange={(e) => onChange({ productValue: e.target.value })}
+            className="bg-white"
           />
         </div>
 
         <div className="space-y-2">
           <Label htmlFor="productCategory">Product Category</Label>
           <Select onValueChange={(value) => onChange({ productCategory: value })}>
-            <SelectTrigger id="productCategory">
+            <SelectTrigger id="productCategory" className="bg-white">
               <SelectValue placeholder="Select Product Category" />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="bg-white">
               <SelectItem value="agricultural">Agricultural</SelectItem>
               <SelectItem value="industrial">Industrial</SelectItem>
               <SelectItem value="textiles">Textiles</SelectItem>
@@ -129,4 +130,3 @@ const ProductDetailsForm = ({ onChange }: { onChange: (data: any) => void }) => 
 };
 
 export default ProductDetailsForm;
-

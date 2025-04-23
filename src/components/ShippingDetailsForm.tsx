@@ -1,3 +1,4 @@
+
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -18,16 +19,17 @@ const ShippingDetailsForm = ({ onChange }: { onChange: (data: any) => void }) =>
             min="1"
             placeholder="Enter quantity"
             onChange={(e) => onChange({ quantity: e.target.value })}
+            className="bg-white"
           />
         </div>
 
         <div className="space-y-2">
           <Label htmlFor="transportMode">Transport Mode</Label>
           <Select onValueChange={(value) => onChange({ transportMode: value })}>
-            <SelectTrigger id="transportMode">
+            <SelectTrigger id="transportMode" className="bg-white">
               <SelectValue placeholder="Select Transport Mode" />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="bg-white">
               <SelectItem value="ocean">Ocean</SelectItem>
               <SelectItem value="air">Air</SelectItem>
               <SelectItem value="road">Road</SelectItem>
@@ -40,10 +42,10 @@ const ShippingDetailsForm = ({ onChange }: { onChange: (data: any) => void }) =>
         <div className="space-y-2">
           <Label htmlFor="shipmentType">Shipment Type</Label>
           <Select onValueChange={(value) => onChange({ shipmentType: value })}>
-            <SelectTrigger id="shipmentType">
+            <SelectTrigger id="shipmentType" className="bg-white">
               <SelectValue placeholder="Select Shipment Type" />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="bg-white">
               <SelectItem value="fcl">Full Container Load (FCL)</SelectItem>
               <SelectItem value="lcl">Less than Container Load (LCL)</SelectItem>
               <SelectItem value="bulk">Bulk Cargo</SelectItem>
@@ -60,25 +62,38 @@ const ShippingDetailsForm = ({ onChange }: { onChange: (data: any) => void }) =>
             type="number" 
             placeholder="Enter weight in kg"
             onChange={(e) => onChange({ weight: e.target.value })}
+            className="bg-white"
           />
         </div>
 
         <div className="space-y-2">
           <Label>Dimensions (cm)</Label>
           <div className="grid grid-cols-3 gap-4">
-            <Input placeholder="Length" onChange={(e) => onChange({ length: e.target.value })} />
-            <Input placeholder="Width" onChange={(e) => onChange({ width: e.target.value })} />
-            <Input placeholder="Height" onChange={(e) => onChange({ height: e.target.value })} />
+            <Input 
+              placeholder="Length" 
+              onChange={(e) => onChange({ length: e.target.value })}
+              className="bg-white" 
+            />
+            <Input 
+              placeholder="Width" 
+              onChange={(e) => onChange({ width: e.target.value })}
+              className="bg-white" 
+            />
+            <Input 
+              placeholder="Height" 
+              onChange={(e) => onChange({ height: e.target.value })}
+              className="bg-white" 
+            />
           </div>
         </div>
 
         <div className="space-y-2">
           <Label htmlFor="packageType">Packaging Type</Label>
           <Select onValueChange={(value) => onChange({ packageType: value })}>
-            <SelectTrigger id="packageType">
+            <SelectTrigger id="packageType" className="bg-white">
               <SelectValue placeholder="Select Package Type" />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="bg-white">
               <SelectItem value="boxes">Boxes</SelectItem>
               <SelectItem value="pallets">Pallets</SelectItem>
               <SelectItem value="drums">Drums</SelectItem>
@@ -91,10 +106,10 @@ const ShippingDetailsForm = ({ onChange }: { onChange: (data: any) => void }) =>
         <div className="space-y-2">
           <Label htmlFor="dangerousGoods">Dangerous Goods</Label>
           <Select onValueChange={(value) => onChange({ dangerousGoods: value })}>
-            <SelectTrigger id="dangerousGoods">
+            <SelectTrigger id="dangerousGoods" className="bg-white">
               <SelectValue placeholder="Select Dangerous Goods Status" />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="bg-white">
               <SelectItem value="no">No</SelectItem>
               <SelectItem value="yes">Yes</SelectItem>
             </SelectContent>
@@ -106,7 +121,7 @@ const ShippingDetailsForm = ({ onChange }: { onChange: (data: any) => void }) =>
           <Textarea 
             id="specialRequirements" 
             placeholder="Enter any special shipping requirements or notes"
-            className="min-h-[100px]"
+            className="min-h-[100px] bg-white"
             onChange={(e) => onChange({ specialRequirements: e.target.value })}
           />
         </div>
