@@ -26,7 +26,7 @@ const TradeNavigator = () => {
             Global Trade Strategy Navigator
           </h1>
           <p className="text-lg text-center text-blue-100">
-            Discover smarter trade routes and opportunities for your small business
+            Diversify your trade routes, strengthen your business future
           </p>
         </div>
       </header>
