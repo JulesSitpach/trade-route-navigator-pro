@@ -1,3 +1,4 @@
+
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -5,7 +6,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Button } from '@/components/ui/button';
 import { countryTariffData } from '@/data/countryTariffData';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
-import { InfoCircle } from 'lucide-react';
+import { Info } from 'lucide-react';  // Changed from InfoCircle to Info
 
 const ProductDetailsForm = ({ onChange }: { onChange: (data: any) => void }) => {
   return (
@@ -48,7 +49,7 @@ const ProductDetailsForm = ({ onChange }: { onChange: (data: any) => void }) => 
                     <Tooltip>
                       <TooltipTrigger className="flex items-center">
                         {country.name}
-                        <InfoCircle className="ml-2 h-4 w-4" />
+                        <Info className="ml-2 h-4 w-4" />  {/* Changed from InfoCircle to Info */}
                       </TooltipTrigger>
                       <TooltipContent>
                         <div className="space-y-2">
@@ -79,7 +80,7 @@ const ProductDetailsForm = ({ onChange }: { onChange: (data: any) => void }) => 
                     <Tooltip>
                       <TooltipTrigger className="flex items-center">
                         {country.name}
-                        <InfoCircle className="ml-2 h-4 w-4" />
+                        <Info className="ml-2 h-4 w-4" />  {/* Changed from InfoCircle to Info */}
                       </TooltipTrigger>
                       <TooltipContent>
                         <div className="space-y-2">
@@ -128,3 +129,4 @@ const ProductDetailsForm = ({ onChange }: { onChange: (data: any) => void }) => 
 };
 
 export default ProductDetailsForm;
+
