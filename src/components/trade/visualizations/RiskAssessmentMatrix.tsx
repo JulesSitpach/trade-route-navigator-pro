@@ -58,6 +58,7 @@ const RiskAssessmentMatrix = () => {
       <Card>
         <CardContent className="p-6">
           <ChartContainer
+            config={chartConfig}
             title="Route Risk Assessment"
             subtitle="Analyze shipping routes by cost, risk, and reliability"
           >
@@ -140,4 +141,3 @@ const RiskAssessmentMatrix = () => {
 };
 
 export default RiskAssessmentMatrix;
-
