@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { 
@@ -79,15 +78,6 @@ const RouteComparisonTimeline = () => {
           </div>
         </CardContent>
       </Card>
-
-      <div className="text-sm">
-        <p className="font-medium mb-2">Key Insights:</p>
-        <ul className="list-disc pl-5 space-y-1 text-muted-foreground">
-          <li>Air shipping reduces transit time by 85% but increases costs by 130%</li>
-          <li>Panama Canal route offers the best balance of cost and speed</li>
-          <li>USMCA triangular trade route requires additional processing time but reduces tariffs</li>
-        </ul>
-      </div>
     </div>
   );
 };
