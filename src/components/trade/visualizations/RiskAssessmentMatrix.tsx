@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { 
-  ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Cell, Tooltip, ResponsiveContainer, ZAxis 
+  ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Cell, Tooltip, ResponsiveContainer, ZAxis, Legend 
 } from "recharts";
 import { useTariffData } from "./tariff/useTariffData";
 import { createAxisTitle, getTariffColor } from "@/utils/chartUtils";
