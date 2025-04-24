@@ -9,7 +9,6 @@ import { chartCommonConfig } from "@/utils/chartUtils";
 import { useTariffData } from "./tariff/useTariffData";
 import { createAxisTitle } from "@/utils/chartUtils";
 import { useChartResponsiveStyles } from "@/hooks/use-chart-responsive-styles";
-import { TariffTooltip } from './tariff/TariffTooltip';
 import { tooltipStyles, cursorStyles } from "@/components/ui/chart/theme/commonStyles";
 import { chartConfig } from "./chartConfig";
 import { lightTheme } from "@/components/ui/chart/chartTheme";
@@ -17,6 +16,7 @@ import { formatCurrency } from "@/components/ui/chart/chartUtils";
 import { calculateBubbleSize } from "@/components/ui/chart/theme/commonStyles";
 import { ChartContainer } from "@/components/ui/chart/ChartContainer";
 import { ChartStyleEnforcer } from "@/components/ui/chart/ChartStyleEnforcer";
+import { RiskMatrixTooltip } from './risk/RiskMatrixTooltip';
 
 const RiskAssessmentMatrix = () => {
   const riskData = [
@@ -103,7 +103,7 @@ const RiskAssessmentMatrix = () => {
                     name="Reliability"
                   />
                   <Tooltip 
-                    content={<TariffTooltip />} 
+                    content={<RiskMatrixTooltip />} 
                     cursor={cursorStyles.scatter}
                     wrapperStyle={{
                       ...tooltipStyles.wrapper,
@@ -147,4 +147,3 @@ const RiskAssessmentMatrix = () => {
 };
 
 export default RiskAssessmentMatrix;
-
