@@ -4,12 +4,11 @@ import { Card, CardContent } from "@/components/ui/card";
 import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Cell, Tooltip, ResponsiveContainer, ZAxis } from "recharts";
 import { useTariffData } from "./tariff/useTariffData";
 import TariffInsights from "./tariff/TariffInsights";
-import { createAxisTitle, getChartMargins } from "@/utils/chartUtils";
+import { createAxisTitle, getChartMargins, getTariffColor } from "@/utils/chartUtils";
 import { useChartResponsiveStyles } from "@/hooks/use-chart-responsive-styles";
 import { TariffTooltip } from './tariff/TariffTooltip';
 import { TariffAxisTick } from './tariff/TariffAxisTick';
 import TariffLegend from './tariff/TariffLegend';
-import { getTariffColor } from "@/utils/chartUtils";
 
 const TariffHeatmap = () => {
   const { tariffData } = useTariffData();
