@@ -56,9 +56,10 @@ export const ChartContainer = React.forwardRef<
     })
   }
 
+  // Convert aspectRatio to string to fix the TypeScript error
   const aspectRatioStyle = typeof aspectRatio === 'number' 
-    ? aspectRatio 
-    : aspectRatio.split('/').reduce((a, b) => parseFloat(a) / parseFloat(b), 0);
+    ? String(aspectRatio) 
+    : aspectRatio;
 
   return (
     <ChartContext.Provider value={{ theme, updateTheme, config }}>
@@ -94,7 +95,7 @@ export const ChartContainer = React.forwardRef<
           style={{ 
             minHeight: `${minHeight}px`,
             maxHeight: `${maxHeight}px`,
-            aspectRatio: String(aspectRatioStyle)
+            aspectRatio: aspectRatioStyle
           }}
         >
           <RechartsPrimitive.ResponsiveContainer
