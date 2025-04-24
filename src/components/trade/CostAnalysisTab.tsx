@@ -18,10 +18,27 @@ const RequirementItem = ({ label, status }: RequirementItemProps) => (
 );
 
 const CostAnalysisTab = () => {
-  // These will be populated from actual data in the future
-  const costItems: {label: string; value: string}[] = [];
-  const importRequirements: {label: string; status: 'required' | 'warning' | 'not-required'}[] = [];
-  const recommendedStrategy = '';
+  // Sample data - this will be replaced with real data in the future
+  const costItems = [
+    { label: "Product Value", value: "$10,000.00" },
+    { label: "Import Duty (8.5%)", value: "$850.00" },
+    { label: "Freight Cost", value: "$1,200.00" },
+    { label: "Insurance (1.2%)", value: "$120.00" },
+    { label: "Documentation Fees", value: "$75.00" },
+    { label: "Customs Clearance", value: "$150.00" },
+    { label: "Inland Transportation", value: "$300.00" },
+    { label: "Warehousing", value: "$200.00" },
+    { label: "Other Taxes and Fees", value: "$180.00" }
+  ];
+  
+  const importRequirements = [
+    { label: "Certificate of Origin", status: 'required' as const },
+    { label: "Import License", status: 'warning' as const },
+    { label: "Safety Certification", status: 'required' as const },
+    { label: "Phytosanitary Certificate", status: 'not-required' as const }
+  ];
+  
+  const recommendedStrategy = "Based on your product and destinations, we recommend ocean freight via Panama with consolidated shipping to reduce costs by approximately 18%.";
 
   return (
     <>
@@ -57,7 +74,7 @@ const CostAnalysisTab = () => {
           <div className="border-t-2 border-gray-200 pt-4 mt-6">
             <CostItem 
               label="Total Landed Cost" 
-              value="Pending" 
+              value="$13,075.00" 
               className="text-lg font-bold"
             />
           </div>
