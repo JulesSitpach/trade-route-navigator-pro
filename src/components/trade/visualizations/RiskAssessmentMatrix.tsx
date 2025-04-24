@@ -15,6 +15,7 @@ import { chartConfig } from "./chartConfig";
 import { lightTheme } from "@/components/ui/chart/chartTheme";
 import { formatCurrency } from "@/components/ui/chart/chartUtils";
 import { calculateBubbleSize } from "@/components/ui/chart/theme/commonStyles";
+import { ChartContainer } from "@/components/ui/chart/ChartContainer";
 
 const RiskAssessmentMatrix = () => {
   const riskData = [
