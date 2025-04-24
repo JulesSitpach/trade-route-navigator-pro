@@ -19,7 +19,7 @@ export const ChartLegendContent = React.forwardRef<
     { className, hideIcon = false, payload, verticalAlign = "bottom", nameKey },
     ref
   ) => {
-    const { config } = useChart()
+    const { config, theme } = useChart()
 
     if (!payload?.length) {
       return null
@@ -33,6 +33,10 @@ export const ChartLegendContent = React.forwardRef<
           verticalAlign === "top" ? "pb-3" : "pt-3",
           className
         )}
+        style={{
+          fontSize: theme.typography.sizes.legend,
+          fontFamily: theme.typography.fontFamily,
+        }}
       >
         {payload.map((item) => {
           const key = `${nameKey || item.dataKey || "value"}`
@@ -42,7 +46,8 @@ export const ChartLegendContent = React.forwardRef<
             <div
               key={item.value}
               className={cn(
-                "flex items-center gap-1.5 [&>svg]:h-3 [&>svg]:w-3 [&>svg]:text-muted-foreground"
+                "flex items-center gap-1.5",
+                "[&>svg]:h-3 [&>svg]:w-3 [&>svg]:text-muted-foreground"
               )}
             >
               {itemConfig?.icon && !hideIcon ? (
@@ -51,11 +56,13 @@ export const ChartLegendContent = React.forwardRef<
                 <div
                   className="h-2 w-2 shrink-0 rounded-[2px]"
                   style={{
-                    backgroundColor: item.color,
+                    backgroundColor: item.color || theme.colors.primary[0],
                   }}
                 />
               )}
-              {itemConfig?.label}
+              <span className="text-muted-foreground">
+                {itemConfig?.label || item.value}
+              </span>
             </div>
           )
         })}

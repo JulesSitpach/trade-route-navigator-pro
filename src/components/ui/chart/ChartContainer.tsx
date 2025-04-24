@@ -18,14 +18,14 @@ export const ChartContainer = React.forwardRef<
 >(({ id, className, children, config, ...props }, ref) => {
   const uniqueId = React.useId()
   const chartId = `chart-${id || uniqueId.replace(/:/g, "")}`
-  const [theme, setTheme] = React.useState(chartTheme);
+  const [theme, setTheme] = React.useState(chartTheme)
   
   const updateTheme = (newTheme: Partial<typeof chartTheme>) => {
     setTheme({
       ...theme,
       ...newTheme,
-    });
-  };
+    })
+  }
 
   return (
     <ChartContext.Provider value={{ theme, updateTheme, config }}>
@@ -33,9 +33,25 @@ export const ChartContainer = React.forwardRef<
         data-chart={chartId}
         ref={ref}
         className={cn(
-          "flex aspect-video justify-center text-xs [&_.recharts-cartesian-axis-tick_text]:fill-muted-foreground [&_.recharts-cartesian-grid_line[stroke='#ccc']]:stroke-border/50 [&_.recharts-curve.recharts-tooltip-cursor]:stroke-border [&_.recharts-dot[stroke='#fff']]:stroke-transparent [&_.recharts-layer]:outline-none [&_.recharts-polar-grid_[stroke='#ccc']]:stroke-border [&_.recharts-radial-bar-background-sector]:fill-muted [&_.recharts-rectangle.recharts-tooltip-cursor]:fill-muted [&_.recharts-reference-line_[stroke='#ccc']]:stroke-border [&_.recharts-sector[stroke='#fff']]:stroke-transparent [&_.recharts-sector]:outline-none [&_.recharts-surface]:outline-none",
+          "relative flex aspect-video justify-center",
+          "text-[length:var(--chart-text-size,0.75rem)]",
+          "[&_.recharts-cartesian-axis-tick_text]:fill-muted-foreground",
+          "[&_.recharts-cartesian-grid_line]:stroke-border/50",
+          "[&_.recharts-curve.recharts-tooltip-cursor]:stroke-border",
+          "[&_.recharts-dot]:stroke-background",
+          "[&_.recharts-layer]:outline-none",
+          "[&_.recharts-polar-grid]:stroke-border",
+          "[&_.recharts-radar-grid]:stroke-border",
+          "[&_.recharts-rectangle.recharts-tooltip-cursor]:fill-muted/50",
+          "[&_.recharts-reference-line]:stroke-border",
+          "[&_.recharts-sector]:outline-none",
+          "[&_.recharts-surface]:outline-none",
           className
         )}
+        style={{
+          '--chart-font-family': theme.typography.fontFamily,
+          '--chart-text-size': theme.typography.sizes.axis,
+        } as React.CSSProperties}
         {...props}
       >
         <ChartStyle id={chartId} config={config} />
@@ -46,4 +62,4 @@ export const ChartContainer = React.forwardRef<
     </ChartContext.Provider>
   )
 })
-ChartContainer.displayName = "Chart"
+ChartContainer.displayName = "ChartContainer"
