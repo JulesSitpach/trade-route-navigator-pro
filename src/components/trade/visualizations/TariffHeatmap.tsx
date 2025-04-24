@@ -54,6 +54,19 @@ const CustomXAxisTick = ({ x, y, payload }: any) => (
   </g>
 );
 
+// Define tariff color constants
+const TARIFF_COLORS = {
+  low: "#10b981",    // Green color for low tariffs
+  medium: "#f59e0b", // Amber color for medium tariffs
+  high: "#ef4444"    // Red color for high tariffs
+};
+
+const getTariffColor = (tariffRate: number): string => {
+  if (tariffRate <= 5) return TARIFF_COLORS.low;
+  if (tariffRate <= 15) return TARIFF_COLORS.medium;
+  return TARIFF_COLORS.high;
+};
+
 const TariffHeatmap = () => {
   const { tariffData } = useTariffData();
   const margins = getChartMargins('scatter');
@@ -111,9 +124,7 @@ const TariffHeatmap = () => {
                   {tariffData.map((entry, index) => (
                     <Cell
                       key={`cell-${index}`}
-                      fill={entry.tariffRate <= 5 ? chartConfig.tariff.low.color : 
-                            entry.tariffRate <= 15 ? chartConfig.tariff.medium.color : 
-                            chartConfig.tariff.high.color}
+                      fill={getTariffColor(entry.tariffRate)}
                       stroke="currentColor"
                       strokeWidth={1}
                       r={entry.volume / Math.max(...volumeValues) * 20 + 5}
@@ -127,9 +138,9 @@ const TariffHeatmap = () => {
           <ChartLegend>
             <ChartLegendContent
               payload={[
-                { value: 'Low Tariff (0-5%)', color: chartConfig.tariff.low.color },
-                { value: 'Medium Tariff (6-15%)', color: chartConfig.tariff.medium.color },
-                { value: 'High Tariff (>15%)', color: chartConfig.tariff.high.color }
+                { value: 'Low Tariff (0-5%)', color: TARIFF_COLORS.low },
+                { value: 'Medium Tariff (6-15%)', color: TARIFF_COLORS.medium },
+                { value: 'High Tariff (>15%)', color: TARIFF_COLORS.high }
               ]}
             />
           </ChartLegend>
