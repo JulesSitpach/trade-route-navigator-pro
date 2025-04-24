@@ -58,23 +58,7 @@ const CostBreakdownChart = () => {
                 layout="horizontal"
                 wrapperStyle={{ paddingBottom: "20px" }}
               />
-              <ChartTooltip 
-                content={({ payload }) => {
-                  if (payload && payload[0]) {
-                    const data = payload[0].payload;
-                    return (
-                      <ChartTooltipContent>
-                        <div className="flex flex-col gap-2">
-                          <span>{data.label}</span>
-                          <span>${data.value.toLocaleString()}</span>
-                          <span>{data.percentage}% of total</span>
-                        </div>
-                      </ChartTooltipContent>
-                    );
-                  }
-                  return null;
-                }}
-              />
+              <ChartTooltip content={<ChartTooltipContent />} />
               <Pie
                 data={costDataWithPercentage}
                 cx="50%"
