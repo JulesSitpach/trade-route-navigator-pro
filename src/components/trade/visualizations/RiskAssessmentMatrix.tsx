@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { 
@@ -16,6 +15,7 @@ import { formatCurrency } from "@/components/ui/chart/chartUtils";
 import { calculateBubbleSize } from "@/components/ui/chart/theme/commonStyles";
 import { ChartContainer } from "@/components/ui/chart/ChartContainer";
 import { StyleDebugger } from '@/components/debug/StyleDebugger';
+import { ChartStyleEnforcer } from "@/components/ui/chart/ChartStyleEnforcer";
 
 const RiskAssessmentMatrix = () => {
   const riskData = [
@@ -44,99 +44,101 @@ const RiskAssessmentMatrix = () => {
 
   return (
     <div className="space-y-6">
-      <div className="space-y-2">
-        <h3 className="text-lg font-semibold">Risk Assessment Matrix</h3>
-        <p className="text-sm text-muted-foreground">
-          Compare routes based on cost vs. risk factors to find your optimal balance
-        </p>
-      </div>
-      
-      <Card>
-        <CardContent className="p-6">
-          <ChartContainer
-            config={chartConfig}
-            title="Route Risk Assessment"
-            subtitle="Analyze shipping routes by cost, risk, and reliability"
-          >
-            <ResponsiveContainer width="100%" height="100%">
-              <ScatterChart 
-                margin={chartCommonConfig.margins.default}
-              >
-                <CartesianGrid 
-                  strokeDasharray={chartCommonConfig.grid.strokeDasharray} 
-                  stroke={chartCommonConfig.grid.stroke}
-                  opacity={0.15}
-                />
-                <XAxis 
-                  type="number"
-                  dataKey="x"
-                  name="Cost"
-                  domain={[2000, 6000]}
-                  tickCount={5}
-                  tickFormatter={(value) => formatCurrency(value)}
-                  tick={{
-                    fontSize: 12,
-                    fill: lightTheme.colors.text,
-                  }}
-                  axisLine={chartCommonConfig.axis.line}
-                  tickLine={false}
-                  label={createAxisTitle('Total Route Cost', 'x', { offset: 40 })}
-                />
-                <YAxis
-                  type="number"
-                  dataKey="y"
-                  name="Risk Score"
-                  domain={[0, 10]}
-                  tickCount={6}
-                  tick={{
-                    fontSize: 12,
-                    fill: lightTheme.colors.text,
-                  }}
-                  axisLine={chartCommonConfig.axis.line}
-                  tickLine={false}
-                  label={createAxisTitle('Risk Level (0-10)', 'y', { offset: 35 })}
-                />
-                <ZAxis
-                  type="number"
-                  dataKey="z"
-                  range={[60, 200]}
-                  name="Reliability"
-                />
-                <Tooltip 
-                  content={<TariffTooltip />} 
-                  cursor={cursorStyles.scatter}
-                  wrapperStyle={tooltipStyles.wrapper}
-                  contentStyle={tooltipStyles.contentStyle}
-                />
-                <Legend 
-                  layout="horizontal"
-                  verticalAlign="top"
-                  align="center"
-                  wrapperStyle={{
-                    paddingBottom: '20px',
-                    display: 'flex',
-                    justifyContent: 'center'
-                  }}
-                />
-                <Scatter data={riskData} fill={lightTheme.colors.primary}>
-                  {riskData.map((entry, index) => {
-                    const size = calculateBubbleSize(entry.z, minZ, maxZ);
-                    return (
-                      <Cell
-                        key={`cell-${index}`}
-                        fill={getRiskColor(entry.riskLevel)}
-                        stroke={getRiskColor(entry.riskLevel)}
-                        strokeWidth={2}
-                        r={size}
-                      />
-                    );
-                  })}
-                </Scatter>
-              </ScatterChart>
-            </ResponsiveContainer>
-          </ChartContainer>
-        </CardContent>
-      </Card>
+      <ChartStyleEnforcer>
+        <div className="space-y-2">
+          <h3 className="text-lg font-semibold">Risk Assessment Matrix</h3>
+          <p className="text-sm text-muted-foreground">
+            Compare routes based on cost vs. risk factors to find your optimal balance
+          </p>
+        </div>
+        
+        <Card>
+          <CardContent className="p-6">
+            <ChartContainer
+              config={chartConfig}
+              title="Route Risk Assessment"
+              subtitle="Analyze shipping routes by cost, risk, and reliability"
+            >
+              <ResponsiveContainer width="100%" height="100%">
+                <ScatterChart 
+                  margin={chartCommonConfig.margins.default}
+                >
+                  <CartesianGrid 
+                    strokeDasharray={chartCommonConfig.grid.strokeDasharray} 
+                    stroke={chartCommonConfig.grid.stroke}
+                    opacity={0.15}
+                  />
+                  <XAxis 
+                    type="number"
+                    dataKey="x"
+                    name="Cost"
+                    domain={[2000, 6000]}
+                    tickCount={5}
+                    tickFormatter={(value) => formatCurrency(value)}
+                    tick={{
+                      fontSize: 12,
+                      fill: lightTheme.colors.text,
+                    }}
+                    axisLine={chartCommonConfig.axis.line}
+                    tickLine={false}
+                    label={createAxisTitle('Total Route Cost', 'x', { offset: 40 })}
+                  />
+                  <YAxis
+                    type="number"
+                    dataKey="y"
+                    name="Risk Score"
+                    domain={[0, 10]}
+                    tickCount={6}
+                    tick={{
+                      fontSize: 12,
+                      fill: lightTheme.colors.text,
+                    }}
+                    axisLine={chartCommonConfig.axis.line}
+                    tickLine={false}
+                    label={createAxisTitle('Risk Level (0-10)', 'y', { offset: 35 })}
+                  />
+                  <ZAxis
+                    type="number"
+                    dataKey="z"
+                    range={[60, 200]}
+                    name="Reliability"
+                  />
+                  <Tooltip 
+                    content={<TariffTooltip />} 
+                    cursor={cursorStyles.scatter}
+                    wrapperStyle={tooltipStyles.wrapper}
+                    contentStyle={tooltipStyles.contentStyle}
+                  />
+                  <Legend 
+                    layout="horizontal"
+                    verticalAlign="top"
+                    align="center"
+                    wrapperStyle={{
+                      paddingBottom: '20px',
+                      display: 'flex',
+                      justifyContent: 'center'
+                    }}
+                  />
+                  <Scatter data={riskData} fill={lightTheme.colors.primary}>
+                    {riskData.map((entry, index) => {
+                      const size = calculateBubbleSize(entry.z, minZ, maxZ);
+                      return (
+                        <Cell
+                          key={`cell-${index}`}
+                          fill={getRiskColor(entry.riskLevel)}
+                          stroke={getRiskColor(entry.riskLevel)}
+                          strokeWidth={2}
+                          r={size}
+                        />
+                      );
+                    })}
+                  </Scatter>
+                </ScatterChart>
+              </ResponsiveContainer>
+            </ChartContainer>
+          </CardContent>
+        </Card>
+      </ChartStyleEnforcer>
       
       <StyleDebugger />
     </div>
