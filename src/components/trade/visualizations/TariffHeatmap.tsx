@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { 
@@ -8,7 +7,7 @@ import {
   ChartLegend,
   ChartLegendContent
 } from "@/components/ui/chart";
-import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Cell, Tooltip } from "recharts";
+import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Cell, Tooltip, ZAxis } from "recharts";
 import { chartConfig } from "./chartConfig";
 import { useTariffData } from "./tariff/useTariffData";
 import TariffInsights from "./tariff/TariffInsights";
@@ -58,29 +57,6 @@ const CustomXAxisTick = (props: any) => {
   );
 };
 
-// Custom shape renderer for the scatter points - creates circles with dynamic sizes
-const CustomScatterShape = (props: any) => {
-  const { cx, cy, fill, payload } = props;
-  
-  // Get min and max volumes for scaling
-  const allVolumes = useTariffData().tariffData.map(item => item.volume);
-  const minVolume = Math.min(...allVolumes);
-  const maxVolume = Math.max(...allVolumes);
-  
-  // Calculate radius based on volume
-  // Using a logarithmic scale to better visualize size differences
-  const minRadius = 5;
-  const maxRadius = 25;
-  
-  let radius = minRadius;
-  if (maxVolume !== minVolume) {
-    const normalizedValue = (payload.volume - minVolume) / (maxVolume - minVolume);
-    radius = minRadius + (maxRadius - minRadius) * normalizedValue;
-  }
-  
-  return <circle cx={cx} cy={cy} r={radius} fill={fill} />;
-};
-
 const TARIFF_COLORS = {
   low: "#10b981",    // Green color for low tariffs
   medium: "#f59e0b", // Amber color for medium tariffs
@@ -96,6 +72,14 @@ const getTariffColor = (tariffRate: number): string => {
 const TariffHeatmap = () => {
   const { tariffData } = useTariffData();
   const margins = getChartMargins('scatter');
+  
+  const formattedData = tariffData.map(item => {
+    const size = Math.log(item.volume) * 20;
+    return {
+      ...item,
+      size
+    };
+  });
 
   return (
     <div className="space-y-6">
@@ -152,13 +136,18 @@ const TariffHeatmap = () => {
                   width={65}
                   padding={{ top: 20, bottom: 20 }}
                 />
+                <ZAxis 
+                  type="number" 
+                  dataKey="size" 
+                  range={[20, 200]} 
+                  scale="pow"
+                />
                 <Tooltip content={<CustomTooltipContent />} cursor={{ strokeDasharray: '3 3' }} />
                 <Scatter 
-                  data={tariffData}
+                  data={formattedData}
                   name="Countries"
-                  shape={<CustomScatterShape />}
                 >
-                  {tariffData.map((entry, index) => (
+                  {formattedData.map((entry, index) => (
                     <Cell
                       key={`cell-${index}`}
                       fill={getTariffColor(entry.tariffRate)}
