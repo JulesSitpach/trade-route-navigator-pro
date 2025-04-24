@@ -69,23 +69,13 @@ export const SeasonalityChart: React.FC<SeasonalityChartProps> = ({
           contentStyle={tooltipStyles.contentStyle}
         />
         
-        {legendProps ? (
-          <Legend 
-            content={(props) => <ChartCustomLegend {...props} />}
-            verticalAlign={legendProps.verticalAlign || "top"}
-            align={legendProps.align || "center"}
-            height={legendProps.height || 36}
-            wrapperStyle={legendProps.wrapperStyle || { paddingBottom: '20px' }}
-          />
-        ) : (
-          <Legend 
-            content={(props) => <ChartCustomLegend {...props} />}
-            verticalAlign="top" 
-            align="center"
-            height={36}
-            wrapperStyle={{ paddingBottom: '20px' }}
-          />
-        )}
+        <Legend 
+          content={<ChartCustomLegend />}
+          verticalAlign={legendProps?.verticalAlign || "top"}
+          align={legendProps?.align || "center"}
+          height={legendProps?.height || 36}
+          wrapperStyle={legendProps?.wrapperStyle || { paddingBottom: '20px' }}
+        />
         
         <Line 
           yAxisId="left" 

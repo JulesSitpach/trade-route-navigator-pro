@@ -2,7 +2,7 @@
 import { LegendProps } from 'recharts';
 import { legendStyles } from './theme/commonStyles';
 
-export const ChartCustomLegend = (props: LegendProps) => {
+export const ChartCustomLegend: React.FC<LegendProps> = (props) => {
   const { payload } = props;
   
   if (!payload || !payload.length) return null;
