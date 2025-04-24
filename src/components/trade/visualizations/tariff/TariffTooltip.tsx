@@ -14,16 +14,16 @@ export const TariffTooltip: React.FC<TariffTooltipProps> = ({ active, payload })
     const tariffColor = getTariffColor(data.tariffRate);
     
     return (
-      <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
-        <div className="font-semibold text-base border-b border-gray-100 pb-2 mb-2 text-gray-800">
+      <div className="bg-white border border-gray-200 rounded-md shadow-sm p-3 max-w-[250px]">
+        <div className="font-semibold text-sm text-gray-800 mb-2 border-b border-gray-100 pb-1">
           {data.country}
         </div>
-        <div className="space-y-2">
+        <div className="space-y-1">
           <div className="flex justify-between items-center">
-            <span className="text-sm text-gray-500">Tariff Rate:</span>
+            <span className="text-xs text-gray-600">Tariff Rate:</span>
             <Badge 
               variant="outline" 
-              className="ml-2 font-medium" 
+              className="ml-2 font-medium text-xs" 
               style={{ 
                 backgroundColor: `${tariffColor}15`, 
                 color: tariffColor,
@@ -34,14 +34,14 @@ export const TariffTooltip: React.FC<TariffTooltipProps> = ({ active, payload })
             </Badge>
           </div>
           <div className="flex justify-between items-center">
-            <span className="text-sm text-gray-500">Trade Volume:</span>
-            <span className="font-medium text-sm text-gray-700">
+            <span className="text-xs text-gray-600">Trade Volume:</span>
+            <span className="font-medium text-xs text-gray-800">
               ${Number(data.volume).toLocaleString()}
             </span>
           </div>
           <div className="flex justify-between items-center">
-            <span className="text-sm text-gray-500">Category:</span>
-            <span className="font-medium text-sm text-gray-700">
+            <span className="text-xs text-gray-600">Category:</span>
+            <span className="font-medium text-xs text-gray-800">
               {data.productCategory}
             </span>
           </div>
