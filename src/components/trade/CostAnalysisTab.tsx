@@ -2,6 +2,7 @@
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { CostItem } from "./shared/CostItem";
+import { useState, useEffect } from "react";
 
 interface RequirementItemProps {
   label: string;
@@ -18,8 +19,7 @@ const RequirementItem = ({ label, status }: RequirementItemProps) => (
 );
 
 const CostAnalysisTab = () => {
-  // Sample data - this will be replaced with real data in the future
-  const costItems = [
+  const [costItems, setCostItems] = useState([
     { label: "Product Value", value: "$10,000.00" },
     { label: "Import Duty (8.5%)", value: "$850.00" },
     { label: "Freight Cost", value: "$1,200.00" },
@@ -29,16 +29,30 @@ const CostAnalysisTab = () => {
     { label: "Inland Transportation", value: "$300.00" },
     { label: "Warehousing", value: "$200.00" },
     { label: "Other Taxes and Fees", value: "$180.00" }
-  ];
+  ]);
   
-  const importRequirements = [
+  const [importRequirements, setImportRequirements] = useState([
     { label: "Certificate of Origin", status: 'required' as const },
     { label: "Import License", status: 'warning' as const },
     { label: "Safety Certification", status: 'required' as const },
     { label: "Phytosanitary Certificate", status: 'not-required' as const }
-  ];
+  ]);
   
-  const recommendedStrategy = "Based on your product and destinations, we recommend ocean freight via Panama with consolidated shipping to reduce costs by approximately 18%.";
+  const [recommendedStrategy, setRecommendedStrategy] = useState(
+    "Based on your product and destinations, we recommend ocean freight via Panama with consolidated shipping to reduce costs by approximately 18%."
+  );
+
+  const [totalLandedCost, setTotalLandedCost] = useState("$0.00");
+
+  useEffect(() => {
+    // Calculate total from cost items
+    const total = costItems.reduce((sum, item) => {
+      const value = parseFloat(item.value.replace(/[$,]/g, '')) || 0;
+      return sum + value;
+    }, 0);
+    
+    setTotalLandedCost(`$${total.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`);
+  }, [costItems]);
 
   return (
     <>
@@ -74,7 +88,7 @@ const CostAnalysisTab = () => {
           <div className="border-t-2 border-gray-200 pt-4 mt-6">
             <CostItem 
               label="Total Landed Cost" 
-              value="$13,075.00" 
+              value={totalLandedCost} 
               className="text-lg font-bold"
             />
           </div>

@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { 
@@ -13,7 +14,48 @@ import { tooltipStyles, cursorStyles } from "@/components/ui/chart/theme/commonS
 import { ChartCustomLegend } from '@/components/ui/chart/ChartCustomLegend';
 
 const RouteComparisonTimeline = () => {
-  const routeData: any[] = [];
+  const routeData = [
+    {
+      name: "Shanghai → LA → Chicago",
+      shipping: 20,
+      customs: 4,
+      distribution: 4,
+      cost: "$4,800",
+      totalDays: 28
+    },
+    {
+      name: "Shanghai → Air → Chicago",
+      shipping: 3,
+      customs: 2,
+      distribution: 3,
+      cost: "$9,500",
+      totalDays: 8
+    },
+    {
+      name: "Guangzhou → Singapore → Rotterdam",
+      shipping: 28,
+      customs: 5,
+      distribution: 7,
+      cost: "$5,200",
+      totalDays: 40
+    },
+    {
+      name: "Vietnam → Singapore → LA",
+      shipping: 25,
+      customs: 5,
+      distribution: 5,
+      cost: "$4,500",
+      totalDays: 35
+    },
+    {
+      name: "China → Mexico → US",
+      shipping: 24,
+      customs: 7,
+      distribution: 3,
+      cost: "$4,300",
+      totalDays: 34
+    }
+  ];
 
   return (
     <div className="space-y-4">

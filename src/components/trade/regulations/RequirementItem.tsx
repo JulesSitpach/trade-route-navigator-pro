@@ -1,6 +1,10 @@
 
 import { Badge } from "@/components/ui/badge";
-import { RequirementItemProps } from "./types";
+
+interface RequirementItemProps {
+  label: string;
+  status: 'required' | 'warning' | 'not-required';
+}
 
 export const RequirementItem = ({ label, status }: RequirementItemProps) => (
   <div className="flex justify-between items-center">
