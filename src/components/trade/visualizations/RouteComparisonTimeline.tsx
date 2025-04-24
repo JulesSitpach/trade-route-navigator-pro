@@ -78,11 +78,13 @@ const RouteComparisonTimeline = () => {
                   height={80}
                   angle={-35}
                   textAnchor="end"
+                  label={{ value: 'Shipping Routes', position: 'insideBottom', offset: -10 }}
                 />
                 <YAxis 
                   tickLine={false}
                   axisLine={chartCommonConfig.axis.line}
                   tick={chartCommonConfig.axis.tick}
+                  label={{ value: 'Transit Days', angle: -90, position: 'insideLeft', dx: -10 }}
                 />
                 <Tooltip 
                   content={<RouteComparisonTooltip />}
@@ -113,15 +115,6 @@ const RouteComparisonTimeline = () => {
           </div>
         </CardContent>
       </Card>
-
-      <div className="text-sm mt-6">
-        <p className="font-medium mb-2">Key Insights:</p>
-        <ul className="list-disc pl-5 space-y-1 text-muted-foreground">
-          <li>Air shipping reduces transit time by 85% but increases costs by 130%</li>
-          <li>Panama Canal route offers the best balance of cost and speed</li>
-          <li>USMCA triangular trade route requires additional processing time but reduces tariffs</li>
-        </ul>
-      </div>
     </div>
   );
 };
