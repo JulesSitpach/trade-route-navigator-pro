@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { 
@@ -5,12 +6,10 @@ import {
 } from "recharts";
 import { chartCommonConfig } from "@/utils/chartUtils";
 import { useTariffData } from "./tariff/useTariffData";
-import { createAxisTitle, getTariffColor } from "@/utils/chartUtils";
+import { createAxisTitle } from "@/utils/chartUtils";
 import { useChartResponsiveStyles } from "@/hooks/use-chart-responsive-styles";
 import { TariffTooltip } from './tariff/TariffTooltip';
-import { TariffAxisTick } from './tariff/TariffAxisTick';
 import { tooltipStyles, cursorStyles } from "@/components/ui/chart/theme/commonStyles";
-import { ChartCustomLegend } from '@/components/ui/chart/ChartCustomLegend';
 import { chartConfig } from "./chartConfig";
 import { lightTheme } from "@/components/ui/chart/chartTheme";
 import { formatCurrency } from "@/components/ui/chart/chartUtils";
@@ -45,7 +44,6 @@ const RiskAssessmentMatrix = () => {
 
   return (
     <div className="space-y-6">
-      <StyleDebugger />
       <div className="space-y-2">
         <h3 className="text-lg font-semibold">Risk Assessment Matrix</h3>
         <p className="text-sm text-muted-foreground">
@@ -139,6 +137,8 @@ const RiskAssessmentMatrix = () => {
           </ChartContainer>
         </CardContent>
       </Card>
+      
+      <StyleDebugger />
     </div>
   );
 };
