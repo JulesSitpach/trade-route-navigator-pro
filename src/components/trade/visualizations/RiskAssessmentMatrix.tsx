@@ -100,11 +100,9 @@ const RiskAssessmentMatrix = () => {
                 />
                 <ChartTooltip 
                   content={<ChartTooltipContent />} 
-                  cursor={{ 
-                    fill: 'transparent',
-                    stroke: '#e5e7eb',
-                    strokeDasharray: '3 3'
-                  }} 
+                  cursor={cursorStyles.scatter}
+                  wrapperStyle={tooltipStyles.wrapper}
+                  contentStyle={tooltipStyles.contentStyle}
                 />
                 <Scatter data={riskData} fill={lightTheme.colors.primary}>
                   {riskData.map((entry, index) => {

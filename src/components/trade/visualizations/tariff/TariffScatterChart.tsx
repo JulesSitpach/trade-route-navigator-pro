@@ -9,6 +9,7 @@ import {
   ResponsiveContainer,
   Cell
 } from "recharts";
+import { cursorStyles, tooltipStyles } from "@/components/ui/chart/theme/commonStyles";
 
 interface TariffData {
   country: string;
@@ -61,11 +62,9 @@ const TariffScatterChart: React.FC<TariffScatterChartProps> = ({ data, getTariff
               return [value, name];
             }}
             labelFormatter={(value) => `Country: ${value}`}
-            cursor={{ 
-              fill: 'transparent',
-              stroke: '#e5e7eb',
-              strokeDasharray: '3 3'
-            }}
+            cursor={cursorStyles.scatter}
+            wrapperStyle={tooltipStyles.wrapper}
+            contentStyle={tooltipStyles.contentStyle}
           />
           <Scatter name="Tariff Rates" data={data} fill="#8884d8">
             {data.map((entry, index) => {
