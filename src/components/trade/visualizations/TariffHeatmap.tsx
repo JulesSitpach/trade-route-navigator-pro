@@ -24,8 +24,8 @@ const CustomXAxisTick = (props: any) => {
       <text 
         x={0} 
         y={0} 
-        dy={20} // Increased vertical spacing for X-axis labels
-        dx={-5} // Added horizontal offset to move labels further from axis
+        dy={25} // Increased vertical spacing for better separation
+        dx={-10} // Further offset to prevent overlap 
         textAnchor="end" 
         fill="#666"
         fontSize={12}
@@ -40,12 +40,12 @@ const CustomXAxisTick = (props: any) => {
 const TariffHeatmap = () => {
   const { tariffData, getTariffColor } = useTariffData();
   
-  // Enhanced margins to ensure X-axis labels are visible
+  // Enhanced margins with more generous spacing
   const margins = {
-    top: 40,    // Further increased top margin for legend
-    right: 40,   // Increased right margin
-    bottom: 120, // Further increased for rotated X-axis labels
-    left: 90     // Further increased left margin for Y-axis labels
+    top: 50,    // Increased top margin for legend and header
+    right: 50,  // More space on the right side
+    bottom: 140, // Much more space for rotated X-axis labels
+    left: 100   // Significantly wider left margin for Y-axis labels
   };
 
   return (
@@ -59,7 +59,7 @@ const TariffHeatmap = () => {
       
       <Card>
         <CardContent className="p-6">
-          <div className="h-[600px]"> {/* Increased height for better visualization */}
+          <div className="h-[600px]"> {/* Maintained increased height for better visualization */}
             <ChartContainer 
               config={chartConfig} 
               height={600}
@@ -79,10 +79,10 @@ const TariffHeatmap = () => {
                   tick={<CustomXAxisTick />} 
                   axisLine={chartCommonConfig.axis.line}
                   tickLine={false}
-                  height={100}   // Further increased height for X-axis
+                  height={120}   // Even more height for X-axis labels
                   interval={0}   // Show all country names
-                  label={createAxisTitle('Countries', 'x', { offset: 80, position: 'insideBottom' })}
-                  padding={{ left: 20, right: 20 }} // Added padding to X-axis
+                  label={createAxisTitle('Countries', 'x', { offset: 100, position: 'insideBottom' })}
+                  padding={{ left: 30, right: 30 }} // More padding to X-axis
                 />
                 <YAxis
                   type="number"
@@ -90,22 +90,21 @@ const TariffHeatmap = () => {
                   name="Tariff Rate"
                   tick={{
                     fontSize: 12,
-                    dx: -10, // Move Y-axis ticks away from the axis
+                    dx: -15, // Move Y-axis ticks further from the axis
                   }}
                   axisLine={chartCommonConfig.axis.line}
                   tickLine={false}
                   domain={[0, 'dataMax + 2']} // Add some padding at the top
-                  label={createAxisTitle('Tariff Rate (%)', 'y', { offset: 70, position: 'insideLeft' })}
+                  label={createAxisTitle('Tariff Rate (%)', 'y', { offset: 80, position: 'insideLeft' })}
                   tickFormatter={(value) => `${value}%`}
-                  width={80}    // Further increased width to ensure Y-axis labels fit
-                  padding={{ top: 20, bottom: 20 }} // Added padding to Y-axis
+                  width={100}    // Even wider to ensure Y-axis labels fit comfortably
+                  padding={{ top: 30, bottom: 30 }} // More padding to Y-axis
                 />
                 <ChartLegend 
                   content={<ChartLegendContent />}
                   verticalAlign="top"
                   align="center"
                   layout="horizontal"
-                  wrapperStyle={{ paddingBottom: "10px" }}
                 />
                 <ChartTooltip 
                   content={<ChartTooltipContent />}
@@ -121,7 +120,6 @@ const TariffHeatmap = () => {
                       fill={getTariffColor(entry.tariffRate)}
                       stroke={getTariffColor(entry.tariffRate)}
                       strokeWidth={1}
-                      // Enhanced bubble sizing to make the volume representation clearer
                       radius={Math.max(5, Math.sqrt(entry.volume) / 1.2)} 
                     />
                   ))}
