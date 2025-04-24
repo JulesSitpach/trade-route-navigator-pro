@@ -7,7 +7,7 @@ import {
   ChartLegendContent,
   createAxisTitle
 } from "@/components/ui/chart";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid } from "recharts";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, ZAxis, Cell } from "recharts";
 import { chartConfig } from "./chartConfig";
 import { chartCommonConfig } from "@/utils/chartUtils";
 import { LineChart as LineChartIcon } from "lucide-react";
@@ -40,7 +40,7 @@ const SeasonalityGraph = () => {
       
       <Card>
         <CardContent className="p-6">
-          <div className="h-[450px]">
+          <div className="h-[400px]">
             <ChartContainer config={chartConfig}>
               <LineChart
                 data={seasonalityData}
