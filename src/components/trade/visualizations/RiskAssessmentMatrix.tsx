@@ -1,17 +1,18 @@
+
 import { Card, CardContent } from "@/components/ui/card";
 import { 
   ChartContainer, 
   ChartTooltip, 
   ChartTooltipContent,
   ChartLegend,
-  ChartLegendContent,
-  createAxisTitle
+  ChartLegendContent
 } from "@/components/ui/chart";
 import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, ZAxis, Cell } from "recharts";
 import { chartConfig } from "./chartConfig";
 import { chartCommonConfig } from "@/utils/chartUtils";
 import { lightTheme } from "@/components/ui/chart/chartTheme";
 import { formatCurrency } from "@/components/ui/chart/chartUtils";
+import { createAxisTitle } from "@/components/ui/chart/axisConfig";
 
 const RiskAssessmentMatrix = () => {
   // Sample risk assessment data

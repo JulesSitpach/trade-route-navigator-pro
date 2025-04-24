@@ -3,6 +3,7 @@ import { ChartTheme } from './theme/types';
 import { lightColors, darkColors } from './theme/colors';
 import { typography } from './theme/typography';
 import { spacing } from './theme/spacing';
+import { LabelPosition } from 'recharts/types/component/Label';
 
 // Light theme default configuration
 export const lightTheme: ChartTheme = {
@@ -73,10 +74,10 @@ export const getMargins = (
 
 // Common chart element styling
 export const chartElements = {
-  axisTitle: (text: string, axis: 'x' | 'y', options?: { offset?: number; position?: string; angle?: number }) => {
+  axisTitle: (text: string, axis: 'x' | 'y', options?: { offset?: number; position?: LabelPosition; angle?: number }) => {
     const theme = getChartTheme();
     const defaultOffset = axis === 'x' ? theme.spacing.axisOffset.x : theme.spacing.axisOffset.y;
-    const defaultPosition = axis === 'x' ? 'insideBottom' : 'insideLeft';
+    const defaultPosition = axis === 'x' ? 'insideBottom' : 'insideLeft' as LabelPosition;
     const defaultAngle = axis === 'y' ? -90 : 0;
     
     return {

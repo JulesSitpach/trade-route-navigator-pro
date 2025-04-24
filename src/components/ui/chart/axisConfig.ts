@@ -1,10 +1,11 @@
 
 import { CSSProperties } from 'react';
 import { chartTheme } from './chartTheme';
+import { LabelPosition } from 'recharts/types/component/Label';
 
 export type AxisTitleConfig = {
   value: string;
-  position: 'insideLeft' | 'insideRight' | 'insideTop' | 'insideBottom' | 'outside';
+  position: LabelPosition;
   angle?: number;
   offset: number;
   style: CSSProperties;
@@ -18,7 +19,7 @@ export const createAxisTitle = (
   axis: 'x' | 'y',
   options: {
     offset?: number;
-    position?: string;
+    position?: LabelPosition;
     angle?: number;
   } = {}
 ): AxisTitleConfig => {
@@ -42,7 +43,7 @@ export const createAxisTitle = (
   
   return {
     value: text,
-    position: position as 'insideLeft' | 'insideRight' | 'insideTop' | 'insideBottom',
+    position: position as LabelPosition,
     offset: offset,
     angle: angle,
     style: {
