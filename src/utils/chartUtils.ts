@@ -1,14 +1,13 @@
-
 import { getChartTheme, chartElements } from '@/components/ui/chart/chartTheme';
 import { Props as LabelProps } from 'recharts/types/component/Label';
 import { LabelPosition } from 'recharts/types/component/Label';
 import { TextAnchor } from '@/components/ui/chart/types/textTypes';
 
-// Common chart configuration for consistent styling
+// Updated with consistent chart margins
 export const chartCommonConfig = {
   margins: {
-    default: { top: 20, right: 30, bottom: 60, left: 60 },
-    withXLabels: { top: 20, right: 30, bottom: 80, left: 60 }
+    default: { top: 30, right: 20, bottom: 60, left: 60 },
+    withXLabels: { top: 30, right: 20, bottom: 80, left: 60 }
   },
   // Grid styling
   grid: {

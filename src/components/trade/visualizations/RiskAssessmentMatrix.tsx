@@ -1,10 +1,9 @@
-
 import React from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { 
   ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Cell, Tooltip, ResponsiveContainer, ZAxis, Legend 
 } from "recharts";
-import { ChartContainer } from "@/components/ui/chart/ChartContainer";
+import { chartCommonConfig } from "@/utils/chartUtils";
 import { useTariffData } from "./tariff/useTariffData";
 import { createAxisTitle, getTariffColor } from "@/utils/chartUtils";
 import { useChartResponsiveStyles } from "@/hooks/use-chart-responsive-styles";
@@ -13,13 +12,11 @@ import { TariffAxisTick } from './tariff/TariffAxisTick';
 import { tooltipStyles, cursorStyles } from "@/components/ui/chart/theme/commonStyles";
 import { ChartCustomLegend } from '@/components/ui/chart/ChartCustomLegend';
 import { chartConfig } from "./chartConfig";
-import { chartCommonConfig } from "@/utils/chartUtils";
 import { lightTheme } from "@/components/ui/chart/chartTheme";
 import { formatCurrency } from "@/components/ui/chart/chartUtils";
 import { calculateBubbleSize } from "@/components/ui/chart/theme/commonStyles";
 
 const RiskAssessmentMatrix = () => {
-  // Sample risk assessment data
   const riskData = [
     { x: 2450, y: 7, z: 100, name: "Shanghai → Panama → LA → Chicago", riskLevel: "medium", label: "Standard Ocean Route" },
     { x: 5650, y: 2, z: 80, name: "Shanghai → LA → Chicago (Air)", riskLevel: "low", label: "Express Air Route" },
@@ -28,7 +25,6 @@ const RiskAssessmentMatrix = () => {
     { x: 2800, y: 3, z: 60, name: "Shanghai → Rotterdam → US East Coast", riskLevel: "low", label: "East Coast Route" }
   ];
 
-  // Function to determine color based on risk level
   const getRiskColor = (riskLevel: string) => {
     switch(riskLevel) {
       case "high": return chartConfig.highRisk.color;
@@ -38,7 +34,6 @@ const RiskAssessmentMatrix = () => {
     }
   };
 
-  // Extract z values for proper bubble sizing
   const zValues = riskData.map(item => item.z);
   const minZ = Math.min(...zValues);
   const maxZ = Math.max(...zValues);
@@ -63,7 +58,9 @@ const RiskAssessmentMatrix = () => {
             subtitle="Analyze shipping routes by cost, risk, and reliability"
           >
             <ResponsiveContainer width="100%" height="100%">
-              <ScatterChart margin={margins}>
+              <ScatterChart 
+                margin={chartCommonConfig.margins.default}
+              >
                 <CartesianGrid 
                   strokeDasharray={chartCommonConfig.grid.strokeDasharray} 
                   stroke={chartCommonConfig.grid.stroke}

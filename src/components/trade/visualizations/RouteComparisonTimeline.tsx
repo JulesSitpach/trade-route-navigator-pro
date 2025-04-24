@@ -4,10 +4,10 @@ import {
   BarChart, Bar, XAxis, YAxis, 
   CartesianGrid, Legend, Tooltip, ResponsiveContainer 
 } from 'recharts';
+import { chartCommonConfig } from "@/utils/chartUtils";
 import { RouteComparisonTooltip } from './RouteComparisonTooltip';
 import { BarChartIcon } from "lucide-react";
 import { chartConfig } from "./chartConfig";
-import { chartCommonConfig } from "@/utils/chartUtils";
 import { StyleDebugger } from './debug/StyleDebugger';
 import { tooltipStyles, cursorStyles } from "@/components/ui/chart/theme/commonStyles";
 import { ChartCustomLegend } from '@/components/ui/chart/ChartCustomLegend';
@@ -66,7 +66,7 @@ const RouteComparisonTimeline = () => {
             <ResponsiveContainer width="100%" height="100%">
               <BarChart
                 data={routeData}
-                margin={chartCommonConfig.margins.withXLabels}
+                margin={chartCommonConfig.margins.default}
                 barSize={32}
               >
                 <CartesianGrid 
