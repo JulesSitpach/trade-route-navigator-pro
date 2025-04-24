@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { 
   LineChart, Line, XAxis, YAxis, CartesianGrid, 
@@ -9,6 +10,7 @@ import { createAxisTitle } from './axisConfig';
 import { SeasonalityChartProps } from './types/chartTypes';
 import { SeasonalityTooltip } from '@/components/trade/visualizations/seasonality/SeasonalityTooltip';
 import { ChartLegend } from './ChartLegend';
+import { cursorStyles } from './theme/commonStyles';
 
 export const SeasonalityChart: React.FC<SeasonalityChartProps> = ({ 
   data, 
