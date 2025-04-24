@@ -13,7 +13,7 @@ import { chartCommonConfig } from "@/utils/chartUtils";
 import { lightTheme } from "@/components/ui/chart/chartTheme";
 import { formatCurrency } from "@/components/ui/chart/chartUtils";
 import { createAxisTitle } from "@/components/ui/chart/axisConfig";
-import { LabelPosition } from "recharts/types/component/Label";
+import { calculateBubbleSize } from "@/components/ui/chart/theme/commonStyles";
 
 const RiskAssessmentMatrix = () => {
   // Sample risk assessment data
@@ -34,6 +34,11 @@ const RiskAssessmentMatrix = () => {
       default: return "#ccc";
     }
   };
+
+  // Extract z values for proper bubble sizing
+  const zValues = riskData.map(item => item.z);
+  const minZ = Math.min(...zValues);
+  const maxZ = Math.max(...zValues);
 
   return (
     <div className="space-y-6">
@@ -99,14 +104,19 @@ const RiskAssessmentMatrix = () => {
                   data={riskData}
                   fill={lightTheme.colors.primary}
                 >
-                  {riskData.map((entry, index) => (
-                    <Cell
-                      key={`cell-${index}`}
-                      fill={getRiskColor(entry.riskLevel)}
-                      stroke={getRiskColor(entry.riskLevel)}
-                      strokeWidth={2}
-                    />
-                  ))}
+                  {riskData.map((entry, index) => {
+                    // Calculate bubble size based on z value for proportional representation
+                    const size = calculateBubbleSize(entry.z, minZ, maxZ);
+                    return (
+                      <Cell
+                        key={`cell-${index}`}
+                        fill={getRiskColor(entry.riskLevel)}
+                        stroke={getRiskColor(entry.riskLevel)}
+                        strokeWidth={2}
+                        r={size} // Use calculated radius
+                      />
+                    );
+                  })}
                 </Scatter>
               </ScatterChart>
             </ChartContainer>

@@ -60,7 +60,9 @@ export const SeasonalityChart: React.FC<SeasonalityChartProps> = ({
           }}
         />
         
-        <Tooltip content={<SeasonalityTooltip />} />
+        <Tooltip 
+          content={<SeasonalityTooltip />} 
+        />
         
         <Legend 
           verticalAlign="top" 

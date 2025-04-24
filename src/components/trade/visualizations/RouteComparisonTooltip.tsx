@@ -20,10 +20,10 @@ export const RouteComparisonTooltip: React.FC<RouteComparisonTooltipProps> = ({ 
   return (
     <div style={{
       ...tooltipStyles.wrapper,
-      backgroundColor: '#FFFFFF', // Explicitly set background color
-      boxShadow: '0 4px 12px rgba(0,0,0,0.05)', // Ensure shadow is applied
-      border: '1px solid #e5e7eb',
-      opacity: 1
+      // Ensuring consistent styles with explicit overrides
+      backgroundColor: '#FFFFFF', 
+      boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)',
+      border: '1px solid rgba(229, 231, 235, 1)',
     }}>
       <div style={tooltipStyles.title}>
         {data?.fullRoute || label}

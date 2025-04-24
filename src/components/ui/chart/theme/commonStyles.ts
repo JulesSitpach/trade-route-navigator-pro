@@ -3,14 +3,19 @@ import { lightTheme } from '../chartTheme';
 
 export const tooltipStyles = {
   wrapper: {
-    backgroundColor: '#FFFFFF',
-    border: '1px solid #e5e7eb',
-    borderRadius: '8px',
-    boxShadow: '0 4px 12px rgba(0,0,0,0.05)',
+    backgroundColor: '#ffffff',   // Pure white
+    border: '1px solid rgba(229, 231, 235, 1)',  // Light gray border
+    borderRadius: '6px',
+    boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)',
     padding: '10px 12px',
-    opacity: 1,
+    opacity: 1,  // Ensure full opacity
     fontSize: lightTheme.typography.fontSize.label,
     fontFamily: lightTheme.typography.fontFamily,
+  },
+  contentStyle: {
+    backgroundColor: '#ffffff',
+    fontSize: '12px',
+    opacity: 1
   },
   title: {
     fontSize: '14px',
@@ -33,13 +38,27 @@ export const tooltipStyles = {
   },
 };
 
-export const chartGridStyles = {
-  stroke: '#e5e7eb',
-  strokeDasharray: '4 4',
-  opacity: 0.3,
-};
-
 export const legendStyles = {
+  container: {
+    display: 'flex',
+    justifyContent: 'center',
+    marginBottom: '16px'
+  },
+  item: {
+    display: 'flex',
+    alignItems: 'center',
+    marginRight: '16px'
+  },
+  colorIndicator: {
+    width: '12px',
+    height: '12px',
+    marginRight: '6px',
+    borderRadius: '2px'
+  },
+  text: {
+    fontSize: '12px',
+    color: '#4b5563'
+  },
   wrapper: {
     padding: '8px',
     display: 'flex',
@@ -47,13 +66,12 @@ export const legendStyles = {
     flexWrap: 'wrap' as const,
     justifyContent: 'center',
   },
-  item: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '8px',
-    fontSize: '13px',
-    color: '#4b5563',
-  },
+};
+
+export const chartGridStyles = {
+  stroke: '#e5e7eb',
+  strokeDasharray: '4 4',
+  opacity: 0.3,
 };
 
 export const axisStyles = {
@@ -72,3 +90,16 @@ export const axisStyles = {
   },
 };
 
+// Utility function for bubble sizing
+export const calculateBubbleSize = (value: number, minValue: number, maxValue: number): number => {
+  // Ensure proper scaling for bubble sizes
+  const minRadius = 5;
+  const maxRadius = 20;
+  
+  // If there's only one value or min equals max
+  if (minValue === maxValue) return (minRadius + maxRadius) / 2;
+  
+  // Calculate size proportionally
+  const scale = (value - minValue) / (maxValue - minValue);
+  return minRadius + scale * (maxRadius - minRadius);
+};
