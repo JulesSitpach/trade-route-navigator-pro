@@ -37,6 +37,11 @@ const CostBreakdownChart = () => {
                 <ChartTooltip 
                   content={<ChartTooltipContent />} 
                 />
+                <ChartLegend 
+                  content={<ChartLegendContent />}
+                  verticalAlign="top"
+                  align="center"
+                />
                 <Pie
                   data={costData}
                   cx="50%"
@@ -52,11 +57,6 @@ const CostBreakdownChart = () => {
                     <Cell key={`cell-${index}`} fill={chartConfig[entry.name as keyof typeof chartConfig]?.color || "#ccc"} />
                   ))}
                 </Pie>
-                <ChartLegend 
-                  content={<ChartLegendContent />}
-                  verticalAlign="bottom"
-                  align="center"
-                />
               </PieChart>
             </ChartContainer>
           </div>

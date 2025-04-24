@@ -41,10 +41,10 @@ const RiskAssessmentMatrix = () => {
             <ChartContainer config={chartConfig}>
               <ScatterChart
                 margin={{
-                  top: 20,
+                  top: 40,
                   right: 40,
                   left: 20,
-                  bottom: 40, // Increased bottom margin to accommodate X axis labels
+                  bottom: 40,
                 }}
               >
                 <CartesianGrid strokeDasharray="3 3" strokeOpacity={0.3} />
