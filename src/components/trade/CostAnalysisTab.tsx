@@ -3,6 +3,8 @@ import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { CostItem } from "./shared/CostItem";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { requiredDocuments } from "./data/sampleData";
 
 interface RequirementItemProps {
   label: string;
@@ -31,12 +33,13 @@ const CostAnalysisTab = () => {
     { label: "Other Taxes and Fees", value: "$180.00" }
   ]);
   
-  const [importRequirements, setImportRequirements] = useState([
-    { label: "Certificate of Origin", status: 'required' as const },
-    { label: "Import License", status: 'warning' as const },
-    { label: "Safety Certification", status: 'required' as const },
-    { label: "Phytosanitary Certificate", status: 'not-required' as const }
-  ]);
+  // Instead of hardcoding, use the data from sampleData.ts
+  const [importRequirements, setImportRequirements] = useState(
+    requiredDocuments.map(doc => ({
+      label: doc.name,
+      status: doc.status
+    }))
+  );
   
   const [recommendedStrategy, setRecommendedStrategy] = useState(
     "Based on your product and destinations, we recommend ocean freight via Panama with consolidated shipping to reduce costs by approximately 18%."

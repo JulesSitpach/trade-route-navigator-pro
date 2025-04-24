@@ -12,7 +12,8 @@ import { chartConfig } from "./chartConfig";
 import { Donut } from "lucide-react";
 import { useState, useEffect } from "react";
 
-const CostBreakdownChart = () => {
+// Transform cost data from the format in CostAnalysisTab to the format needed for the chart
+const useCostData = () => {
   const [costData, setCostData] = useState([
     { name: "Product Value", value: 10000, color: "#3498db" },
     { name: "Import Duty", value: 850, color: "#e74c3c" },
@@ -24,6 +25,12 @@ const CostBreakdownChart = () => {
     { name: "Warehousing", value: 200, color: "#8e44ad" },
     { name: "Other Taxes and Fees", value: 180, color: "#7f8c8d" }
   ]);
+
+  return { costData };
+};
+
+const CostBreakdownChart = () => {
+  const { costData } = useCostData();
 
   return (
     <div className="space-y-4">
