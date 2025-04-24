@@ -6,6 +6,7 @@ import {
   CartesianGrid, Legend, Tooltip, ResponsiveContainer 
 } from 'recharts';
 import { RouteComparisonTooltip } from './RouteComparisonTooltip';
+import { BarChartIcon } from "lucide-react";
 
 // Updated data to match the image
 const data = [
@@ -18,12 +19,13 @@ const data = [
 const RouteComparisonTimeline = () => {
   return (
     <div className="space-y-6">
-      <div className="space-y-2">
-        <h3 className="text-lg font-semibold">Route Comparison Timeline</h3>
-        <p className="text-sm text-muted-foreground">
-          Compare transit times across different shipping routes and methods
-        </p>
+      <div className="flex items-center gap-2">
+        <BarChartIcon className="h-5 w-5 text-muted-foreground" />
+        <h3 className="text-lg font-medium">Route Comparison Timeline</h3>
       </div>
+      <p className="text-sm text-muted-foreground">
+        Compare transit times across different shipping routes and methods
+      </p>
 
       <Card>
         <CardContent className="p-6">
@@ -34,16 +36,17 @@ const RouteComparisonTimeline = () => {
                 margin={{ top: 20, right: 30, bottom: 60, left: 40 }}
                 barSize={32}
               >
-                <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" opacity={0.6} />
                 <XAxis 
                   dataKey="name"
                   tick={{ fontSize: 12 }}
                   height={80}
                   angle={-35}
                   textAnchor="end"
+                  label={{ value: 'Shipping Routes', position: 'insideBottom', offset: -10 }}
                 />
                 <YAxis 
-                  label={{ value: 'Transit Days', angle: -90, position: 'insideLeft', offset: -5 }}
+                  label={{ value: 'Transit Days', angle: -90, position: 'insideLeft', dx: -10 }}
                   tick={{ fontSize: 12 }}
                 />
                 <Tooltip content={<RouteComparisonTooltip />} />
@@ -76,6 +79,15 @@ const RouteComparisonTimeline = () => {
           </div>
         </CardContent>
       </Card>
+
+      <div className="text-sm">
+        <p className="font-medium mb-2">Key Insights:</p>
+        <ul className="list-disc pl-5 space-y-1 text-muted-foreground">
+          <li>Air shipping reduces transit time by 85% but increases costs by 130%</li>
+          <li>Panama Canal route offers the best balance of cost and speed</li>
+          <li>USMCA triangular trade route requires additional processing time but reduces tariffs</li>
+        </ul>
+      </div>
     </div>
   );
 };
