@@ -1,3 +1,4 @@
+
 import { Card, CardContent } from "@/components/ui/card";
 import { 
   ChartContainer, 
@@ -40,7 +41,9 @@ const SeasonalityGraph = () => {
       
       <Card>
         <CardContent className="p-6">
-          <div className="w-full h-[400px]">
+          <div 
+            className="chart-wrapper w-full h-[400px] min-w-[300px] overflow-auto" 
+          >
             <ChartContainer config={chartConfig}>
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart
