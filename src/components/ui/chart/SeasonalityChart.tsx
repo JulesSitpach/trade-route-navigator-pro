@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { 
   LineChart, Line, XAxis, YAxis, CartesianGrid, 
@@ -14,8 +15,16 @@ import { cursorStyles, tooltipStyles } from './theme/commonStyles';
 export const SeasonalityChart: React.FC<SeasonalityChartProps> = ({ 
   data, 
   title, 
-  subtitle 
+  subtitle,
+  legendProps 
 }) => {
+  const defaultLegendProps = {
+    verticalAlign: "top", 
+    align: "center",
+    height: 36,
+    wrapperStyle: { paddingBottom: '20px' }
+  };
+
   return (
     <BaseChart 
       title={title || "Annual Shipping Trends"} 
@@ -68,10 +77,7 @@ export const SeasonalityChart: React.FC<SeasonalityChartProps> = ({
         />
         
         <Legend 
-          verticalAlign="top" 
-          align="center"
-          height={36}
-          wrapperStyle={{ paddingBottom: '20px' }}
+          {...(legendProps || defaultLegendProps)}
         />
         
         <Line 

@@ -1,5 +1,6 @@
 
 import { ReactElement } from 'react';
+import { LegendProps } from 'recharts';
 
 export interface BaseChartProps {
   children: ReactElement;
@@ -20,4 +21,5 @@ export interface SeasonalityChartProps {
   }[];
   title?: string;
   subtitle?: string;
+  legendProps?: LegendProps;
 }
