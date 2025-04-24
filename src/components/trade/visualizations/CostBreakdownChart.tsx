@@ -26,13 +26,13 @@ const CostBreakdownChart = () => {
   return (
     <div className="space-y-4">
       <h3 className="text-lg font-medium">Cost Breakdown Analysis</h3>
-      <p className="text-sm text-muted-foreground mb-6">
+      <p className="text-sm text-muted-foreground mb-4">
         Visualize the distribution of costs across different components in your supply chain
       </p>
       
-      <Card className="border rounded-lg shadow-sm">
-        <CardContent className="p-6">
-          <div className="h-[400px]">
+      <Card>
+        <CardContent className="p-4">
+          <div style={{ height: chartDimensions.height.default }} className="flex justify-center">
             <ChartContainer config={chartConfig}>
               <PieChart margin={chartCommonConfig.margins.default}>
                 <ChartTooltip 

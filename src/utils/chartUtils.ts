@@ -1,4 +1,3 @@
-
 // Common chart configuration settings
 export const chartCommonConfig = {
   margins: {
@@ -62,12 +61,11 @@ export const formatters = {
 // Common chart dimensions
 export const chartDimensions = {
   height: {
-    default: 400,
-    large: 500
+    default: 350, // Reduced from 400 for better window fit
+    large: 450    // Reduced from 500 for better window fit
   },
   pieChart: {
-    innerRadius: 70,
-    outerRadius: 140
+    innerRadius: 60,  // Adjusted for better proportions
+    outerRadius: 120  // Adjusted for better proportions
   }
 };
-

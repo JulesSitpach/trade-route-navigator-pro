@@ -30,13 +30,13 @@ const SeasonalityGraph = () => {
   return (
     <div className="space-y-4">
       <h3 className="text-lg font-medium">Seasonality Analysis</h3>
-      <p className="text-sm text-muted-foreground mb-6">
+      <p className="text-sm text-muted-foreground mb-4">
         Track how shipping costs, transit times, and risks fluctuate throughout the year
       </p>
       
-      <Card className="border rounded-lg shadow-sm">
-        <CardContent className="p-6">
-          <div className="h-[400px]">
+      <Card>
+        <CardContent className="p-4">
+          <div style={{ height: chartDimensions.height.default }}>
             <ChartContainer config={chartConfig}>
               <LineChart
                 data={seasonalityData}

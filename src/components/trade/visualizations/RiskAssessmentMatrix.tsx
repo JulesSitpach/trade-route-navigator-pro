@@ -31,13 +31,13 @@ const RiskAssessmentMatrix = () => {
   return (
     <div className="space-y-4">
       <h3 className="text-lg font-medium">Risk Assessment Matrix</h3>
-      <p className="text-sm text-muted-foreground mb-6">
+      <p className="text-sm text-muted-foreground mb-4">
         Compare routes based on cost vs. risk factors to find your optimal balance
       </p>
       
-      <Card className="border rounded-lg shadow-sm">
-        <CardContent className="p-6">
-          <div className="h-[400px]">
+      <Card>
+        <CardContent className="p-4">
+          <div style={{ height: chartDimensions.height.default }} className="flex justify-center">
             <ChartContainer config={chartConfig}>
               <ScatterChart margin={chartCommonConfig.margins.withXLabels}>
                 <CartesianGrid 
