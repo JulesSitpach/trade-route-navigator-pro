@@ -18,7 +18,11 @@ export const RouteComparisonTooltip: React.FC<RouteComparisonTooltipProps> = ({ 
   
   return (
     <div className="bg-white rounded-lg shadow-md p-3 max-w-[250px] border border-gray-100" 
-         style={{ backgroundColor: 'white', boxShadow: '0 4px 12px rgba(0,0,0,0.05)' }}>
+         style={{ 
+           backgroundColor: '#FFFFFF', 
+           boxShadow: '0 4px 12px rgba(0,0,0,0.05)',
+           border: '1px solid #e5e7eb' 
+         }}>
       <div className="font-semibold text-sm text-gray-800 mb-2 border-b border-gray-100 pb-1">
         {data?.fullRoute || label}
       </div>
