@@ -1,8 +1,10 @@
+
 import React from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { 
   ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Cell, Tooltip, ResponsiveContainer, ZAxis, Legend 
 } from "recharts";
+import { ChartContainer } from "@/components/ui/chart";
 import { useTariffData } from "./tariff/useTariffData";
 import { createAxisTitle, getTariffColor } from "@/utils/chartUtils";
 import { useChartResponsiveStyles } from "@/hooks/use-chart-responsive-styles";
@@ -55,8 +57,10 @@ const RiskAssessmentMatrix = () => {
       
       <Card>
         <CardContent className="p-6">
-          {/* Replace custom legend with ChartCustomLegend */}
-          <div className="h-[500px]">
+          <ChartContainer
+            title="Route Risk Assessment"
+            subtitle="Analyze shipping routes by cost, risk, and reliability"
+          >
             <ResponsiveContainer width="100%" height="100%">
               <ScatterChart margin={margins}>
                 <CartesianGrid 
@@ -128,7 +132,7 @@ const RiskAssessmentMatrix = () => {
                 </Scatter>
               </ScatterChart>
             </ResponsiveContainer>
-          </div>
+          </ChartContainer>
         </CardContent>
       </Card>
     </div>
@@ -136,3 +140,4 @@ const RiskAssessmentMatrix = () => {
 };
 
 export default RiskAssessmentMatrix;
+
