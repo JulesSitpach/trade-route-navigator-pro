@@ -1,4 +1,3 @@
-
 import { lightTheme } from '../chartTheme';
 
 export const tooltipStyles = {
@@ -38,6 +37,7 @@ export const tooltipStyles = {
   },
 };
 
+// Standardize legend styles
 export const legendStyles = {
   container: {
     display: 'flex',
@@ -90,7 +90,7 @@ export const axisStyles = {
   },
 };
 
-// Utility function for bubble sizing
+// Update and standardize bubble size calculation
 export const calculateBubbleSize = (value: number, minValue: number, maxValue: number): number => {
   // Ensure proper scaling for bubble sizes
   const minRadius = 5;

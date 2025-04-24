@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { Badge } from "@/components/ui/badge";
+import { tooltipStyles } from "@/components/ui/chart/theme/commonStyles";
 
 interface SeasonalityTooltipProps {
   active?: boolean;
@@ -12,7 +13,7 @@ export const SeasonalityTooltip: React.FC<SeasonalityTooltipProps> = ({ active, 
     const data = payload[0].payload;
     
     return (
-      <div className="bg-white border border-gray-200 rounded-md shadow-sm p-3 max-w-[250px]">
+      <div style={tooltipStyles.wrapper}>
         <div className="font-semibold text-sm text-gray-800 mb-2 border-b border-gray-100 pb-1">
           {data.month}
         </div>

@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Badge } from "@/components/ui/badge";
 import { tooltipStyles } from "@/components/ui/chart/theme/commonStyles";
@@ -18,13 +17,7 @@ export const RouteComparisonTooltip: React.FC<RouteComparisonTooltipProps> = ({ 
   const total = payload.reduce((sum, entry) => sum + entry.value, 0);
   
   return (
-    <div style={{
-      ...tooltipStyles.wrapper,
-      // Ensuring consistent styles with explicit overrides
-      backgroundColor: '#FFFFFF', 
-      boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)',
-      border: '1px solid rgba(229, 231, 235, 1)',
-    }}>
+    <div style={tooltipStyles.wrapper}>
       <div style={tooltipStyles.title}>
         {data?.fullRoute || label}
       </div>

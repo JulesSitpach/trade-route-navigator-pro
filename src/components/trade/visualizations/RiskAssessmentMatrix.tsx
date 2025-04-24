@@ -1,4 +1,3 @@
-
 import { Card, CardContent } from "@/components/ui/card";
 import { 
   ChartContainer, 
@@ -100,12 +99,8 @@ const RiskAssessmentMatrix = () => {
                   name="Reliability"
                 />
                 <ChartTooltip content={<ChartTooltipContent />} />
-                <Scatter 
-                  data={riskData}
-                  fill={lightTheme.colors.primary}
-                >
+                <Scatter data={riskData} fill={lightTheme.colors.primary}>
                   {riskData.map((entry, index) => {
-                    // Calculate bubble size based on z value for proportional representation
                     const size = calculateBubbleSize(entry.z, minZ, maxZ);
                     return (
                       <Cell
@@ -113,7 +108,7 @@ const RiskAssessmentMatrix = () => {
                         fill={getRiskColor(entry.riskLevel)}
                         stroke={getRiskColor(entry.riskLevel)}
                         strokeWidth={2}
-                        r={size} // Use calculated radius
+                        r={size}
                       />
                     );
                   })}
