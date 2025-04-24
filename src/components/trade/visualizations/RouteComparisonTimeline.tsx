@@ -9,7 +9,7 @@ import { BarChartIcon } from "lucide-react";
 import { chartConfig } from "./chartConfig";
 import { chartCommonConfig } from "@/utils/chartUtils";
 import { StyleDebugger } from './debug/StyleDebugger';
-import { cursorStyles } from "@/components/ui/chart/theme/commonStyles";
+import { tooltipStyles, cursorStyles } from "@/components/ui/chart/theme/commonStyles";
 
 const RouteComparisonTimeline = () => {
   // Sample route comparison data with simplified names

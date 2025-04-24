@@ -13,6 +13,7 @@ import { lightTheme } from "@/components/ui/chart/chartTheme";
 import { formatCurrency } from "@/components/ui/chart/chartUtils";
 import { createAxisTitle } from "@/components/ui/chart/axisConfig";
 import { calculateBubbleSize } from "@/components/ui/chart/theme/commonStyles";
+import { cursorStyles, tooltipStyles } from "@/components/ui/chart/theme/commonStyles";
 
 const RiskAssessmentMatrix = () => {
   // Sample risk assessment data
