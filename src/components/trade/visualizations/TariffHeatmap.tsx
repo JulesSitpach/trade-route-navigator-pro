@@ -15,7 +15,6 @@ import { useTariffData } from "./tariff/useTariffData";
 import TariffLegend from "./tariff/TariffLegend";
 import TariffInsights from "./tariff/TariffInsights";
 
-// Enhanced custom tick component for X-axis labels
 const CustomXAxisTick = (props: any) => {
   const { x, y, payload } = props;
   return (
@@ -36,7 +35,6 @@ const CustomXAxisTick = (props: any) => {
   );
 };
 
-// Enhanced Y-axis tick component for better spacing
 const CustomYAxisTick = (props: any) => {
   const { x, y, payload } = props;
   return (
@@ -55,7 +53,6 @@ const CustomYAxisTick = (props: any) => {
   );
 };
 
-// Custom tooltip content for better display
 const CustomTooltipContent = (props: any) => {
   const { active, payload } = props;
   
@@ -76,7 +73,6 @@ const CustomTooltipContent = (props: any) => {
 const TariffHeatmap = () => {
   const { tariffData, getTariffColor } = useTariffData();
   
-  // Adjusted margins for better spacing
   const margins = {
     top: 40,     
     right: 40,   
@@ -84,20 +80,15 @@ const TariffHeatmap = () => {
     left: 80     
   };
 
-  // Calculate bubble size based on volume - ensures proper scaling
   const calculateBubbleSize = (volume: number): number => {
-    // Define min and max radius
     const minRadius = 5;
     const maxRadius = 20;
     
-    // Find min and max volume for proper scaling
     const minVolume = Math.min(...tariffData.map(d => d.volume));
     const maxVolume = Math.max(...tariffData.map(d => d.volume));
     
-    // If all volumes are the same, return medium size
     if (minVolume === maxVolume) return (minRadius + maxRadius) / 2;
     
-    // Calculate scaled radius
     const scale = (volume - minVolume) / (maxVolume - minVolume);
     return minRadius + scale * (maxRadius - minRadius);
   };
@@ -172,7 +163,6 @@ const TariffHeatmap = () => {
             </ChartContainer>
           </div>
           
-          {/* Custom standalone legend with proper styling */}
           <div className="flex justify-center mt-4 space-x-8">
             <div className="flex items-center">
               <div className="w-3 h-3 rounded-full bg-green-500 mr-2"></div>
