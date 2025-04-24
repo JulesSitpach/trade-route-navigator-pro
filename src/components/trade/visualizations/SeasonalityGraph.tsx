@@ -7,7 +7,7 @@ import {
   ChartLegendContent,
   createAxisTitle
 } from "@/components/ui/chart";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, ZAxis, Cell } from "recharts";
+import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid } from "recharts";
 import { chartConfig } from "./chartConfig";
 import { chartCommonConfig } from "@/utils/chartUtils";
 import { LineChart as LineChartIcon } from "lucide-react";
@@ -40,77 +40,79 @@ const SeasonalityGraph = () => {
       
       <Card>
         <CardContent className="p-6">
-          <div className="h-[400px]">
+          <div className="w-full h-[400px]">
             <ChartContainer config={chartConfig}>
-              <LineChart
-                data={seasonalityData}
-                margin={chartCommonConfig.margins.withXLabels}
-              >
-                <CartesianGrid 
-                  strokeDasharray={chartCommonConfig.grid.strokeDasharray}
-                  stroke={chartCommonConfig.grid.stroke}
-                  strokeOpacity={chartCommonConfig.grid.strokeOpacity}
-                />
-                <ChartLegend 
-                  content={<ChartLegendContent />}
-                  verticalAlign="top"
-                  align="center"
-                />
-                <XAxis 
-                  dataKey="month"
-                  tick={chartCommonConfig.axis.tick}
-                  axisLine={chartCommonConfig.axis.line}
-                  tickLine={false}
-                  label={createAxisTitle('Month', 'x', { offset: 10 })}
-                />
-                <YAxis 
-                  yAxisId="left"
-                  label={createAxisTitle('Freight Cost Index', 'y', { offset: 5 })}
-                  tickLine={false}
-                  axisLine={chartCommonConfig.axis.line}
-                  tick={chartCommonConfig.axis.tick}
-                />
-                <YAxis 
-                  yAxisId="right"
-                  orientation="right"
-                  label={createAxisTitle('Risk/Congestion (%)', 'y', { 
-                    position: 'insideRight',
-                    offset: 5 
-                  })}
-                  tickLine={false}
-                  axisLine={chartCommonConfig.axis.line}
-                  tick={chartCommonConfig.axis.tick}
-                />
-                <ChartTooltip content={<ChartTooltipContent />} />
-                <Line
-                  yAxisId="left"
-                  type="monotone"
-                  dataKey="freight"
-                  name="Freight"
-                  stroke={chartConfig.freight.color}
-                  strokeWidth={2}
-                  dot={{ fill: chartConfig.freight.color, r: 4 }}
-                  activeDot={{ r: 6 }}
-                />
-                <Line
-                  yAxisId="right"
-                  type="monotone"
-                  dataKey="congestion"
-                  name="Congestion"
-                  stroke={chartConfig.handling.color}
-                  strokeWidth={2}
-                  dot={{ fill: chartConfig.handling.color, r: 4 }}
-                />
-                <Line
-                  yAxisId="right"
-                  type="monotone"
-                  dataKey="risk"
-                  name="Risk"
-                  stroke={chartConfig.risk.color}
-                  strokeWidth={2}
-                  dot={{ fill: chartConfig.risk.color, r: 4 }}
-                />
-              </LineChart>
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart
+                  data={seasonalityData}
+                  margin={chartCommonConfig.margins.withXLabels}
+                >
+                  <CartesianGrid 
+                    strokeDasharray={chartCommonConfig.grid.strokeDasharray}
+                    stroke={chartCommonConfig.grid.stroke}
+                    strokeOpacity={chartCommonConfig.grid.strokeOpacity}
+                  />
+                  <ChartLegend 
+                    content={<ChartLegendContent />}
+                    verticalAlign="top"
+                    align="center"
+                  />
+                  <XAxis 
+                    dataKey="month"
+                    tick={chartCommonConfig.axis.tick}
+                    axisLine={chartCommonConfig.axis.line}
+                    tickLine={false}
+                    label={createAxisTitle('Month', 'x', { offset: 10 })}
+                  />
+                  <YAxis 
+                    yAxisId="left"
+                    label={createAxisTitle('Freight Cost Index', 'y', { offset: 5 })}
+                    tickLine={false}
+                    axisLine={chartCommonConfig.axis.line}
+                    tick={chartCommonConfig.axis.tick}
+                  />
+                  <YAxis 
+                    yAxisId="right"
+                    orientation="right"
+                    label={createAxisTitle('Risk/Congestion (%)', 'y', { 
+                      position: 'insideRight',
+                      offset: 5 
+                    })}
+                    tickLine={false}
+                    axisLine={chartCommonConfig.axis.line}
+                    tick={chartCommonConfig.axis.tick}
+                  />
+                  <ChartTooltip content={<ChartTooltipContent />} />
+                  <Line
+                    yAxisId="left"
+                    type="monotone"
+                    dataKey="freight"
+                    name="Freight"
+                    stroke={chartConfig.freight.color}
+                    strokeWidth={2}
+                    dot={{ fill: chartConfig.freight.color, r: 4 }}
+                    activeDot={{ r: 6 }}
+                  />
+                  <Line
+                    yAxisId="right"
+                    type="monotone"
+                    dataKey="congestion"
+                    name="Congestion"
+                    stroke={chartConfig.handling.color}
+                    strokeWidth={2}
+                    dot={{ fill: chartConfig.handling.color, r: 4 }}
+                  />
+                  <Line
+                    yAxisId="right"
+                    type="monotone"
+                    dataKey="risk"
+                    name="Risk"
+                    stroke={chartConfig.risk.color}
+                    strokeWidth={2}
+                    dot={{ fill: chartConfig.risk.color, r: 4 }}
+                  />
+                </LineChart>
+              </ResponsiveContainer>
             </ChartContainer>
           </div>
         </CardContent>
