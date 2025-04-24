@@ -1,4 +1,3 @@
-
 import * as React from "react"
 import * as RechartsPrimitive from "recharts"
 import { cn } from "@/lib/utils"
@@ -6,6 +5,7 @@ import { ChartContext } from "./ChartContext"
 import { ChartStyle } from "./ChartStyle"
 import { ChartConfig } from "./types"
 import { chartTheme } from "./chartTheme"
+import { fontStyles } from "@/utils/fontStyles"
 
 interface ChartContainerProps extends React.ComponentProps<"div"> {
   config: ChartConfig;
@@ -66,7 +66,6 @@ export const ChartContainer = React.forwardRef<
     })
   }
 
-  // Handle different prop types for styling
   const aspectRatioStyle = typeof aspectRatio === 'number' 
     ? String(aspectRatio) 
     : aspectRatio;
@@ -103,17 +102,27 @@ export const ChartContainer = React.forwardRef<
           className
         )}
         style={{
-          '--chart-font-family': theme.typography.fontFamily,
-          '--chart-text-size': theme.typography.fontSize.axis,
+          '--chart-font-family': fontStyles.family,
+          '--chart-text-size': fontStyles.sizes.axisLabel,
           width: widthStyle,
         } as React.CSSProperties}
         {...props}
       >
         {title && (
-          <h3 className="text-lg font-medium mb-2">{title}</h3>
+          <h3 
+            className="text-lg font-medium mb-2"
+            style={{ fontSize: fontStyles.sizes.chartTitle }}
+          >
+            {title}
+          </h3>
         )}
         {subtitle && (
-          <p className="text-sm text-muted-foreground mb-4">{subtitle}</p>
+          <p 
+            className="text-sm text-muted-foreground mb-4"
+            style={{ fontSize: fontStyles.sizes.tooltipBody }}
+          >
+            {subtitle}
+          </p>
         )}
         <ChartStyle id={chartId} config={config} />
         <div 
