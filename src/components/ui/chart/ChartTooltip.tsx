@@ -1,4 +1,3 @@
-
 import * as React from "react"
 import * as RechartsPrimitive from "recharts"
 import { cn } from "@/lib/utils"
@@ -150,7 +149,12 @@ export const ChartTooltipContent = React.forwardRef<
                         </span>
                       </div>
                       {item.value && (
-                        <span className="font-mono font-medium tabular-nums text-foreground text-black">
+                        <span className={cn(
+                          "font-medium tabular-nums text-black",
+                          theme.typography.fontFamily === "'Inter', -apple-system, BlinkMacSystemFont, sans-serif'" 
+                            ? "font-sans" 
+                            : ""
+                        )}>
                           {item.value.toLocaleString()}
                         </span>
                       )}
