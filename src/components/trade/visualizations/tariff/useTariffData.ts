@@ -10,16 +10,16 @@ export interface TariffData {
 
 export const useTariffData = () => {
   const tariffData = useMemo<TariffData[]>(() => [
-    { country: "USA", tariffRate: 25, productCategory: "Electronics", volume: 120 },
-    { country: "EU", tariffRate: 5, productCategory: "Electronics", volume: 90 },
-    { country: "Canada", tariffRate: 0, productCategory: "Electronics", volume: 70 },
-    { country: "Mexico", tariffRate: 0, productCategory: "Electronics", volume: 50 },
-    { country: "Japan", tariffRate: 8, productCategory: "Electronics", volume: 60 },
-    { country: "Vietnam", tariffRate: 10, productCategory: "Electronics", volume: 40 },
-    { country: "China", tariffRate: 15, productCategory: "Electronics", volume: 150 },
-    { country: "India", tariffRate: 20, productCategory: "Electronics", volume: 70 },
-    { country: "Brazil", tariffRate: 35, productCategory: "Electronics", volume: 30 },
-    { country: "Australia", tariffRate: 5, productCategory: "Electronics", volume: 25 }
+    { country: "USA", tariffRate: 25, productCategory: "Electronics", volume: 12000 },
+    { country: "EU", tariffRate: 5, productCategory: "Electronics", volume: 9500 },
+    { country: "Canada", tariffRate: 0, productCategory: "Electronics", volume: 8000 },
+    { country: "Mexico", tariffRate: 0, productCategory: "Electronics", volume: 6000 },
+    { country: "Japan", tariffRate: 39, productCategory: "Electronics", volume: 5000 },
+    { country: "Vietnam", tariffRate: 10, productCategory: "Electronics", volume: 4200 },
+    { country: "China", tariffRate: 15, productCategory: "Electronics", volume: 15000 },
+    { country: "India", tariffRate: 20, productCategory: "Electronics", volume: 7500 },
+    { country: "Brazil", tariffRate: 35, productCategory: "Electronics", volume: 3200 },
+    { country: "Australia", tariffRate: 5, productCategory: "Electronics", volume: 4800 }
   ], []);
 
   const getTariffColor = (rate: number) => {
@@ -33,3 +33,4 @@ export const useTariffData = () => {
     getTariffColor
   };
 };
+
