@@ -1,4 +1,3 @@
-
 import { Card, CardContent } from "@/components/ui/card";
 import { 
   ChartContainer, 
@@ -79,21 +78,26 @@ const TariffHeatmap = () => {
   
   // Adjusted margins for better spacing
   const margins = {
-    top: 40,     // Top margin for legend
-    right: 40,   // Increased right margin
-    bottom: 100, // Increased bottom margin for X-axis labels
-    left: 80     // Increased left margin for Y-axis labels
+    top: 40,     
+    right: 40,   
+    bottom: 100, 
+    left: 80     
   };
 
   // Calculate bubble size based on volume - ensures proper scaling
   const calculateBubbleSize = (volume: number): number => {
+    // Define min and max radius
     const minRadius = 5;
     const maxRadius = 20;
+    
+    // Find min and max volume for proper scaling
     const minVolume = Math.min(...tariffData.map(d => d.volume));
     const maxVolume = Math.max(...tariffData.map(d => d.volume));
     
+    // If all volumes are the same, return medium size
     if (minVolume === maxVolume) return (minRadius + maxRadius) / 2;
     
+    // Calculate scaled radius
     const scale = (volume - minVolume) / (maxVolume - minVolume);
     return minRadius + scale * (maxRadius - minRadius);
   };
@@ -160,7 +164,7 @@ const TariffHeatmap = () => {
                       fill={getTariffColor(entry.tariffRate)}
                       stroke={getTariffColor(entry.tariffRate)}
                       strokeWidth={1}
-                      radius={calculateBubbleSize(entry.volume)}
+                      r={calculateBubbleSize(entry.volume)}
                     />
                   ))}
                 </Scatter>
