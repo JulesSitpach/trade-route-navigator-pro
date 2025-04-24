@@ -1,3 +1,5 @@
+
+import React from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { 
   ChartContainer, 
@@ -141,3 +143,4 @@ const RouteComparisonTimeline = () => {
 };
 
 export default RouteComparisonTimeline;
+
