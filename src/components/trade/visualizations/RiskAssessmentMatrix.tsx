@@ -1,7 +1,8 @@
 import React from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { 
-  ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Cell, Tooltip, ResponsiveContainer, ZAxis, Legend 
+  ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Cell, 
+  Tooltip, ResponsiveContainer, ZAxis, Legend 
 } from "recharts";
 import { chartCommonConfig } from "@/utils/chartUtils";
 import { useTariffData } from "./tariff/useTariffData";
@@ -16,6 +17,7 @@ import { calculateBubbleSize } from "@/components/ui/chart/theme/commonStyles";
 import { ChartContainer } from "@/components/ui/chart/ChartContainer";
 import { StyleDebugger } from '@/components/debug/StyleDebugger';
 import { ChartStyleEnforcer } from "@/components/ui/chart/ChartStyleEnforcer";
+import { PropDebugger } from "@/components/debug/PropDebugger";
 
 const RiskAssessmentMatrix = () => {
   const riskData = [
@@ -139,6 +141,17 @@ const RiskAssessmentMatrix = () => {
           </CardContent>
         </Card>
       </ChartStyleEnforcer>
+      
+      <PropDebugger
+        title="Risk Matrix Chart Props"
+        componentProps={{
+          chartConfig: chartConfig,
+          margins,
+          tooltipStyles,
+          cursorStyles,
+          lightTheme
+        }}
+      />
       
       <StyleDebugger />
     </div>
