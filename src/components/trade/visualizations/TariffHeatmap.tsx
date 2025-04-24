@@ -111,7 +111,9 @@ const TariffHeatmap = () => {
                   {tariffData.map((entry, index) => (
                     <Cell
                       key={`cell-${index}`}
-                      fill={chartConfig.tariff[entry.tariffRate <= 5 ? 'low' : entry.tariffRate <= 15 ? 'medium' : 'high'].color}
+                      fill={entry.tariffRate <= 5 ? chartConfig.tariff.low.color : 
+                            entry.tariffRate <= 15 ? chartConfig.tariff.medium.color : 
+                            chartConfig.tariff.high.color}
                       stroke="currentColor"
                       strokeWidth={1}
                       r={entry.volume / Math.max(...volumeValues) * 20 + 5}
@@ -129,7 +131,6 @@ const TariffHeatmap = () => {
                 { value: 'Medium Tariff (6-15%)', color: chartConfig.tariff.medium.color },
                 { value: 'High Tariff (>15%)', color: chartConfig.tariff.high.color }
               ]}
-              layout="horizontal"
             />
           </ChartLegend>
         </CardContent>
