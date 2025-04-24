@@ -1,3 +1,4 @@
+
 import * as React from "react"
 import * as RechartsPrimitive from "recharts"
 import { cn } from "@/lib/utils"
@@ -87,7 +88,7 @@ export const ChartTooltipContent = React.forwardRef<
           className
         )}
         style={{
-          fontSize: theme.typography.sizes.tooltip,
+          fontSize: theme.typography.sizes.label,
           fontFamily: theme.typography.fontFamily,
         }}
       >
