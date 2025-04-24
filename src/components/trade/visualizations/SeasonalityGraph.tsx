@@ -46,7 +46,7 @@ const SeasonalityGraph = () => {
                   top: 20,
                   right: 50,
                   left: 20,
-                  bottom: 20,
+                  bottom: 60, // Increased bottom margin to accommodate legend
                 }}
               >
                 <CartesianGrid 
@@ -60,7 +60,8 @@ const SeasonalityGraph = () => {
                   tick={{ fontSize: 11, fill: '#666' }}
                   tickLine={{ stroke: '#e6e6e6' }}
                   axisLine={{ stroke: '#e6e6e6' }}
-                  padding={{ left: 10, right: 10 }}
+                  padding={{ left: 0, right: 0 }}
+                  height={30} // Fixed height to ensure labels stay within bounds
                 />
                 <YAxis 
                   yAxisId="left"
@@ -76,7 +77,7 @@ const SeasonalityGraph = () => {
                   tick={{ fontSize: 11, fill: '#666' }}
                   domain={[90, 240]}
                   ticks={[90, 120, 150, 180, 210, 240]}
-                  padding={{ top: 20, bottom: 20 }}
+                  padding={{ top: 0, bottom: 0 }}
                 />
                 <YAxis 
                   yAxisId="right"
@@ -93,11 +94,12 @@ const SeasonalityGraph = () => {
                   tickLine={{ stroke: '#e6e6e6' }}
                   axisLine={{ stroke: '#e6e6e6' }}
                   tick={{ fontSize: 11, fill: '#666' }}
-                  padding={{ top: 20, bottom: 20 }}
+                  padding={{ top: 0, bottom: 0 }}
                 />
                 <ChartTooltip
                   content={<ChartTooltipContent />}
                 />
+                {/* Move legend to bottom outside of chart area */}
                 <ChartLegend 
                   content={<ChartLegendContent />}
                   verticalAlign="bottom"
@@ -110,8 +112,8 @@ const SeasonalityGraph = () => {
                   name="Freight"
                   stroke={chartConfig.freight.color}
                   strokeWidth={2}
-                  dot={{ fill: chartConfig.freight.color, r: 5 }}
-                  activeDot={{ r: 6 }}
+                  dot={{ fill: chartConfig.freight.color, r: 4 }}
+                  activeDot={{ r: 5 }}
                   connectNulls={true}
                 />
                 <Line
@@ -121,7 +123,7 @@ const SeasonalityGraph = () => {
                   name="Congestion"
                   stroke={chartConfig.handling.color}
                   strokeWidth={2}
-                  dot={{ fill: chartConfig.handling.color, r: 5 }}
+                  dot={{ fill: chartConfig.handling.color, r: 4 }}
                   connectNulls={true}
                 />
                 <Line
@@ -131,7 +133,7 @@ const SeasonalityGraph = () => {
                   name="Risk"
                   stroke={chartConfig.risk.color}
                   strokeWidth={2}
-                  dot={{ fill: chartConfig.risk.color, r: 5 }}
+                  dot={{ fill: chartConfig.risk.color, r: 4 }}
                   connectNulls={true}
                 />
               </LineChart>
@@ -140,7 +142,8 @@ const SeasonalityGraph = () => {
         </CardContent>
       </Card>
 
-      <Card className="bg-slate-50">
+      {/* Key Seasonal Factors card is now completely separated from the chart */}
+      <Card className="bg-slate-50 mt-6">
         <CardContent className="p-4">
           <p className="font-medium mb-2">Key Seasonal Factors:</p>
           <ul className="list-disc pl-5 space-y-1 text-sm text-muted-foreground">
