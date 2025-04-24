@@ -104,7 +104,7 @@ export const ChartContainer = React.forwardRef<
         )}
         style={{
           '--chart-font-family': theme.typography.fontFamily,
-          '--chart-text-size': theme.typography.sizes.axis,
+          '--chart-text-size': theme.typography.fontSize.axis,
           width: widthStyle,
         } as React.CSSProperties}
         {...props}

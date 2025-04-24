@@ -22,7 +22,13 @@ export const createAxisTitle = (
     angle?: number;
   } = {}
 ): AxisTitleConfig => {
-  const { axisTitle } = chartTheme;
+  // Default styling for axis titles
+  const axisTitle = {
+    fontFamily: chartTheme.typography.fontFamily,
+    fontSize: chartTheme.typography.fontSize.axis,
+    fontWeight: chartTheme.typography.fontWeight.normal,
+    color: chartTheme.colors.text
+  };
   
   // Default positions and angles based on axis
   const defaultPosition = axis === 'x' ? 'insideBottom' : 'insideLeft';
@@ -61,8 +67,7 @@ export const getChartMargins = (
     legendPosition?: 'top' | 'bottom' | 'right';
   } = {}
 ) => {
-  const { spacing } = chartTheme;
-  const baseMargin = { ...spacing.chartMargin };
+  const baseMargin = { ...chartTheme.spacing.margin };
   
   // Adjust bottom margin for X axis title or rotated labels
   if (options.hasXAxisTitle) {

@@ -1,3 +1,4 @@
+
 export interface ChartTheme {
   colors: {
     primary: string;
@@ -19,6 +20,11 @@ export interface ChartTheme {
       high: string;
       critical: string;
     };
+    lines?: {
+      freight: string;
+      cost: string;
+      risk: string;
+    };
   };
   typography: {
     fontFamily: string;
@@ -28,6 +34,11 @@ export interface ChartTheme {
       axis: number;
       label: number;
       tick: number;
+    };
+    sizes?: {
+      legend: number;
+      axis: number;
+      label: number;
     };
     fontWeight: {
       normal: number;
@@ -50,6 +61,12 @@ export interface ChartTheme {
       x: number;
       y: number;
     };
+    chartMargin?: {
+      top: number;
+      right: number;
+      bottom: number;
+      left: number;
+    };
   };
   grid: {
     stroke: string;
@@ -65,6 +82,12 @@ export interface ChartTheme {
   animation: {
     duration: number;
     easing: string;
+  };
+  axisTitle?: {
+    fontFamily: string;
+    fontSize: number;
+    fontWeight: number;
+    color: string;
   };
 }
 
@@ -99,6 +122,11 @@ export const lightTheme: ChartTheme = {
       high: '#ef4444',     // Red (High risk)
       critical: '#b91c1c',  // Dark red (Critical risk)
     },
+    lines: {
+      freight: '#3b82f6',  // Blue
+      cost: '#f59e0b',     // Amber
+      risk: '#ef4444',     // Red
+    },
   },
   typography: {
     fontFamily: 'Inter, system-ui, sans-serif',
@@ -108,6 +136,11 @@ export const lightTheme: ChartTheme = {
       axis: 14,
       label: 13,
       tick: 12,
+    },
+    sizes: {
+      legend: 14,
+      axis: 12,
+      label: 13,
     },
     fontWeight: {
       normal: 400,
@@ -130,6 +163,12 @@ export const lightTheme: ChartTheme = {
       x: 60,
       y: 60,
     },
+    chartMargin: {
+      top: 40,
+      right: 40,
+      bottom: 100,
+      left: 80,
+    },
   },
   grid: {
     stroke: '#e5e7eb',     // Gray 200
@@ -145,6 +184,12 @@ export const lightTheme: ChartTheme = {
   animation: {
     duration: 500,
     easing: 'ease',
+  },
+  axisTitle: {
+    fontFamily: 'Inter, system-ui, sans-serif',
+    fontSize: 12,
+    fontWeight: 500,
+    color: '#64748b',
   },
 };
 
@@ -166,6 +211,7 @@ export const darkTheme: ChartTheme = {
       '#60a5fa',  // Lighter Blue
       '#fb923c',  // Lighter Orange
     ],
+    lines: lightTheme.colors.lines,
   },
   grid: {
     stroke: '#374151',     // Gray 700

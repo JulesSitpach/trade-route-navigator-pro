@@ -34,7 +34,7 @@ export const ChartLegendContent = React.forwardRef<
           className
         )}
         style={{
-          fontSize: theme.typography.sizes.legend,
+          fontSize: theme.typography.fontSize.label,
           fontFamily: theme.typography.fontFamily,
         }}
       >
@@ -56,7 +56,7 @@ export const ChartLegendContent = React.forwardRef<
                 <div
                   className="h-2 w-2 shrink-0 rounded-[2px]"
                   style={{
-                    backgroundColor: item.color || theme.colors.primary[0],
+                    backgroundColor: item.color || theme.colors.primary,
                   }}
                 />
               )}

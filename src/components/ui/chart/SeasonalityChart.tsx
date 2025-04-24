@@ -24,7 +24,7 @@ export const SeasonalityChart: React.FC<SeasonalityChartProps> = ({
     >
       <LineChart
         data={data}
-        margin={chartTheme.spacing.chartMargin}
+        margin={chartTheme.spacing.margin}
       >
         <CartesianGrid 
           strokeDasharray="3 3" 
@@ -36,7 +36,7 @@ export const SeasonalityChart: React.FC<SeasonalityChartProps> = ({
           dataKey="month" 
           label={createAxisTitle("Month", "x")}
           tick={{ 
-            fontSize: chartTheme.typography.sizes.axis,
+            fontSize: chartTheme.typography.fontSize.axis,
             fill: chartTheme.colors.text 
           }}
         />
@@ -45,7 +45,7 @@ export const SeasonalityChart: React.FC<SeasonalityChartProps> = ({
           yAxisId="left"
           label={createAxisTitle("Freight Cost Index", "y")}
           tick={{ 
-            fontSize: chartTheme.typography.sizes.axis,
+            fontSize: chartTheme.typography.fontSize.axis,
             fill: chartTheme.colors.text 
           }}
         />
@@ -55,7 +55,7 @@ export const SeasonalityChart: React.FC<SeasonalityChartProps> = ({
           orientation="right"
           label={createAxisTitle("Risk/Congestion (%)", "y", { position: "insideRight" })}
           tick={{ 
-            fontSize: chartTheme.typography.sizes.axis,
+            fontSize: chartTheme.typography.fontSize.axis,
             fill: chartTheme.colors.text 
           }}
         />
@@ -67,7 +67,7 @@ export const SeasonalityChart: React.FC<SeasonalityChartProps> = ({
           yAxisId="left" 
           type="monotone" 
           dataKey="freight" 
-          stroke={chartTheme.colors.lines.freight} 
+          stroke={chartTheme.colors.lines?.freight || '#3b82f6'} 
           activeDot={{ r: 6 }} 
           name="Freight"
           strokeWidth={2}
@@ -77,7 +77,7 @@ export const SeasonalityChart: React.FC<SeasonalityChartProps> = ({
           yAxisId="right" 
           type="monotone" 
           dataKey="congestion" 
-          stroke={chartTheme.colors.lines.cost} 
+          stroke={chartTheme.colors.lines?.cost || '#f59e0b'} 
           activeDot={{ r: 6 }} 
           name="Congestion"
           strokeWidth={2}
@@ -87,7 +87,7 @@ export const SeasonalityChart: React.FC<SeasonalityChartProps> = ({
           yAxisId="right" 
           type="monotone" 
           dataKey="risk" 
-          stroke={chartTheme.colors.lines.risk} 
+          stroke={chartTheme.colors.lines?.risk || '#ef4444'} 
           activeDot={{ r: 6 }} 
           name="Risk"
           strokeWidth={2}

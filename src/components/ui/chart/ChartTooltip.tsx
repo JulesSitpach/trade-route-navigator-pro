@@ -88,7 +88,7 @@ export const ChartTooltipContent = React.forwardRef<
           className
         )}
         style={{
-          fontSize: theme.typography.sizes.label,
+          fontSize: theme.typography.fontSize.label,
           fontFamily: theme.typography.fontFamily,
           color: "#000000" // Black text color
         }}
@@ -98,7 +98,7 @@ export const ChartTooltipContent = React.forwardRef<
           {payload.map((item, index) => {
             const key = `${nameKey || item.name || item.dataKey || "value"}`
             const itemConfig = getPayloadConfigFromPayload(config, item, key)
-            const indicatorColor = color || item.payload.fill || item.color || theme.colors.primary[0]
+            const indicatorColor = color || item.payload.fill || item.color || theme.colors.primary
 
             return (
               <div
