@@ -10,7 +10,9 @@ import {
 } from "@/components/ui/chart";
 import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, ZAxis, Cell } from "recharts";
 import { chartConfig } from "./chartConfig";
-import { chartCommonConfig, formatCurrency } from "@/utils/chartUtils";
+import { chartCommonConfig } from "@/utils/chartUtils";
+import { chartTheme } from "@/components/ui/chart/chartTheme";
+import { formatCurrency } from "@/components/ui/chart/chartUtils";
 
 const RiskAssessmentMatrix = () => {
   // Sample risk assessment data

@@ -9,7 +9,7 @@ import {
   createAxisTitle,
   getChartMargins
 } from "@/components/ui/chart";
-import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Cell } from "recharts";
+import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Cell, ResponsiveContainer } from "recharts";
 import { chartConfig } from "./chartConfig";
 import { chartCommonConfig } from "@/utils/chartUtils";
 import { useTariffData } from "./tariff/useTariffData";
@@ -19,13 +19,13 @@ import TariffInsights from "./tariff/TariffInsights";
 const TariffHeatmap = () => {
   const { tariffData, getTariffColor } = useTariffData();
   
-  const margins = getChartMargins({
-    hasXAxisTitle: true,
-    hasYAxisTitle: true,
-    hasRotatedLabels: true,
-    hasLegend: true,
-    legendPosition: 'top'
-  });
+  // Enhanced margins to ensure X-axis labels are visible
+  const margins = {
+    top: 20,
+    right: 30,
+    bottom: 120, // Increased bottom margin for rotated country names
+    left: 60     // Increased left margin for Y-axis labels
+  };
 
   return (
     <div className="space-y-6">
@@ -38,18 +38,18 @@ const TariffHeatmap = () => {
       
       <Card>
         <CardContent className="p-6">
-          <div className="h-[450px]">
+          <div className="h-[500px]"> {/* Increased height for better visualization */}
             <ChartContainer 
               config={chartConfig} 
-              height={450}
+              height={500}
               title="Country Tariff Comparison"
-              subtitle="Bubble size represents trade volume"
+              subtitle="Bubble size represents trade volume - larger bubbles indicate higher volume"
             >
               <ScatterChart margin={margins}>
                 <CartesianGrid 
                   strokeDasharray={chartCommonConfig.grid.strokeDasharray}
                   stroke={chartCommonConfig.grid.stroke}
-                  strokeOpacity={chartCommonConfig.grid.strokeOpacity}
+                  opacity={0.2}
                 />
                 <ChartLegend 
                   content={<ChartLegendContent />}
@@ -62,25 +62,35 @@ const TariffHeatmap = () => {
                   type="category"
                   dataKey="country"
                   name="Country"
-                  tick={chartCommonConfig.axis.tick}
+                  tick={{
+                    fontSize: 12,
+                    angle: -45,
+                    textAnchor: 'end',
+                    dy: 10
+                  }}
                   axisLine={chartCommonConfig.axis.line}
                   tickLine={false}
-                  angle={-45}
-                  textAnchor="end"
                   height={100}
-                  label={createAxisTitle('Countries', 'x', { offset: 5, position: 'insideBottom' })}
-                  dy={10}
+                  interval={0} // Show all country names
+                  label={createAxisTitle('Countries', 'x', { offset: 70, position: 'insideBottom' })}
                 />
                 <YAxis
                   type="number"
                   dataKey="tariffRate"
                   name="Tariff Rate"
-                  tick={chartCommonConfig.axis.tick}
+                  tick={{
+                    fontSize: 12,
+                  }}
                   axisLine={chartCommonConfig.axis.line}
                   tickLine={false}
-                  label={createAxisTitle('Tariff Rate (%)', 'y', { offset: 10, position: 'insideLeft' })}
+                  domain={[0, 'dataMax + 2']} // Add some padding at the top
+                  label={createAxisTitle('Tariff Rate (%)', 'y', { offset: 45, position: 'insideLeft' })}
+                  tickFormatter={(value) => `${value}%`}
                 />
-                <ChartTooltip content={<ChartTooltipContent />} />
+                <ChartTooltip 
+                  content={<ChartTooltipContent />}
+                  cursor={{ strokeDasharray: '3 3' }}
+                />
                 <Scatter 
                   data={tariffData} 
                   fill="#8884d8"
@@ -91,7 +101,8 @@ const TariffHeatmap = () => {
                       fill={getTariffColor(entry.tariffRate)}
                       stroke={getTariffColor(entry.tariffRate)}
                       strokeWidth={1}
-                      radius={Math.sqrt(entry.volume) / 2}
+                      // Enhanced bubble sizing to make the volume representation clearer
+                      radius={Math.max(4, Math.sqrt(entry.volume) / 1.5)} 
                     />
                   ))}
                 </Scatter>
