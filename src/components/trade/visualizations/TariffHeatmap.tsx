@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { 
@@ -77,8 +78,9 @@ const TariffHeatmap = () => {
     const minVolume = Math.min(...tariffData.map(d => d.volume));
     const maxVolume = Math.max(...tariffData.map(d => d.volume));
     
-    const minRadius = 5;
-    const maxRadius = 20;
+    // Adjusted radius values for better visual balance
+    const minRadius = 4;
+    const maxRadius = 15;
     
     if (minVolume === maxVolume) return (minRadius + maxRadius) / 2;
     
