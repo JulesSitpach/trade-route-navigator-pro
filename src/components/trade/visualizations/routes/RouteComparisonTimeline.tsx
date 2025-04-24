@@ -2,16 +2,17 @@
 import React from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { 
-  ScatterChart, Scatter, XAxis, YAxis, ZAxis, 
+  BarChart, Bar, XAxis, YAxis, 
   CartesianGrid, Legend, Tooltip, ResponsiveContainer 
 } from 'recharts';
 import { RouteComparisonTooltip } from './RouteComparisonTooltip';
 
+// Updated data to match the image
 const data = [
-  { x: 0, y: 10, z: 200, name: 'Shanghai → LA → Chicago', shipping: 14, customs: 3, distribution: 4 },
-  { x: 1, y: 15, z: 260, name: 'Hong Kong → Seattle → Dallas', shipping: 16, customs: 4, distribution: 5 },
-  { x: 2, y: 8, z: 180, name: 'Shenzhen → Vancouver → Toronto', shipping: 12, customs: 2, distribution: 3 },
-  { x: 3, y: 20, z: 280, name: 'Guangzhou → Panama → Miami', shipping: 18, customs: 5, distribution: 6 },
+  { name: "Shanghai → Panama → LA → Chicago", shipping: 18, customs: 3, distribution: 3 },
+  { name: "Shanghai → LA → Chicago (Air)", shipping: 2, customs: 0.5, distribution: 0.5 },
+  { name: "Vietnam → Singapore → LA → Chicago", shipping: 22, customs: 2, distribution: 3 },
+  { name: "China → Mexico → US (USMCA)", shipping: 14, customs: 5, distribution: 2 },
 ];
 
 const RouteComparisonTimeline = () => {
@@ -20,7 +21,7 @@ const RouteComparisonTimeline = () => {
       <div className="space-y-2">
         <h3 className="text-lg font-semibold">Route Comparison Timeline</h3>
         <p className="text-sm text-muted-foreground">
-          Compare shipping routes based on duration and complexity
+          Compare transit times across different shipping routes and methods
         </p>
       </div>
 
@@ -28,46 +29,49 @@ const RouteComparisonTimeline = () => {
         <CardContent className="p-6">
           <div className="h-[450px]">
             <ResponsiveContainer width="100%" height="100%">
-              <ScatterChart
-                margin={{ top: 20, right: 30, bottom: 20, left: 30 }}
+              <BarChart
+                data={data}
+                margin={{ top: 20, right: 30, bottom: 60, left: 40 }}
+                barSize={32}
               >
                 <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
                 <XAxis 
-                  type="number" 
-                  dataKey="x" 
-                  name="Timeline" 
-                  tick={{fontSize: 12}}
-                  tickFormatter={(value) => `Week ${value + 1}`}
-                  label={{ value: 'Shipping Routes', position: 'insideBottom', offset: -10 }}
+                  dataKey="name"
+                  tick={{ fontSize: 12 }}
+                  height={80}
+                  angle={-35}
+                  textAnchor="end"
                 />
                 <YAxis 
-                  type="number" 
-                  dataKey="y" 
-                  name="Duration" 
-                  unit=" days"
-                  tick={{fontSize: 12}}
-                  label={{ value: 'Transit Days', position: 'insideLeft', angle: -90, offset: -15 }}
-                />
-                <ZAxis 
-                  type="number" 
-                  dataKey="z" 
-                  range={[60, 400]} 
-                  name="Volume" 
+                  label={{ value: 'Transit Days', angle: -90, position: 'insideLeft', offset: -5 }}
+                  tick={{ fontSize: 12 }}
                 />
                 <Tooltip content={<RouteComparisonTooltip />} />
                 <Legend 
-                  verticalAlign="top" 
-                  height={36}
+                  verticalAlign="top"
                   align="center"
+                  height={36}
                   wrapperStyle={{ paddingBottom: '20px' }}
                 />
-                <Scatter 
-                  name="Routes" 
-                  data={data} 
-                  fill="#3b82f6"
-                  shape="circle"
+                <Bar 
+                  dataKey="shipping" 
+                  stackId="a" 
+                  name="Shipping" 
+                  fill="#8884d8" 
                 />
-              </ScatterChart>
+                <Bar 
+                  dataKey="customs" 
+                  stackId="a" 
+                  name="Customs" 
+                  fill="#4caf50" 
+                />
+                <Bar 
+                  dataKey="distribution" 
+                  stackId="a" 
+                  name="Distribution" 
+                  fill="#2196f3" 
+                />
+              </BarChart>
             </ResponsiveContainer>
           </div>
         </CardContent>
