@@ -1,9 +1,10 @@
+
 import React from 'react';
 import { Card, CardContent } from "@/components/ui/card";
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from "recharts";
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
 import { chartConfig } from "./chartConfig";
 import { chartCommonConfig } from "@/utils/chartUtils";
-import { BarChart as BarChartIcon } from "lucide-react";
+import { BarChartIcon } from "lucide-react";
 import { RouteComparisonTooltip } from './routes/RouteComparisonTooltip';
 
 const RouteComparisonTimeline = () => {
@@ -39,16 +40,6 @@ const RouteComparisonTimeline = () => {
     }
   ];
 
-  // Define a default theme for axis titles
-  const axisTheme = {
-    fontFamily: 'inherit',
-    fontSize: '0.75rem',
-    fontWeight: 400,
-    color: '#64748b',
-    padding: 0,
-    offset: { x: 0, y: 0 }
-  };
-
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-2">
@@ -62,61 +53,63 @@ const RouteComparisonTimeline = () => {
       <Card>
         <CardContent className="p-6">
           <div className="h-[450px]">
-            <BarChart
-              data={routeData}
-              margin={chartCommonConfig.margins.withXLabels}
-              barSize={32}
-            >
-              <CartesianGrid 
-                strokeDasharray={chartCommonConfig.grid.strokeDasharray}
-                stroke={chartCommonConfig.grid.stroke}
-                opacity={chartCommonConfig.grid.opacity}
-              />
-              <Legend 
-                verticalAlign="top"
-                align="center"
-                height={36}
-                wrapperStyle={{ paddingBottom: '20px' }}
-              />
-              <XAxis 
-                dataKey="name"
-                tick={chartCommonConfig.axis.tick}
-                axisLine={chartCommonConfig.axis.line}
-                tickLine={false}
-                height={80}
-                angle={-35}
-                textAnchor="end"
-              />
-              <YAxis 
-                tickLine={false}
-                axisLine={chartCommonConfig.axis.line}
-                tick={chartCommonConfig.axis.tick}
-              />
-              <Tooltip 
-                content={<RouteComparisonTooltip />}
-              />
-              <Bar 
-                dataKey="shipping" 
-                stackId="a" 
-                name="Shipping" 
-                fill={chartConfig.primaryRoute.color}
-                radius={[4, 4, 0, 0]}
-              />
-              <Bar 
-                dataKey="customs" 
-                stackId="a" 
-                name="Customs" 
-                fill={chartConfig.customs.color}
-                radius={[4, 4, 0, 0]}
-              />
-              <Bar 
-                dataKey="distribution" 
-                stackId="a" 
-                name="Distribution" 
-                fill={chartConfig.lastMile.color}
-                radius={[4, 4, 0, 0]}
-              />
-            </BarChart>
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart
+                data={routeData}
+                margin={chartCommonConfig.margins.withXLabels}
+                barSize={32}
+              >
+                <CartesianGrid 
+                  strokeDasharray={chartCommonConfig.grid.strokeDasharray}
+                  stroke={chartCommonConfig.grid.stroke}
+                  opacity={chartCommonConfig.grid.opacity}
+                />
+                <Legend 
+                  verticalAlign="top"
+                  align="center"
+                  height={36}
+                  wrapperStyle={{ paddingBottom: '20px' }}
+                />
+                <XAxis 
+                  dataKey="name"
+                  tick={chartCommonConfig.axis.tick}
+                  axisLine={chartCommonConfig.axis.line}
+                  tickLine={false}
+                  height={80}
+                  angle={-35}
+                  textAnchor="end"
+                />
+                <YAxis 
+                  tickLine={false}
+                  axisLine={chartCommonConfig.axis.line}
+                  tick={chartCommonConfig.axis.tick}
+                />
+                <Tooltip 
+                  content={<RouteComparisonTooltip />}
+                />
+                <Bar 
+                  dataKey="shipping" 
+                  stackId="a" 
+                  name="Shipping" 
+                  fill={chartConfig.primaryRoute.color}
+                  radius={[4, 4, 0, 0]}
+                />
+                <Bar 
+                  dataKey="customs" 
+                  stackId="a" 
+                  name="Customs" 
+                  fill={chartConfig.customs.color}
+                  radius={[4, 4, 0, 0]}
+                />
+                <Bar 
+                  dataKey="distribution" 
+                  stackId="a" 
+                  name="Distribution" 
+                  fill={chartConfig.lastMile.color}
+                  radius={[4, 4, 0, 0]}
+                />
+              </BarChart>
+            </ResponsiveContainer>
           </div>
         </CardContent>
       </Card>
