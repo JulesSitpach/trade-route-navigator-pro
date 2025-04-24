@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Cell, Tooltip, ResponsiveContainer, ZAxis } from "recharts";
@@ -37,12 +36,12 @@ const TariffHeatmap = () => {
                       horizontal={true} 
                     />
                     <XAxis 
-                      type="category"
+                      type="category" 
                       dataKey="country"
                       name="Country"
-                      tick={(props) => <TariffAxisTick {...props} />}
-                      axisLine={{ stroke: '#e2e8f0' }}
+                      tick={TariffAxisTick}
                       tickLine={false}
+                      axisLine={false}
                       height={80}
                       interval={0}
                       label={createAxisTitle('Countries', 'x', { 
