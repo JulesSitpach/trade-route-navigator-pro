@@ -65,11 +65,13 @@ const RouteComparisonTimeline = () => {
                 data={routeData}
                 margin={chartCommonConfig.margins.withXLabels}
                 barSize={32}
+                background={{ fill: "transparent" }}
               >
                 <CartesianGrid 
                   strokeDasharray="4 4"
                   stroke="#e0e0e0"
                   opacity={0.3}
+                  vertical={false}
                 />
                 <Legend 
                   verticalAlign="top"
@@ -106,14 +108,14 @@ const RouteComparisonTimeline = () => {
                   stackId="a" 
                   name="Customs" 
                   fill={chartConfig.customs.color}
-                  radius={[4, 4, 0, 0]}
+                  radius={[0, 0, 0, 0]}
                 />
                 <Bar 
                   dataKey="distribution" 
                   stackId="a" 
                   name="Distribution" 
                   fill={chartConfig.lastMile.color}
-                  radius={[4, 4, 0, 0]}
+                  radius={[0, 0, 4, 4]}
                 />
               </BarChart>
             </ResponsiveContainer>
@@ -125,4 +127,3 @@ const RouteComparisonTimeline = () => {
 };
 
 export default RouteComparisonTimeline;
-
