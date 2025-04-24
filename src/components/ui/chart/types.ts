@@ -13,5 +13,18 @@ export type ChartContextProps = {
   config: ChartConfig
 }
 
+export type AxisTitleConfig = {
+  fontFamily: string;
+  fontSize: string;
+  fontWeight: number;
+  color: string;
+  padding: number;
+  offset: {
+    x: number;
+    y: number;
+  };
+}
+
 // Format: { THEME_NAME: CSS_SELECTOR }
 export const THEMES = { light: "", dark: ".dark" } as const
+
