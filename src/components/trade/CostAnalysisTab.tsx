@@ -1,10 +1,9 @@
-
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { CostItem } from "./shared/CostItem";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { requiredDocuments } from "./data/sampleData";
+import { requiredDocuments } from "./data";
 
 interface RequirementItemProps {
   label: string;
@@ -33,7 +32,6 @@ const CostAnalysisTab = () => {
     { label: "Other Taxes and Fees", value: "$180.00" }
   ]);
   
-  // Instead of hardcoding, use the data from sampleData.ts
   const [importRequirements, setImportRequirements] = useState(
     requiredDocuments.map(doc => ({
       label: doc.name,
@@ -48,7 +46,6 @@ const CostAnalysisTab = () => {
   const [totalLandedCost, setTotalLandedCost] = useState("$0.00");
 
   useEffect(() => {
-    // Calculate total from cost items
     const total = costItems.reduce((sum, item) => {
       const value = parseFloat(item.value.replace(/[$,]/g, '')) || 0;
       return sum + value;

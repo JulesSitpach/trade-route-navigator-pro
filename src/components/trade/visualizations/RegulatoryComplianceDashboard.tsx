@@ -3,7 +3,8 @@ import { useState, useEffect } from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { CheckCircle2, AlertCircle, Clock, HelpCircle } from "lucide-react";
-import { requiredDocuments, regulatoryTimeline } from '../data/sampleData';
+import { requiredDocuments } from '../data';
+import { regulatoryTimeline } from '../data';
 
 const RegulatoryComplianceDashboard = () => {
   const [completionRate, setCompletionRate] = useState(75);
