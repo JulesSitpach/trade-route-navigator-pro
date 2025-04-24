@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { 
@@ -158,15 +157,22 @@ const TariffHeatmap = () => {
             </ChartContainer>
           </div>
           
-          <ChartLegend>
-            <ChartLegendContent
-              payload={[
-                { value: 'Low Tariff (0-5%)', color: TARIFF_COLORS.low },
-                { value: 'Medium Tariff (6-15%)', color: TARIFF_COLORS.medium },
-                { value: `High Tariff (>15%)`, color: TARIFF_COLORS.high }
-              ]}
-            />
-          </ChartLegend>
+          <div className="flex justify-center mt-4">
+            <div className="flex items-center bg-gray-900 text-white px-4 py-2 rounded-md shadow-md text-sm">
+              <div className="flex items-center mr-4">
+                <div className="w-3 h-3 rounded-full mr-2" style={{ backgroundColor: TARIFF_COLORS.low }} />
+                <span>Low Tariff (0-5%)</span>
+              </div>
+              <div className="flex items-center mr-4">
+                <div className="w-3 h-3 rounded-full mr-2" style={{ backgroundColor: TARIFF_COLORS.medium }} />
+                <span>Medium Tariff (6-15%)</span>
+              </div>
+              <div className="flex items-center">
+                <div className="w-3 h-3 rounded-full mr-2" style={{ backgroundColor: TARIFF_COLORS.high }} />
+                <span>High Tariff ({'>'}15%)</span>
+              </div>
+            </div>
+          </div>
         </CardContent>
       </Card>
 
