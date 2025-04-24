@@ -1,4 +1,3 @@
-
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import AlternativeRoutes from './AlternativeRoutes';
 import TradeOpportunities from './TradeOpportunities';
@@ -7,7 +6,7 @@ import CostAnalysisTab from './trade/CostAnalysisTab';
 import RegulationsTab from './trade/RegulationsTab';
 import VisualizationsTab from './trade/VisualizationsTab';
 import { Route } from './trade/types';
-import { routes, opportunities } from './trade/data/sampleData';
+import { routes, opportunities } from './trade/data';
 
 const TradeAnalysis = ({ data }: { data: any }) => {
   // Use sample routes data from sampleData.ts file

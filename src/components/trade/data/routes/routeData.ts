@@ -1,4 +1,5 @@
-import { Route, TradeOpportunity, Document } from '../types';
+
+import { Route } from '../../types';
 
 export const routes: Route[] = [
   {
@@ -55,7 +56,7 @@ export const routes: Route[] = [
       customerExperience: 'Consistent delivery schedules enable reliable promises to customers'
     },
     complianceComplexity: {
-      level: 'Medium' as 'Low' | 'Medium' | 'High',
+      level: 'Medium',
       documentation: '5-7 documents required, standard filing process',
       simplificationPotential: 'AEO certification could streamline customs'
     }
@@ -114,96 +115,9 @@ export const routes: Route[] = [
       customerExperience: 'Enhanced customer satisfaction with rapid delivery options'
     },
     complianceComplexity: {
-      level: 'Low' as 'Low' | 'Medium' | 'High',
+      level: 'Low',
       documentation: '3-4 documents with expedited processing',
       simplificationPotential: 'Express customs clearance programs available'
     }
-  }
-];
-
-export const opportunities: TradeOpportunity[] = [
-  {
-    title: 'Alternative Origin: Vietnam Instead of China',
-    savings: '$3,125.00',
-    tags: ['Tariff Reduction', 'Lower Risk'],
-    description: 'Sourcing this product from Vietnam instead of China would reduce the tariff rate from 125% to 10%, resulting in significant savings on duty costs.',
-    currentRoute: 'China → US (125% tariff)',
-    alternativeRoute: 'Vietnam → US (10% tariff)',
-    type: 'savings' as const
-  },
-  {
-    title: 'Triangular Trade: China → Mexico → US',
-    savings: '$2,875.00',
-    tags: ['USMCA Advantage', 'Requires Processing'],
-    description: 'Import components from China to Mexico (15% tariff), perform sufficient processing to meet USMCA requirements, then export to US with 0% tariff.',
-    currentRoute: 'China → US (125% tariff)',
-    alternativeRoute: 'China → Mexico (15% tariff) → US (0% tariff under USMCA)',
-    type: 'savings' as const
-  }
-];
-
-export const requiredDocuments: Document[] = [
-  { name: 'Certificate of Origin', status: 'required' as const },
-  { name: 'Commercial Invoice', status: 'required' as const },
-  { name: 'Packing List', status: 'required' as const },
-  { name: 'Bill of Lading/Airway Bill', status: 'required' as const },
-  { name: 'Import/Export Licenses', status: 'warning' as const },
-  { name: 'Safety/Compliance Certifications', status: 'required' as const },
-  { name: 'Phytosanitary Certificate', status: 'not-required' as const }
-];
-
-export const regulatoryTimeline = [
-  { stage: 'Pre-shipment', documents: ['Certificate of Origin', 'Commercial Invoice', 'Export Licenses'], deadline: '14 days before departure' },
-  { stage: 'During Transit', documents: ['Bill of Lading', 'Packing List'], deadline: 'Must accompany shipment' },
-  { stage: 'Upon Arrival', documents: ['Import Licenses', 'Compliance Certifications'], deadline: 'Required for customs clearance' },
-  { stage: 'Post-clearance', documents: ['Post-import Verification', 'Recordkeeping'], deadline: 'Within 30 days after clearance' }
-];
-
-export const countryRequirements = [
-  {
-    country: 'United States',
-    requirements: [
-      'FDA registration for food products',
-      'Electronic cargo information submission 24hrs before loading',
-      'ISF filing required',
-      'English labeling mandatory'
-    ]
-  },
-  {
-    country: 'European Union',
-    requirements: [
-      'CE marking for applicable products',
-      'REACH compliance for chemicals',
-      'GDPR compliance for consumer data',
-      'Country of origin marking in local language'
-    ]
-  }
-];
-
-export const permitGuidance = [
-  {
-    permit: 'Import License',
-    processingTime: '10-15 business days',
-    fee: '$150-$300',
-    documentation: ['Business registration', 'Product specifications', 'End-user statement']
-  },
-  {
-    permit: 'Customs Bond',
-    processingTime: '3-5 business days',
-    fee: '0.5% of shipment value (minimum $100)',
-    documentation: ['Company financial statements', 'Surety approval']
-  }
-];
-
-export const regulatoryUpdates = [
-  {
-    date: 'January 2025',
-    title: 'New Electronic Documentation System',
-    description: 'All import documentation must be submitted through the new government electronic portal.'
-  },
-  {
-    date: 'March 2025',
-    title: 'Revised Tariff Schedule',
-    description: 'Tariff rates for electronic components will increase by 5% under new trade agreement provisions.'
   }
 ];
