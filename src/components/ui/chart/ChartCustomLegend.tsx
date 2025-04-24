@@ -3,8 +3,9 @@ import { LegendProps } from 'recharts';
 import { legendStyles } from './theme/commonStyles';
 
 export const ChartCustomLegend = (props: LegendProps & {
-  verticalAlign?: string;
-  align?: string;
+  layout?: 'horizontal' | 'vertical';
+  verticalAlign?: 'top' | 'middle' | 'bottom';
+  align?: 'left' | 'center' | 'right';
   height?: number;
   wrapperStyle?: React.CSSProperties;
 }) => {
@@ -35,4 +36,3 @@ export const ChartCustomLegend = (props: LegendProps & {
     </div>
   );
 };
-

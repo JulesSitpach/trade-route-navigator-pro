@@ -19,8 +19,8 @@ export const SeasonalityChart: React.FC<SeasonalityChartProps> = ({
   legendProps 
 }) => {
   const defaultLegendProps = {
-    verticalAlign: "top", 
-    align: "center",
+    verticalAlign: "top" as const, 
+    align: "center" as const,
     height: 36,
     wrapperStyle: { paddingBottom: '20px' }
   };
@@ -116,4 +116,3 @@ export const SeasonalityChart: React.FC<SeasonalityChartProps> = ({
     </BaseChart>
   );
 };
-

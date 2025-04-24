@@ -22,10 +22,10 @@ export interface SeasonalityChartProps {
   title?: string;
   subtitle?: string;
   legendProps?: {
-    verticalAlign?: string;
-    align?: string;
+    layout?: 'horizontal' | 'vertical';
+    verticalAlign?: 'top' | 'middle' | 'bottom';
+    align?: 'left' | 'center' | 'right';
     height?: number;
     wrapperStyle?: React.CSSProperties;
   };
 }
-
