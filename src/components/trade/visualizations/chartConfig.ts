@@ -1,85 +1,87 @@
 
 import { ChartConfig } from "@/components/ui/chart";
+import { chartTheme } from "@/utils/chartTheme";
 
 // Define colors for various chart elements
 export const chartConfig: ChartConfig = {
   freight: {
     label: "Freight",
-    color: "#8B5CF6", // Vivid Purple
+    color: chartTheme.colors.categorical.freight,
   },
   insurance: {
     label: "Insurance",
-    color: "#D946EF", // Magenta Pink
+    color: chartTheme.colors.categorical.insurance,
   },
   customs: {
     label: "Customs",
-    color: "#F97316", // Bright Orange
+    color: chartTheme.colors.categorical.customs,
   },
   handling: {
     label: "Handling",
-    color: "#0EA5E9", // Ocean Blue
+    color: chartTheme.colors.categorical.handling,
   },
   documentation: {
     label: "Documentation",
-    color: "#6B7280", // Gray
+    color: chartTheme.colors.categorical.documentation,
   },
   warehouse: {
     label: "Warehousing",
-    color: "#10B981", // Green
+    color: chartTheme.colors.primary[2],
   },
   lastMile: {
     label: "Last Mile",
-    color: "#FBBF24", // Yellow
+    color: chartTheme.colors.categorical.lastMile,
   },
   compliance: {
     label: "Compliance",
-    color: "#6366F1", // Indigo
+    color: chartTheme.colors.categorical.compliance,
   },
   risk: {
     label: "Risk",
-    color: "#EF4444", // Red
+    color: chartTheme.colors.lines.risk,
   },
   // Risk levels
   highRisk: {
     label: "High Risk",
-    color: "#EF4444", // Red
+    color: chartTheme.colors.risk.high,
   },
   mediumRisk: {
     label: "Medium Risk",
-    color: "#F97316", // Orange
+    color: chartTheme.colors.risk.medium,
   },
   lowRisk: {
     label: "Low Risk",
-    color: "#22C55E", // Green
+    color: chartTheme.colors.risk.low,
   },
   // Time periods
   q1: {
     label: "Q1",
-    color: "#8B5CF6", // Purple
+    color: chartTheme.colors.primary[0],
   },
   q2: {
     label: "Q2",
-    color: "#0EA5E9", // Blue
+    color: chartTheme.colors.primary[3],
   },
   q3: {
     label: "Q3",
-    color: "#22C55E", // Green
+    color: chartTheme.colors.primary[2],
   },
   q4: {
     label: "Q4",
-    color: "#F97316", // Orange
+    color: chartTheme.colors.primary[1],
   },
   // Routes
   primaryRoute: {
     label: "Primary Route",
-    color: "#8B5CF6", // Purple
+    color: chartTheme.colors.primary[0],
   },
   secondaryRoute: {
     label: "Secondary Route",
-    color: "#0EA5E9", // Blue
+    color: chartTheme.colors.primary[3],
   },
   alternativeRoute: {
     label: "Alternative Route",
-    color: "#22C55E", // Green
+    color: chartTheme.colors.primary[2],
   }
 };
+

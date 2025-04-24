@@ -1,16 +1,12 @@
+
+import { chartTheme } from './chartTheme';
+
 // Common chart configuration settings
 export const chartCommonConfig = {
   margins: {
-    default: {
-      top: 60, // Increased top margin for legend
-      right: 30,
-      left: 60, // Increased left margin for y-axis label
-      bottom: 60 // Increased bottom margin for x-axis label
-    },
+    default: chartTheme.spacing.chartMargin,
     withXLabels: {
-      top: 60,
-      right: 30,
-      left: 60,
+      ...chartTheme.spacing.chartMargin,
       bottom: 80 // Extra space for rotated x-axis labels
     }
   },
@@ -21,28 +17,28 @@ export const chartCommonConfig = {
     }
   },
   grid: {
-    strokeDasharray: "3 3",
+    strokeDasharray: chartTheme.grid.strokeDasharray,
     strokeOpacity: 0.15,
-    stroke: "#8E9196",
+    stroke: chartTheme.grid.stroke,
     vertical: true,
     horizontal: true
   },
   axis: {
     tick: {
-      fontSize: 12,
-      fill: "#8E9196",
-      fontWeight: 400,
-      dy: 8
+      fontSize: parseInt(chartTheme.typography.sizes.axis),
+      fill: chartTheme.colors.text,
+      fontWeight: chartTheme.typography.weights.normal,
+      dy: chartTheme.spacing.tickSize
     },
     label: {
-      fontSize: 13,
-      fill: "#403E43",
-      fontWeight: 500,
-      offset: 45,
-      margin: 10
+      fontSize: parseInt(chartTheme.typography.sizes.label),
+      fill: chartTheme.colors.text,
+      fontWeight: chartTheme.typography.weights.medium,
+      offset: chartTheme.spacing.axisOffset,
+      margin: chartTheme.spacing.chartPadding
     },
     line: {
-      stroke: "#E5E7EB",
+      stroke: chartTheme.colors.axisLine,
       strokeWidth: 1
     },
     format: {
@@ -53,11 +49,11 @@ export const chartCommonConfig = {
   },
   tooltip: {
     style: {
-      background: "#ffffff",
-      border: "1px solid rgba(0,0,0,0.1)",
-      borderRadius: "6px",
-      padding: "8px 12px",
-      boxShadow: "0 2px 4px rgba(0,0,0,0.1)"
+      background: chartTheme.tooltip.background,
+      border: chartTheme.tooltip.border,
+      borderRadius: chartTheme.tooltip.borderRadius,
+      padding: chartTheme.tooltip.padding,
+      boxShadow: chartTheme.tooltip.boxShadow
     }
   }
 };
@@ -72,11 +68,12 @@ export const formatters = {
 // Common chart dimensions
 export const chartDimensions = {
   height: {
-    default: 350, // Reduced from 400 for better window fit
-    large: 450    // Reduced from 500 for better window fit
+    default: 350,
+    large: 450
   },
   pieChart: {
-    innerRadius: 60,  // Adjusted for better proportions
-    outerRadius: 120  // Adjusted for better proportions
+    innerRadius: 60,
+    outerRadius: 120
   }
 };
+
