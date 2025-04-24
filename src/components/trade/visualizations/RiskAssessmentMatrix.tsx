@@ -22,23 +22,25 @@ const RiskAssessmentMatrix = () => {
   // Function to determine color based on risk level
   const getRiskColor = (riskLevel: string) => {
     switch(riskLevel) {
-      case "high": return "#ea384c";
-      case "medium": return "#f97316";
-      case "low": return "#22c55e";
+      case "high": return chartConfig.highRisk.color;
+      case "medium": return chartConfig.mediumRisk.color;
+      case "low": return chartConfig.lowRisk.color;
       default: return "#ccc";
     }
   };
 
   return (
-    <div className="space-y-4">
-      <h3 className="text-lg font-medium">Risk Assessment Matrix</h3>
-      <p className="text-sm text-muted-foreground mb-4">
-        Compare routes based on cost vs. risk factors to find your optimal balance
-      </p>
+    <div className="space-y-6">
+      <div className="space-y-2">
+        <h3 className="text-lg font-semibold">Risk Assessment Matrix</h3>
+        <p className="text-sm text-muted-foreground">
+          Compare routes based on cost vs. risk factors to find your optimal balance
+        </p>
+      </div>
       
-      <Card>
-        <CardContent className="p-4">
-          <div style={{ height: chartDimensions.height.default }} className="flex justify-center">
+      <Card className="overflow-hidden">
+        <CardContent className="p-6">
+          <div className="h-[450px]">
             <ChartContainer config={chartConfig}>
               <ScatterChart margin={chartCommonConfig.margins.withXLabels}>
                 <CartesianGrid 
@@ -82,18 +84,14 @@ const RiskAssessmentMatrix = () => {
                   range={[60, 200]}
                   name="Reliability"
                 />
-                <ChartTooltip
-                  cursor={false}
-                  content={<ChartTooltipContent />}
-                />
-                <Scatter 
-                  data={riskData}
-                  shape="circle"
-                >
+                <ChartTooltip content={<ChartTooltipContent />} />
+                <Scatter data={riskData}>
                   {riskData.map((entry, index) => (
-                    <Cell 
-                      key={`cell-${index}`} 
+                    <Cell
+                      key={`cell-${index}`}
                       fill={getRiskColor(entry.riskLevel)}
+                      stroke={getRiskColor(entry.riskLevel)}
+                      strokeWidth={1}
                     />
                   ))}
                 </Scatter>
@@ -105,15 +103,15 @@ const RiskAssessmentMatrix = () => {
 
       <div className="flex items-center justify-center gap-8 mt-6">
         <div className="flex items-center gap-2">
-          <div className="w-3 h-3 rounded-full" style={{ backgroundColor: "#22c55e" }}></div>
+          <div className="w-3 h-3 rounded-full" style={{ backgroundColor: chartConfig.lowRisk.color }}></div>
           <span className="text-sm text-muted-foreground">Low Risk</span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-3 h-3 rounded-full" style={{ backgroundColor: "#f97316" }}></div>
+          <div className="w-3 h-3 rounded-full" style={{ backgroundColor: chartConfig.mediumRisk.color }}></div>
           <span className="text-sm text-muted-foreground">Medium Risk</span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-3 h-3 rounded-full" style={{ backgroundColor: "#ea384c" }}></div>
+          <div className="w-3 h-3 rounded-full" style={{ backgroundColor: chartConfig.highRisk.color }}></div>
           <span className="text-sm text-muted-foreground">High Risk</span>
         </div>
       </div>
