@@ -1,11 +1,13 @@
-
 import React from 'react';
 import { Card, CardContent } from "@/components/ui/card";
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
+import { 
+  BarChart, Bar, XAxis, YAxis, 
+  CartesianGrid, Legend, Tooltip, ResponsiveContainer 
+} from 'recharts';
+import { RouteComparisonTooltip } from './RouteComparisonTooltip';
+import { BarChartIcon } from "lucide-react";
 import { chartConfig } from "./chartConfig";
 import { chartCommonConfig } from "@/utils/chartUtils";
-import { BarChartIcon } from "lucide-react";
-import { RouteComparisonTooltip } from './routes/RouteComparisonTooltip';
 
 const RouteComparisonTimeline = () => {
   // Sample route comparison data with simplified names
@@ -122,4 +124,3 @@ const RouteComparisonTimeline = () => {
 };
 
 export default RouteComparisonTimeline;
-
