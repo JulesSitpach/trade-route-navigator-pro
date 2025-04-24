@@ -12,9 +12,11 @@ import { chartConfig } from "./chartConfig";
 import { chartCommonConfig } from "@/utils/chartUtils";
 import { LineChart as LineChartIcon } from "lucide-react";
 import { useChartResponsive } from "@/hooks/use-chart-responsive";
+import { useChartResponsiveStyles } from "@/hooks/use-chart-responsive-styles";
 
 const SeasonalityGraph = () => {
   const { margins, tickCount, legendPosition } = useChartResponsive();
+  const styles = useChartResponsiveStyles();
   
   const seasonalityData = [
     { month: "Jan", freight: 100, congestion: 40, risk: 30 },
@@ -55,7 +57,7 @@ const SeasonalityGraph = () => {
                   <CartesianGrid 
                     strokeDasharray={chartCommonConfig.grid.strokeDasharray}
                     stroke={chartCommonConfig.grid.stroke}
-                    strokeOpacity={chartCommonConfig.grid.strokeOpacity}
+                    strokeOpacity={styles.gridOpacity}
                   />
                   <ChartLegend 
                     content={<ChartLegendContent />}
@@ -98,9 +100,9 @@ const SeasonalityGraph = () => {
                     dataKey="freight"
                     name="Freight"
                     stroke={chartConfig.freight.color}
-                    strokeWidth={2}
-                    dot={{ fill: chartConfig.freight.color, r: 4 }}
-                    activeDot={{ r: 6 }}
+                    strokeWidth={styles.strokeWidth}
+                    dot={{ fill: chartConfig.freight.color, r: styles.dot.radius }}
+                    activeDot={{ r: styles.dot.activeRadius }}
                   />
                   <Line
                     yAxisId="right"
@@ -108,8 +110,8 @@ const SeasonalityGraph = () => {
                     dataKey="congestion"
                     name="Congestion"
                     stroke={chartConfig.handling.color}
-                    strokeWidth={2}
-                    dot={{ fill: chartConfig.handling.color, r: 4 }}
+                    strokeWidth={styles.strokeWidth}
+                    dot={{ fill: chartConfig.handling.color, r: styles.dot.radius }}
                   />
                   <Line
                     yAxisId="right"
@@ -117,8 +119,8 @@ const SeasonalityGraph = () => {
                     dataKey="risk"
                     name="Risk"
                     stroke={chartConfig.risk.color}
-                    strokeWidth={2}
-                    dot={{ fill: chartConfig.risk.color, r: 4 }}
+                    strokeWidth={styles.strokeWidth}
+                    dot={{ fill: chartConfig.risk.color, r: styles.dot.radius }}
                   />
                 </LineChart>
               </ResponsiveContainer>
