@@ -24,7 +24,7 @@ const CustomXAxisTick = (props: any) => {
       <text 
         x={0} 
         y={0} 
-        dy={10} 
+        dy={16} 
         textAnchor="end" 
         fill="#666"
         fontSize={12}
@@ -41,10 +41,10 @@ const TariffHeatmap = () => {
   
   // Enhanced margins to ensure X-axis labels are visible
   const margins = {
-    top: 20,
+    top: 30,    // Increased top margin for legend
     right: 30,
-    bottom: 120, // Increased bottom margin for rotated country names
-    left: 60     // Increased left margin for Y-axis labels
+    bottom: 100, // Increased for rotated X-axis labels
+    left: 70     // Increased left margin for Y-axis labels
   };
 
   return (
@@ -71,13 +71,6 @@ const TariffHeatmap = () => {
                   stroke={chartCommonConfig.grid.stroke}
                   opacity={0.2}
                 />
-                <ChartLegend 
-                  content={<ChartLegendContent />}
-                  verticalAlign="top"
-                  align="center"
-                  layout="horizontal"
-                  wrapperStyle={{ paddingBottom: "20px" }}
-                />
                 <XAxis 
                   type="category"
                   dataKey="country"
@@ -85,8 +78,8 @@ const TariffHeatmap = () => {
                   tick={<CustomXAxisTick />} 
                   axisLine={chartCommonConfig.axis.line}
                   tickLine={false}
-                  height={100}
-                  interval={0} // Show all country names
+                  height={90}    // Increased height for X-axis
+                  interval={0}   // Show all country names
                   label={createAxisTitle('Countries', 'x', { offset: 70, position: 'insideBottom' })}
                 />
                 <YAxis
@@ -101,6 +94,14 @@ const TariffHeatmap = () => {
                   domain={[0, 'dataMax + 2']} // Add some padding at the top
                   label={createAxisTitle('Tariff Rate (%)', 'y', { offset: 45, position: 'insideLeft' })}
                   tickFormatter={(value) => `${value}%`}
+                  width={60}    // Added width to ensure Y-axis labels fit
+                />
+                <ChartLegend 
+                  content={<ChartLegendContent />}
+                  verticalAlign="top"
+                  align="center"
+                  layout="horizontal"
+                  wrapperStyle={{ paddingBottom: "10px" }}
                 />
                 <ChartTooltip 
                   content={<ChartTooltipContent />}
