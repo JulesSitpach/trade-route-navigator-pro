@@ -180,6 +180,9 @@ export const darkTheme: ChartTheme = {
   },
 };
 
+// Export chartTheme as lightTheme for backward compatibility
+export const chartTheme = lightTheme;
+
 // Export a function to get appropriate theme based on mode
 export const getChartTheme = (mode: 'light' | 'dark' = 'light'): ChartTheme => {
   return mode === 'dark' ? darkTheme : lightTheme;
@@ -303,6 +306,7 @@ export const commonChartConfig = (mode: 'light' | 'dark' = 'light') => {
 export default {
   lightTheme,
   darkTheme,
+  chartTheme,
   getChartTheme,
   getMargins,
   chartElements,

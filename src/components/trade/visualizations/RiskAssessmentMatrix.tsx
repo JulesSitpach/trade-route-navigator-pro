@@ -1,4 +1,3 @@
-
 import { Card, CardContent } from "@/components/ui/card";
 import { 
   ChartContainer, 
@@ -11,7 +10,7 @@ import {
 import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, ZAxis, Cell } from "recharts";
 import { chartConfig } from "./chartConfig";
 import { chartCommonConfig } from "@/utils/chartUtils";
-import { chartTheme } from "@/components/ui/chart/chartTheme";
+import { lightTheme } from "@/components/ui/chart/chartTheme";
 import { formatCurrency } from "@/components/ui/chart/chartUtils";
 
 const RiskAssessmentMatrix = () => {
@@ -67,7 +66,7 @@ const RiskAssessmentMatrix = () => {
                   tickFormatter={(value) => formatCurrency(value)}
                   tick={{
                     fontSize: 12,
-                    fill: chartTheme.colors.text,
+                    fill: lightTheme.colors.text,
                   }}
                   axisLine={chartCommonConfig.axis.line}
                   tickLine={false}
@@ -81,7 +80,7 @@ const RiskAssessmentMatrix = () => {
                   tickCount={6}
                   tick={{
                     fontSize: 12,
-                    fill: chartTheme.colors.text,
+                    fill: lightTheme.colors.text,
                   }}
                   axisLine={chartCommonConfig.axis.line}
                   tickLine={false}
@@ -96,7 +95,7 @@ const RiskAssessmentMatrix = () => {
                 <ChartTooltip content={<ChartTooltipContent />} />
                 <Scatter 
                   data={riskData}
-                  fill={chartTheme.colors.primary[0]}
+                  fill={lightTheme.colors.primary[0]}
                 >
                   {riskData.map((entry, index) => (
                     <Cell

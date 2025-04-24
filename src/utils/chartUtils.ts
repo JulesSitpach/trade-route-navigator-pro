@@ -1,5 +1,5 @@
 
-import { chartTheme } from '@/components/ui/chart/chartTheme';
+import { lightTheme } from '@/components/ui/chart/chartTheme';
 import { getChartTheme, getMargins } from '@/components/ui/chart/chartTheme';
 
 // Common chart configuration settings
@@ -15,9 +15,9 @@ export const chartCommonConfig = {
     }
   },
   grid: {
-    strokeDasharray: chartTheme.grid.strokeDasharray,
-    strokeOpacity: chartTheme.grid.opacity,
-    stroke: chartTheme.grid.stroke,
+    strokeDasharray: lightTheme.grid.strokeDasharray,
+    strokeOpacity: lightTheme.grid.opacity,
+    stroke: lightTheme.grid.stroke,
     vertical: true,
     horizontal: true
   },
