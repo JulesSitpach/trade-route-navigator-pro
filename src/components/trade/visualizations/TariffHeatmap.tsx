@@ -58,9 +58,9 @@ const CustomXAxisTick = (props: any) => {
 };
 
 const TARIFF_COLORS = {
-  low: "#10b981",    // Green color for low tariffs
-  medium: "#f59e0b", // Amber color for medium tariffs
-  high: "#ef4444"    // Red color for high tariffs
+  low: "#22c55e",    // Green-500
+  medium: "#f59e0b", // Amber-500
+  high: "#ef4444"    // Red-500
 };
 
 const getTariffColor = (tariffRate: number): string => {
@@ -160,20 +160,27 @@ const TariffHeatmap = () => {
             </ChartContainer>
           </div>
           
-          <div className="flex justify-center mt-4">
-            <div className="flex items-center bg-gray-900 text-white px-4 py-2 rounded-md shadow-md text-sm">
-              <div className="flex items-center mr-4">
-                <div className="w-3 h-3 rounded-full mr-2" style={{ backgroundColor: TARIFF_COLORS.low }} />
-                <span>Low Tariff (0-5%)</span>
-              </div>
-              <div className="flex items-center mr-4">
-                <div className="w-3 h-3 rounded-full mr-2" style={{ backgroundColor: TARIFF_COLORS.medium }} />
-                <span>Medium Tariff (6-15%)</span>
-              </div>
-              <div className="flex items-center">
-                <div className="w-3 h-3 rounded-full mr-2" style={{ backgroundColor: TARIFF_COLORS.high }} />
-                <span>High Tariff ({'>'}15%)</span>
-              </div>
+          <div className="flex justify-center mt-4 space-x-6">
+            <div className="flex items-center">
+              <div 
+                className="w-3 h-3 rounded-sm mr-2"
+                style={{ backgroundColor: TARIFF_COLORS.low }}
+              />
+              <span className="text-sm">Low Tariff (0-5%)</span>
+            </div>
+            <div className="flex items-center">
+              <div 
+                className="w-3 h-3 rounded-sm mr-2"
+                style={{ backgroundColor: TARIFF_COLORS.medium }}
+              />
+              <span className="text-sm">Medium Tariff (6-15%)</span>
+            </div>
+            <div className="flex items-center">
+              <div 
+                className="w-3 h-3 rounded-sm mr-2"
+                style={{ backgroundColor: TARIFF_COLORS.high }}
+              />
+              <span className="text-sm">High Tariff ({'>'}15%)</span>
             </div>
           </div>
         </CardContent>
