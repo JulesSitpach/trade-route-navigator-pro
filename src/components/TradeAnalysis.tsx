@@ -86,6 +86,42 @@ const sampleRoutes: Route[] = [
       flexiblePickup: true,
       lowerMinimumQuantity: false
     },
+    emergingMarkets: {
+      hubs: ["Singapore", "Rotterdam", "Hamburg"],
+      growthPotential: "Strong potential in Western European markets",
+      economicZones: ["Singapore FTZ", "Rotterdam Port Zone", "Berlin-Brandenburg"],
+      competitorAnalysis: "High competition in established route"
+    },
+    financialConsiderations: {
+      cashFlowImpact: "Longer transit allows for improved cash flow management",
+      paymentTerms: "Net 45-60 available with some carriers",
+      tradeFinance: "Multiple financing options via European banks",
+      currencyExchange: "Multiple currency exchanges may impact costs"
+    },
+    riskMitigation: {
+      insuranceOptions: ["Standard maritime insurance", "Comprehensive coverage"],
+      backupRoutes: ["Air freight option for urgent cases", "Alternative ports in Hamburg"],
+      splitShipment: true,
+      coverageComparison: "15% premium for delays coverage"
+    },
+    partnerships: {
+      distributors: ["European Distribution Network", "German Logistics Partners"],
+      warehousing: ["Rotterdam Harbor Storage", "Berlin Central Hub"],
+      fulfillment: ["EU Fulfillment Services", "German Distribution GmbH"],
+      lastMile: ["DHL", "European Courier Services"]
+    },
+    scalingConsiderations: {
+      growthAccommodation: "Established route with excellent scaling options",
+      volumeThresholds: "5+ containers monthly for preferential rates",
+      peakSeasonFlexibility: "Good availability year-round",
+      infrastructureDevelopment: "New automated terminal in Rotterdam opening Q1 2026"
+    },
+    competitiveAdvantages: {
+      positioningStrategy: "Access to key European markets",
+      speedToMarket: "Reliable delivery windows for European distribution",
+      uniqueAccess: "Strong connections to German distribution network",
+      customerExperience: "End-to-end tracking with multilingual support"
+    },
     complianceComplexity: {
       level: 'High',
       documentation: "Complex documentation with multiple customs clearances",
