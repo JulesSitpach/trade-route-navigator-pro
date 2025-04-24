@@ -3,6 +3,7 @@ import { useState, useRef } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
+import { ChartBar } from 'lucide-react';
 import ProductDetailsForm from './ProductDetailsForm';
 import ShippingDetailsForm from './ShippingDetailsForm';
 import TradeAnalysis from './TradeAnalysis';
@@ -31,6 +32,8 @@ const TradeNavigator = () => {
       ...prev,
       product: { ...prev.product, ...productData }
     }));
+    // Hide analysis when inputs change
+    if (showAnalysis) setShowAnalysis(false);
   };
 
   const handleShippingDetailsChange = (shippingData: any) => {
@@ -38,6 +41,24 @@ const TradeNavigator = () => {
       ...prev,
       shipping: { ...prev.shipping, ...shippingData }
     }));
+    // Hide analysis when inputs change
+    if (showAnalysis) setShowAnalysis(false);
+  };
+
+  const handleCalculateAnalysis = () => {
+    setShowAnalysis(true);
+    toast({
+      title: "Analysis Generated",
+      description: "Your trade analysis has been calculated successfully.",
+      duration: 3000
+    });
+    
+    // Scroll to analysis after short delay to ensure it's rendered
+    setTimeout(() => {
+      if (analysisRef.current) {
+        analysisRef.current.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 100);
   };
 
   return (
@@ -61,10 +82,25 @@ const TradeNavigator = () => {
         <Card className="shadow-lg">
           <ShippingDetailsForm onChange={handleShippingDetailsChange} />
         </Card>
+        
+        <div className="flex justify-center">
+          <Button 
+            onClick={handleCalculateAnalysis} 
+            className="bg-[#3A4756] hover:bg-[#2A3746] text-white px-8 py-6"
+            size="lg"
+          >
+            <ChartBar className="mr-2" />
+            Calculate Trade Analysis
+          </Button>
+        </div>
 
-        <Card className="shadow-lg">
-          <TradeAnalysis data={formData} />
-        </Card>
+        {showAnalysis && (
+          <div ref={analysisRef}>
+            <Card className="shadow-lg">
+              <TradeAnalysis data={formData} />
+            </Card>
+          </div>
+        )}
 
         <PropDebugger 
           componentProps={formData} 
