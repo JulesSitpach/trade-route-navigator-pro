@@ -184,12 +184,6 @@ const RiskAssessmentMatrix = () => {
         showInConsole={true} 
         customTitle="Tooltip Styles" 
       />
-      
-      <StyleDebugger 
-        targetSelector=".recharts-legend-wrapper" 
-        showInConsole={true} 
-        customTitle="Legend Styles" 
-      />
     </div>
   );
 };
