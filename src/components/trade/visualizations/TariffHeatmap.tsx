@@ -8,7 +8,7 @@ import {
   ChartLegend,
   ChartLegendContent
 } from "@/components/ui/chart";
-import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Cell, Tooltip, ZAxis } from "recharts";
+import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Cell, Tooltip } from "recharts";
 import { chartConfig } from "./chartConfig";
 import { useTariffData } from "./tariff/useTariffData";
 import TariffInsights from "./tariff/TariffInsights";
@@ -70,30 +70,23 @@ const getTariffColor = (tariffRate: number): string => {
   return TARIFF_COLORS.high;
 };
 
-// Custom shape renderer for the scatter points - creates circles with dynamic sizes
-const CustomBubble = (props: any) => {
-  const { cx, cy, fill, payload } = props;
-  
-  // Calculate radius based on trade volume with enhanced differentiation
-  // Using a stronger logarithmic scale with adjustable base
-  const base = 1.5; // Adjusts contrast between sizes
-  const minRadius = 5;
-  const maxRadius = 60;
-  
-  // Custom scaling function for better visual differentiation
-  const scale = (value: number) => {
-    const logValue = Math.log(value) / Math.log(base);
-    return minRadius + logValue * 3; // Multiply by 3 for more pronounced differences
-  };
-  
-  const radius = scale(payload.volume);
-  
-  return <circle cx={cx} cy={cy} r={radius} fill={fill} stroke={fill} strokeOpacity={0.7} fillOpacity={0.7} />;
-};
-
 const TariffHeatmap = () => {
   const { tariffData } = useTariffData();
   const margins = getChartMargins('scatter');
+  
+  const calculateBubbleSize = (volume: number): number => {
+    const minVolume = Math.min(...tariffData.map(d => d.volume));
+    const maxVolume = Math.max(...tariffData.map(d => d.volume));
+    
+    // Adjusted radius values for better visual balance
+    const minRadius = 4;
+    const maxRadius = 15;
+    
+    if (minVolume === maxVolume) return (minRadius + maxRadius) / 2;
+    
+    const scale = (volume - minVolume) / (maxVolume - minVolume);
+    return minRadius + scale * (maxRadius - minRadius);
+  };
 
   return (
     <div className="space-y-6">
@@ -151,17 +144,14 @@ const TariffHeatmap = () => {
                   padding={{ top: 20, bottom: 20 }}
                 />
                 <Tooltip content={<CustomTooltipContent />} cursor={{ strokeDasharray: '3 3' }} />
-                <Scatter 
-                  data={tariffData}
-                  name="Countries"
-                  shape={<CustomBubble />}
-                >
+                <Scatter data={tariffData} name="Countries">
                   {tariffData.map((entry, index) => (
                     <Cell
                       key={`cell-${index}`}
                       fill={getTariffColor(entry.tariffRate)}
                       stroke={getTariffColor(entry.tariffRate)}
                       strokeWidth={1}
+                      r={calculateBubbleSize(entry.volume)}
                     />
                   ))}
                 </Scatter>
