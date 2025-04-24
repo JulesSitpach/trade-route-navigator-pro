@@ -6,9 +6,10 @@ import TariffAnalysis from './TariffAnalysis';
 import CostAnalysisTab from './trade/CostAnalysisTab';
 import RegulationsTab from './trade/RegulationsTab';
 import VisualizationsTab from './trade/VisualizationsTab';
+import { Route } from './trade/types';
 
 // Sample data for alternative routes
-const sampleRoutes = [
+const sampleRoutes: Route[] = [
   {
     path: "Shanghai → Los Angeles → Chicago",
     transitTime: "28-32 days",
@@ -64,7 +65,7 @@ const sampleRoutes = [
       customerExperience: "End-to-end tracking capabilities"
     },
     complianceComplexity: {
-      level: "Medium",
+      level: 'Medium',
       documentation: "Standard documentation plus FDA approval",
       simplificationPotential: "Customs broker package available"
     }
@@ -86,7 +87,7 @@ const sampleRoutes = [
       lowerMinimumQuantity: false
     },
     complianceComplexity: {
-      level: "High",
+      level: 'High',
       documentation: "Complex documentation with multiple customs clearances",
       simplificationPotential: "EU fast-track program available for regular shippers"
     }
