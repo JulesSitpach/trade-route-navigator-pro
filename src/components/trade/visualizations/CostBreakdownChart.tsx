@@ -46,9 +46,9 @@ const CostBreakdownChart = () => {
         <CardContent className="p-6">
           <ChartContainer 
             config={chartConfig} 
-            aspectRatio={16/9} 
-            minHeight={400}
+            height={400}
             className="w-full"
+            title="Cost Distribution"
           >
             <PieChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
               <ChartLegend 

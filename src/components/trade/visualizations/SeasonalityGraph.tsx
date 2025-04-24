@@ -8,7 +8,7 @@ import {
   ChartLegendContent,
   createAxisTitle
 } from "@/components/ui/chart";
-import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid } from "recharts";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid } from "recharts";
 import { chartConfig } from "./chartConfig";
 import { chartCommonConfig } from "@/utils/chartUtils";
 import { LineChart as LineChartIcon } from "lucide-react";
@@ -48,9 +48,9 @@ const SeasonalityGraph = () => {
         <CardContent className="p-6">
           <ChartContainer 
             config={chartConfig}
-            aspectRatio={21/9}
-            minHeight={400}
+            height={400}
             className="w-full"
+            title="Annual Shipping Trends"
           >
             <LineChart
               data={seasonalityData}

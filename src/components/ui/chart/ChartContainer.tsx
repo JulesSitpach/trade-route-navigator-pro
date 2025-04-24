@@ -13,6 +13,9 @@ interface ChartContainerProps extends React.ComponentProps<"div"> {
   aspectRatio?: string | number;
   minHeight?: number;
   maxHeight?: number;
+  title?: string;
+  height?: string | number;
+  width?: string | number;
 }
 
 export const ChartContainer = React.forwardRef<
@@ -26,6 +29,9 @@ export const ChartContainer = React.forwardRef<
   aspectRatio = "16/9", 
   minHeight = 300,
   maxHeight = 600,
+  title,
+  height,
+  width = "100%",
   ...props 
 }, ref) => {
   const uniqueId = React.useId()
@@ -56,10 +62,16 @@ export const ChartContainer = React.forwardRef<
     })
   }
 
-  // Convert aspectRatio to string to fix the TypeScript error
+  // Handle different prop types for styling
   const aspectRatioStyle = typeof aspectRatio === 'number' 
     ? String(aspectRatio) 
     : aspectRatio;
+    
+  const heightStyle = height 
+    ? (typeof height === 'number' ? `${height}px` : height) 
+    : undefined;
+  
+  const widthStyle = typeof width === 'number' ? `${width}px` : width;
 
   return (
     <ChartContext.Provider value={{ theme, updateTheme, config }}>
@@ -67,7 +79,7 @@ export const ChartContainer = React.forwardRef<
         ref={ref}
         data-chart={chartId}
         className={cn(
-          "relative flex justify-center",
+          "relative flex flex-col",
           "text-[length:var(--chart-text-size,0.75rem)]",
           "[&_.recharts-cartesian-axis-tick_text]:fill-muted-foreground",
           "[&_.recharts-cartesian-grid_line]:stroke-border/50",
@@ -85,17 +97,20 @@ export const ChartContainer = React.forwardRef<
         style={{
           '--chart-font-family': theme.typography.fontFamily,
           '--chart-text-size': theme.typography.sizes.axis,
+          width: widthStyle,
         } as React.CSSProperties}
         {...props}
       >
+        {title && <h3 className="text-lg font-medium mb-2">{title}</h3>}
         <ChartStyle id={chartId} config={config} />
         <div 
           ref={containerRef}
           className="chart-wrapper w-full h-full overflow-visible"
           style={{ 
             minHeight: `${minHeight}px`,
-            maxHeight: `${maxHeight}px`,
-            aspectRatio: aspectRatioStyle
+            maxHeight: maxHeight ? `${maxHeight}px` : undefined,
+            aspectRatio: heightStyle ? undefined : aspectRatioStyle,
+            height: heightStyle,
           }}
         >
           <RechartsPrimitive.ResponsiveContainer
