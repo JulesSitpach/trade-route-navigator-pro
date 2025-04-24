@@ -6,7 +6,6 @@ import {
   CartesianGrid, Legend, Tooltip, ResponsiveContainer 
 } from 'recharts';
 import { RouteComparisonTooltip } from './RouteComparisonTooltip';
-import { getTariffColor } from '@/utils/chartUtils';
 
 const data = [
   { x: 0, y: 10, z: 200, name: 'Shanghai → LA → Chicago', shipping: 14, customs: 3, distribution: 4 },
@@ -27,19 +26,19 @@ const RouteComparisonTimeline = () => {
 
       <Card>
         <CardContent className="p-6">
-          <div className="h-[500px]">
+          <div className="h-[450px]">
             <ResponsiveContainer width="100%" height="100%">
               <ScatterChart
-                margin={{ top: 20, right: 30, bottom: 20, left: 60 }}
+                margin={{ top: 20, right: 30, bottom: 20, left: 30 }}
               >
                 <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
                 <XAxis 
                   type="number" 
                   dataKey="x" 
                   name="Timeline" 
-                  unit="" 
                   tick={{fontSize: 12}}
                   tickFormatter={(value) => `Week ${value + 1}`}
+                  label={{ value: 'Shipping Routes', position: 'insideBottom', offset: -10 }}
                 />
                 <YAxis 
                   type="number" 
@@ -47,6 +46,7 @@ const RouteComparisonTimeline = () => {
                   name="Duration" 
                   unit=" days"
                   tick={{fontSize: 12}}
+                  label={{ value: 'Transit Days', position: 'insideLeft', angle: -90, offset: -15 }}
                 />
                 <ZAxis 
                   type="number" 
