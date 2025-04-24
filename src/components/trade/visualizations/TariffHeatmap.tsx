@@ -1,5 +1,4 @@
-
-import React, { useMemo } from 'react';
+import React from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Cell, Tooltip, ResponsiveContainer, ZAxis } from "recharts";
 import { useTariffData } from "./tariff/useTariffData";
@@ -12,21 +11,8 @@ import TariffLegend from './tariff/TariffLegend';
 
 const TariffHeatmap = () => {
   const { tariffData } = useTariffData();
-  const margins = useMemo(() => getChartMargins('scatter'), []);
+  const margins = getChartMargins('scatter');
   const chartStyles = useChartResponsiveStyles();
-  
-  const calculateBubbleSize = useMemo(() => (volume) => {
-    const minVolume = Math.min(...tariffData.map(d => d.volume));
-    const maxVolume = Math.max(...tariffData.map(d => d.volume));
-    
-    const minRadius = 5;
-    const maxRadius = 20;
-    
-    if (minVolume === maxVolume) return (minRadius + maxRadius) / 2;
-    
-    const scale = (volume - minVolume) / (maxVolume - minVolume);
-    return minRadius + scale * (maxRadius - minRadius);
-  }, [tariffData]);
 
   return (
     <div className="space-y-6">
@@ -91,14 +77,17 @@ const TariffHeatmap = () => {
                       range={[50, 500]} 
                       name="Trade Volume" 
                     />
-                    <Tooltip content={<TariffTooltip />}
+                    <Tooltip content={<TariffTooltip />} 
                       cursor={{ 
                         stroke: '#64748b',
                         strokeDasharray: '3 3',
                         strokeOpacity: 0.5
                       }} 
                     />
-                    <Scatter data={tariffData} isAnimationActive={false}>
+                    <Scatter 
+                      data={tariffData} 
+                      isAnimationActive={false}
+                    >
                       {tariffData.map((entry, index) => (
                         <Cell
                           key={`cell-${index}`}
@@ -108,7 +97,7 @@ const TariffHeatmap = () => {
                           }}
                           stroke="#ffffff"
                           strokeWidth={1}
-                          r={calculateBubbleSize(entry.volume)}
+                          r={Math.sqrt(entry.volume) / 3}
                         />
                       ))}
                     </Scatter>
