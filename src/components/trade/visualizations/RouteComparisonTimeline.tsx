@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { 
@@ -57,13 +58,14 @@ const RouteComparisonTimeline = () => {
       </p>
       
       <Card>
-        <CardContent className="p-6">
-          <div className="h-[450px]">
+        <CardContent className="p-6 bg-white">
+          <div className="h-[450px]" style={{ backgroundColor: "#ffffff" }}>
             <ResponsiveContainer width="100%" height="100%">
               <BarChart
                 data={routeData}
                 margin={chartCommonConfig.margins.withXLabels}
                 barSize={32}
+                style={{ backgroundColor: "#ffffff" }}
               >
                 <CartesianGrid 
                   strokeDasharray="4 4"
