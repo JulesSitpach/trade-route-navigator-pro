@@ -28,13 +28,19 @@ export const BaseChart: React.FC<BaseChartProps> = ({
       style={{ marginBottom: '2rem' }}
     >
       {title && (
-        <h3 className="chart-title text-lg font-semibold mb-1">
+        <h3 
+          className="chart-title text-lg font-semibold mb-1"
+          style={{ fontSize: `${chartTheme.typography.fontSize.title}px` }}
+        >
           {title}
         </h3>
       )}
       
       {subtitle && (
-        <p className="chart-subtitle text-sm text-muted-foreground mb-4">
+        <p 
+          className="chart-subtitle text-sm text-muted-foreground mb-4"
+          style={{ fontSize: `${chartTheme.typography.fontSize.subtitle}px` }}
+        >
           {subtitle}
         </p>
       )}
@@ -44,6 +50,7 @@ export const BaseChart: React.FC<BaseChartProps> = ({
         style={{ 
           width: widthStyle, 
           height: heightStyle,
+          minHeight: '300px'
         }}
       >
         <ResponsiveContainer width="100%" height="100%">
@@ -53,3 +60,4 @@ export const BaseChart: React.FC<BaseChartProps> = ({
     </div>
   );
 };
+
