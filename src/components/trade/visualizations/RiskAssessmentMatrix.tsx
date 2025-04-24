@@ -16,6 +16,7 @@ import { lightTheme } from "@/components/ui/chart/chartTheme";
 import { formatCurrency } from "@/components/ui/chart/chartUtils";
 import { calculateBubbleSize } from "@/components/ui/chart/theme/commonStyles";
 import { ChartContainer } from "@/components/ui/chart/ChartContainer";
+import { StyleDebugger } from '../debug/StyleDebugger';
 
 const RiskAssessmentMatrix = () => {
   const riskData = [
@@ -44,6 +45,7 @@ const RiskAssessmentMatrix = () => {
 
   return (
     <div className="space-y-6">
+      <StyleDebugger />
       <div className="space-y-2">
         <h3 className="text-lg font-semibold">Risk Assessment Matrix</h3>
         <p className="text-sm text-muted-foreground">
