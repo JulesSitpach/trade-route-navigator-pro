@@ -1,12 +1,10 @@
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { 
   ChartContainer, 
   ChartTooltip, 
-  ChartTooltipContent,
-  ChartLegend,
-  ChartLegendContent
+  ChartTooltipContent
 } from "@/components/ui/chart";
 import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Cell, Tooltip } from "recharts";
 import { chartConfig } from "./chartConfig";
@@ -69,9 +67,9 @@ const getTariffColor = (tariffRate: number): string => {
 
 const TariffHeatmap = () => {
   const { tariffData } = useTariffData();
-  const margins = getChartMargins('scatter');
+  const margins = useMemo(() => getChartMargins('scatter'), []);
   
-  const calculateBubbleSize = (volume: number): number => {
+  const calculateBubbleSize = useMemo(() => (volume: number): number => {
     const minVolume = Math.min(...tariffData.map(d => d.volume));
     const maxVolume = Math.max(...tariffData.map(d => d.volume));
     
@@ -83,7 +81,7 @@ const TariffHeatmap = () => {
     
     const scale = (volume - minVolume) / (maxVolume - minVolume);
     return minRadius + scale * (maxRadius - minRadius);
-  };
+  }, [tariffData]);
 
   return (
     <div className="space-y-6">
@@ -158,7 +156,11 @@ const TariffHeatmap = () => {
                   padding={{ top: 20, bottom: 20 }}
                 />
                 <Tooltip content={<CustomTooltipContent />} cursor={{ strokeDasharray: '3 3' }} />
-                <Scatter data={tariffData} name="Countries">
+                <Scatter 
+                  data={tariffData} 
+                  name="Countries"
+                  isAnimationActive={false} 
+                >
                   {tariffData.map((entry, index) => (
                     <Cell
                       key={`cell-${index}`}
@@ -181,4 +183,3 @@ const TariffHeatmap = () => {
 };
 
 export default TariffHeatmap;
-
