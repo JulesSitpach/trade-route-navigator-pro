@@ -24,8 +24,8 @@ const CustomXAxisTick = (props: any) => {
       <text 
         x={0} 
         y={0} 
-        dy={25} // Increased vertical spacing for better separation
-        dx={-10} // Further offset to prevent overlap 
+        dy={16} // Reduced vertical spacing
+        dx={-15} // More horizontal offset for better separation
         textAnchor="end" 
         fill="#666"
         fontSize={12}
@@ -40,12 +40,12 @@ const CustomXAxisTick = (props: any) => {
 const TariffHeatmap = () => {
   const { tariffData, getTariffColor } = useTariffData();
   
-  // Enhanced margins with more generous spacing
+  // Properly adjusted margins to prevent axis label overlapping
   const margins = {
-    top: 50,    // Increased top margin for legend and header
-    right: 50,  // More space on the right side
-    bottom: 140, // Much more space for rotated X-axis labels
-    left: 100   // Significantly wider left margin for Y-axis labels
+    top: 40,    // Top margin for legend
+    right: 30,  // Right side margin
+    bottom: 80, // Bottom margin for X-axis labels (reduced from previous)
+    left: 60    // Left margin for Y-axis labels (reduced from previous)
   };
 
   return (
@@ -59,7 +59,7 @@ const TariffHeatmap = () => {
       
       <Card>
         <CardContent className="p-6">
-          <div className="h-[600px]"> {/* Maintained increased height for better visualization */}
+          <div className="h-[600px]">
             <ChartContainer 
               config={chartConfig} 
               height={600}
@@ -79,10 +79,10 @@ const TariffHeatmap = () => {
                   tick={<CustomXAxisTick />} 
                   axisLine={chartCommonConfig.axis.line}
                   tickLine={false}
-                  height={120}   // Even more height for X-axis labels
+                  height={60}   // Reduced height
                   interval={0}   // Show all country names
-                  label={createAxisTitle('Countries', 'x', { offset: 100, position: 'insideBottom' })}
-                  padding={{ left: 30, right: 30 }} // More padding to X-axis
+                  label={createAxisTitle('Countries', 'x', { offset: 50, position: 'insideBottom' })}
+                  padding={{ left: 30, right: 30 }} // Keep padding
                 />
                 <YAxis
                   type="number"
@@ -90,15 +90,15 @@ const TariffHeatmap = () => {
                   name="Tariff Rate"
                   tick={{
                     fontSize: 12,
-                    dx: -15, // Move Y-axis ticks further from the axis
+                    dx: -5, // Reduced offset to prevent too much spacing
                   }}
                   axisLine={chartCommonConfig.axis.line}
                   tickLine={false}
                   domain={[0, 'dataMax + 2']} // Add some padding at the top
-                  label={createAxisTitle('Tariff Rate (%)', 'y', { offset: 80, position: 'insideLeft' })}
+                  label={createAxisTitle('Tariff Rate (%)', 'y', { offset: 45, position: 'insideLeft' })}
                   tickFormatter={(value) => `${value}%`}
-                  width={100}    // Even wider to ensure Y-axis labels fit comfortably
-                  padding={{ top: 30, bottom: 30 }} // More padding to Y-axis
+                  width={50}    // Reduced width
+                  padding={{ top: 20, bottom: 20 }}
                 />
                 <ChartLegend 
                   content={<ChartLegendContent />}
