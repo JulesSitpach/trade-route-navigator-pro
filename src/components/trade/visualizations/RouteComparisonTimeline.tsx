@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/chart";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip } from "recharts";
 import { chartConfig } from "./chartConfig";
+import { chartCommonConfig } from "@/utils/chartUtils";
 
 const RouteComparisonTimeline = () => {
   // Sample route comparison data
@@ -55,13 +56,20 @@ const RouteComparisonTimeline = () => {
             <ChartContainer config={chartConfig}>
               <BarChart
                 data={routeData}
-                margin={{ top: 40, right: 30, left: 40, bottom: 60 }} // Increased top margin for legend
+                margin={chartCommonConfig.margins.withXLabels}
                 barSize={30}
               >
-                <CartesianGrid strokeDasharray="3 3" />
+                <CartesianGrid 
+                  strokeDasharray={chartCommonConfig.grid.strokeDasharray} 
+                />
+                <ChartLegend 
+                  content={<ChartLegendContent />}
+                  verticalAlign={chartCommonConfig.legend.position.vertical}
+                  align={chartCommonConfig.legend.position.align}
+                />
                 <XAxis 
                   dataKey="name"
-                  tick={{ fontSize: 11 }}
+                  tick={chartCommonConfig.axis.tick}
                   tickLine={false}
                   height={60}
                   angle={-25}
@@ -78,11 +86,6 @@ const RouteComparisonTimeline = () => {
                 />
                 <ChartTooltip
                   content={<ChartTooltipContent />}
-                />
-                <ChartLegend 
-                  content={<ChartLegendContent />}
-                  verticalAlign="top" // Move legend to top
-                  height={36}
                 />
                 <Bar dataKey="shipping" stackId="a" name="Shipping" fill={chartConfig.primaryRoute.color} />
                 <Bar dataKey="customs" stackId="a" name="Customs" fill={chartConfig.customs.color} />

@@ -1,4 +1,3 @@
-
 import { Card, CardContent } from "@/components/ui/card";
 import { 
   ChartContainer, 
@@ -7,6 +6,7 @@ import {
 } from "@/components/ui/chart";
 import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, ZAxis, Cell, ResponsiveContainer } from "recharts";
 import { chartConfig } from "./chartConfig";
+import { chartCommonConfig } from "@/utils/chartUtils";
 
 const RiskAssessmentMatrix = () => {
   // Sample risk assessment data
@@ -39,33 +39,22 @@ const RiskAssessmentMatrix = () => {
         <CardContent className="p-6">
           <div className="h-[400px] w-full">
             <ChartContainer config={chartConfig}>
-              <ScatterChart
-                margin={{
-                  top: 40,
-                  right: 40,
-                  left: 20,
-                  bottom: 40,
-                }}
-              >
-                <CartesianGrid strokeDasharray="3 3" strokeOpacity={0.3} />
+              <ScatterChart margin={chartCommonConfig.margins.withXLabels}>
+                <CartesianGrid 
+                  strokeDasharray={chartCommonConfig.grid.strokeDasharray} 
+                  strokeOpacity={chartCommonConfig.grid.strokeOpacity} 
+                />
                 <XAxis 
                   type="number"
                   dataKey="x"
                   name="Cost ($)"
                   domain={[2000, 6000]}
                   tickCount={5}
-                  tickLine={false}
-                  axisLine={false}
-                  tick={{ fontSize: 12, dy: 10 }} // Added dy to push labels down
+                  tick={chartCommonConfig.axis.tick}
                   label={{ 
                     value: 'Cost ($)', 
                     position: 'bottom',
-                    offset: 20, // Increased offset to position label further below
-                    style: { 
-                      textAnchor: 'middle',
-                      fontSize: 12,
-                      fill: '#64748b'
-                    }
+                    ...chartCommonConfig.axis.label
                   }}
                 />
                 <YAxis
@@ -96,11 +85,7 @@ const RiskAssessmentMatrix = () => {
                 />
                 <ChartTooltip
                   cursor={false}
-                  content={
-                    <ChartTooltipContent 
-                      className="bg-[#f3f3f3] border border-border/50 shadow-md" 
-                    />
-                  }
+                  content={<ChartTooltipContent />}
                 />
                 <Scatter 
                   data={riskData}

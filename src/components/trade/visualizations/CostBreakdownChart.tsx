@@ -1,4 +1,3 @@
-
 import { Card, CardContent } from "@/components/ui/card";
 import { 
   ChartContainer, 
@@ -9,6 +8,7 @@ import {
 } from "@/components/ui/chart";
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 import { chartConfig } from "./chartConfig";
+import { chartCommonConfig, chartDimensions } from "@/utils/chartUtils";
 
 const CostBreakdownChart = () => {
   // Sample cost breakdown data
@@ -33,28 +33,31 @@ const CostBreakdownChart = () => {
         <CardContent className="p-6">
           <div className="h-96">
             <ChartContainer config={chartConfig}>
-              <PieChart>
+              <PieChart margin={chartCommonConfig.margins.default}>
                 <ChartTooltip 
                   content={<ChartTooltipContent />} 
                 />
                 <ChartLegend 
                   content={<ChartLegendContent />}
-                  verticalAlign="top"
-                  align="center"
+                  verticalAlign={chartCommonConfig.legend.position.vertical}
+                  align={chartCommonConfig.legend.position.align}
                 />
                 <Pie
                   data={costData}
                   cx="50%"
                   cy="50%"
                   labelLine={false}
-                  outerRadius={140}
-                  innerRadius={70}
+                  outerRadius={chartDimensions.pieChart.outerRadius}
+                  innerRadius={chartDimensions.pieChart.innerRadius}
                   fill="#8884d8"
                   dataKey="value"
                   nameKey="name"
                 >
                   {costData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={chartConfig[entry.name as keyof typeof chartConfig]?.color || "#ccc"} />
+                    <Cell 
+                      key={`cell-${index}`} 
+                      fill={chartConfig[entry.name as keyof typeof chartConfig]?.color || "#ccc"} 
+                    />
                   ))}
                 </Pie>
               </PieChart>

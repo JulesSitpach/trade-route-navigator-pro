@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/chart";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, ResponsiveContainer } from "recharts";
 import { chartConfig } from "./chartConfig";
+import { chartCommonConfig } from "@/utils/chartUtils";
 
 const SeasonalityGraph = () => {
   // Sample seasonality data
@@ -41,25 +42,24 @@ const SeasonalityGraph = () => {
             <ChartContainer config={chartConfig}>
               <LineChart
                 data={seasonalityData}
-                margin={{
-                  top: 40,
-                  right: 50,
-                  left: 20,
-                  bottom: 60,
-                }}
+                margin={chartCommonConfig.margins.withXLabels}
               >
                 <CartesianGrid 
-                  strokeDasharray="3 3" 
-                  stroke="#e6e6e6" 
+                  strokeDasharray={chartCommonConfig.grid.strokeDasharray}
+                  stroke="#e6e6e6"
                   horizontal={true}
                   vertical={false}
                 />
+                <ChartLegend 
+                  content={<ChartLegendContent />}
+                  verticalAlign={chartCommonConfig.legend.position.vertical}
+                  align={chartCommonConfig.legend.position.align}
+                />
                 <XAxis 
                   dataKey="month"
-                  tick={{ fontSize: 11, fill: '#666' }}
+                  tick={chartCommonConfig.axis.tick}
                   tickLine={{ stroke: '#e6e6e6' }}
                   axisLine={{ stroke: '#e6e6e6' }}
-                  padding={{ left: 0, right: 0 }}
                   height={30}
                 />
                 <YAxis 
@@ -95,14 +95,7 @@ const SeasonalityGraph = () => {
                   tick={{ fontSize: 11, fill: '#666' }}
                   padding={{ top: 0, bottom: 0 }}
                 />
-                <ChartTooltip
-                  content={<ChartTooltipContent />}
-                />
-                <ChartLegend 
-                  content={<ChartLegendContent />}
-                  verticalAlign="top"
-                  height={36}
-                />
+                <ChartTooltip content={<ChartTooltipContent />} />
                 <Line
                   yAxisId="left"
                   type="monotone"
