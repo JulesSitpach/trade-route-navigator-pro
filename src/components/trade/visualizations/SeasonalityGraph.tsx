@@ -12,8 +12,10 @@ import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid } fro
 import { chartConfig } from "./chartConfig";
 import { chartCommonConfig } from "@/utils/chartUtils";
 import { LineChart as LineChartIcon } from "lucide-react";
+import { useChartMargins } from "@/hooks/use-chart-margins";
 
 const SeasonalityGraph = () => {
+  const margins = useChartMargins();
   const seasonalityData = [
     { month: "Jan", freight: 100, congestion: 40, risk: 30 },
     { month: "Feb", freight: 105, congestion: 45, risk: 35 },
@@ -48,7 +50,7 @@ const SeasonalityGraph = () => {
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart
                   data={seasonalityData}
-                  margin={chartCommonConfig.margins.withXLabels}
+                  margin={margins}
                 >
                   <CartesianGrid 
                     strokeDasharray={chartCommonConfig.grid.strokeDasharray}
