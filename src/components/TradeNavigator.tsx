@@ -1,4 +1,3 @@
-
 import { useState, useRef } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -8,54 +7,22 @@ import ShippingDetailsForm from './ShippingDetailsForm';
 import TradeAnalysis from './TradeAnalysis';
 
 const TradeNavigator = () => {
-  const [formData, setFormData] = useState({
-    product: {},
-    shipping: {}
+  const [formData] = useState({
+    product: {
+      productDescription: 'Sample Electronics',
+      originCountry: 'China',
+      destinationCountry: 'USA',
+      productValue: 10000
+    },
+    shipping: {
+      quantity: 100,
+      transportMode: 'sea'
+    }
   });
   
   const { toast } = useToast();
   const [showAnalysis, setShowAnalysis] = useState(false);
   const analysisRef = useRef<HTMLDivElement>(null);
-
-  const validateMandatoryFields = () => {
-    const requiredProductFields = ['productDescription', 'originCountry', 'destinationCountry', 'productValue'];
-    const requiredShippingFields = ['quantity', 'transportMode'];
-    
-    // Added console logs for debugging
-    console.log("Product data:", formData.product);
-    console.log("Shipping data:", formData.shipping);
-    
-    const missingProductFields = requiredProductFields.filter(
-      field => !formData.product[field as keyof typeof formData.product]
-    );
-    
-    const missingShippingFields = requiredShippingFields.filter(
-      field => !formData.shipping[field as keyof typeof formData.shipping]
-    );
-
-    console.log("Missing product fields:", missingProductFields);
-    console.log("Missing shipping fields:", missingShippingFields);
-
-    if (missingProductFields.length > 0 || missingShippingFields.length > 0) {
-      let missingFields = [...missingProductFields, ...missingShippingFields].join(", ");
-      toast({
-        variant: "destructive",
-        title: "Missing Required Information",
-        description: `Please fill in all required fields: ${missingFields}`,
-      });
-      return false;
-    }
-    return true;
-  };
-
-  const handleCalculate = () => {
-    if (validateMandatoryFields()) {
-      setShowAnalysis(true);
-      setTimeout(() => {
-        analysisRef.current?.scrollIntoView({ behavior: 'smooth' });
-      }, 100);
-    }
-  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -72,31 +39,8 @@ const TradeNavigator = () => {
 
       <main className="max-w-6xl mx-auto px-4 py-8 space-y-8">
         <Card className="shadow-lg">
-          <ProductDetailsForm 
-            onChange={(data) => setFormData(prev => ({ ...prev, product: { ...prev.product, ...data } }))}
-          />
+          <TradeAnalysis data={formData} />
         </Card>
-
-        <Card className="shadow-lg">
-          <ShippingDetailsForm 
-            onChange={(data) => setFormData(prev => ({ ...prev, shipping: { ...prev.shipping, ...data } }))}
-          />
-        </Card>
-
-        <div className="text-center">
-          <Button 
-            className="bg-[#3498db] hover:bg-[#2980b9] text-white px-8 py-2"
-            onClick={handleCalculate}
-          >
-            Calculate Costs & Find Opportunities
-          </Button>
-        </div>
-
-        {showAnalysis && (
-          <Card className="shadow-lg mt-8" ref={analysisRef}>
-            <TradeAnalysis data={formData} />
-          </Card>
-        )}
       </main>
     </div>
   );
