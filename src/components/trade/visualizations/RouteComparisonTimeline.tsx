@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { 
@@ -9,6 +8,7 @@ import { RouteComparisonTooltip } from './RouteComparisonTooltip';
 import { BarChartIcon } from "lucide-react";
 import { chartConfig } from "./chartConfig";
 import { chartCommonConfig } from "@/utils/chartUtils";
+import { StyleDebugger } from './debug/StyleDebugger';
 
 const RouteComparisonTimeline = () => {
   // Sample route comparison data with simplified names
@@ -49,6 +49,7 @@ const RouteComparisonTimeline = () => {
 
   return (
     <div className="space-y-4">
+      <StyleDebugger />
       <div className="flex items-center gap-2">
         <BarChartIcon className="h-5 w-5 text-muted-foreground" />
         <h3 className="text-lg font-medium">Route Comparison Timeline</h3>
