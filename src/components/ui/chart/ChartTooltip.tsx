@@ -4,7 +4,6 @@ import * as RechartsPrimitive from "recharts"
 import { cn } from "@/lib/utils"
 import { useChart } from "./ChartContext"
 import { getPayloadConfigFromPayload } from "./utils"
-import { TextAnchor } from "./types/textTypes"
 
 export const ChartTooltip = RechartsPrimitive.Tooltip
 
@@ -85,13 +84,12 @@ export const ChartTooltipContent = React.forwardRef<
       <div
         ref={ref}
         className={cn(
-          "grid min-w-[8rem] items-start gap-1.5 rounded-lg border border-border/50 bg-[#F1F1F1] px-2.5 py-1.5 shadow-xl",
+          "grid min-w-[8rem] items-start gap-1.5 rounded-lg border border-border/50 bg-background px-2.5 py-1.5 shadow-xl",
           className
         )}
         style={{
           fontSize: theme.typography.fontSize.label,
           fontFamily: theme.typography.fontFamily,
-          color: "#000000" // Black text color
         }}
       >
         {!nestLabel ? tooltipLabel : null}
@@ -108,7 +106,6 @@ export const ChartTooltipContent = React.forwardRef<
                   "flex w-full flex-wrap items-stretch gap-2",
                   indicator === "dot" && "items-center"
                 )}
-                style={{ color: "#000000" }} // Ensure black text for all payload items
               >
                 {formatter && item?.value !== undefined && item.name ? (
                   formatter(item.value, item.name, item, index, item.payload)
@@ -146,13 +143,13 @@ export const ChartTooltipContent = React.forwardRef<
                     >
                       <div className="grid gap-1.5">
                         {nestLabel ? tooltipLabel : null}
-                        <span className="text-muted-foreground text-black">
+                        <span className="text-muted-foreground">
                           {itemConfig?.label || item.name}
                         </span>
                       </div>
                       {item.value && (
                         <span className={cn(
-                          "font-medium tabular-nums text-black",
+                          "font-medium tabular-nums",
                           theme.typography.fontFamily === "'Inter', -apple-system, BlinkMacSystemFont, sans-serif'" 
                             ? "font-sans" 
                             : ""

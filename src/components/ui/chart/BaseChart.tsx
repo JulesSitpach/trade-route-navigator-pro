@@ -60,4 +60,3 @@ export const BaseChart: React.FC<BaseChartProps> = ({
     </div>
   );
 };
-
