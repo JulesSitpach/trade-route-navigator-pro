@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Cell, Tooltip, ResponsiveContainer, ZAxis } from "recharts";
@@ -8,7 +9,7 @@ import { TariffTooltip } from './tariff/TariffTooltip';
 import { TariffAxisTick } from './tariff/TariffAxisTick';
 
 const TariffHeatmap = () => {
-  const { tariffData } = useTariffData();
+  const { tariffData, getTariffColor } = useTariffData();
   const margins = { top: 30, right: 20, bottom: 60, left: 60 };
   const chartStyles = useChartResponsiveStyles();
 
