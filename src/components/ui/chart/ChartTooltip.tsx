@@ -84,12 +84,13 @@ export const ChartTooltipContent = React.forwardRef<
       <div
         ref={ref}
         className={cn(
-          "grid min-w-[8rem] items-start gap-1.5 rounded-lg border border-border/50 bg-background/95 px-2.5 py-1.5 shadow-xl backdrop-blur-sm",
+          "grid min-w-[8rem] items-start gap-1.5 rounded-lg border border-border/50 bg-[#F1F1F1] px-2.5 py-1.5 shadow-xl",
           className
         )}
         style={{
           fontSize: theme.typography.sizes.label,
           fontFamily: theme.typography.fontFamily,
+          color: "#000000" // Black text color
         }}
       >
         {!nestLabel ? tooltipLabel : null}
@@ -106,6 +107,7 @@ export const ChartTooltipContent = React.forwardRef<
                   "flex w-full flex-wrap items-stretch gap-2",
                   indicator === "dot" && "items-center"
                 )}
+                style={{ color: "#000000" }} // Ensure black text for all payload items
               >
                 {formatter && item?.value !== undefined && item.name ? (
                   formatter(item.value, item.name, item, index, item.payload)
