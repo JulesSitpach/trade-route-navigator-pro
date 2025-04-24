@@ -1,3 +1,4 @@
+
 import { Card, CardContent } from "@/components/ui/card";
 import { 
   ChartContainer, 
@@ -9,7 +10,7 @@ import {
 } from "@/components/ui/chart";
 import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, ZAxis, Cell } from "recharts";
 import { chartConfig } from "./chartConfig";
-import { chartCommonConfig, chartDimensions } from "@/utils/chartUtils";
+import { chartCommonConfig, formatCurrency } from "@/utils/chartUtils";
 
 const RiskAssessmentMatrix = () => {
   // Sample risk assessment data
@@ -44,11 +45,11 @@ const RiskAssessmentMatrix = () => {
         <CardContent className="p-6">
           <div className="h-[450px]">
             <ChartContainer config={chartConfig}>
-              <ScatterChart margin={chartCommonConfig.margins.withXLabels}>
+              <ScatterChart margin={{ top: 20, right: 30, bottom: 60, left: 50 }}>
                 <CartesianGrid 
                   strokeDasharray={chartCommonConfig.grid.strokeDasharray} 
                   stroke={chartCommonConfig.grid.stroke}
-                  strokeOpacity={chartCommonConfig.grid.strokeOpacity}
+                  opacity={0.15}
                 />
                 <ChartLegend 
                   content={<ChartLegendContent />}
@@ -58,23 +59,31 @@ const RiskAssessmentMatrix = () => {
                 <XAxis 
                   type="number"
                   dataKey="x"
-                  name="Cost ($)"
+                  name="Cost"
                   domain={[2000, 6000]}
                   tickCount={5}
-                  tick={chartCommonConfig.axis.tick}
+                  tickFormatter={(value) => formatCurrency(value)}
+                  tick={{
+                    fontSize: 12,
+                    fill: chartTheme.colors.text,
+                  }}
                   axisLine={chartCommonConfig.axis.line}
                   tickLine={false}
-                  label={createAxisTitle('Total Cost ($)', 'x', { offset: 20 })}
+                  label={createAxisTitle('Total Route Cost', 'x', { offset: 40 })}
                 />
                 <YAxis
                   type="number"
                   dataKey="y"
                   name="Risk Score"
                   domain={[0, 10]}
-                  tick={chartCommonConfig.axis.tick}
+                  tickCount={6}
+                  tick={{
+                    fontSize: 12,
+                    fill: chartTheme.colors.text,
+                  }}
                   axisLine={chartCommonConfig.axis.line}
                   tickLine={false}
-                  label={createAxisTitle('Risk Level (1-10)', 'y', { offset: 10 })}
+                  label={createAxisTitle('Risk Level (0-10)', 'y', { offset: 35 })}
                 />
                 <ZAxis
                   type="number"
@@ -83,13 +92,16 @@ const RiskAssessmentMatrix = () => {
                   name="Reliability"
                 />
                 <ChartTooltip content={<ChartTooltipContent />} />
-                <Scatter data={riskData}>
+                <Scatter 
+                  data={riskData}
+                  fill={chartTheme.colors.primary[0]}
+                >
                   {riskData.map((entry, index) => (
                     <Cell
                       key={`cell-${index}`}
                       fill={getRiskColor(entry.riskLevel)}
                       stroke={getRiskColor(entry.riskLevel)}
-                      strokeWidth={1}
+                      strokeWidth={2}
                     />
                   ))}
                 </Scatter>
