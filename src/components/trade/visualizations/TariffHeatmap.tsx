@@ -3,15 +3,15 @@ import React, { useMemo } from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { 
   ChartContainer, 
-  ChartTooltip, 
-  ChartTooltipContent
+  ChartTooltip
 } from "@/components/ui/chart";
-import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Cell, Tooltip } from "recharts";
+import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Cell, Tooltip, ResponsiveContainer } from "recharts";
 import { chartConfig } from "./chartConfig";
 import { useTariffData } from "./tariff/useTariffData";
 import TariffInsights from "./tariff/TariffInsights";
 import { createAxisTitle, getChartMargins } from "@/utils/chartUtils";
 import { chartCommonConfig } from "@/utils/chartUtils";
+import { useChartResponsiveStyles } from "@/hooks/use-chart-responsive-styles";
 
 const CustomTooltipContent = (props: any) => {
   const { active, payload } = props;
@@ -19,13 +19,17 @@ const CustomTooltipContent = (props: any) => {
   if (active && payload && payload.length) {
     const data = payload[0].payload;
     return (
-      <div className="bg-gray-900 text-white p-3 rounded-md shadow-md text-sm">
-        <div className="font-medium mb-1">{data.country}</div>
+      <div className="bg-white border border-gray-200 p-3 rounded-lg shadow-lg text-gray-800">
+        <div className="font-medium mb-2 border-b pb-1">{data.country}</div>
         <div className="flex items-center mb-1">
           <div className="w-3 h-3 rounded-full mr-2" style={{ backgroundColor: getTariffColor(data.tariffRate) }}></div>
-          <span>Tariff Rate: {data.tariffRate}%</span>
+          <span className="font-medium">Tariff Rate: </span>
+          <span className="ml-1">{data.tariffRate}%</span>
         </div>
-        <div>Volume: {data.volume.toLocaleString()}</div>
+        <div className="flex items-center">
+          <span className="font-medium">Trade Volume: </span>
+          <span className="ml-1">${(data.volume).toLocaleString()}</span>
+        </div>
       </div>
     );
   }
@@ -41,9 +45,9 @@ const CustomXAxisTick = (props: any) => {
         x={0} 
         y={0} 
         dy={16} 
-        dx={-20}
+        dx={-15}
         textAnchor="end" 
-        fill="#666"
+        fill="#64748b"
         fontSize={12}
         transform="rotate(-45)"
       >
@@ -68,6 +72,7 @@ const getTariffColor = (tariffRate: number): string => {
 const TariffHeatmap = () => {
   const { tariffData } = useTariffData();
   const margins = useMemo(() => getChartMargins('scatter'), []);
+  const chartStyles = useChartResponsiveStyles();
   
   const calculateBubbleSize = useMemo(() => (volume: number): number => {
     const minVolume = Math.min(...tariffData.map(d => d.volume));
@@ -92,34 +97,34 @@ const TariffHeatmap = () => {
         </p>
       </div>
       
-      <Card>
+      <Card className="overflow-hidden border-border/50">
         <CardContent className="p-6">
-          <div className="flex justify-center mb-4">
-            <div className="flex items-center bg-gray-900 text-white px-4 py-2 rounded-md shadow-md text-sm">
-              <div className="flex items-center mr-4">
-                <div className="w-3 h-3 rounded-full mr-2 bg-green-500"></div>
-                <span>Low Tariff (0-5%)</span>
+          <div className="flex justify-center mb-6">
+            <div className="flex items-center gap-6 px-6 py-3 rounded-lg border border-border/50 bg-muted/30">
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 rounded-full bg-green-500"></div>
+                <span className="text-sm">Low Tariff (0-5%)</span>
               </div>
-              <div className="flex items-center mr-4">
-                <div className="w-3 h-3 rounded-full mr-2 bg-amber-500"></div>
-                <span>Medium Tariff (6-15%)</span>
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 rounded-full bg-amber-500"></div>
+                <span className="text-sm">Medium Tariff (6-15%)</span>
               </div>
-              <div className="flex items-center">
-                <div className="w-3 h-3 rounded-full mr-2 bg-red-500"></div>
-                <span>High Tariff ({'>'}15%)</span>
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 rounded-full bg-red-500"></div>
+                <span className="text-sm">High Tariff (&gt;15%)</span>
               </div>
             </div>
           </div>
 
-          <div className="h-[600px]">
+          <div className="h-[550px]">
             <ChartContainer 
               config={chartConfig}
-              height={600}
+              height={550}
               title="Country Tariff Comparison"
               subtitle="Bubble size represents trade volume - larger bubbles indicate higher volume"
             >
               <ScatterChart margin={margins}>
-                <CartesianGrid className="stroke-border/50" strokeDasharray="4 4" />
+                <CartesianGrid className="stroke-border/40" strokeDasharray="5 5" opacity={0.8} />
                 <XAxis 
                   type="category"
                   dataKey="country"
@@ -141,7 +146,7 @@ const TariffHeatmap = () => {
                   name="Tariff Rate"
                   tick={{
                     fontSize: 12,
-                    dx: -10,
+                    fill: '#64748b',
                   }}
                   axisLine={chartCommonConfig.axis.line}
                   tickLine={false}
@@ -155,7 +160,14 @@ const TariffHeatmap = () => {
                   width={65}
                   padding={{ top: 20, bottom: 20 }}
                 />
-                <Tooltip content={<CustomTooltipContent />} cursor={{ strokeDasharray: '3 3' }} />
+                <Tooltip 
+                  content={<CustomTooltipContent />} 
+                  cursor={{ 
+                    strokeDasharray: '3 3',
+                    stroke: '#64748b',
+                    strokeOpacity: 0.7
+                  }} 
+                />
                 <Scatter 
                   data={tariffData} 
                   name="Countries"
@@ -165,8 +177,8 @@ const TariffHeatmap = () => {
                     <Cell
                       key={`cell-${index}`}
                       fill={getTariffColor(entry.tariffRate)}
-                      stroke={getTariffColor(entry.tariffRate)}
-                      strokeWidth={1}
+                      stroke="#fff"
+                      strokeWidth={0.5}
                       r={calculateBubbleSize(entry.volume)}
                     />
                   ))}
