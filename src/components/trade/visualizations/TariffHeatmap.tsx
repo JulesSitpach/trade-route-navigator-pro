@@ -73,7 +73,19 @@ const getTariffColor = (tariffRate: number): string => {
 const TariffHeatmap = () => {
   const { tariffData } = useTariffData();
   const margins = getChartMargins('scatter');
-  const volumeValues = tariffData.map(entry => entry.volume);
+  
+  const calculateBubbleSize = (volume: number): number => {
+    const minVolume = Math.min(...tariffData.map(d => d.volume));
+    const maxVolume = Math.max(...tariffData.map(d => d.volume));
+    
+    const minRadius = 5;
+    const maxRadius = 20;
+    
+    if (minVolume === maxVolume) return (minRadius + maxRadius) / 2;
+    
+    const scale = (volume - minVolume) / (maxVolume - minVolume);
+    return minRadius + scale * (maxRadius - minRadius);
+  };
 
   return (
     <div className="space-y-6">
@@ -136,9 +148,9 @@ const TariffHeatmap = () => {
                     <Cell
                       key={`cell-${index}`}
                       fill={getTariffColor(entry.tariffRate)}
-                      stroke="currentColor"
+                      stroke={getTariffColor(entry.tariffRate)}
                       strokeWidth={1}
-                      r={entry.volume / Math.max(...volumeValues) * 20 + 5}
+                      r={calculateBubbleSize(entry.volume)}
                     />
                   ))}
                 </Scatter>
