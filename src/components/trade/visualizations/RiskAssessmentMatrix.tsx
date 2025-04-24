@@ -44,6 +44,27 @@ const RiskAssessmentMatrix = () => {
   const margins = { top: 30, right: 20, bottom: 60, left: 60 };
   const chartStyles = useChartResponsiveStyles();
 
+  React.useEffect(() => {
+    console.log("RiskAssessmentMatrix rendered");
+    console.log("Applied tooltipStyles:", tooltipStyles);
+    
+    // Check for any potential style conflicts
+    setTimeout(() => {
+      const tooltips = document.querySelectorAll('.recharts-tooltip-wrapper');
+      if (tooltips.length) {
+        console.log("Found tooltip elements:", tooltips.length);
+        const computedStyle = window.getComputedStyle(tooltips[0]);
+        console.log("Tooltip computed style:", {
+          backgroundColor: computedStyle.backgroundColor,
+          border: computedStyle.border,
+          opacity: computedStyle.opacity
+        });
+      } else {
+        console.log("No tooltip elements found. Hover over chart to generate one.");
+      }
+    }, 1000);
+  }, []);
+
   return (
     <div className="space-y-6">
       <ChartStyleEnforcer>
@@ -108,7 +129,11 @@ const RiskAssessmentMatrix = () => {
                   <Tooltip 
                     content={<TariffTooltip />} 
                     cursor={cursorStyles.scatter}
-                    wrapperStyle={tooltipStyles.wrapper}
+                    wrapperStyle={{
+                      ...tooltipStyles.wrapper,
+                      backgroundColor: '#ffffff !important',
+                      opacity: '1 !important'
+                    }}
                     contentStyle={tooltipStyles.contentStyle}
                   />
                   <Legend 
@@ -145,15 +170,26 @@ const RiskAssessmentMatrix = () => {
       <PropDebugger
         title="Risk Matrix Chart Props"
         componentProps={{
-          chartConfig: chartConfig,
+          chartConfig,
           margins,
           tooltipStyles,
           cursorStyles,
           lightTheme
         }}
+        showInConsole={true}
       />
       
-      <StyleDebugger />
+      <StyleDebugger 
+        targetSelector=".recharts-tooltip-wrapper" 
+        showInConsole={true} 
+        customTitle="Tooltip Styles" 
+      />
+      
+      <StyleDebugger 
+        targetSelector=".recharts-legend-wrapper" 
+        showInConsole={true} 
+        customTitle="Legend Styles" 
+      />
     </div>
   );
 };

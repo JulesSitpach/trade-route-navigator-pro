@@ -8,72 +8,70 @@ interface ComputedStyles {
   color?: string;
   border?: string;
   boxShadow?: string;
-  tooltip?: {
-    backgroundColor: string;
-    border: string;
-    boxShadow: string;
-  };
+  opacity?: string;
 }
 
 interface StyleDebuggerProps {
   targetSelector?: string;
+  showInConsole?: boolean;
+  customTitle?: string;
 }
 
 export const StyleDebugger: React.FC<StyleDebuggerProps> = ({ 
-  targetSelector = '.recharts-wrapper' 
+  targetSelector = '.recharts-tooltip-wrapper',
+  showInConsole = false,
+  customTitle = 'Chart Styles'
 }) => {
-  const [styles, setStyles] = useState<Record<string, ComputedStyles>>({});
+  const [styles, setStyles] = useState<ComputedStyles | null>(null);
   
   useEffect(() => {
-    const updateStyles = () => {
-      // Find elements matching selector
+    const checkStyles = () => {
       const elements = document.querySelectorAll(targetSelector);
-      const styleInfo: Record<string, ComputedStyles> = {};
       
-      elements.forEach((el, index) => {
-        const computedStyle = window.getComputedStyle(el);
-        const elStyles: ComputedStyles = {};
+      if (elements.length) {
+        const computedStyle = window.getComputedStyle(elements[0]);
+        const extractedStyles: ComputedStyles = {
+          backgroundColor: computedStyle.backgroundColor,
+          border: computedStyle.border,
+          boxShadow: computedStyle.boxShadow,
+          color: computedStyle.color,
+          fontFamily: computedStyle.fontFamily,
+          fontSize: computedStyle.fontSize,
+          opacity: computedStyle.opacity,
+        };
         
-        // Log important style properties
-        ['fontFamily', 'fontSize', 'backgroundColor', 'color', 'border', 'boxShadow'].forEach(prop => {
-          elStyles[prop as keyof ComputedStyles] = computedStyle[prop];
-        });
+        setStyles(extractedStyles);
         
-        // Log tooltip styles if present
-        const tooltips = el.querySelectorAll('.recharts-tooltip-wrapper');
-        if (tooltips.length) {
-          const tooltipStyle = window.getComputedStyle(tooltips[0]);
-          elStyles.tooltip = {
-            backgroundColor: tooltipStyle.backgroundColor,
-            border: tooltipStyle.border,
-            boxShadow: tooltipStyle.boxShadow
-          };
+        if (showInConsole) {
+          console.log(`StyleDebugger - ${customTitle} (${targetSelector}):`, extractedStyles);
         }
-        
-        styleInfo[`element-${index}`] = elStyles;
-      });
-      
-      setStyles(styleInfo);
+      }
     };
 
     // Initial check
-    updateStyles();
-    
-    // Set up mutation observer to watch for dynamic changes
-    const observer = new MutationObserver(updateStyles);
+    checkStyles();
+
+    // Set up mutation observer to watch for dynamic elements
+    const observer = new MutationObserver(checkStyles);
     observer.observe(document.body, { 
       childList: true, 
       subtree: true 
     });
 
-    return () => observer.disconnect();
-  }, [targetSelector]);
+    // Check when hovering to capture tooltip styles
+    document.addEventListener('mouseover', checkStyles);
+
+    return () => {
+      observer.disconnect();
+      document.removeEventListener('mouseover', checkStyles);
+    };
+  }, [targetSelector, showInConsole, customTitle]);
   
-  if (Object.keys(styles).length === 0) return null;
+  if (!styles) return null;
 
   return (
     <div className="fixed bottom-4 right-4 bg-white p-4 rounded-lg shadow-lg border border-gray-200 max-w-[300px] z-50">
-      <h3 className="font-semibold mb-2 text-sm">Computed Styles:</h3>
+      <h3 className="font-semibold mb-2 text-sm">{customTitle} Computed Styles:</h3>
       <pre className="text-xs whitespace-pre-wrap overflow-auto max-h-[200px]">
         {JSON.stringify(styles, null, 2)}
       </pre>
