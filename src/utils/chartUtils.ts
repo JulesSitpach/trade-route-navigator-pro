@@ -1,34 +1,31 @@
-
 import { getChartTheme, chartElements } from '@/components/ui/chart/chartTheme';
-import { LabelProps } from 'recharts';
-import { ChartConfig } from '@/components/ui/chart/types';
+import { Props as LabelProps } from 'recharts/types/component/Label';
 
 // Common chart configuration for consistent styling
 export const chartCommonConfig = {
   margins: {
     default: { top: 20, right: 30, bottom: 60, left: 60 },
-    withXLabels: { top: 20, right: 30, bottom: 80, left: 60 },
+    withXLabels: { top: 20, right: 30, bottom: 80, left: 60 }
   },
-  legend: {
-    position: {
-      vertical: "top" as const,
-      align: "center" as const
-    }
-  },
+  // Grid styling
   grid: {
     stroke: chartElements.grid.stroke,
     strokeDasharray: chartElements.grid.strokeDasharray,
     opacity: chartElements.grid.opacity,
   },
+  
+  // Axis styling
   axis: {
     line: chartElements.axis.line,
     tick: chartElements.axis.tick,
   },
+  
+  // Responsive behavior
   responsive: {
     aspect: 4.0 / 3.0,
     width: '100%',
     minHeight: 300,
-  }
+  },
 };
 
 // Function to generate a standard axis title with consistent styling
@@ -41,7 +38,18 @@ export const createAxisTitle = (
     angle?: number;
   }
 ): LabelProps => {
-  return chartElements.axisTitle(text, axis, options);
+  return {
+    value: text,
+    offset: options?.offset ?? (axis === 'x' ? 40 : 35),
+    position: options?.position ?? (axis === 'x' ? 'insideBottom' : 'insideLeft'),
+    style: {
+      fontSize: 12,
+      fill: '#64748b',
+      fontWeight: 500,
+      textAnchor: 'middle' as const,
+    },
+    angle: options?.angle ?? (axis === 'y' ? -90 : 0),
+  };
 };
 
 // Function to get appropriate chart margins based on chart type
@@ -133,19 +141,14 @@ export const formatNumber = (value: number): string => {
   return new Intl.NumberFormat('en-US').format(value);
 };
 
-// Generate Y-axis ticks with nice intervals
-export const generateYAxisTicks = (maxValue: number, tickCount: number = 5): number[] => {
-  const roundToNearestNice = (value: number): number => {
-    const magnitude = Math.pow(10, Math.floor(Math.log10(value)));
-    const normalized = value / magnitude;
-    
-    if (normalized < 1.5) return magnitude;
-    if (normalized < 3) return 2 * magnitude;
-    if (normalized < 7) return 5 * magnitude;
-    return 10 * magnitude;
-  };
-  
-  const tickInterval = roundToNearestNice(maxValue / (tickCount - 1));
-  return Array.from({ length: tickCount }, (_, i) => i * tickInterval);
+export default {
+  chartCommonConfig,
+  createAxisTitle,
+  getChartMargins,
+  calculateBubbleSize,
+  getColorByThreshold,
+  getTariffColor,
+  formatCurrency, 
+  formatPercent,
+  formatNumber,
 };
-
