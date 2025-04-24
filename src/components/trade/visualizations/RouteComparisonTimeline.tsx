@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { 
@@ -14,8 +13,33 @@ import { chartConfig } from "./chartConfig";
 import { chartCommonConfig } from "@/utils/chartUtils";
 import { BarChart as BarChartIcon } from "lucide-react";
 
+const CustomXAxisTick = (props: any) => {
+  const { x, y, payload } = props;
+  
+  const parts = payload.value.split('→').map((part: string) => part.trim());
+  
+  return (
+    <g transform={`translate(${x},${y})`}>
+      {parts.map((part: string, index: number) => (
+        <text
+          key={index}
+          x={0}
+          y={index * 12}
+          dy={10}
+          textAnchor="end"
+          fill="#666"
+          fontSize={11}
+          transform="rotate(-35)"
+        >
+          {part}
+          {index < parts.length - 1 ? ' →' : ''}
+        </text>
+      ))}
+    </g>
+  );
+};
+
 const RouteComparisonTimeline = () => {
-  // Sample route comparison data
   const routeData = [
     {
       name: "Shanghai → Panama → LA → Chicago",
@@ -41,13 +65,12 @@ const RouteComparisonTimeline = () => {
     {
       name: "China → Mexico → US (USMCA)",
       shipping: 14,
-      customs: 5, // Processing time in Mexico
+      customs: 5,
       distribution: 2,
       label: "Triangular Trade Route"
     }
   ];
 
-  // Define a default theme for axis titles
   const axisTheme = {
     fontFamily: 'inherit',
     fontSize: '0.75rem',
@@ -69,11 +92,16 @@ const RouteComparisonTimeline = () => {
       
       <Card>
         <CardContent className="p-6">
-          <div className="h-[450px]">
+          <div className="h-[500px]">
             <ChartContainer config={chartConfig}>
               <BarChart
                 data={routeData}
-                margin={chartCommonConfig.margins.withXLabels}
+                margin={{
+                  top: 20,
+                  right: 30,
+                  bottom: 140,
+                  left: 60
+                }}
                 barSize={32}
               >
                 <CartesianGrid 
@@ -88,13 +116,12 @@ const RouteComparisonTimeline = () => {
                 />
                 <XAxis 
                   dataKey="name"
-                  tick={chartCommonConfig.axis.tick}
+                  tick={<CustomXAxisTick />}
                   axisLine={chartCommonConfig.axis.line}
                   tickLine={false}
-                  height={80}
-                  angle={-35}
-                  textAnchor="end"
-                  label={createAxisTitle('Shipping Routes', 'x', { offset: 30 })}
+                  height={120}
+                  interval={0}
+                  label={createAxisTitle('Shipping Routes', 'x', { offset: 50 })}
                 />
                 <YAxis 
                   label={createAxisTitle('Transit Days', 'y', { offset: 10 })}
@@ -143,4 +170,3 @@ const RouteComparisonTimeline = () => {
 };
 
 export default RouteComparisonTimeline;
-
