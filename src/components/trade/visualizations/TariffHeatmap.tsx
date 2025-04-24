@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { 
@@ -69,17 +70,30 @@ const getTariffColor = (tariffRate: number): string => {
   return TARIFF_COLORS.high;
 };
 
+// Custom shape renderer for the scatter points - creates circles with dynamic sizes
+const CustomBubble = (props: any) => {
+  const { cx, cy, fill, payload } = props;
+  
+  // Calculate radius based on trade volume with enhanced differentiation
+  // Using a stronger logarithmic scale with adjustable base
+  const base = 1.5; // Adjusts contrast between sizes
+  const minRadius = 5;
+  const maxRadius = 60;
+  
+  // Custom scaling function for better visual differentiation
+  const scale = (value: number) => {
+    const logValue = Math.log(value) / Math.log(base);
+    return minRadius + logValue * 3; // Multiply by 3 for more pronounced differences
+  };
+  
+  const radius = scale(payload.volume);
+  
+  return <circle cx={cx} cy={cy} r={radius} fill={fill} stroke={fill} strokeOpacity={0.7} fillOpacity={0.7} />;
+};
+
 const TariffHeatmap = () => {
   const { tariffData } = useTariffData();
   const margins = getChartMargins('scatter');
-  
-  const formattedData = tariffData.map(item => {
-    const size = Math.log(item.volume) * 20;
-    return {
-      ...item,
-      size
-    };
-  });
 
   return (
     <div className="space-y-6">
@@ -136,18 +150,13 @@ const TariffHeatmap = () => {
                   width={65}
                   padding={{ top: 20, bottom: 20 }}
                 />
-                <ZAxis 
-                  type="number" 
-                  dataKey="size" 
-                  range={[20, 200]} 
-                  scale="pow"
-                />
                 <Tooltip content={<CustomTooltipContent />} cursor={{ strokeDasharray: '3 3' }} />
                 <Scatter 
-                  data={formattedData}
+                  data={tariffData}
                   name="Countries"
+                  shape={<CustomBubble />}
                 >
-                  {formattedData.map((entry, index) => (
+                  {tariffData.map((entry, index) => (
                     <Cell
                       key={`cell-${index}`}
                       fill={getTariffColor(entry.tariffRate)}
