@@ -1,10 +1,11 @@
+
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { CostItem } from "./shared/CostItem";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { requiredDocuments } from "./data";
-import { defaultCostItems, calculateTotalCost } from "./data/costData";
+import { generateCostItems, calculateTotalCost } from "./data/costData";
 
 interface RequirementItemProps {
   label: string;
@@ -20,8 +21,19 @@ const RequirementItem = ({ label, status }: RequirementItemProps) => (
   </div>
 );
 
-const CostAnalysisTab = () => {
-  const [costItems, setCostItems] = useState(defaultCostItems);
+interface CostAnalysisProps {
+  data: {
+    product: {
+      productValue: string;
+    };
+    shipping: {
+      quantity: string;
+    };
+  };
+}
+
+const CostAnalysisTab = ({ data }: CostAnalysisProps) => {
+  const [costItems, setCostItems] = useState(generateCostItems({ productValue: 10000 }));
   
   const [importRequirements, setImportRequirements] = useState(
     requiredDocuments.map(doc => ({
@@ -30,11 +42,39 @@ const CostAnalysisTab = () => {
     }))
   );
   
-  const [recommendedStrategy, setRecommendedStrategy] = useState(
-    "Based on your product and destinations, we recommend ocean freight via Panama with consolidated shipping to reduce costs by approximately 18%."
-  );
-
+  const [recommendedStrategy, setRecommendedStrategy] = useState<string | null>(null);
   const [totalLandedCost, setTotalLandedCost] = useState("$0.00");
+
+  useEffect(() => {
+    if (data?.product?.productValue) {
+      const productValue = parseFloat(data.product.productValue) || 0;
+      const quantity = parseInt(data.shipping?.quantity) || 1;
+      
+      // Generate cost items based on product value and quantity
+      const items = generateCostItems({
+        productValue: productValue * quantity,
+        // You can add more dynamic rates based on other form fields
+      });
+      
+      setCostItems(items);
+
+      // Generate recommendation based on value and quantity
+      const totalValue = productValue * quantity;
+      if (totalValue > 50000) {
+        setRecommendedStrategy(
+          "Based on your high-value shipment, we recommend dedicated freight service with premium insurance coverage to ensure maximum protection."
+        );
+      } else if (totalValue > 10000) {
+        setRecommendedStrategy(
+          "Based on your product and destinations, we recommend ocean freight via Panama with consolidated shipping to reduce costs by approximately 18%."
+        );
+      } else {
+        setRecommendedStrategy(
+          "For this shipment value, we recommend grouped shipping to optimize costs while maintaining reasonable delivery times."
+        );
+      }
+    }
+  }, [data]);
 
   useEffect(() => {
     const total = calculateTotalCost(costItems);

@@ -8,10 +8,31 @@ import VisualizationsTab from './trade/VisualizationsTab';
 import { Route } from './trade/types';
 import { routes, opportunities } from './trade/data';
 
-const TradeAnalysis = ({ data }: { data: any }) => {
-  // Use sample routes data from sampleData.ts file
-  const sampleRoutes = routes;
-  
+interface TradeAnalysisProps {
+  data: {
+    product: {
+      productDescription: string;
+      originCountry: string;
+      destinationCountry: string;
+      productValue: string;
+      productCategory: string;
+    };
+    shipping: {
+      quantity: string;
+      transportMode: string;
+      shipmentType: string;
+      packageType: string;
+      dangerousGoods: string;
+      weight: string;
+      length: string;
+      width: string;
+      height: string;
+      specialRequirements: string;
+    };
+  };
+}
+
+const TradeAnalysis = ({ data }: TradeAnalysisProps) => {
   return (
     <div className="p-6">
       <h2 className="text-xl font-semibold text-gray-800 mb-6">Trade Analysis Results</h2>
@@ -26,7 +47,7 @@ const TradeAnalysis = ({ data }: { data: any }) => {
         </TabsList>
 
         <TabsContent value="costs">
-          <CostAnalysisTab />
+          <CostAnalysisTab data={data} />
         </TabsContent>
 
         <TabsContent value="routes">
