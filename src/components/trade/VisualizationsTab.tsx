@@ -4,7 +4,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import CostBreakdownChart from './visualizations/CostBreakdownChart';
 import RouteComparisonTimeline from './visualizations/RouteComparisonTimeline';
 import TariffHeatmap from './visualizations/TariffHeatmap';
-import GlobalTradeMap from './visualizations/GlobalTradeMap';
 import SeasonalityGraph from './visualizations/SeasonalityGraph';
 import RiskAssessmentMatrix from './visualizations/RiskAssessmentMatrix';
 import SupplyChainFlowDiagram from './visualizations/SupplyChainFlowDiagram';
@@ -25,10 +24,9 @@ const VisualizationsTab = () => {
         </CardHeader>
         <CardContent>
           <Tabs value={activeChart} onValueChange={setActiveChart} className="w-full">
-            <TabsList className="grid grid-cols-4 w-full md:grid-cols-4 lg:grid-cols-8">
+            <TabsList className="grid grid-cols-4 w-full md:grid-cols-4 lg:grid-cols-7">
               <TabsTrigger value="cost-breakdown">Cost Breakdown</TabsTrigger>
               <TabsTrigger value="route-comparison">Routes Timeline</TabsTrigger>
-              <TabsTrigger value="global-map">Global Map</TabsTrigger>
               <TabsTrigger value="tariff-heatmap">Tariff Heatmap</TabsTrigger>
               <TabsTrigger value="seasonality">Seasonality</TabsTrigger>
               <TabsTrigger value="risk-matrix">Risk Matrix</TabsTrigger>
@@ -42,10 +40,6 @@ const VisualizationsTab = () => {
             
             <TabsContent value="route-comparison" className="pt-6">
               <RouteComparisonTimeline />
-            </TabsContent>
-            
-            <TabsContent value="global-map" className="pt-6">
-              <GlobalTradeMap />
             </TabsContent>
             
             <TabsContent value="tariff-heatmap" className="pt-6">
