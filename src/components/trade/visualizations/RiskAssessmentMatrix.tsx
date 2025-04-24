@@ -4,7 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { 
   ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Cell, Tooltip, ResponsiveContainer, ZAxis, Legend 
 } from "recharts";
-import { ChartContainer } from "@/components/ui/chart";
+import { ChartContainer } from "@/components/ui/chart/ChartContainer";
 import { useTariffData } from "./tariff/useTariffData";
 import { createAxisTitle, getTariffColor } from "@/utils/chartUtils";
 import { useChartResponsiveStyles } from "@/hooks/use-chart-responsive-styles";
@@ -111,11 +111,14 @@ const RiskAssessmentMatrix = () => {
                   contentStyle={tooltipStyles.contentStyle}
                 />
                 <Legend 
-                  content={<ChartCustomLegend />}
+                  layout="horizontal"
                   verticalAlign="top"
                   align="center"
-                  height={36}
-                  wrapperStyle={{ paddingBottom: '20px' }}
+                  wrapperStyle={{
+                    paddingBottom: '20px',
+                    display: 'flex',
+                    justifyContent: 'center'
+                  }}
                 />
                 <Scatter data={riskData} fill={lightTheme.colors.primary}>
                   {riskData.map((entry, index) => {

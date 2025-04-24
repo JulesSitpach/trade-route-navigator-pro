@@ -36,6 +36,16 @@ const SeasonalityGraph = () => {
             data={seasonalityData}
             title="Annual Shipping Trends"
             subtitle="Monthly freight costs, congestion, and risk indicators"
+            legendProps={{
+              layout: "horizontal",
+              verticalAlign: "top",
+              align: "center",
+              wrapperStyle: {
+                paddingBottom: '20px',
+                display: 'flex',
+                justifyContent: 'center'
+              }
+            }}
           />
         </CardContent>
       </Card>

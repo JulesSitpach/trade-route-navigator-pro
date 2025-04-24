@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { 
@@ -77,11 +76,14 @@ const RouteComparisonTimeline = () => {
                   vertical={false}
                 />
                 <Legend 
-                  content={<ChartCustomLegend />}
+                  layout="horizontal"
                   verticalAlign="top"
                   align="center"
-                  height={36}
-                  wrapperStyle={{ paddingBottom: '20px' }}
+                  wrapperStyle={{
+                    paddingBottom: '20px',
+                    display: 'flex',
+                    justifyContent: 'center'
+                  }}
                 />
                 <XAxis 
                   dataKey="name"
@@ -134,4 +136,3 @@ const RouteComparisonTimeline = () => {
 };
 
 export default RouteComparisonTimeline;
-
