@@ -38,21 +38,25 @@ const CustomTooltip = ({ active, payload }: any) => {
   );
 };
 
-const CustomXAxisTick = ({ x, y, payload }: any) => (
-  <g transform={`translate(${x},${y})`}>
-    <text 
-      x={0} 
-      y={0} 
-      dy={16} 
-      dx={-12} 
-      textAnchor="end" 
-      className="fill-muted-foreground text-xs"
-      transform="rotate(-45)"
-    >
-      {payload.value}
-    </text>
-  </g>
-);
+const CustomXAxisTick = (props: any) => {
+  const { x, y, payload } = props;
+  return (
+    <g transform={`translate(${x},${y})`}>
+      <text 
+        x={0} 
+        y={0} 
+        dy={16} 
+        dx={-20}
+        textAnchor="end" 
+        fill="#666"
+        fontSize={12}
+        transform="rotate(-45)"
+      >
+        {payload.value}
+      </text>
+    </g>
+  );
+};
 
 const TARIFF_COLORS = {
   low: "#10b981",    // Green color for low tariffs
@@ -96,11 +100,14 @@ const TariffHeatmap = () => {
                   dataKey="country"
                   name="Country"
                   tick={<CustomXAxisTick />} 
-                  axisLine={{ stroke: 'currentColor', strokeWidth: 1 }}
+                  axisLine={chartCommonConfig.axis.line}
                   tickLine={false}
-                  height={60}
+                  height={80}
                   interval={0}
-                  label={createAxisTitle('Countries', 'x', { offset: 60, position: 'insideBottom' })}
+                  label={createAxisTitle('Countries', 'x', { 
+                    offset: -5,
+                    position: 'insideBottom'
+                  })}
                   padding={{ left: 30, right: 30 }}
                 />
                 <YAxis
