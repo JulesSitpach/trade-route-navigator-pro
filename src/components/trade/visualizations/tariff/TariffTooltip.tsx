@@ -14,7 +14,7 @@ export const TariffTooltip: React.FC<TariffTooltipProps> = ({ active, payload })
     const tariffColor = getTariffColor(data.tariffRate);
     
     return (
-      <div className="bg-white p-4 rounded-lg shadow-lg border border-gray-200">
+      <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
         <div className="font-semibold text-base border-b border-gray-100 pb-2 mb-2 text-gray-800">
           {data.country}
         </div>
