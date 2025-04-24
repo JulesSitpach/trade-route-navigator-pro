@@ -6,36 +6,34 @@ import {
   ChartLegend,
   ChartLegendContent
 } from "@/components/ui/chart";
-import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Cell } from "recharts";
+import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Cell, Tooltip } from "recharts";
 import { chartConfig } from "./chartConfig";
 import { useTariffData } from "./tariff/useTariffData";
 import TariffInsights from "./tariff/TariffInsights";
 import { createAxisTitle, getChartMargins } from "@/utils/chartUtils";
 import { chartCommonConfig } from "@/utils/chartUtils";
 
-const CustomTooltip = ({ active, payload }: any) => {
-  if (!active || !payload?.length) return null;
+const CustomTooltipContent = (props: any) => {
+  const { active, payload } = props;
   
-  const data = payload[0].payload;
-  return (
-    <ChartTooltipContent
-      active={active}
-      payload={[
-        {
-          name: "Country",
-          value: data.country
-        },
-        {
-          name: "Tariff Rate",
-          value: `${data.tariffRate}%`
-        },
-        {
-          name: "Trade Volume",
-          value: data.volume.toLocaleString()
-        }
-      ]}
-    />
-  );
+  if (active && payload && payload.length) {
+    const data = payload[0].payload;
+    return (
+      <div style={{ 
+        backgroundColor: 'white', 
+        padding: '10px', 
+        border: '1px solid #e5e7eb',
+        borderRadius: '4px',
+        boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+      }}>
+        <p style={{ fontWeight: 'bold', margin: '0 0 5px' }}>{`Country: ${data.country}`}</p>
+        <p style={{ margin: '0 0 3px' }}>{`Tariff Rate: ${data.tariffRate}%`}</p>
+        <p style={{ margin: '0' }}>{`Volume: ${data.volume.toLocaleString()}`}</p>
+      </div>
+    );
+  }
+  
+  return null;
 };
 
 const CustomXAxisTick = (props: any) => {
@@ -142,7 +140,7 @@ const TariffHeatmap = () => {
                   width={65}
                   padding={{ top: 20, bottom: 20 }}
                 />
-                <ChartTooltip content={<CustomTooltip />} cursor={{ strokeDasharray: '3 3' }} />
+                <Tooltip content={<CustomTooltipContent />} cursor={{ strokeDasharray: '3 3' }} />
                 <Scatter data={tariffData} name="Countries">
                   {tariffData.map((entry, index) => (
                     <Cell
