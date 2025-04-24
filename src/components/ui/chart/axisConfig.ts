@@ -2,7 +2,7 @@
 import { CSSProperties } from 'react';
 import { chartTheme } from './chartTheme';
 import { LabelPosition } from 'recharts/types/component/Label';
-import { TextAnchor } from 'recharts/types/component/Text';
+import { TextAnchor } from './types/textTypes';
 
 export type AxisTitleConfig = {
   value: string;

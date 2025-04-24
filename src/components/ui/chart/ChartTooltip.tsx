@@ -4,6 +4,7 @@ import * as RechartsPrimitive from "recharts"
 import { cn } from "@/lib/utils"
 import { useChart } from "./ChartContext"
 import { getPayloadConfigFromPayload } from "./utils"
+import { TextAnchor } from "./types/textTypes"
 
 export const ChartTooltip = RechartsPrimitive.Tooltip
 

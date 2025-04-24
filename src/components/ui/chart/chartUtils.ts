@@ -1,7 +1,7 @@
 
 import { ChartConfig } from "./types"
 import { chartTheme } from "./chartTheme";
-import { TextAnchor } from 'recharts/types/component/Text';
+import { TextAnchor } from './types/textTypes';
 
 export function getPayloadConfigFromPayload(
   config: ChartConfig,

@@ -4,7 +4,7 @@ import { lightColors, darkColors } from './theme/colors';
 import { typography } from './theme/typography';
 import { spacing } from './theme/spacing';
 import { LabelPosition } from 'recharts/types/component/Label';
-import { TextAnchor } from 'recharts/types/component/Text';
+import { TextAnchor } from './types/textTypes';
 
 // Light theme default configuration
 export const lightTheme: ChartTheme = {
