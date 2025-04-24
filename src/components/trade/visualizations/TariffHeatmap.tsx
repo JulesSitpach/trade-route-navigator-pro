@@ -4,23 +4,23 @@ import { Card, CardContent } from "@/components/ui/card";
 import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Cell, Tooltip, ResponsiveContainer, ZAxis } from "recharts";
 import { useTariffData } from "./tariff/useTariffData";
 import TariffInsights from "./tariff/TariffInsights";
-import { createAxisTitle, getChartMargins } from "@/utils/chartUtils";
-import { chartCommonConfig } from "@/utils/chartUtils";
+import { createAxisTitle, getChartMargins, getTariffColor } from "@/utils/chartUtils";
 import { useChartResponsiveStyles } from "@/hooks/use-chart-responsive-styles";
 import { Badge } from "@/components/ui/badge";
 import TariffLegend from './tariff/TariffLegend';
 
-const CustomTooltipContent = ({ active, payload }) => {
+// Properly typed CustomTooltipContent
+const CustomTooltipContent = ({ active, payload }: { active?: boolean, payload?: any[] }) => {
   if (active && payload && payload.length) {
     const data = payload[0].payload;
     const tariffColor = getTariffColor(data.tariffRate);
     
     return (
-      <div className="bg-white p-3 rounded-lg shadow-lg border border-gray-100">
+      <div className="bg-white p-4 rounded-lg shadow-lg border border-gray-200">
         <div className="font-semibold text-base border-b border-gray-100 pb-2 mb-2 text-gray-800">
           {data.country}
         </div>
-        <div className="space-y-1.5">
+        <div className="space-y-2">
           <div className="flex justify-between items-center">
             <span className="text-sm text-gray-500">Tariff Rate:</span>
             <Badge 
@@ -210,3 +210,4 @@ const TariffHeatmap = () => {
 };
 
 export default TariffHeatmap;
+
