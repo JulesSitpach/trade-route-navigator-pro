@@ -1,6 +1,5 @@
-
 import { ChartConfig } from "@/components/ui/chart";
-import { chartTheme } from "@/utils/chartTheme";
+import { chartTheme } from "@/components/ui/chart/chartTheme";
 
 // Define colors for various chart elements
 export const chartConfig: ChartConfig = {
@@ -84,4 +83,3 @@ export const chartConfig: ChartConfig = {
     color: chartTheme.colors.primary[2],
   }
 };
-

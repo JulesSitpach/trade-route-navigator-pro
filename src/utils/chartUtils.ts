@@ -1,5 +1,4 @@
-
-import { chartTheme } from './chartTheme';
+import { chartTheme } from '@/components/ui/chart/chartTheme';
 
 // Common chart configuration settings
 export const chartCommonConfig = {
@@ -76,4 +75,3 @@ export const chartDimensions = {
     outerRadius: 120
   }
 };
-
