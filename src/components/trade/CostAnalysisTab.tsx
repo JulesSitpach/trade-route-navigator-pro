@@ -4,6 +4,7 @@ import { CostItem } from "./shared/CostItem";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { requiredDocuments } from "./data";
+import { defaultCostItems, calculateTotalCost } from "./data/costData";
 
 interface RequirementItemProps {
   label: string;
@@ -20,17 +21,7 @@ const RequirementItem = ({ label, status }: RequirementItemProps) => (
 );
 
 const CostAnalysisTab = () => {
-  const [costItems, setCostItems] = useState([
-    { label: "Product Value", value: "$10,000.00" },
-    { label: "Import Duty (8.5%)", value: "$850.00" },
-    { label: "Freight Cost", value: "$1,200.00" },
-    { label: "Insurance (1.2%)", value: "$120.00" },
-    { label: "Documentation Fees", value: "$75.00" },
-    { label: "Customs Clearance", value: "$150.00" },
-    { label: "Inland Transportation", value: "$300.00" },
-    { label: "Warehousing", value: "$200.00" },
-    { label: "Other Taxes and Fees", value: "$180.00" }
-  ]);
+  const [costItems, setCostItems] = useState(defaultCostItems);
   
   const [importRequirements, setImportRequirements] = useState(
     requiredDocuments.map(doc => ({
@@ -46,11 +37,7 @@ const CostAnalysisTab = () => {
   const [totalLandedCost, setTotalLandedCost] = useState("$0.00");
 
   useEffect(() => {
-    const total = costItems.reduce((sum, item) => {
-      const value = parseFloat(item.value.replace(/[$,]/g, '')) || 0;
-      return sum + value;
-    }, 0);
-    
+    const total = calculateTotalCost(costItems);
     setTotalLandedCost(`$${total.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`);
   }, [costItems]);
 
