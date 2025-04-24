@@ -54,7 +54,7 @@ const TariffHeatmap = () => {
                       type="category"
                       dataKey="country"
                       name="Country"
-                      tick={<TariffAxisTick />}
+                      tick={(props) => <TariffAxisTick x={props.x} y={props.y} payload={props.payload} />}
                       axisLine={{ stroke: '#e2e8f0' }}
                       tickLine={false}
                       height={80}
