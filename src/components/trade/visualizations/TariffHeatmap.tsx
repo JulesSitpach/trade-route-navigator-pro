@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { 
@@ -20,16 +21,19 @@ const CustomTooltipContent = (props: any) => {
   if (active && payload && payload.length) {
     const data = payload[0].payload;
     return (
-      <div className="bg-gray-900 text-white p-3 rounded-md shadow-md text-sm">
-        <div className="font-medium mb-1">{data.country}</div>
-        <div className="flex items-center mb-1">
-          <div 
-            className="w-3 h-3 rounded-full mr-2" 
-            style={{ backgroundColor: getTariffColor(data.tariffRate) }}
-          />
-          <span>Tariff Rate: {data.tariffRate}%</span>
+      <div className="bg-white p-3 border border-gray-200 shadow-md rounded-md">
+        <div className="font-medium mb-2">{data.country}</div>
+        <div className="grid grid-cols-2 gap-x-3 gap-y-1 text-sm">
+          <div className="flex items-center">
+            <div className="w-3 h-3 rounded-sm mr-2" 
+                 style={{ backgroundColor: getTariffColor(data.tariffRate) }}></div>
+            <span className="text-muted-foreground">Tariff Rate</span>
+          </div>
+          <span className="text-right font-medium">{data.tariffRate}%</span>
+          
+          <span className="text-muted-foreground">Volume</span>
+          <span className="text-right font-medium">{data.volume.toLocaleString()}</span>
         </div>
-        <div>Volume: {data.volume.toLocaleString()}</div>
       </div>
     );
   }
