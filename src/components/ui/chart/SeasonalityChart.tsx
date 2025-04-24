@@ -8,7 +8,7 @@ import { BaseChart } from './BaseChart';
 import { chartTheme } from './chartTheme';
 import { createAxisTitle } from './axisConfig';
 import { SeasonalityChartProps } from './types/chartTypes';
-import { ChartTooltip } from './ChartTooltip';
+import { SeasonalityTooltip } from '@/components/trade/visualizations/seasonality/SeasonalityTooltip';
 import { ChartLegend } from './ChartLegend';
 
 export const SeasonalityChart: React.FC<SeasonalityChartProps> = ({ 
@@ -60,8 +60,14 @@ export const SeasonalityChart: React.FC<SeasonalityChartProps> = ({
           }}
         />
         
-        <ChartTooltip />
-        <ChartLegend />
+        <Tooltip content={<SeasonalityTooltip />} />
+        
+        <Legend 
+          verticalAlign="top" 
+          align="center"
+          height={36}
+          wrapperStyle={{ paddingBottom: '20px' }}
+        />
         
         <Line 
           yAxisId="left" 
