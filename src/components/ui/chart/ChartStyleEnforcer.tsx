@@ -1,7 +1,7 @@
-
 import React, { useEffect, ReactNode } from 'react';
 import { tooltipStyles, legendStyles } from './theme/commonStyles';
 import { lightTheme } from './chartTheme';
+import './theme/chartOverrides.css';
 
 interface ChartStyleEnforcerProps {
   children: ReactNode;
@@ -75,4 +75,3 @@ export const ChartStyleEnforcer = ({ children }: ChartStyleEnforcerProps) => {
   
   return <>{children}</>;
 };
-
