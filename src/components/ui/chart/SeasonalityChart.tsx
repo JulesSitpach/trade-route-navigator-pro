@@ -18,16 +18,6 @@ export const SeasonalityChart: React.FC<SeasonalityChartProps> = ({
   subtitle,
   legendProps 
 }) => {
-  const defaultLegendProps = {
-    verticalAlign: "top" as const, 
-    align: "center" as const,
-    height: 36,
-    wrapperStyle: { paddingBottom: '20px' }
-  };
-
-  // Correctly merge legend props
-  const mergedLegendProps = legendProps ? { ...defaultLegendProps, ...legendProps } : defaultLegendProps;
-
   return (
     <BaseChart 
       title={title || "Annual Shipping Trends"} 
@@ -79,9 +69,23 @@ export const SeasonalityChart: React.FC<SeasonalityChartProps> = ({
           contentStyle={tooltipStyles.contentStyle}
         />
         
-        <Legend 
-          content={(props) => <ChartCustomLegend {...props} {...mergedLegendProps} />}
-        />
+        {legendProps ? (
+          <Legend 
+            content={(props) => <ChartCustomLegend {...props} />}
+            verticalAlign={legendProps.verticalAlign || "top"}
+            align={legendProps.align || "center"}
+            height={legendProps.height || 36}
+            wrapperStyle={legendProps.wrapperStyle || { paddingBottom: '20px' }}
+          />
+        ) : (
+          <Legend 
+            content={(props) => <ChartCustomLegend {...props} />}
+            verticalAlign="top" 
+            align="center"
+            height={36}
+            wrapperStyle={{ paddingBottom: '20px' }}
+          />
+        )}
         
         <Line 
           yAxisId="left" 
