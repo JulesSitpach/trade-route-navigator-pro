@@ -33,6 +33,13 @@ const TradeNavigator = () => {
     }));
   };
 
+  const handleShippingDetailsChange = (shippingData: any) => {
+    setFormData(prev => ({
+      ...prev,
+      shipping: { ...prev.shipping, ...shippingData }
+    }));
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       <header className="bg-[#3A4756] text-white py-12 px-4">
@@ -49,6 +56,10 @@ const TradeNavigator = () => {
       <main className="max-w-6xl mx-auto px-4 py-8 space-y-8">
         <Card className="shadow-lg">
           <ProductDetailsForm onChange={handleProductDetailsChange} />
+        </Card>
+
+        <Card className="shadow-lg">
+          <ShippingDetailsForm onChange={handleShippingDetailsChange} />
         </Card>
 
         <Card className="shadow-lg">
