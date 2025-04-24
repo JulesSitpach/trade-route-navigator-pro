@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils"
 import { ChartContext } from "./ChartContext"
 import { ChartStyle } from "./ChartStyle"
 import { ChartConfig } from "./types"
+import { chartTheme } from "./chartTheme"
 
 export const ChartContainer = React.forwardRef<
   HTMLDivElement,
@@ -17,9 +18,17 @@ export const ChartContainer = React.forwardRef<
 >(({ id, className, children, config, ...props }, ref) => {
   const uniqueId = React.useId()
   const chartId = `chart-${id || uniqueId.replace(/:/g, "")}`
+  const [theme, setTheme] = React.useState(chartTheme);
+  
+  const updateTheme = (newTheme: Partial<typeof chartTheme>) => {
+    setTheme({
+      ...theme,
+      ...newTheme,
+    });
+  };
 
   return (
-    <ChartContext.Provider value={{ config }}>
+    <ChartContext.Provider value={{ theme, updateTheme, config }}>
       <div
         data-chart={chartId}
         ref={ref}
