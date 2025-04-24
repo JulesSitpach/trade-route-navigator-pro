@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { 
@@ -24,10 +23,7 @@ const CustomTooltipContent = (props: any) => {
       <div className="bg-gray-900 text-white p-3 rounded-md shadow-md text-sm">
         <div className="font-medium mb-1">{data.country}</div>
         <div className="flex items-center mb-1">
-          <div 
-            className="w-3 h-3 rounded-full mr-2" 
-            style={{ backgroundColor: getTariffColor(data.tariffRate) }}
-          />
+          <div className="w-3 h-3 rounded-full mr-2" style={{ backgroundColor: getTariffColor(data.tariffRate) }}></div>
           <span>Tariff Rate: {data.tariffRate}%</span>
         </div>
         <div>Volume: {data.volume.toLocaleString()}</div>
