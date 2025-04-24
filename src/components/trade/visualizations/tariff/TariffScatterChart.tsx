@@ -65,13 +65,18 @@ const TariffScatterChart: React.FC<TariffScatterChartProps> = ({ data, getTariff
             cursor={{ strokeDasharray: '3 3' }}
           />
           <Scatter name="Tariff Rates" data={data} fill="#8884d8">
-            {data.map((entry, index) => (
-              <Cell 
-                key={`cell-${index}`} 
-                fill={getTariffColor(entry.tariffRate)} 
-                radius={Math.sqrt(entry.volume) / 2}
-              />
-            ))}
+            {data.map((entry, index) => {
+              const color = getTariffColor(entry.tariffRate);
+              return (
+                <Cell 
+                  key={`cell-${index}`} 
+                  fill={color}
+                  // Add the fill property to the payload for the tooltip to use
+                  data-fill={color}
+                  radius={Math.sqrt(entry.volume) / 2}
+                />
+              );
+            })}
           </Scatter>
         </ScatterChart>
       </ResponsiveContainer>

@@ -97,11 +97,15 @@ export const ChartTooltipContent = React.forwardRef<
           {payload.map((item, index) => {
             const key = `${nameKey || item.name || item.dataKey || "value"}`
             const itemConfig = getPayloadConfigFromPayload(config, item, key)
-            const indicatorColor = color || item.payload.fill || item.color || theme.colors.primary
+            // Fix: Add fallback for indicatorColor to prevent undefined.fill error
+            const indicatorColor = color || 
+                                   (item.payload && item.payload.fill) || 
+                                   item.color || 
+                                   theme.colors.primary;
 
             return (
               <div
-                key={item.dataKey}
+                key={item.dataKey || index}
                 className={cn(
                   "flex w-full flex-wrap items-stretch gap-2",
                   indicator === "dot" && "items-center"
