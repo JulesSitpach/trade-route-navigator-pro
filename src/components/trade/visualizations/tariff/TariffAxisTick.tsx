@@ -9,7 +9,8 @@ interface TariffAxisTickProps {
   };
 }
 
-export const TariffAxisTick: React.FC<TariffAxisTickProps> = ({ x, y, payload }) => {
+export const TariffAxisTick = (props: TariffAxisTickProps): React.ReactElement => {
+  const { x, y, payload } = props;
   return (
     <g transform={`translate(${x},${y})`}>
       <text 
