@@ -74,18 +74,18 @@ const TariffHeatmap = () => {
   const { tariffData } = useTariffData();
   const margins = getChartMargins('scatter');
   
+  // Fixed bubble size calculation to ensure proper scaling
   const calculateBubbleSize = (volume: number): number => {
     const minVolume = Math.min(...tariffData.map(d => d.volume));
     const maxVolume = Math.max(...tariffData.map(d => d.volume));
     
-    // Adjusted radius values for better visual balance
     const minRadius = 4;
     const maxRadius = 15;
     
     if (minVolume === maxVolume) return (minRadius + maxRadius) / 2;
     
-    const scale = (volume - minVolume) / (maxVolume - minVolume);
-    return minRadius + scale * (maxRadius - minRadius);
+    const normalized = (volume - minVolume) / (maxVolume - minVolume);
+    return minRadius + normalized * (maxRadius - minRadius);
   };
 
   return (
@@ -144,16 +144,23 @@ const TariffHeatmap = () => {
                   padding={{ top: 20, bottom: 20 }}
                 />
                 <Tooltip content={<CustomTooltipContent />} cursor={{ strokeDasharray: '3 3' }} />
-                <Scatter data={tariffData} name="Countries">
-                  {tariffData.map((entry, index) => (
-                    <Cell
-                      key={`cell-${index}`}
-                      fill={getTariffColor(entry.tariffRate)}
-                      stroke={getTariffColor(entry.tariffRate)}
-                      strokeWidth={1}
-                      r={calculateBubbleSize(entry.volume)}
-                    />
-                  ))}
+                <Scatter 
+                  data={tariffData} 
+                  name="Countries"
+                  shape="circle"
+                >
+                  {tariffData.map((entry, index) => {
+                    const bubbleSize = calculateBubbleSize(entry.volume);
+                    return (
+                      <Cell
+                        key={`cell-${index}`}
+                        fill={getTariffColor(entry.tariffRate)}
+                        stroke={getTariffColor(entry.tariffRate)}
+                        strokeWidth={1}
+                        r={bubbleSize}
+                      />
+                    );
+                  })}
                 </Scatter>
               </ScatterChart>
             </ChartContainer>
