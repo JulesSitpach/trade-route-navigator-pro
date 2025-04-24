@@ -11,14 +11,10 @@ import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid } fro
 import { chartConfig } from "./chartConfig";
 import { chartCommonConfig } from "@/utils/chartUtils";
 import { LineChart as LineChartIcon } from "lucide-react";
-import { useChartMargins } from "@/hooks/use-chart-margins";
-import { useAxisTicks } from "@/hooks/use-axis-ticks";
-import { useLegendPosition } from "@/hooks/use-legend-position";
+import { useChartResponsive } from "@/hooks/use-chart-responsive";
 
 const SeasonalityGraph = () => {
-  const margins = useChartMargins();
-  const tickCount = useAxisTicks();
-  const legendPosition = useLegendPosition();
+  const { margins, tickCount, legendPosition } = useChartResponsive();
   
   const seasonalityData = [
     { month: "Jan", freight: 100, congestion: 40, risk: 30 },
