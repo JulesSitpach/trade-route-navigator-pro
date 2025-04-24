@@ -1,3 +1,4 @@
+
 import { useState, useRef } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -10,14 +11,14 @@ import TradeAnalysis from './TradeAnalysis';
 const TradeNavigator = () => {
   const [formData, setFormData] = useState({
     product: {
-      productDescription: 'Sample Electronics',
-      originCountry: 'China',
-      destinationCountry: 'USA',
-      productValue: 10000
+      productDescription: '',
+      originCountry: '',
+      destinationCountry: '',
+      productValue: ''
     },
     shipping: {
-      quantity: 100,
-      transportMode: 'sea'
+      quantity: '',
+      transportMode: ''
     }
   });
   
@@ -43,7 +44,44 @@ const TradeNavigator = () => {
     if (showAnalysis) setShowAnalysis(false);
   };
 
+  const validateForm = () => {
+    const { product, shipping } = formData;
+    const requiredFields = {
+      product: ['productDescription', 'originCountry', 'destinationCountry', 'productValue'],
+      shipping: ['quantity', 'transportMode']
+    };
+
+    let missingFields: string[] = [];
+
+    requiredFields.product.forEach(field => {
+      if (!product[field as keyof typeof product]) {
+        missingFields.push(field);
+      }
+    });
+
+    requiredFields.shipping.forEach(field => {
+      if (!shipping[field as keyof typeof shipping]) {
+        missingFields.push(field);
+      }
+    });
+
+    if (missingFields.length > 0) {
+      toast({
+        title: "Missing Required Fields",
+        description: `Please fill in all mandatory fields: ${missingFields.join(', ')}`,
+        variant: "destructive"
+      });
+      return false;
+    }
+
+    return true;
+  };
+
   const handleCalculateAnalysis = () => {
+    if (!validateForm()) {
+      return;
+    }
+
     setShowAnalysis(true);
     toast({
       title: "Analysis Generated",
@@ -105,3 +143,4 @@ const TradeNavigator = () => {
 };
 
 export default TradeNavigator;
+
