@@ -42,7 +42,7 @@ const TariffLegend: React.FC = () => {
             style={{ backgroundColor: theme.colors.tariff.high }}
           />
           <div>
-            <p className="text-sm font-medium">High Tariff (>15%)</p>
+            <p className="text-sm font-medium">High Tariff ({'>'}15%)</p>
             <p className="text-xs text-muted-foreground">
               Significant trade barriers that require careful cost consideration
             </p>
