@@ -6,15 +6,6 @@ import TariffAnalysis from './TariffAnalysis';
 import CostAnalysisTab from './trade/CostAnalysisTab';
 import RegulationsTab from './trade/RegulationsTab';
 import VisualizationsTab from './trade/VisualizationsTab';
-import { 
-  routes, 
-  opportunities, 
-  requiredDocuments, 
-  regulatoryTimeline,
-  countryRequirements,
-  permitGuidance,
-  regulatoryUpdates 
-} from './trade/data/sampleData';
 
 const TradeAnalysis = ({ data }: { data: any }) => {
   return (
@@ -35,7 +26,7 @@ const TradeAnalysis = ({ data }: { data: any }) => {
         </TabsContent>
 
         <TabsContent value="routes">
-          <AlternativeRoutes routes={routes} />
+          <AlternativeRoutes routes={[]} />
         </TabsContent>
 
         <TabsContent value="tariffs">
@@ -55,4 +46,3 @@ const TradeAnalysis = ({ data }: { data: any }) => {
 };
 
 export default TradeAnalysis;
-
