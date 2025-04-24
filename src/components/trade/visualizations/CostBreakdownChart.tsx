@@ -5,11 +5,12 @@ import {
   ChartLegend,
   ChartLegendContent, 
   ChartTooltip, 
-  ChartTooltipContent
+  ChartTooltipContent 
 } from "@/components/ui/chart";
-import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
+import { PieChart, Pie, Cell } from "recharts";
 import { chartConfig } from "./chartConfig";
 import { chartCommonConfig, chartDimensions } from "@/utils/chartUtils";
+import { Donut } from "lucide-react";
 
 const CostBreakdownChart = () => {
   // Sample cost breakdown data
@@ -25,39 +26,43 @@ const CostBreakdownChart = () => {
 
   return (
     <div className="space-y-4">
-      <h3 className="text-lg font-medium">Cost Breakdown Analysis</h3>
-      <p className="text-sm text-muted-foreground mb-4">
+      <div className="flex items-center gap-2">
+        <Donut className="h-5 w-5 text-muted-foreground" />
+        <h3 className="text-lg font-medium">Cost Breakdown Analysis</h3>
+      </div>
+      <p className="text-sm text-muted-foreground">
         Visualize the distribution of costs across different components in your supply chain
       </p>
       
       <Card>
-        <CardContent className="p-4">
-          <div style={{ height: chartDimensions.height.default }} className="flex justify-center">
+        <CardContent className="p-6">
+          <div className="h-[400px]">
             <ChartContainer config={chartConfig}>
               <PieChart margin={chartCommonConfig.margins.default}>
-                <ChartTooltip 
-                  content={<ChartTooltipContent />}
-                  cursor={false}
-                />
+                <ChartTooltip content={<ChartTooltipContent />} />
                 <ChartLegend 
                   content={<ChartLegendContent />}
-                  verticalAlign={chartCommonConfig.legend.position.vertical}
-                  align={chartCommonConfig.legend.position.align}
+                  verticalAlign="bottom"
+                  align="center"
                 />
                 <Pie
                   data={costData}
                   cx="50%"
                   cy="50%"
                   labelLine={false}
-                  outerRadius={chartDimensions.pieChart.outerRadius}
-                  innerRadius={chartDimensions.pieChart.innerRadius}
+                  outerRadius={140}
+                  innerRadius={100}
+                  paddingAngle={2}
                   dataKey="value"
                   nameKey="name"
+                  cornerRadius={4}
                 >
                   {costData.map((entry, index) => (
                     <Cell 
-                      key={`cell-${index}`} 
-                      fill={chartConfig[entry.name as keyof typeof chartConfig]?.color || "#ccc"} 
+                      key={`cell-${index}`}
+                      fill={chartConfig[entry.name]?.color}
+                      stroke={chartConfig[entry.name]?.color}
+                      strokeWidth={1}
                     />
                   ))}
                 </Pie>

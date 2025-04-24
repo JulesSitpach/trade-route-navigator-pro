@@ -7,9 +7,10 @@ import {
   ChartLegend,
   ChartLegendContent
 } from "@/components/ui/chart";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, ResponsiveContainer } from "recharts";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid } from "recharts";
 import { chartConfig } from "./chartConfig";
-import { chartCommonConfig, chartDimensions } from "@/utils/chartUtils";
+import { chartCommonConfig } from "@/utils/chartUtils";
+import { LineChart as LineChartIcon } from "lucide-react";
 
 const SeasonalityGraph = () => {
   // Sample seasonality data
@@ -30,14 +31,17 @@ const SeasonalityGraph = () => {
 
   return (
     <div className="space-y-4">
-      <h3 className="text-lg font-medium">Seasonality Analysis</h3>
-      <p className="text-sm text-muted-foreground mb-4">
+      <div className="flex items-center gap-2">
+        <LineChartIcon className="h-5 w-5 text-muted-foreground" />
+        <h3 className="text-lg font-medium">Seasonality Analysis</h3>
+      </div>
+      <p className="text-sm text-muted-foreground">
         Track how shipping costs, transit times, and risks fluctuate throughout the year
       </p>
       
       <Card>
-        <CardContent className="p-4">
-          <div style={{ height: chartDimensions.height.default }}>
+        <CardContent className="p-6">
+          <div className="h-[450px]">
             <ChartContainer config={chartConfig}>
               <LineChart
                 data={seasonalityData}
@@ -50,8 +54,8 @@ const SeasonalityGraph = () => {
                 />
                 <ChartLegend 
                   content={<ChartLegendContent />}
-                  verticalAlign={chartCommonConfig.legend.position.vertical}
-                  align={chartCommonConfig.legend.position.align}
+                  verticalAlign="top"
+                  align="center"
                 />
                 <XAxis 
                   dataKey="month"
