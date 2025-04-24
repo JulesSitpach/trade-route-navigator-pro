@@ -22,22 +22,33 @@ export const chartCommonConfig = {
   },
   grid: {
     strokeDasharray: "3 3",
-    strokeOpacity: 0.2,
-    stroke: "#e0e0e0"
+    strokeOpacity: 0.15,
+    stroke: "#8E9196",
+    vertical: true,
+    horizontal: true
   },
   axis: {
     tick: {
       fontSize: 12,
-      fill: "#666666"
+      fill: "#8E9196",
+      fontWeight: 400,
+      dy: 8
     },
     label: {
       fontSize: 13,
-      fill: "#666666",
-      offset: 45
+      fill: "#403E43",
+      fontWeight: 500,
+      offset: 45,
+      margin: 10
     },
     line: {
-      stroke: "#e0e0e0",
+      stroke: "#E5E7EB",
       strokeWidth: 1
+    },
+    format: {
+      percentage: (value: number) => `${value}%`,
+      currency: (value: number) => `$${value}`,
+      number: (value: number) => value.toLocaleString()
     }
   },
   tooltip: {
