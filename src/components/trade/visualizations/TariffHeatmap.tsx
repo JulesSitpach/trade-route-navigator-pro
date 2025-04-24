@@ -40,7 +40,7 @@ const TariffHeatmap = () => {
                       type="category"
                       dataKey="country"
                       name="Country"
-                      tick={TariffAxisTick}
+                      tick={(props) => <TariffAxisTick {...props} />}
                       axisLine={{ stroke: '#e2e8f0' }}
                       tickLine={false}
                       height={80}
@@ -147,7 +147,7 @@ const TariffHeatmap = () => {
               
               <div className="mt-6 pt-4 border-t">
                 <p className="text-sm font-medium mb-1">Note:</p>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-muted-foreground ml-6">
                   Bubble size represents trade volume in units. Larger bubbles indicate higher trade volume with the corresponding country.
                 </p>
               </div>
