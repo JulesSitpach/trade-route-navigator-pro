@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { 
@@ -21,7 +20,7 @@ const CustomTooltipContent = (props: any) => {
   if (active && payload && payload.length) {
     const data = payload[0].payload;
     return (
-      <div className="bg-white p-3 border border-gray-200 shadow-md rounded-md">
+      <div className="bg-background p-3 border border-gray-300 shadow-md rounded-md">
         <div className="font-medium mb-2">{data.country}</div>
         <div className="grid grid-cols-2 gap-x-3 gap-y-1 text-sm">
           <div className="flex items-center">
