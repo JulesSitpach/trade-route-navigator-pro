@@ -21,5 +21,11 @@ export interface SeasonalityChartProps {
   }[];
   title?: string;
   subtitle?: string;
-  legendProps?: LegendProps;
+  legendProps?: {
+    verticalAlign?: string;
+    align?: string;
+    height?: number;
+    wrapperStyle?: React.CSSProperties;
+  };
 }
+

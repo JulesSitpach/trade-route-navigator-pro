@@ -9,7 +9,7 @@ import { chartTheme } from './chartTheme';
 import { createAxisTitle } from './axisConfig';
 import { SeasonalityChartProps } from './types/chartTypes';
 import { SeasonalityTooltip } from '@/components/trade/visualizations/seasonality/SeasonalityTooltip';
-import { ChartLegend } from './ChartLegend';
+import { ChartCustomLegend } from './ChartCustomLegend';
 import { cursorStyles, tooltipStyles } from './theme/commonStyles';
 
 export const SeasonalityChart: React.FC<SeasonalityChartProps> = ({ 
@@ -80,10 +80,7 @@ export const SeasonalityChart: React.FC<SeasonalityChartProps> = ({
         />
         
         <Legend 
-          verticalAlign={mergedLegendProps.verticalAlign}
-          align={mergedLegendProps.align}
-          height={mergedLegendProps.height}
-          wrapperStyle={mergedLegendProps.wrapperStyle}
+          content={(props) => <ChartCustomLegend {...props} {...mergedLegendProps} />}
         />
         
         <Line 
@@ -119,3 +116,4 @@ export const SeasonalityChart: React.FC<SeasonalityChartProps> = ({
     </BaseChart>
   );
 };
+
