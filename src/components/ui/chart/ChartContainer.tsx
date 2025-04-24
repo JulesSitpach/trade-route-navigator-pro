@@ -14,8 +14,10 @@ interface ChartContainerProps extends React.ComponentProps<"div"> {
   minHeight?: number;
   maxHeight?: number;
   title?: string;
+  subtitle?: string;
   height?: string | number;
   width?: string | number;
+  legendPosition?: 'top' | 'bottom' | 'right';
 }
 
 export const ChartContainer = React.forwardRef<
@@ -30,8 +32,10 @@ export const ChartContainer = React.forwardRef<
   minHeight = 300,
   maxHeight = 600,
   title,
+  subtitle,
   height,
   width = "100%",
+  legendPosition = 'top',
   ...props 
 }, ref) => {
   const uniqueId = React.useId()
@@ -78,6 +82,7 @@ export const ChartContainer = React.forwardRef<
       <div
         ref={ref}
         data-chart={chartId}
+        data-legend-position={legendPosition}
         className={cn(
           "relative flex flex-col",
           "text-[length:var(--chart-text-size,0.75rem)]",
@@ -92,6 +97,9 @@ export const ChartContainer = React.forwardRef<
           "[&_.recharts-reference-line]:stroke-border",
           "[&_.recharts-sector]:outline-none",
           "[&_.recharts-surface]:outline-none",
+          "[&_.recharts-legend-item]:mb-2",
+          "[&_[data-legend-position=right]_.recharts-legend-wrapper]:right-0",
+          "[&_[data-legend-position=bottom]_.recharts-legend-wrapper]:bottom-0",
           className
         )}
         style={{
@@ -101,7 +109,12 @@ export const ChartContainer = React.forwardRef<
         } as React.CSSProperties}
         {...props}
       >
-        {title && <h3 className="text-lg font-medium mb-2">{title}</h3>}
+        {title && (
+          <h3 className="text-lg font-medium mb-2">{title}</h3>
+        )}
+        {subtitle && (
+          <p className="text-sm text-muted-foreground mb-4">{subtitle}</p>
+        )}
         <ChartStyle id={chartId} config={config} />
         <div 
           ref={containerRef}

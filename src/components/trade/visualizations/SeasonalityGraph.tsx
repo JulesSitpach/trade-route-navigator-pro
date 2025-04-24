@@ -6,7 +6,8 @@ import {
   ChartTooltipContent,
   ChartLegend,
   ChartLegendContent,
-  createAxisTitle
+  createAxisTitle,
+  getChartMargins
 } from "@/components/ui/chart";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid } from "recharts";
 import { chartConfig } from "./chartConfig";
@@ -16,8 +17,15 @@ import { useChartResponsive } from "@/hooks/use-chart-responsive";
 import { useChartResponsiveStyles } from "@/hooks/use-chart-responsive-styles";
 
 const SeasonalityGraph = () => {
-  const { margins, tickCount, legendPosition } = useChartResponsive();
+  const { tickCount, legendPosition } = useChartResponsive();
   const styles = useChartResponsiveStyles();
+  
+  const margins = getChartMargins({
+    hasXAxisTitle: true,
+    hasYAxisTitle: true,
+    hasLegend: true,
+    legendPosition: legendPosition
+  });
   
   const seasonalityData = [
     { month: "Jan", freight: 100, congestion: 40, risk: 30 },
@@ -51,6 +59,8 @@ const SeasonalityGraph = () => {
             height={400}
             className="w-full"
             title="Annual Shipping Trends"
+            subtitle="Monthly freight costs, congestion, and risk indicators"
+            legendPosition={legendPosition}
           >
             <LineChart
               data={seasonalityData}
@@ -74,12 +84,12 @@ const SeasonalityGraph = () => {
                 tick={chartCommonConfig.axis.tick}
                 axisLine={chartCommonConfig.axis.line}
                 tickLine={false}
-                label={createAxisTitle('Month', 'x', { offset: 10 })}
+                label={createAxisTitle('Month', 'x', { offset: 10, position: 'insideBottom' })}
                 tickCount={tickCount}
               />
               <YAxis 
                 yAxisId="left"
-                label={createAxisTitle('Freight Cost Index', 'y', { offset: 5 })}
+                label={createAxisTitle('Freight Cost Index', 'y', { offset: 10, position: 'insideLeft' })}
                 tickLine={false}
                 axisLine={chartCommonConfig.axis.line}
                 tick={chartCommonConfig.axis.tick}
@@ -89,7 +99,8 @@ const SeasonalityGraph = () => {
                 orientation="right"
                 label={createAxisTitle('Risk/Congestion (%)', 'y', { 
                   position: 'insideRight',
-                  offset: 5 
+                  offset: 10,
+                  angle: 90 
                 })}
                 tickLine={false}
                 axisLine={chartCommonConfig.axis.line}

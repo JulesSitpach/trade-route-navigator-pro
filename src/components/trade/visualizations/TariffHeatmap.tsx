@@ -1,3 +1,4 @@
+
 import { Card, CardContent } from "@/components/ui/card";
 import { 
   ChartContainer, 
@@ -5,17 +6,26 @@ import {
   ChartTooltipContent,
   ChartLegend,
   ChartLegendContent,
-  createAxisTitle
+  createAxisTitle,
+  getChartMargins
 } from "@/components/ui/chart";
 import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Cell } from "recharts";
 import { chartConfig } from "./chartConfig";
-import { chartCommonConfig, chartDimensions } from "@/utils/chartUtils";
+import { chartCommonConfig } from "@/utils/chartUtils";
 import { useTariffData } from "./tariff/useTariffData";
 import TariffLegend from "./tariff/TariffLegend";
 import TariffInsights from "./tariff/TariffInsights";
 
 const TariffHeatmap = () => {
   const { tariffData, getTariffColor } = useTariffData();
+  
+  const margins = getChartMargins({
+    hasXAxisTitle: true,
+    hasYAxisTitle: true,
+    hasRotatedLabels: true,
+    hasLegend: true,
+    legendPosition: 'top'
+  });
 
   return (
     <div className="space-y-6">
@@ -29,8 +39,13 @@ const TariffHeatmap = () => {
       <Card>
         <CardContent className="p-6">
           <div className="h-[450px]">
-            <ChartContainer config={chartConfig}>
-              <ScatterChart margin={chartCommonConfig.margins.withXLabels}>
+            <ChartContainer 
+              config={chartConfig} 
+              height={450}
+              title="Country Tariff Comparison"
+              subtitle="Bubble size represents trade volume"
+            >
+              <ScatterChart margin={margins}>
                 <CartesianGrid 
                   strokeDasharray={chartCommonConfig.grid.strokeDasharray}
                   stroke={chartCommonConfig.grid.stroke}
@@ -40,6 +55,8 @@ const TariffHeatmap = () => {
                   content={<ChartLegendContent />}
                   verticalAlign="top"
                   align="center"
+                  layout="horizontal"
+                  wrapperStyle={{ paddingBottom: "20px" }}
                 />
                 <XAxis 
                   type="category"
@@ -50,8 +67,9 @@ const TariffHeatmap = () => {
                   tickLine={false}
                   angle={-45}
                   textAnchor="end"
-                  height={80}
-                  label={createAxisTitle('Countries', 'x', { offset: 30 })}
+                  height={100}
+                  label={createAxisTitle('Countries', 'x', { offset: 5, position: 'insideBottom' })}
+                  dy={10}
                 />
                 <YAxis
                   type="number"
@@ -60,7 +78,7 @@ const TariffHeatmap = () => {
                   tick={chartCommonConfig.axis.tick}
                   axisLine={chartCommonConfig.axis.line}
                   tickLine={false}
-                  label={createAxisTitle('Tariff Rate (%)', 'y', { offset: 10 })}
+                  label={createAxisTitle('Tariff Rate (%)', 'y', { offset: 10, position: 'insideLeft' })}
                 />
                 <ChartTooltip content={<ChartTooltipContent />} />
                 <Scatter 
