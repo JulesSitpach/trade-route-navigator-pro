@@ -8,7 +8,7 @@ import {
   ChartLegend,
   ChartLegendContent
 } from "@/components/ui/chart";
-import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Cell, Tooltip } from "recharts";
+import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Cell, Tooltip, ZAxis } from "recharts";
 import { chartConfig } from "./chartConfig";
 import { useTariffData } from "./tariff/useTariffData";
 import TariffInsights from "./tariff/TariffInsights";
@@ -74,19 +74,15 @@ const TariffHeatmap = () => {
   const { tariffData } = useTariffData();
   const margins = getChartMargins('scatter');
   
-  // Fixed bubble size calculation to ensure proper scaling
-  const calculateBubbleSize = (volume: number): number => {
-    const minVolume = Math.min(...tariffData.map(d => d.volume));
-    const maxVolume = Math.max(...tariffData.map(d => d.volume));
-    
-    const minRadius = 4;
-    const maxRadius = 15;
-    
-    if (minVolume === maxVolume) return (minRadius + maxRadius) / 2;
-    
-    const normalized = (volume - minVolume) / (maxVolume - minVolume);
-    return minRadius + normalized * (maxRadius - minRadius);
-  };
+  // Prepare data with explicit size field for ZAxis
+  const formattedData = tariffData.map(item => {
+    // Calculate size explicitly, using a scale that works better with Recharts
+    const size = (item.volume / 1000) + 10;  // Simple formula that scales nicely
+    return {
+      ...item,
+      size  // Add a size property for ZAxis to use
+    };
+  });
 
   return (
     <div className="space-y-6">
@@ -143,24 +139,26 @@ const TariffHeatmap = () => {
                   width={65}
                   padding={{ top: 20, bottom: 20 }}
                 />
+                <ZAxis 
+                  type="number" 
+                  dataKey="size" 
+                  range={[50, 400]} 
+                  scale="linear" 
+                />
                 <Tooltip content={<CustomTooltipContent />} cursor={{ strokeDasharray: '3 3' }} />
                 <Scatter 
-                  data={tariffData} 
+                  data={formattedData}
                   name="Countries"
-                  shape="circle"
+                  fill="#8884d8"
                 >
-                  {tariffData.map((entry, index) => {
-                    const bubbleSize = calculateBubbleSize(entry.volume);
-                    return (
-                      <Cell
-                        key={`cell-${index}`}
-                        fill={getTariffColor(entry.tariffRate)}
-                        stroke={getTariffColor(entry.tariffRate)}
-                        strokeWidth={1}
-                        r={bubbleSize}
-                      />
-                    );
-                  })}
+                  {formattedData.map((entry, index) => (
+                    <Cell
+                      key={`cell-${index}`}
+                      fill={getTariffColor(entry.tariffRate)}
+                      stroke={getTariffColor(entry.tariffRate)}
+                      strokeWidth={1}
+                    />
+                  ))}
                 </Scatter>
               </ScatterChart>
             </ChartContainer>
