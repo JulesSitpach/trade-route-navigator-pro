@@ -37,7 +37,6 @@ export const tooltipStyles = {
   },
 };
 
-// Update legend styles with standardized values
 export const legendStyles = {
   container: {
     display: 'flex',
@@ -71,7 +70,9 @@ export const legendStyles = {
 
 export const cursorStyles = {
   bar: { 
-    fill: 'transparent' 
+    fill: 'transparent',
+    stroke: '#e5e7eb', 
+    strokeDasharray: '3 3' 
   },
   line: { 
     stroke: '#e5e7eb', 
@@ -111,16 +112,12 @@ export const axisStyles = {
   },
 };
 
-// Update and standardize bubble size calculation
 export const calculateBubbleSize = (value: number, minValue: number, maxValue: number): number => {
-  // Ensure proper scaling for bubble sizes
   const minRadius = 5;
   const maxRadius = 20;
   
-  // If there's only one value or min equals max
   if (minValue === maxValue) return (minRadius + maxRadius) / 2;
   
-  // Calculate size proportionally
   const scale = (value - minValue) / (maxValue - minValue);
   return minRadius + scale * (maxRadius - minRadius);
 };
