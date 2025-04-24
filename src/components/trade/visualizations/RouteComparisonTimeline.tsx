@@ -57,14 +57,15 @@ const RouteComparisonTimeline = () => {
         Compare transit times across different shipping routes and methods
       </p>
       
-      <Card>
-        <CardContent className="p-6">
-          <div className="h-[450px]">
-            <ResponsiveContainer width="100%" height="100%">
+      <Card className="bg-white">
+        <CardContent className="p-6 bg-white">
+          <div className="h-[450px] bg-white">
+            <ResponsiveContainer width="100%" height="100%" className="bg-white">
               <BarChart
                 data={routeData}
                 margin={chartCommonConfig.margins.withXLabels}
                 barSize={32}
+                style={{ backgroundColor: '#ffffff' }}
               >
                 <CartesianGrid 
                   strokeDasharray="4 4"
@@ -94,6 +95,7 @@ const RouteComparisonTimeline = () => {
                 />
                 <Tooltip 
                   content={<RouteComparisonTooltip />}
+                  wrapperStyle={{ backgroundColor: '#ffffff', outline: 'none', border: 'none' }}
                 />
                 <Bar 
                   dataKey="shipping" 
