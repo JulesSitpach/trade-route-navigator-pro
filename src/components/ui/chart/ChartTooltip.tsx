@@ -1,9 +1,9 @@
-
 import * as React from "react"
 import * as RechartsPrimitive from "recharts"
 import { cn } from "@/lib/utils"
 import { useChart } from "./ChartContext"
 import { getPayloadConfigFromPayload } from "./utils"
+import { tooltipStyles } from "./theme/commonStyles"
 
 export const ChartTooltip = RechartsPrimitive.Tooltip
 
@@ -84,14 +84,11 @@ export const ChartTooltipContent = React.forwardRef<
       <div
         ref={ref}
         className={cn(
-          "grid min-w-[8rem] items-start gap-1.5 rounded-lg border border-border/50 bg-white px-2.5 py-1.5 shadow-xl", // Changed bg-background to bg-white
+          "grid min-w-[8rem] items-start gap-1.5",
           className
         )}
         style={{
-          fontSize: theme.typography.fontSize.label,
-          fontFamily: theme.typography.fontFamily,
-          backgroundColor: '#ffffff', // Explicitly set white background
-          boxShadow: '0 4px 12px rgba(0,0,0,0.05)' // Add subtle shadow
+          ...tooltipStyles.wrapper
         }}
       >
         {!nestLabel ? tooltipLabel : null}
@@ -99,7 +96,6 @@ export const ChartTooltipContent = React.forwardRef<
           {payload.map((item, index) => {
             const key = `${nameKey || item.name || item.dataKey || "value"}`
             const itemConfig = getPayloadConfigFromPayload(config, item, key)
-            // Fix: Add fallback for indicatorColor to prevent undefined.fill error
             const indicatorColor = color || 
                                    (item.payload && item.payload.fill) || 
                                    item.color || 

@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { Badge } from "@/components/ui/badge";
+import { tooltipStyles } from "@/components/ui/chart/theme/commonStyles";
 
 interface RouteComparisonTooltipProps {
   active?: boolean;
@@ -17,22 +18,14 @@ export const RouteComparisonTooltip: React.FC<RouteComparisonTooltipProps> = ({ 
   const total = payload.reduce((sum, entry) => sum + entry.value, 0);
   
   return (
-    <div 
-      className="rounded-lg p-3 max-w-[250px]" 
-      style={{ 
-        backgroundColor: '#FFFFFF',
-        boxShadow: '0 4px 12px rgba(0,0,0,0.05)',
-        border: '1px solid #e5e7eb',
-        color: '#374151',
-      }}
-    >
-      <div className="font-semibold text-sm text-gray-800 mb-2 border-b border-gray-100 pb-1">
+    <div style={tooltipStyles.wrapper}>
+      <div style={tooltipStyles.title}>
         {data?.fullRoute || label}
       </div>
-      <div className="space-y-1">
+      <div className="space-y-1" style={tooltipStyles.content}>
         {payload.map((entry, index) => (
-          <div key={`item-${index}`} className="flex justify-between items-center">
-            <span className="text-xs text-gray-600">{entry.name}:</span>
+          <div key={`item-${index}`} style={tooltipStyles.row}>
+            <span>{entry.name}:</span>
             <Badge 
               variant="outline" 
               className="ml-2 font-medium text-xs"
@@ -46,8 +39,8 @@ export const RouteComparisonTooltip: React.FC<RouteComparisonTooltipProps> = ({ 
             </Badge>
           </div>
         ))}
-        <div className="flex justify-between items-center mt-1 pt-1 border-t border-gray-100">
-          <span className="text-xs font-medium text-gray-700">Total:</span>
+        <div style={{ ...tooltipStyles.row, marginTop: '8px', borderTop: '1px solid #f3f4f6', paddingTop: '8px' }}>
+          <span className="font-medium">Total:</span>
           <Badge variant="outline" className="ml-2 font-medium text-xs bg-gray-50">
             {total} days
           </Badge>
@@ -56,3 +49,4 @@ export const RouteComparisonTooltip: React.FC<RouteComparisonTooltipProps> = ({ 
     </div>
   );
 };
+
