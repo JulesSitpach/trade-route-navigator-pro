@@ -1,5 +1,6 @@
 import { getChartTheme, chartElements } from '@/components/ui/chart/chartTheme';
 import { Props as LabelProps } from 'recharts/types/component/Label';
+import { LabelPosition } from 'recharts/types/component/Label';
 
 // Common chart configuration for consistent styling
 export const chartCommonConfig = {
@@ -34,22 +35,11 @@ export const createAxisTitle = (
   axis: 'x' | 'y', 
   options?: { 
     offset?: number; 
-    position?: string; 
+    position?: LabelPosition; 
     angle?: number;
   }
 ): LabelProps => {
-  return {
-    value: text,
-    offset: options?.offset ?? (axis === 'x' ? 40 : 35),
-    position: options?.position ?? (axis === 'x' ? 'insideBottom' : 'insideLeft'),
-    style: {
-      fontSize: 12,
-      fill: '#64748b',
-      fontWeight: 500,
-      textAnchor: 'middle' as const,
-    },
-    angle: options?.angle ?? (axis === 'y' ? -90 : 0),
-  };
+  return chartElements.axisTitle(text, axis, options);
 };
 
 // Function to get appropriate chart margins based on chart type
