@@ -32,6 +32,16 @@ const RiskAssessmentMatrix = () => {
     }
   };
 
+  // Define a default theme for axis titles
+  const axisTheme = {
+    fontFamily: 'inherit',
+    fontSize: '0.75rem',
+    fontWeight: 400,
+    color: '#64748b',
+    padding: 0,
+    offset: { x: 0, y: 0 }
+  };
+
   return (
     <div className="space-y-6">
       <div className="space-y-2">
@@ -68,7 +78,8 @@ const RiskAssessmentMatrix = () => {
                   label={AxisTitle({ 
                     text: 'Total Cost ($)', 
                     axis: 'x',
-                    offset: { y: 20 }
+                    offset: { y: 20 },
+                    theme: axisTheme
                   })}
                 />
                 <YAxis
@@ -82,7 +93,8 @@ const RiskAssessmentMatrix = () => {
                   label={AxisTitle({ 
                     text: 'Risk Level (1-10)', 
                     axis: 'y',
-                    offset: { x: 10 }
+                    offset: { x: 10 },
+                    theme: axisTheme
                   })}
                 />
                 <ZAxis

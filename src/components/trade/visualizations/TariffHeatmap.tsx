@@ -18,6 +18,16 @@ import TariffInsights from "./tariff/TariffInsights";
 const TariffHeatmap = () => {
   const { tariffData, getTariffColor } = useTariffData();
 
+  // Define a default theme for axis titles
+  const axisTheme = {
+    fontFamily: 'inherit',
+    fontSize: '0.75rem',
+    fontWeight: 400,
+    color: '#64748b',
+    padding: 0,
+    offset: { x: 0, y: 0 }
+  };
+
   return (
     <div className="space-y-6">
       <div className="space-y-2">
@@ -55,7 +65,8 @@ const TariffHeatmap = () => {
                   label={AxisTitle({ 
                     text: 'Countries', 
                     axis: 'x',
-                    offset: { y: 30 }
+                    offset: { y: 30 },
+                    theme: axisTheme
                   })}
                 />
                 <YAxis
@@ -68,7 +79,8 @@ const TariffHeatmap = () => {
                   label={AxisTitle({ 
                     text: 'Tariff Rate (%)', 
                     axis: 'y',
-                    offset: { x: 10 }
+                    offset: { x: 10 },
+                    theme: axisTheme
                   })}
                 />
                 <ChartTooltip content={<ChartTooltipContent />} />

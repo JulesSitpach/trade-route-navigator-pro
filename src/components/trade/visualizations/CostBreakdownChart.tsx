@@ -1,3 +1,4 @@
+
 import { Card, CardContent } from "@/components/ui/card";
 import { 
   ChartContainer, 
@@ -32,6 +33,16 @@ const CostBreakdownChart = () => {
     ...item,
     percentage: ((item.value / totalCost) * 100).toFixed(1)
   }));
+
+  // Define a default theme for axis titles
+  const axisTheme = {
+    fontFamily: 'inherit',
+    fontSize: '0.75rem',
+    fontWeight: 400,
+    color: '#64748b',
+    padding: 0,
+    offset: { x: 0, y: 0 }
+  };
 
   return (
     <div className="space-y-4">

@@ -46,6 +46,16 @@ const RouteComparisonTimeline = () => {
     }
   ];
 
+  // Define a default theme for axis titles
+  const axisTheme = {
+    fontFamily: 'inherit',
+    fontSize: '0.75rem',
+    fontWeight: 400,
+    color: '#64748b',
+    padding: 0,
+    offset: { x: 0, y: 0 }
+  };
+
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-2">
@@ -86,14 +96,16 @@ const RouteComparisonTimeline = () => {
                   label={AxisTitle({ 
                     text: 'Shipping Routes', 
                     axis: 'x',
-                    offset: { y: 30 }
+                    offset: { y: 30 },
+                    theme: axisTheme
                   })}
                 />
                 <YAxis 
                   label={AxisTitle({ 
                     text: 'Transit Days', 
                     axis: 'y',
-                    offset: { x: 10 }
+                    offset: { x: 10 },
+                    theme: axisTheme
                   })}
                   tickLine={false}
                   axisLine={chartCommonConfig.axis.line}
