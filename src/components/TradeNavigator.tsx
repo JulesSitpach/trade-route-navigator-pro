@@ -83,10 +83,11 @@ const TradeNavigator = () => {
           <ShippingDetailsForm onChange={handleShippingDetailsChange} />
         </Card>
         
+        {/* Move the button here, after the forms */}
         <div className="flex justify-center">
           <Button 
             onClick={handleCalculateAnalysis} 
-            className="bg-[#3A4756] hover:bg-[#2A3746] text-white px-8 py-6"
+            className="bg-pro-blue hover:bg-pro-blue/90 text-white px-8 py-6"
             size="lg"
           >
             <ChartBar className="mr-2" />
@@ -113,3 +114,4 @@ const TradeNavigator = () => {
 };
 
 export default TradeNavigator;
+
