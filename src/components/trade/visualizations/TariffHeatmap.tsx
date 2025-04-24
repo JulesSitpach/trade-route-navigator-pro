@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { 
@@ -92,6 +93,30 @@ const TariffHeatmap = () => {
       
       <Card>
         <CardContent className="p-6">
+          <div className="flex justify-center mb-4 space-x-6">
+            <div className="flex items-center">
+              <div 
+                className="w-3 h-3 rounded-sm mr-2"
+                style={{ backgroundColor: TARIFF_COLORS.low }}
+              />
+              <span className="text-sm">Low Tariff (0-5%)</span>
+            </div>
+            <div className="flex items-center">
+              <div 
+                className="w-3 h-3 rounded-sm mr-2"
+                style={{ backgroundColor: TARIFF_COLORS.medium }}
+              />
+              <span className="text-sm">Medium Tariff (6-15%)</span>
+            </div>
+            <div className="flex items-center">
+              <div 
+                className="w-3 h-3 rounded-sm mr-2"
+                style={{ backgroundColor: TARIFF_COLORS.high }}
+              />
+              <span className="text-sm">High Tariff ({'>'}15%)</span>
+            </div>
+          </div>
+
           <div className="h-[600px]">
             <ChartContainer 
               config={chartConfig}
@@ -159,30 +184,6 @@ const TariffHeatmap = () => {
               </ScatterChart>
             </ChartContainer>
           </div>
-          
-          <div className="flex justify-center mt-4 space-x-6">
-            <div className="flex items-center">
-              <div 
-                className="w-3 h-3 rounded-sm mr-2"
-                style={{ backgroundColor: TARIFF_COLORS.low }}
-              />
-              <span className="text-sm">Low Tariff (0-5%)</span>
-            </div>
-            <div className="flex items-center">
-              <div 
-                className="w-3 h-3 rounded-sm mr-2"
-                style={{ backgroundColor: TARIFF_COLORS.medium }}
-              />
-              <span className="text-sm">Medium Tariff (6-15%)</span>
-            </div>
-            <div className="flex items-center">
-              <div 
-                className="w-3 h-3 rounded-sm mr-2"
-                style={{ backgroundColor: TARIFF_COLORS.high }}
-              />
-              <span className="text-sm">High Tariff ({'>'}15%)</span>
-            </div>
-          </div>
         </CardContent>
       </Card>
 
@@ -192,3 +193,4 @@ const TariffHeatmap = () => {
 };
 
 export default TariffHeatmap;
+
