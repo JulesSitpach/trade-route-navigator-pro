@@ -13,10 +13,12 @@ import { chartCommonConfig } from "@/utils/chartUtils";
 import { LineChart as LineChartIcon } from "lucide-react";
 import { useChartMargins } from "@/hooks/use-chart-margins";
 import { useAxisTicks } from "@/hooks/use-axis-ticks";
+import { useLegendPosition } from "@/hooks/use-legend-position";
 
 const SeasonalityGraph = () => {
   const margins = useChartMargins();
   const tickCount = useAxisTicks();
+  const legendPosition = useLegendPosition();
   
   const seasonalityData = [
     { month: "Jan", freight: 100, congestion: 40, risk: 30 },
@@ -61,8 +63,11 @@ const SeasonalityGraph = () => {
                   />
                   <ChartLegend 
                     content={<ChartLegendContent />}
-                    verticalAlign="top"
+                    verticalAlign={legendPosition}
                     align="center"
+                    wrapperStyle={{ 
+                      paddingTop: legendPosition === "bottom" ? "10px" : "0" 
+                    }}
                   />
                   <XAxis 
                     dataKey="month"
