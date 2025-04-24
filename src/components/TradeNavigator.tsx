@@ -1,3 +1,4 @@
+
 import { useState, useRef } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -5,9 +6,10 @@ import { useToast } from '@/hooks/use-toast';
 import ProductDetailsForm from './ProductDetailsForm';
 import ShippingDetailsForm from './ShippingDetailsForm';
 import TradeAnalysis from './TradeAnalysis';
+import { PropDebugger } from './debug/PropDebugger';
 
 const TradeNavigator = () => {
-  const [formData] = useState({
+  const [formData, setFormData] = useState({
     product: {
       productDescription: 'Sample Electronics',
       originCountry: 'China',
@@ -24,6 +26,13 @@ const TradeNavigator = () => {
   const [showAnalysis, setShowAnalysis] = useState(false);
   const analysisRef = useRef<HTMLDivElement>(null);
 
+  const handleProductDetailsChange = (productData: any) => {
+    setFormData(prev => ({
+      ...prev,
+      product: { ...prev.product, ...productData }
+    }));
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       <header className="bg-[#3A4756] text-white py-12 px-4">
@@ -39,8 +48,18 @@ const TradeNavigator = () => {
 
       <main className="max-w-6xl mx-auto px-4 py-8 space-y-8">
         <Card className="shadow-lg">
+          <ProductDetailsForm onChange={handleProductDetailsChange} />
+        </Card>
+
+        <Card className="shadow-lg">
           <TradeAnalysis data={formData} />
         </Card>
+
+        <PropDebugger 
+          componentProps={formData} 
+          title="Form Data State"
+          showInConsole={true}
+        />
       </main>
     </div>
   );
