@@ -84,12 +84,14 @@ export const ChartTooltipContent = React.forwardRef<
       <div
         ref={ref}
         className={cn(
-          "grid min-w-[8rem] items-start gap-1.5 rounded-lg border border-border/50 bg-background px-2.5 py-1.5 shadow-xl",
+          "grid min-w-[8rem] items-start gap-1.5 rounded-lg border border-border/50 bg-white px-2.5 py-1.5 shadow-xl", // Changed bg-background to bg-white
           className
         )}
         style={{
           fontSize: theme.typography.fontSize.label,
           fontFamily: theme.typography.fontFamily,
+          backgroundColor: '#ffffff', // Explicitly set white background
+          boxShadow: '0 4px 12px rgba(0,0,0,0.05)' // Add subtle shadow
         }}
       >
         {!nestLabel ? tooltipLabel : null}
