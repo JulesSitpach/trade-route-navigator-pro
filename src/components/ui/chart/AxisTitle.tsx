@@ -9,12 +9,14 @@ interface AxisTitleProps {
   position?: 'insideLeft' | 'insideRight' | 'bottom' | 'top';
 }
 
-export const AxisTitle: React.FC<AxisTitleProps> = ({ 
+// This component doesn't render JSX directly but returns a configuration object
+// that can be passed to Recharts XAxis/YAxis label prop
+export const AxisTitle = ({ 
   text, 
   axis, 
   offset,
   position = axis === 'x' ? 'bottom' : 'insideLeft'
-}) => {
+}: AxisTitleProps) => {
   const { theme } = useChart();
   const { axisTitle } = theme;
   
@@ -37,4 +39,3 @@ export const AxisTitle: React.FC<AxisTitleProps> = ({
     }
   };
 };
-
