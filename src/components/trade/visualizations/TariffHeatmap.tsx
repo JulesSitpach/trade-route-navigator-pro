@@ -24,7 +24,8 @@ const CustomXAxisTick = (props: any) => {
       <text 
         x={0} 
         y={0} 
-        dy={16} 
+        dy={20} // Increased vertical spacing for X-axis labels
+        dx={-5} // Added horizontal offset to move labels further from axis
         textAnchor="end" 
         fill="#666"
         fontSize={12}
@@ -41,10 +42,10 @@ const TariffHeatmap = () => {
   
   // Enhanced margins to ensure X-axis labels are visible
   const margins = {
-    top: 30,    // Increased top margin for legend
-    right: 30,
-    bottom: 100, // Increased for rotated X-axis labels
-    left: 70     // Increased left margin for Y-axis labels
+    top: 40,    // Further increased top margin for legend
+    right: 40,   // Increased right margin
+    bottom: 120, // Further increased for rotated X-axis labels
+    left: 90     // Further increased left margin for Y-axis labels
   };
 
   return (
@@ -78,9 +79,10 @@ const TariffHeatmap = () => {
                   tick={<CustomXAxisTick />} 
                   axisLine={chartCommonConfig.axis.line}
                   tickLine={false}
-                  height={90}    // Increased height for X-axis
+                  height={100}   // Further increased height for X-axis
                   interval={0}   // Show all country names
-                  label={createAxisTitle('Countries', 'x', { offset: 70, position: 'insideBottom' })}
+                  label={createAxisTitle('Countries', 'x', { offset: 80, position: 'insideBottom' })}
+                  padding={{ left: 20, right: 20 }} // Added padding to X-axis
                 />
                 <YAxis
                   type="number"
@@ -88,13 +90,15 @@ const TariffHeatmap = () => {
                   name="Tariff Rate"
                   tick={{
                     fontSize: 12,
+                    dx: -10, // Move Y-axis ticks away from the axis
                   }}
                   axisLine={chartCommonConfig.axis.line}
                   tickLine={false}
                   domain={[0, 'dataMax + 2']} // Add some padding at the top
-                  label={createAxisTitle('Tariff Rate (%)', 'y', { offset: 45, position: 'insideLeft' })}
+                  label={createAxisTitle('Tariff Rate (%)', 'y', { offset: 70, position: 'insideLeft' })}
                   tickFormatter={(value) => `${value}%`}
-                  width={60}    // Added width to ensure Y-axis labels fit
+                  width={80}    // Further increased width to ensure Y-axis labels fit
+                  padding={{ top: 20, bottom: 20 }} // Added padding to Y-axis
                 />
                 <ChartLegend 
                   content={<ChartLegendContent />}
