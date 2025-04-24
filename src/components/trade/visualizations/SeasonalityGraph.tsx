@@ -3,10 +3,10 @@ import React from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { SeasonalityChart } from "@/components/ui/chart";
 import { LineChartIcon } from "lucide-react";
+import { useSeasonalityData } from "./seasonality/useSeasonalityData";
 
 const SeasonalityGraph = () => {
-  // Removed hardcoded seasonality data
-  const seasonalityData: any[] = [];
+  const { seasonalityData, loading, error } = useSeasonalityData();
 
   return (
     <div className="space-y-4">
@@ -20,7 +20,15 @@ const SeasonalityGraph = () => {
       
       <Card>
         <CardContent className="p-6">
-          {seasonalityData.length === 0 ? (
+          {loading ? (
+            <div className="text-center text-muted-foreground py-12">
+              Loading seasonality data...
+            </div>
+          ) : error ? (
+            <div className="text-center text-red-500 py-12">
+              {error}
+            </div>
+          ) : seasonalityData.length === 0 ? (
             <div className="text-center text-muted-foreground py-12">
               No seasonality data available
             </div>
