@@ -1,3 +1,4 @@
+
 import { Card, CardContent } from "@/components/ui/card";
 import { 
   ChartContainer, 
@@ -25,17 +26,18 @@ const CostBreakdownChart = () => {
   return (
     <div className="space-y-4">
       <h3 className="text-lg font-medium">Cost Breakdown Analysis</h3>
-      <p className="text-sm text-muted-foreground">
+      <p className="text-sm text-muted-foreground mb-6">
         Visualize the distribution of costs across different components in your supply chain
       </p>
       
-      <Card>
+      <Card className="border rounded-lg shadow-sm">
         <CardContent className="p-6">
-          <div className="h-96">
+          <div className="h-[400px]">
             <ChartContainer config={chartConfig}>
               <PieChart margin={chartCommonConfig.margins.default}>
                 <ChartTooltip 
-                  content={<ChartTooltipContent />} 
+                  content={<ChartTooltipContent />}
+                  cursor={false}
                 />
                 <ChartLegend 
                   content={<ChartLegendContent />}
@@ -49,7 +51,6 @@ const CostBreakdownChart = () => {
                   labelLine={false}
                   outerRadius={chartDimensions.pieChart.outerRadius}
                   innerRadius={chartDimensions.pieChart.innerRadius}
-                  fill="#8884d8"
                   dataKey="value"
                   nameKey="name"
                 >
@@ -66,9 +67,9 @@ const CostBreakdownChart = () => {
         </CardContent>
       </Card>
 
-      <div className="text-sm">
-        <p className="font-medium">Key Insights:</p>
-        <ul className="list-disc pl-5 pt-2 space-y-1">
+      <div className="text-sm mt-6">
+        <p className="font-medium mb-2">Key Insights:</p>
+        <ul className="list-disc pl-5 space-y-1 text-muted-foreground">
           <li>Freight costs represent the largest portion of your total shipping expenses (35%)</li>
           <li>Consider insurance optimization to reduce premiums while maintaining coverage</li>
           <li>Documentation costs can be reduced by leveraging electronic filing systems</li>

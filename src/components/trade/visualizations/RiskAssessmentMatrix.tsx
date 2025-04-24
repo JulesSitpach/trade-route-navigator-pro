@@ -31,18 +31,19 @@ const RiskAssessmentMatrix = () => {
   return (
     <div className="space-y-4">
       <h3 className="text-lg font-medium">Risk Assessment Matrix</h3>
-      <p className="text-sm text-muted-foreground">
+      <p className="text-sm text-muted-foreground mb-6">
         Compare routes based on cost vs. risk factors to find your optimal balance
       </p>
       
-      <Card>
+      <Card className="border rounded-lg shadow-sm">
         <CardContent className="p-6">
-          <div className="h-[400px] w-full">
+          <div className="h-[400px]">
             <ChartContainer config={chartConfig}>
               <ScatterChart margin={chartCommonConfig.margins.withXLabels}>
                 <CartesianGrid 
                   strokeDasharray={chartCommonConfig.grid.strokeDasharray} 
-                  strokeOpacity={chartCommonConfig.grid.strokeOpacity} 
+                  stroke={chartCommonConfig.grid.stroke}
+                  strokeOpacity={chartCommonConfig.grid.strokeOpacity}
                 />
                 <XAxis 
                   type="number"
@@ -51,6 +52,8 @@ const RiskAssessmentMatrix = () => {
                   domain={[2000, 6000]}
                   tickCount={5}
                   tick={chartCommonConfig.axis.tick}
+                  axisLine={chartCommonConfig.axis.line}
+                  tickLine={false}
                   label={{ 
                     value: 'Cost ($)', 
                     position: 'bottom',
@@ -62,19 +65,14 @@ const RiskAssessmentMatrix = () => {
                   dataKey="y"
                   name="Risk Score"
                   domain={[0, 10]}
+                  tick={chartCommonConfig.axis.tick}
+                  axisLine={chartCommonConfig.axis.line}
                   tickLine={false}
-                  axisLine={false}
-                  tick={{ fontSize: 12 }}
                   label={{ 
                     value: 'Risk Score (1-10)', 
                     angle: -90, 
                     position: 'insideLeft',
-                    style: { 
-                      textAnchor: 'middle',
-                      fontSize: 12,
-                      fill: '#64748b'
-                    },
-                    offset: 10
+                    ...chartCommonConfig.axis.label
                   }}
                 />
                 <ZAxis
@@ -95,7 +93,6 @@ const RiskAssessmentMatrix = () => {
                     <Cell 
                       key={`cell-${index}`} 
                       fill={getRiskColor(entry.riskLevel)}
-                      r={6}
                     />
                   ))}
                 </Scatter>
@@ -105,24 +102,24 @@ const RiskAssessmentMatrix = () => {
         </CardContent>
       </Card>
 
-      <div className="flex items-center justify-center gap-8 mt-2">
+      <div className="flex items-center justify-center gap-8 mt-6">
         <div className="flex items-center gap-2">
-          <div className="w-3 h-3 rounded-full" style={{ backgroundColor: "#ea384c" }}></div>
-          <span className="text-sm">High Risk</span>
+          <div className="w-3 h-3 rounded-full" style={{ backgroundColor: "#22c55e" }}></div>
+          <span className="text-sm text-muted-foreground">Low Risk</span>
         </div>
         <div className="flex items-center gap-2">
           <div className="w-3 h-3 rounded-full" style={{ backgroundColor: "#f97316" }}></div>
-          <span className="text-sm">Medium Risk</span>
+          <span className="text-sm text-muted-foreground">Medium Risk</span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-3 h-3 rounded-full" style={{ backgroundColor: "#22c55e" }}></div>
-          <span className="text-sm">Low Risk</span>
+          <div className="w-3 h-3 rounded-full" style={{ backgroundColor: "#ea384c" }}></div>
+          <span className="text-sm text-muted-foreground">High Risk</span>
         </div>
       </div>
 
-      <div className="text-sm mt-4">
-        <p className="font-medium">Risk Assessment Insights:</p>
-        <ul className="list-disc pl-5 pt-2 space-y-1">
+      <div className="text-sm mt-6">
+        <p className="font-medium mb-2">Risk Assessment Insights:</p>
+        <ul className="list-disc pl-5 space-y-1 text-muted-foreground">
           <li>Air freight offers the lowest risk profile but at significant cost premium</li>
           <li>East Coast route provides a balanced risk-cost profile</li>
           <li>Alternative ocean routes may save costs but introduce higher risks</li>

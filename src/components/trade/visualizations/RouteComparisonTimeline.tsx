@@ -1,3 +1,4 @@
+
 import { Card, CardContent } from "@/components/ui/card";
 import { 
   ChartContainer, 
@@ -46,12 +47,12 @@ const RouteComparisonTimeline = () => {
   return (
     <div className="space-y-4">
       <h3 className="text-lg font-medium">Route Comparison Timeline</h3>
-      <p className="text-sm text-muted-foreground">
+      <p className="text-sm text-muted-foreground mb-6">
         Compare transit times across different shipping routes and methods
       </p>
       
-      <Card>
-        <CardContent className="pt-4">
+      <Card className="border rounded-lg shadow-sm">
+        <CardContent className="p-6">
           <div className="h-[400px]">
             <ChartContainer config={chartConfig}>
               <BarChart
@@ -60,7 +61,9 @@ const RouteComparisonTimeline = () => {
                 barSize={30}
               >
                 <CartesianGrid 
-                  strokeDasharray={chartCommonConfig.grid.strokeDasharray} 
+                  strokeDasharray={chartCommonConfig.grid.strokeDasharray}
+                  stroke={chartCommonConfig.grid.stroke}
+                  strokeOpacity={chartCommonConfig.grid.strokeOpacity}
                 />
                 <ChartLegend 
                   content={<ChartLegendContent />}
@@ -70,6 +73,7 @@ const RouteComparisonTimeline = () => {
                 <XAxis 
                   dataKey="name"
                   tick={chartCommonConfig.axis.tick}
+                  axisLine={chartCommonConfig.axis.line}
                   tickLine={false}
                   height={60}
                   angle={-25}
@@ -80,25 +84,42 @@ const RouteComparisonTimeline = () => {
                     value: 'Days', 
                     angle: -90, 
                     position: 'insideLeft',
-                    offset: -15
+                    ...chartCommonConfig.axis.label
                   }}
                   tickLine={false}
+                  axisLine={chartCommonConfig.axis.line}
+                  tick={chartCommonConfig.axis.tick}
                 />
                 <ChartTooltip
                   content={<ChartTooltipContent />}
                 />
-                <Bar dataKey="shipping" stackId="a" name="Shipping" fill={chartConfig.primaryRoute.color} />
-                <Bar dataKey="customs" stackId="a" name="Customs" fill={chartConfig.customs.color} />
-                <Bar dataKey="distribution" stackId="a" name="Distribution" fill={chartConfig.lastMile.color} />
+                <Bar 
+                  dataKey="shipping" 
+                  stackId="a" 
+                  name="Shipping" 
+                  fill={chartConfig.primaryRoute.color} 
+                />
+                <Bar 
+                  dataKey="customs" 
+                  stackId="a" 
+                  name="Customs" 
+                  fill={chartConfig.customs.color} 
+                />
+                <Bar 
+                  dataKey="distribution" 
+                  stackId="a" 
+                  name="Distribution" 
+                  fill={chartConfig.lastMile.color} 
+                />
               </BarChart>
             </ChartContainer>
           </div>
         </CardContent>
       </Card>
 
-      <div className="text-sm mt-4">
-        <p className="font-medium">Key Insights:</p>
-        <ul className="list-disc pl-5 pt-2 space-y-1">
+      <div className="text-sm mt-6">
+        <p className="font-medium mb-2">Key Insights:</p>
+        <ul className="list-disc pl-5 space-y-1 text-muted-foreground">
           <li>Air shipping reduces transit time by 85% but increases costs by 130%</li>
           <li>Panama Canal route offers the best balance of cost and speed</li>
           <li>USMCA triangular trade route requires additional processing time but reduces tariffs</li>

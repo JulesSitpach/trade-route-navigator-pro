@@ -3,16 +3,16 @@
 export const chartCommonConfig = {
   margins: {
     default: {
-      top: 40,
+      top: 60, // Increased top margin for legend
       right: 30,
-      left: 40,
-      bottom: 40
+      left: 60, // Increased left margin for y-axis label
+      bottom: 60 // Increased bottom margin for x-axis label
     },
     withXLabels: {
-      top: 40,
+      top: 60,
       right: 30,
-      left: 40,
-      bottom: 60 // Extra space for rotated x-axis labels
+      left: 60,
+      bottom: 80 // Extra space for rotated x-axis labels
     }
   },
   legend: {
@@ -23,17 +23,22 @@ export const chartCommonConfig = {
   },
   grid: {
     strokeDasharray: "3 3",
-    strokeOpacity: 0.3
+    strokeOpacity: 0.2,
+    stroke: "#e0e0e0"
   },
   axis: {
     tick: {
-      fontSize: 11,
-      fill: "#666"
+      fontSize: 12,
+      fill: "#666666"
     },
     label: {
-      fontSize: 12,
-      fill: "#64748b",
-      offset: 10
+      fontSize: 13,
+      fill: "#666666",
+      offset: 45
+    },
+    line: {
+      stroke: "#e0e0e0",
+      strokeWidth: 1
     }
   },
   tooltip: {
@@ -41,7 +46,8 @@ export const chartCommonConfig = {
       background: "#ffffff",
       border: "1px solid rgba(0,0,0,0.1)",
       borderRadius: "6px",
-      padding: "8px 12px"
+      padding: "8px 12px",
+      boxShadow: "0 2px 4px rgba(0,0,0,0.1)"
     }
   }
 };
@@ -64,3 +70,4 @@ export const chartDimensions = {
     outerRadius: 140
   }
 };
+
