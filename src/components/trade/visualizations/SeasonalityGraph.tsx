@@ -1,4 +1,3 @@
-
 import { Card, CardContent } from "@/components/ui/card";
 import { 
   ChartContainer, 
@@ -13,9 +12,12 @@ import { chartConfig } from "./chartConfig";
 import { chartCommonConfig } from "@/utils/chartUtils";
 import { LineChart as LineChartIcon } from "lucide-react";
 import { useChartMargins } from "@/hooks/use-chart-margins";
+import { useAxisTicks } from "@/hooks/use-axis-ticks";
 
 const SeasonalityGraph = () => {
   const margins = useChartMargins();
+  const tickCount = useAxisTicks();
+  
   const seasonalityData = [
     { month: "Jan", freight: 100, congestion: 40, risk: 30 },
     { month: "Feb", freight: 105, congestion: 45, risk: 35 },
@@ -68,6 +70,7 @@ const SeasonalityGraph = () => {
                     axisLine={chartCommonConfig.axis.line}
                     tickLine={false}
                     label={createAxisTitle('Month', 'x', { offset: 10 })}
+                    tickCount={tickCount}
                   />
                   <YAxis 
                     yAxisId="left"
