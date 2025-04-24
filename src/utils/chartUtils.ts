@@ -1,13 +1,12 @@
+
 import { chartTheme } from '@/components/ui/chart/chartTheme';
+import { getChartTheme, getMargins } from '@/components/ui/chart/chartTheme';
 
 // Common chart configuration settings
 export const chartCommonConfig = {
   margins: {
-    default: chartTheme.spacing.chartMargin,
-    withXLabels: {
-      ...chartTheme.spacing.chartMargin,
-      bottom: 80 // Extra space for rotated x-axis labels
-    }
+    default: getMargins(),
+    withXLabels: getMargins({ bottom: 80 }) // Extra space for rotated x-axis labels
   },
   legend: {
     position: {
@@ -17,27 +16,24 @@ export const chartCommonConfig = {
   },
   grid: {
     strokeDasharray: chartTheme.grid.strokeDasharray,
-    strokeOpacity: 0.15,
+    strokeOpacity: chartTheme.grid.opacity,
     stroke: chartTheme.grid.stroke,
     vertical: true,
     horizontal: true
   },
   axis: {
     tick: {
-      fontSize: parseInt(chartTheme.typography.sizes.axis),
-      fill: chartTheme.colors.text,
-      fontWeight: chartTheme.typography.weights.normal,
-      dy: chartTheme.spacing.tickSize
+      fontSize: getChartTheme().typography.fontSize.tick,
+      fill: getChartTheme().colors.text,
+      fontWeight: getChartTheme().typography.fontWeight.normal,
     },
     label: {
-      fontSize: parseInt(chartTheme.typography.sizes.label),
-      fill: chartTheme.colors.text,
-      fontWeight: chartTheme.typography.weights.medium,
-      offset: chartTheme.spacing.axisOffset,
-      margin: chartTheme.spacing.chartPadding
+      fontSize: getChartTheme().typography.fontSize.axis,
+      fill: getChartTheme().colors.text,
+      fontWeight: getChartTheme().typography.fontWeight.bold,
     },
     line: {
-      stroke: chartTheme.colors.axisLine,
+      stroke: getChartTheme().colors.text,
       strokeWidth: 1
     },
     format: {
@@ -47,13 +43,7 @@ export const chartCommonConfig = {
     }
   },
   tooltip: {
-    style: {
-      background: chartTheme.tooltip.background,
-      border: chartTheme.tooltip.border,
-      borderRadius: chartTheme.tooltip.borderRadius,
-      padding: chartTheme.tooltip.padding,
-      boxShadow: chartTheme.tooltip.boxShadow
-    }
+    style: getChartTheme().tooltip
   }
 };
 
