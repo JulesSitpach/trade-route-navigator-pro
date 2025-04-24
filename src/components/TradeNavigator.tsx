@@ -1,4 +1,3 @@
-
 import { useState, useRef } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -7,7 +6,6 @@ import { ChartBar } from 'lucide-react';
 import ProductDetailsForm from './ProductDetailsForm';
 import ShippingDetailsForm from './ShippingDetailsForm';
 import TradeAnalysis from './TradeAnalysis';
-import { PropDebugger } from './debug/PropDebugger';
 
 const TradeNavigator = () => {
   const [formData, setFormData] = useState({
@@ -83,7 +81,6 @@ const TradeNavigator = () => {
           <ShippingDetailsForm onChange={handleShippingDetailsChange} />
         </Card>
         
-        {/* Move the button here, after the forms */}
         <div className="flex justify-center">
           <Button 
             onClick={handleCalculateAnalysis} 
@@ -102,16 +99,9 @@ const TradeNavigator = () => {
             </Card>
           </div>
         )}
-
-        <PropDebugger 
-          componentProps={formData} 
-          title="Form Data State"
-          showInConsole={true}
-        />
       </main>
     </div>
   );
 };
 
 export default TradeNavigator;
-
