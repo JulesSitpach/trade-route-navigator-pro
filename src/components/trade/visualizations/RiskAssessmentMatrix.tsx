@@ -98,7 +98,14 @@ const RiskAssessmentMatrix = () => {
                   range={[60, 200]}
                   name="Reliability"
                 />
-                <ChartTooltip content={<ChartTooltipContent />} />
+                <ChartTooltip 
+                  content={<ChartTooltipContent />} 
+                  cursor={{ 
+                    fill: 'transparent',
+                    stroke: '#e5e7eb',
+                    strokeDasharray: '3 3'
+                  }} 
+                />
                 <Scatter data={riskData} fill={lightTheme.colors.primary}>
                   {riskData.map((entry, index) => {
                     const size = calculateBubbleSize(entry.z, minZ, maxZ);

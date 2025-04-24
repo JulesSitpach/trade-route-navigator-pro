@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { 
@@ -96,7 +95,11 @@ const RouteComparisonTimeline = () => {
                 />
                 <Tooltip 
                   content={<RouteComparisonTooltip />}
-                  cursor={{ fill: 'rgba(0, 0, 0, 0.05)' }}
+                  cursor={{ 
+                    fill: 'transparent',
+                    stroke: '#e5e7eb',
+                    strokeDasharray: '3 3'
+                  }}
                 />
                 <Bar 
                   dataKey="shipping" 

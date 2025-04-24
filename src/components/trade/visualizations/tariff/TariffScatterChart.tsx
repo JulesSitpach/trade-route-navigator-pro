@@ -62,7 +62,11 @@ const TariffScatterChart: React.FC<TariffScatterChartProps> = ({ data, getTariff
               return [value, name];
             }}
             labelFormatter={(value) => `Country: ${value}`}
-            cursor={{ strokeDasharray: '3 3' }}
+            cursor={{ 
+              strokeDasharray: '3 3',
+              fill: 'transparent',
+              stroke: '#e5e7eb'
+            }}
           />
           <Scatter name="Tariff Rates" data={data} fill="#8884d8">
             {data.map((entry, index) => {

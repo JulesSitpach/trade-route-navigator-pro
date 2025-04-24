@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { 
   LineChart, Line, XAxis, YAxis, CartesianGrid, 
@@ -62,6 +61,11 @@ export const SeasonalityChart: React.FC<SeasonalityChartProps> = ({
         
         <Tooltip 
           content={<SeasonalityTooltip />} 
+          cursor={{ 
+            fill: 'transparent',
+            stroke: '#e5e7eb',
+            strokeDasharray: '3 3'
+          }}
         />
         
         <Legend 
