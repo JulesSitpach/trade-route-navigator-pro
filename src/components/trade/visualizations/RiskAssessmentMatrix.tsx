@@ -1,4 +1,3 @@
-
 import { Card, CardContent } from "@/components/ui/card";
 import { 
   ChartContainer, 
@@ -40,7 +39,7 @@ const RiskAssessmentMatrix = () => {
         </p>
       </div>
       
-      <Card className="overflow-hidden">
+      <Card>
         <CardContent className="p-6">
           <div className="h-[450px]">
             <ChartContainer config={chartConfig}>
@@ -65,8 +64,9 @@ const RiskAssessmentMatrix = () => {
                   axisLine={chartCommonConfig.axis.line}
                   tickLine={false}
                   label={{ 
-                    value: 'Cost ($)', 
+                    value: 'Total Cost ($)', 
                     position: 'bottom',
+                    offset: 40,
                     ...chartCommonConfig.axis.label
                   }}
                 />
@@ -79,7 +79,7 @@ const RiskAssessmentMatrix = () => {
                   axisLine={chartCommonConfig.axis.line}
                   tickLine={false}
                   label={{ 
-                    value: 'Risk Score (1-10)', 
+                    value: 'Risk Level (1-10)', 
                     angle: -90, 
                     position: 'insideLeft',
                     ...chartCommonConfig.axis.label

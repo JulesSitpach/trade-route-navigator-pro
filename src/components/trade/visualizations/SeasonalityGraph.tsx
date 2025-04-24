@@ -62,6 +62,12 @@ const SeasonalityGraph = () => {
                   tick={chartCommonConfig.axis.tick}
                   axisLine={chartCommonConfig.axis.line}
                   tickLine={false}
+                  label={{ 
+                    value: 'Month', 
+                    position: 'bottom',
+                    offset: 20,
+                    ...chartCommonConfig.axis.label
+                  }}
                 />
                 <YAxis 
                   yAxisId="left"

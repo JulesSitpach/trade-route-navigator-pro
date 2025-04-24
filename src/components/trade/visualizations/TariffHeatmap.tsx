@@ -1,4 +1,3 @@
-
 import { Card, CardContent } from "@/components/ui/card";
 import { 
   ChartContainer, 
@@ -26,7 +25,7 @@ const TariffHeatmap = () => {
         </p>
       </div>
       
-      <Card className="overflow-hidden">
+      <Card>
         <CardContent className="p-6">
           <div className="h-[450px]">
             <ChartContainer config={chartConfig}>
@@ -51,6 +50,12 @@ const TariffHeatmap = () => {
                   angle={-45}
                   textAnchor="end"
                   height={80}
+                  label={{ 
+                    value: 'Countries', 
+                    position: 'bottom',
+                    offset: 50,
+                    ...chartCommonConfig.axis.label
+                  }}
                 />
                 <YAxis
                   type="number"

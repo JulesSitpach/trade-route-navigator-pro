@@ -82,10 +82,16 @@ const RouteComparisonTimeline = () => {
                   height={80}
                   angle={-35}
                   textAnchor="end"
+                  label={{ 
+                    value: 'Shipping Routes', 
+                    position: 'bottom',
+                    offset: 50,
+                    ...chartCommonConfig.axis.label
+                  }}
                 />
                 <YAxis 
                   label={{ 
-                    value: 'Days', 
+                    value: 'Transit Days', 
                     angle: -90, 
                     position: 'insideLeft',
                     ...chartCommonConfig.axis.label

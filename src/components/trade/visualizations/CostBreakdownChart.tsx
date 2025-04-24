@@ -1,4 +1,3 @@
-
 import { Card, CardContent } from "@/components/ui/card";
 import { 
   ChartContainer, 
@@ -24,6 +23,15 @@ const CostBreakdownChart = () => {
     { name: "lastMile", value: 380, label: "Last Mile" }
   ];
 
+  // Calculate total for percentages
+  const totalCost = costData.reduce((sum, item) => sum + item.value, 0);
+  
+  // Add percentage to the data
+  const costDataWithPercentage = costData.map(item => ({
+    ...item,
+    percentage: ((item.value / totalCost) * 100).toFixed(1)
+  }));
+
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-2">
@@ -44,9 +52,25 @@ const CostBreakdownChart = () => {
                   verticalAlign="top"
                   align="center"
                 />
-                <ChartTooltip content={<ChartTooltipContent />} />
+                <ChartTooltip 
+                  content={({ payload }) => {
+                    if (payload && payload[0]) {
+                      const data = payload[0].payload;
+                      return (
+                        <ChartTooltipContent>
+                          <div className="flex flex-col gap-2">
+                            <span>{data.label}</span>
+                            <span>${data.value.toLocaleString()}</span>
+                            <span>{data.percentage}% of total</span>
+                          </div>
+                        </ChartTooltipContent>
+                      );
+                    }
+                    return null;
+                  }}
+                />
                 <Pie
-                  data={costData}
+                  data={costDataWithPercentage}
                   cx="50%"
                   cy="50%"
                   labelLine={false}
@@ -57,7 +81,7 @@ const CostBreakdownChart = () => {
                   nameKey="name"
                   cornerRadius={4}
                 >
-                  {costData.map((entry, index) => (
+                  {costDataWithPercentage.map((entry, index) => (
                     <Cell 
                       key={`cell-${index}`}
                       fill={chartConfig[entry.name]?.color}
