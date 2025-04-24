@@ -13,6 +13,7 @@ import { chartCommonConfig } from "@/utils/chartUtils";
 import { lightTheme } from "@/components/ui/chart/chartTheme";
 import { formatCurrency } from "@/components/ui/chart/chartUtils";
 import { createAxisTitle } from "@/components/ui/chart/axisConfig";
+import { LabelPosition } from "recharts/types/component/Label";
 
 const RiskAssessmentMatrix = () => {
   // Sample risk assessment data
@@ -96,7 +97,7 @@ const RiskAssessmentMatrix = () => {
                 <ChartTooltip content={<ChartTooltipContent />} />
                 <Scatter 
                   data={riskData}
-                  fill={lightTheme.colors.primary[0]}
+                  fill={lightTheme.colors.primary}
                 >
                   {riskData.map((entry, index) => (
                     <Cell

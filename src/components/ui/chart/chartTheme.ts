@@ -4,6 +4,7 @@ import { lightColors, darkColors } from './theme/colors';
 import { typography } from './theme/typography';
 import { spacing } from './theme/spacing';
 import { LabelPosition } from 'recharts/types/component/Label';
+import { TextAnchor } from 'recharts/types/component/Text';
 
 // Light theme default configuration
 export const lightTheme: ChartTheme = {
@@ -88,7 +89,7 @@ export const chartElements = {
         fontSize: theme.typography.fontSize.axis,
         fill: theme.colors.text,
         fontWeight: theme.typography.fontWeight.normal,
-        textAnchor: 'middle',
+        textAnchor: 'middle' as TextAnchor,
       },
       angle: options?.angle ?? defaultAngle,
     };

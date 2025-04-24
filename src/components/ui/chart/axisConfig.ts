@@ -2,6 +2,7 @@
 import { CSSProperties } from 'react';
 import { chartTheme } from './chartTheme';
 import { LabelPosition } from 'recharts/types/component/Label';
+import { TextAnchor } from 'recharts/types/component/Text';
 
 export type AxisTitleConfig = {
   value: string;
@@ -37,13 +38,13 @@ export const createAxisTitle = (
   const defaultAngle = axis === 'x' ? 0 : -90;
   
   // Use options or defaults
-  const position = options.position || defaultPosition;
+  const position = options.position || defaultPosition as LabelPosition;
   const offset = options.offset !== undefined ? options.offset : defaultOffset;
   const angle = options.angle !== undefined ? options.angle : defaultAngle;
   
   return {
     value: text,
-    position: position as LabelPosition,
+    position: position,
     offset: offset,
     angle: angle,
     style: {
@@ -51,7 +52,7 @@ export const createAxisTitle = (
       fontSize: axisTitle.fontSize,
       fontWeight: axisTitle.fontWeight,
       fill: axisTitle.color,
-      textAnchor: 'middle',
+      textAnchor: 'middle' as TextAnchor,
     }
   };
 };
