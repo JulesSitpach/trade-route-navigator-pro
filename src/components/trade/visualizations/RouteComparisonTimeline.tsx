@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { 
@@ -66,9 +67,9 @@ const RouteComparisonTimeline = () => {
                 barSize={32}
               >
                 <CartesianGrid 
-                  strokeDasharray={chartCommonConfig.grid.strokeDasharray}
-                  stroke={chartCommonConfig.grid.stroke}
-                  opacity={chartCommonConfig.grid.opacity}
+                  strokeDasharray="4 4"
+                  stroke="#e0e0e0"
+                  opacity={0.3}
                 />
                 <Legend 
                   verticalAlign="top"
@@ -124,3 +125,4 @@ const RouteComparisonTimeline = () => {
 };
 
 export default RouteComparisonTimeline;
+
