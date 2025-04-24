@@ -8,3 +8,4 @@ export * from "./chart/types/chartTypes";
 export * from "./chart/axisConfig";
 export * from "./chart/chartUtils";
 export type { AxisTitleConfig } from "./chart/axisConfig";
+export type { ChartConfig } from "./chart/types";

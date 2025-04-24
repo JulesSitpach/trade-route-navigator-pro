@@ -29,7 +29,7 @@ export const SeasonalityChart: React.FC<SeasonalityChartProps> = ({
         <CartesianGrid 
           strokeDasharray="3 3" 
           stroke={chartTheme.grid.stroke} 
-          opacity={chartTheme.grid.strokeOpacity}
+          opacity={0.15}
         />
         
         <XAxis 
