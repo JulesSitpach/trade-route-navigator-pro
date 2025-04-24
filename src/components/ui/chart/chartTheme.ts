@@ -1,4 +1,3 @@
-
 export const chartTheme = {
   colors: {
     // Core palette matching your existing charts
@@ -77,5 +76,16 @@ export const chartTheme = {
     duration: 300,
     easing: 'cubic-bezier(0.4, 0, 0.2, 1)',
   },
+  
+  axisTitle: {
+    fontFamily: "'Inter', -apple-system, sans-serif",
+    fontSize: '0.75rem',       // 12px
+    fontWeight: 500,
+    color: '#4b5563',
+    padding: 10,
+    offset: {
+      x: 0,
+      y: -10
+    }
+  }
 };
-
