@@ -1,6 +1,10 @@
 
 import { ReactElement } from 'react';
-import { LegendProps, HorizontalAlignmentType, VerticalAlignmentType, LayoutType } from 'recharts';
+
+// Define the alignment types explicitly instead of importing them
+type VerticalAlignment = 'top' | 'middle' | 'bottom'; 
+type HorizontalAlignment = 'left' | 'center' | 'right';
+type Layout = 'horizontal' | 'vertical';
 
 export interface BaseChartProps {
   children: ReactElement;
@@ -22,8 +26,8 @@ export interface SeasonalityChartProps {
   title?: string;
   subtitle?: string;
   legendProps?: {
-    verticalAlign?: VerticalAlignmentType;
-    align?: HorizontalAlignmentType;
+    verticalAlign?: VerticalAlignment;
+    align?: HorizontalAlignment;
     height?: number;
     wrapperStyle?: React.CSSProperties;
   };
