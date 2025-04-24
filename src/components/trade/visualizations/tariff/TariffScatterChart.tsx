@@ -1,4 +1,3 @@
-
 import React from 'react';
 import {
   ScatterChart,
@@ -63,9 +62,9 @@ const TariffScatterChart: React.FC<TariffScatterChartProps> = ({ data, getTariff
             }}
             labelFormatter={(value) => `Country: ${value}`}
             cursor={{ 
-              strokeDasharray: '3 3',
               fill: 'transparent',
-              stroke: '#e5e7eb'
+              stroke: '#e5e7eb',
+              strokeDasharray: '3 3'
             }}
           />
           <Scatter name="Tariff Rates" data={data} fill="#8884d8">

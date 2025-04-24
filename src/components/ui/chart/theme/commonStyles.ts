@@ -68,6 +68,26 @@ export const legendStyles = {
   },
 };
 
+export const cursorStyles = {
+  bar: { 
+    fill: 'transparent' 
+  },
+  line: { 
+    stroke: '#e5e7eb', 
+    strokeDasharray: '3 3' 
+  },
+  scatter: { 
+    fill: 'transparent',
+    stroke: '#e5e7eb',
+    strokeDasharray: '3 3'
+  },
+  area: { 
+    fill: 'transparent', 
+    stroke: '#e5e7eb', 
+    strokeDasharray: '3 3' 
+  }
+};
+
 export const chartGridStyles = {
   stroke: '#e5e7eb',
   strokeDasharray: '4 4',

@@ -9,6 +9,7 @@ import { BarChartIcon } from "lucide-react";
 import { chartConfig } from "./chartConfig";
 import { chartCommonConfig } from "@/utils/chartUtils";
 import { StyleDebugger } from './debug/StyleDebugger';
+import { cursorStyles } from "@/components/ui/chart/theme/commonStyles";
 
 const RouteComparisonTimeline = () => {
   // Sample route comparison data with simplified names
@@ -95,11 +96,7 @@ const RouteComparisonTimeline = () => {
                 />
                 <Tooltip 
                   content={<RouteComparisonTooltip />}
-                  cursor={{ 
-                    fill: 'transparent',
-                    stroke: '#e5e7eb',
-                    strokeDasharray: '3 3'
-                  }}
+                  cursor={cursorStyles.bar}
                 />
                 <Bar 
                   dataKey="shipping" 

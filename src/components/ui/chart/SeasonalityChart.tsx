@@ -61,11 +61,7 @@ export const SeasonalityChart: React.FC<SeasonalityChartProps> = ({
         
         <Tooltip 
           content={<SeasonalityTooltip />} 
-          cursor={{ 
-            fill: 'transparent',
-            stroke: '#e5e7eb',
-            strokeDasharray: '3 3'
-          }}
+          cursor={cursorStyles.line}
         />
         
         <Legend 
