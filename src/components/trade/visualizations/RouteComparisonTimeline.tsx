@@ -97,12 +97,6 @@ const RouteComparisonTimeline = () => {
                 <Tooltip 
                   content={<RouteComparisonTooltip />}
                   cursor={{ fill: 'rgba(0, 0, 0, 0.05)' }}
-                  wrapperStyle={{ 
-                    backgroundColor: 'transparent', 
-                    outline: 'none', 
-                    border: 'none',
-                    boxShadow: 'none'
-                  }}
                 />
                 <Bar 
                   dataKey="shipping" 

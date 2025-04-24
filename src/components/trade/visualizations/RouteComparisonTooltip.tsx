@@ -18,7 +18,13 @@ export const RouteComparisonTooltip: React.FC<RouteComparisonTooltipProps> = ({ 
   const total = payload.reduce((sum, entry) => sum + entry.value, 0);
   
   return (
-    <div style={tooltipStyles.wrapper}>
+    <div style={{
+      ...tooltipStyles.wrapper,
+      backgroundColor: '#FFFFFF', // Explicitly set background color
+      boxShadow: '0 4px 12px rgba(0,0,0,0.05)', // Ensure shadow is applied
+      border: '1px solid #e5e7eb',
+      opacity: 1
+    }}>
       <div style={tooltipStyles.title}>
         {data?.fullRoute || label}
       </div>
@@ -49,4 +55,3 @@ export const RouteComparisonTooltip: React.FC<RouteComparisonTooltipProps> = ({ 
     </div>
   );
 };
-
