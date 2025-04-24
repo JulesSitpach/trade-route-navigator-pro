@@ -9,9 +9,8 @@ interface AxisTitleProps {
   position?: 'insideLeft' | 'insideRight' | 'bottom' | 'top';
 }
 
-// This component doesn't render JSX directly but returns a configuration object
-// that can be passed to Recharts XAxis/YAxis label prop
-export const AxisTitle = ({ 
+// This component renders a proper axis label for Recharts
+export const AxisTitle: React.FC<AxisTitleProps> = ({ 
   text, 
   axis, 
   offset,
@@ -25,7 +24,8 @@ export const AxisTitle = ({
     x: (offset?.x !== undefined) ? offset.x : defaultOffset.x,
     y: (offset?.y !== undefined) ? offset.y : defaultOffset.y
   };
-  
+
+  // Return proper label props that Recharts can use
   return {
     value: text,
     position,

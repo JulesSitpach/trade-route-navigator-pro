@@ -5,7 +5,8 @@ import {
   ChartTooltip, 
   ChartTooltipContent,
   ChartLegend,
-  ChartLegendContent
+  ChartLegendContent,
+  AxisTitle
 } from "@/components/ui/chart";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid } from "recharts";
 import { chartConfig } from "./chartConfig";
@@ -62,21 +63,20 @@ const SeasonalityGraph = () => {
                   tick={chartCommonConfig.axis.tick}
                   axisLine={chartCommonConfig.axis.line}
                   tickLine={false}
-                  label={{ 
-                    value: 'Month', 
-                    position: 'bottom',
-                    offset: 20,
-                    ...chartCommonConfig.axis.label
-                  }}
+                  label={AxisTitle({ 
+                    text: 'Month', 
+                    axis: 'x',
+                    offset: { y: 10 }
+                  })}
                 />
                 <YAxis 
                   yAxisId="left"
-                  label={{ 
-                    value: 'Freight Cost Index', 
-                    angle: -90, 
+                  label={AxisTitle({ 
+                    text: 'Freight Cost Index', 
+                    axis: 'y',
                     position: 'insideLeft',
-                    ...chartCommonConfig.axis.label
-                  }}
+                    offset: { x: 5 }
+                  })}
                   tickLine={false}
                   axisLine={chartCommonConfig.axis.line}
                   tick={chartCommonConfig.axis.tick}
@@ -84,12 +84,12 @@ const SeasonalityGraph = () => {
                 <YAxis 
                   yAxisId="right"
                   orientation="right"
-                  label={{ 
-                    value: 'Risk/Congestion (%)', 
-                    angle: 90, 
-                    position: 'insideRight',
-                    ...chartCommonConfig.axis.label
-                  }}
+                  label={AxisTitle({ 
+                    text: 'Risk/Congestion (%)', 
+                    axis: 'y',
+                    position: 'insideRight', 
+                    offset: { x: 5 }
+                  })}
                   tickLine={false}
                   axisLine={chartCommonConfig.axis.line}
                   tick={chartCommonConfig.axis.tick}

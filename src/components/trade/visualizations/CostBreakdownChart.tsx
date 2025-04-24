@@ -4,7 +4,8 @@ import {
   ChartLegend,
   ChartLegendContent, 
   ChartTooltip, 
-  ChartTooltipContent 
+  ChartTooltipContent,
+  AxisTitle
 } from "@/components/ui/chart";
 import { PieChart, Pie, Cell } from "recharts";
 import { chartConfig } from "./chartConfig";

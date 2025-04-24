@@ -1,10 +1,12 @@
+
 import { Card, CardContent } from "@/components/ui/card";
 import { 
   ChartContainer, 
   ChartTooltip, 
   ChartTooltipContent,
   ChartLegend,
-  ChartLegendContent 
+  ChartLegendContent,
+  AxisTitle
 } from "@/components/ui/chart";
 import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Cell } from "recharts";
 import { chartConfig } from "./chartConfig";
@@ -50,12 +52,11 @@ const TariffHeatmap = () => {
                   angle={-45}
                   textAnchor="end"
                   height={80}
-                  label={{ 
-                    value: 'Countries', 
-                    position: 'bottom',
-                    offset: 50,
-                    ...chartCommonConfig.axis.label
-                  }}
+                  label={AxisTitle({ 
+                    text: 'Countries', 
+                    axis: 'x',
+                    offset: { y: 30 }
+                  })}
                 />
                 <YAxis
                   type="number"
@@ -64,12 +65,11 @@ const TariffHeatmap = () => {
                   tick={chartCommonConfig.axis.tick}
                   axisLine={chartCommonConfig.axis.line}
                   tickLine={false}
-                  label={{ 
-                    value: 'Tariff Rate (%)', 
-                    angle: -90, 
-                    position: 'insideLeft',
-                    ...chartCommonConfig.axis.label
-                  }}
+                  label={AxisTitle({ 
+                    text: 'Tariff Rate (%)', 
+                    axis: 'y',
+                    offset: { x: 10 }
+                  })}
                 />
                 <ChartTooltip content={<ChartTooltipContent />} />
                 <Scatter 

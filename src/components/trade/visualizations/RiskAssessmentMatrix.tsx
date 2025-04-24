@@ -4,7 +4,8 @@ import {
   ChartTooltip, 
   ChartTooltipContent,
   ChartLegend,
-  ChartLegendContent 
+  ChartLegendContent,
+  AxisTitle
 } from "@/components/ui/chart";
 import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, ZAxis, Cell } from "recharts";
 import { chartConfig } from "./chartConfig";
@@ -63,12 +64,11 @@ const RiskAssessmentMatrix = () => {
                   tick={chartCommonConfig.axis.tick}
                   axisLine={chartCommonConfig.axis.line}
                   tickLine={false}
-                  label={{ 
-                    value: 'Total Cost ($)', 
-                    position: 'bottom',
-                    offset: 40,
-                    ...chartCommonConfig.axis.label
-                  }}
+                  label={AxisTitle({ 
+                    text: 'Total Cost ($)', 
+                    axis: 'x',
+                    offset: { y: 20 }
+                  })}
                 />
                 <YAxis
                   type="number"
@@ -78,12 +78,11 @@ const RiskAssessmentMatrix = () => {
                   tick={chartCommonConfig.axis.tick}
                   axisLine={chartCommonConfig.axis.line}
                   tickLine={false}
-                  label={{ 
-                    value: 'Risk Level (1-10)', 
-                    angle: -90, 
-                    position: 'insideLeft',
-                    ...chartCommonConfig.axis.label
-                  }}
+                  label={AxisTitle({ 
+                    text: 'Risk Level (1-10)', 
+                    axis: 'y',
+                    offset: { x: 10 }
+                  })}
                 />
                 <ZAxis
                   type="number"
