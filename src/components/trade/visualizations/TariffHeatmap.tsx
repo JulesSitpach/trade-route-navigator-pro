@@ -16,6 +16,26 @@ import { useTariffData } from "./tariff/useTariffData";
 import TariffLegend from "./tariff/TariffLegend";
 import TariffInsights from "./tariff/TariffInsights";
 
+// Custom tick component for rotated X-axis labels
+const CustomXAxisTick = (props: any) => {
+  const { x, y, payload } = props;
+  return (
+    <g transform={`translate(${x},${y})`}>
+      <text 
+        x={0} 
+        y={0} 
+        dy={10} 
+        textAnchor="end" 
+        fill="#666"
+        fontSize={12}
+        transform="rotate(-45)"
+      >
+        {payload.value}
+      </text>
+    </g>
+  );
+};
+
 const TariffHeatmap = () => {
   const { tariffData, getTariffColor } = useTariffData();
   
@@ -38,10 +58,10 @@ const TariffHeatmap = () => {
       
       <Card>
         <CardContent className="p-6">
-          <div className="h-[500px]"> {/* Increased height for better visualization */}
+          <div className="h-[600px]"> {/* Increased height for better visualization */}
             <ChartContainer 
               config={chartConfig} 
-              height={500}
+              height={600}
               title="Country Tariff Comparison"
               subtitle="Bubble size represents trade volume - larger bubbles indicate higher volume"
             >
@@ -62,12 +82,7 @@ const TariffHeatmap = () => {
                   type="category"
                   dataKey="country"
                   name="Country"
-                  tick={{
-                    fontSize: 12,
-                    angle: -45,
-                    textAnchor: 'end',
-                    dy: 10
-                  }}
+                  tick={<CustomXAxisTick />} 
                   axisLine={chartCommonConfig.axis.line}
                   tickLine={false}
                   height={100}
@@ -102,7 +117,7 @@ const TariffHeatmap = () => {
                       stroke={getTariffColor(entry.tariffRate)}
                       strokeWidth={1}
                       // Enhanced bubble sizing to make the volume representation clearer
-                      radius={Math.max(4, Math.sqrt(entry.volume) / 1.5)} 
+                      radius={Math.max(5, Math.sqrt(entry.volume) / 1.2)} 
                     />
                   ))}
                 </Scatter>
