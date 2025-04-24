@@ -8,33 +8,37 @@ import { BarChartIcon } from "lucide-react";
 import { RouteComparisonTooltip } from './routes/RouteComparisonTooltip';
 
 const RouteComparisonTimeline = () => {
-  // Sample route comparison data
+  // Sample route comparison data with simplified names
   const routeData = [
     {
-      name: "Shanghai → Panama → LA → Chicago",
+      name: "Primary Route",
+      fullRoute: "Shanghai → Panama → LA → Chicago",
       shipping: 18,
       customs: 3,
       distribution: 3,
       label: "Primary Route"
     },
     {
-      name: "Shanghai → LA → Chicago (Air)",
+      name: "Express Air Route",
+      fullRoute: "Shanghai → LA → Chicago (Air)",
       shipping: 2,
       customs: 0.5,
       distribution: 0.5,
       label: "Express Air Route"
     },
     {
-      name: "Vietnam → Singapore → LA → Chicago",
+      name: "Alternative Route",
+      fullRoute: "Vietnam → Singapore → LA → Chicago",
       shipping: 22,
       customs: 2,
       distribution: 3,
       label: "Alternative Route"
     },
     {
-      name: "China → Mexico → US (USMCA)",
+      name: "USMCA Route",
+      fullRoute: "China → Mexico → US (USMCA)",
       shipping: 14,
-      customs: 5, // Processing time in Mexico
+      customs: 5,
       distribution: 2,
       label: "Triangular Trade Route"
     }
@@ -75,9 +79,7 @@ const RouteComparisonTimeline = () => {
                   tick={chartCommonConfig.axis.tick}
                   axisLine={chartCommonConfig.axis.line}
                   tickLine={false}
-                  height={80}
-                  angle={-35}
-                  textAnchor="end"
+                  height={60}
                   label={{ value: 'Shipping Routes', position: 'insideBottom', offset: -10 }}
                 />
                 <YAxis 
@@ -120,3 +122,4 @@ const RouteComparisonTimeline = () => {
 };
 
 export default RouteComparisonTimeline;
+

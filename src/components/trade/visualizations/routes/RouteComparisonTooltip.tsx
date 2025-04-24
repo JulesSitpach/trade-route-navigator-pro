@@ -13,13 +13,13 @@ export const RouteComparisonTooltip: React.FC<RouteComparisonTooltipProps> = ({ 
     return null;
   }
   
-  // Calculate total transit days
+  const data = payload[0]?.payload;
   const total = payload.reduce((sum, entry) => sum + entry.value, 0);
   
   return (
     <div className="bg-white border border-gray-200 rounded-md shadow-sm p-3 max-w-[250px]">
       <div className="font-semibold text-sm text-gray-800 mb-2 border-b border-gray-100 pb-1">
-        {label}
+        {data?.fullRoute || label}
       </div>
       <div className="space-y-1">
         {payload.map((entry, index) => (
@@ -48,3 +48,4 @@ export const RouteComparisonTooltip: React.FC<RouteComparisonTooltipProps> = ({ 
     </div>
   );
 };
+
