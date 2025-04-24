@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { 
@@ -15,9 +16,7 @@ import { lightTheme } from "@/components/ui/chart/chartTheme";
 import { formatCurrency } from "@/components/ui/chart/chartUtils";
 import { calculateBubbleSize } from "@/components/ui/chart/theme/commonStyles";
 import { ChartContainer } from "@/components/ui/chart/ChartContainer";
-import { StyleDebugger } from '@/components/debug/StyleDebugger';
 import { ChartStyleEnforcer } from "@/components/ui/chart/ChartStyleEnforcer";
-import { PropDebugger } from "@/components/debug/PropDebugger";
 
 const RiskAssessmentMatrix = () => {
   const riskData = [
@@ -44,27 +43,6 @@ const RiskAssessmentMatrix = () => {
   const margins = { top: 30, right: 20, bottom: 60, left: 60 };
   const chartStyles = useChartResponsiveStyles();
 
-  React.useEffect(() => {
-    console.log("RiskAssessmentMatrix rendered");
-    console.log("Applied tooltipStyles:", tooltipStyles);
-    
-    // Check for any potential style conflicts
-    setTimeout(() => {
-      const tooltips = document.querySelectorAll('.recharts-tooltip-wrapper');
-      if (tooltips.length) {
-        console.log("Found tooltip elements:", tooltips.length);
-        const computedStyle = window.getComputedStyle(tooltips[0]);
-        console.log("Tooltip computed style:", {
-          backgroundColor: computedStyle.backgroundColor,
-          border: computedStyle.border,
-          opacity: computedStyle.opacity
-        });
-      } else {
-        console.log("No tooltip elements found. Hover over chart to generate one.");
-      }
-    }, 1000);
-  }, []);
-
   return (
     <div className="space-y-6">
       <ChartStyleEnforcer>
@@ -83,9 +61,7 @@ const RiskAssessmentMatrix = () => {
               subtitle="Analyze shipping routes by cost, risk, and reliability"
             >
               <ResponsiveContainer width="100%" height="100%">
-                <ScatterChart 
-                  margin={chartCommonConfig.margins.default}
-                >
+                <ScatterChart margin={chartCommonConfig.margins.default}>
                   <CartesianGrid 
                     strokeDasharray={chartCommonConfig.grid.strokeDasharray} 
                     stroke={chartCommonConfig.grid.stroke}
@@ -166,26 +142,9 @@ const RiskAssessmentMatrix = () => {
           </CardContent>
         </Card>
       </ChartStyleEnforcer>
-      
-      <PropDebugger
-        title="Risk Matrix Chart Props"
-        componentProps={{
-          chartConfig,
-          margins,
-          tooltipStyles,
-          cursorStyles,
-          lightTheme
-        }}
-        showInConsole={true}
-      />
-      
-      <StyleDebugger 
-        targetSelector=".recharts-tooltip-wrapper" 
-        showInConsole={true} 
-        customTitle="Tooltip Styles" 
-      />
     </div>
   );
 };
 
 export default RiskAssessmentMatrix;
+
