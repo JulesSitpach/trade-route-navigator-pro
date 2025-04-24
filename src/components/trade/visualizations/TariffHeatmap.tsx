@@ -21,7 +21,7 @@ const CustomTooltipContent = (props: any) => {
   if (active && payload && payload.length) {
     const data = payload[0].payload;
     return (
-      <div className="bg-gray-900 text-white p-3 rounded-md shadow-md text-sm">
+      <div className="bg-slate-800 text-white p-3 rounded-md shadow-md text-sm">
         <div className="font-medium mb-1">{data.country}</div>
         <div className="flex items-center mb-1">
           <div 
@@ -70,30 +70,15 @@ const getTariffColor = (tariffRate: number): string => {
   return TARIFF_COLORS.high;
 };
 
-// Custom shape renderer for the scatter points - creates circles with dynamic sizes
-const CustomBubble = (props: any) => {
-  const { cx, cy, fill, payload } = props;
-  
-  // Calculate radius based on trade volume with enhanced differentiation
-  // Using a stronger logarithmic scale with adjustable base
-  const base = 1.5; // Adjusts contrast between sizes
-  const minRadius = 5;
-  const maxRadius = 60;
-  
-  // Custom scaling function for better visual differentiation
-  const scale = (value: number) => {
-    const logValue = Math.log(value) / Math.log(base);
-    return minRadius + logValue * 3; // Multiply by 3 for more pronounced differences
-  };
-  
-  const radius = scale(payload.volume);
-  
-  return <circle cx={cx} cy={cy} r={radius} fill={fill} stroke={fill} strokeOpacity={0.7} fillOpacity={0.7} />;
-};
-
 const TariffHeatmap = () => {
   const { tariffData } = useTariffData();
   const margins = getChartMargins('scatter');
+  
+  // Format the data with logarithmic scaling for better bubble size distribution
+  const formattedData = tariffData.map(item => ({
+    ...item,
+    size: Math.sqrt(item.volume) * 2 // Square root scaling provides better visual distribution
+  }));
 
   return (
     <div className="space-y-6">
@@ -104,7 +89,7 @@ const TariffHeatmap = () => {
         </p>
       </div>
       
-      <Card>
+      <Card className="border-slate-200">
         <CardContent className="p-6">
           <div className="h-[600px]">
             <ChartContainer 
@@ -150,18 +135,25 @@ const TariffHeatmap = () => {
                   width={65}
                   padding={{ top: 20, bottom: 20 }}
                 />
+                <ZAxis 
+                  type="number" 
+                  dataKey="size" 
+                  range={[30, 400]} 
+                  scale="sqrt"
+                />
                 <Tooltip content={<CustomTooltipContent />} cursor={{ strokeDasharray: '3 3' }} />
                 <Scatter 
-                  data={tariffData}
+                  data={formattedData}
                   name="Countries"
-                  shape={<CustomBubble />}
+                  fill="#8884d8"
                 >
-                  {tariffData.map((entry, index) => (
+                  {formattedData.map((entry, index) => (
                     <Cell
                       key={`cell-${index}`}
                       fill={getTariffColor(entry.tariffRate)}
                       stroke={getTariffColor(entry.tariffRate)}
                       strokeWidth={1}
+                      fillOpacity={0.8}
                     />
                   ))}
                 </Scatter>
@@ -170,7 +162,7 @@ const TariffHeatmap = () => {
           </div>
           
           <div className="flex justify-center mt-4">
-            <div className="flex items-center bg-gray-900 text-white px-4 py-2 rounded-md shadow-md text-sm">
+            <div className="flex items-center bg-slate-800 text-white px-4 py-2 rounded-md shadow-md text-sm">
               <div className="flex items-center mr-4">
                 <div className="w-3 h-3 rounded-full mr-2" style={{ backgroundColor: TARIFF_COLORS.low }} />
                 <span>Low Tariff (0-5%)</span>
