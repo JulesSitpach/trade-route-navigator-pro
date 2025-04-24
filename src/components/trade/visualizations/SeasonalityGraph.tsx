@@ -1,3 +1,4 @@
+
 import { Card, CardContent } from "@/components/ui/card";
 import { 
   ChartContainer, 
@@ -8,7 +9,7 @@ import {
 } from "@/components/ui/chart";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, ResponsiveContainer } from "recharts";
 import { chartConfig } from "./chartConfig";
-import { chartCommonConfig } from "@/utils/chartUtils";
+import { chartCommonConfig, chartDimensions } from "@/utils/chartUtils";
 
 const SeasonalityGraph = () => {
   // Sample seasonality data

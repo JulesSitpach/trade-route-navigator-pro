@@ -1,3 +1,4 @@
+
 import { Card, CardContent } from "@/components/ui/card";
 import { 
   ChartContainer, 
@@ -6,7 +7,7 @@ import {
 } from "@/components/ui/chart";
 import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, ZAxis, Cell, ResponsiveContainer } from "recharts";
 import { chartConfig } from "./chartConfig";
-import { chartCommonConfig } from "@/utils/chartUtils";
+import { chartCommonConfig, chartDimensions } from "@/utils/chartUtils";
 
 const RiskAssessmentMatrix = () => {
   // Sample risk assessment data
