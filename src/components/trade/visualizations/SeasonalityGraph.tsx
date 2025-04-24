@@ -1,32 +1,10 @@
 
+import React from 'react';
 import { Card, CardContent } from "@/components/ui/card";
-import { 
-  ChartContainer, 
-  ChartTooltip, 
-  ChartTooltipContent,
-  ChartLegend,
-  ChartLegendContent,
-  createAxisTitle,
-  getChartMargins
-} from "@/components/ui/chart";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid } from "recharts";
-import { chartConfig } from "./chartConfig";
-import { chartCommonConfig } from "@/utils/chartUtils";
-import { LineChart as LineChartIcon } from "lucide-react";
-import { useChartResponsive } from "@/hooks/use-chart-responsive";
-import { useChartResponsiveStyles } from "@/hooks/use-chart-responsive-styles";
+import { SeasonalityChart } from "@/components/ui/chart";
+import { LineChartIcon } from "lucide-react";
 
 const SeasonalityGraph = () => {
-  const { tickCount, legendPosition } = useChartResponsive();
-  const styles = useChartResponsiveStyles();
-  
-  const margins = getChartMargins({
-    hasXAxisTitle: true,
-    hasYAxisTitle: true,
-    hasLegend: true,
-    legendPosition: legendPosition
-  });
-  
   const seasonalityData = [
     { month: "Jan", freight: 100, congestion: 40, risk: 30 },
     { month: "Feb", freight: 105, congestion: 45, risk: 35 },
@@ -54,91 +32,11 @@ const SeasonalityGraph = () => {
       
       <Card>
         <CardContent className="p-6">
-          <ChartContainer 
-            config={chartConfig}
-            height={400}
-            className="w-full"
+          <SeasonalityChart 
+            data={seasonalityData}
             title="Annual Shipping Trends"
             subtitle="Monthly freight costs, congestion, and risk indicators"
-            legendPosition={legendPosition}
-          >
-            <LineChart
-              data={seasonalityData}
-              margin={margins}
-            >
-              <CartesianGrid 
-                strokeDasharray={chartCommonConfig.grid.strokeDasharray}
-                stroke={chartCommonConfig.grid.stroke}
-                strokeOpacity={styles.gridOpacity}
-              />
-              <ChartLegend 
-                content={<ChartLegendContent />}
-                verticalAlign={legendPosition}
-                align="center"
-                wrapperStyle={{ 
-                  paddingTop: legendPosition === "bottom" ? "10px" : "0" 
-                }}
-              />
-              <XAxis 
-                dataKey="month"
-                tick={chartCommonConfig.axis.tick}
-                axisLine={chartCommonConfig.axis.line}
-                tickLine={false}
-                label={createAxisTitle('Month', 'x', { offset: 10, position: 'insideBottom' })}
-                tickCount={tickCount}
-              />
-              <YAxis 
-                yAxisId="left"
-                label={createAxisTitle('Freight Cost Index', 'y', { offset: 10, position: 'insideLeft' })}
-                tickLine={false}
-                axisLine={chartCommonConfig.axis.line}
-                tick={chartCommonConfig.axis.tick}
-              />
-              <YAxis 
-                yAxisId="right"
-                orientation="right"
-                label={createAxisTitle('Risk/Congestion (%)', 'y', { 
-                  position: 'insideRight',
-                  offset: 10,
-                  angle: 90 
-                })}
-                tickLine={false}
-                axisLine={chartCommonConfig.axis.line}
-                tick={chartCommonConfig.axis.tick}
-              />
-              <ChartTooltip content={<ChartTooltipContent />} />
-              <Line
-                yAxisId="left"
-                type="monotone"
-                dataKey="freight"
-                name="Freight"
-                stroke={chartConfig.freight.color}
-                strokeWidth={styles.strokeWidth}
-                dot={{ fill: chartConfig.freight.color, r: styles.dot.radius }}
-                activeDot={{ r: styles.dot.activeRadius }}
-              />
-              <Line
-                yAxisId="right"
-                type="monotone"
-                dataKey="congestion"
-                name="Congestion"
-                stroke={chartConfig.handling.color}
-                strokeWidth={styles.strokeWidth}
-                dot={{ fill: chartConfig.handling.color, r: styles.dot.radius }}
-                activeDot={{ r: styles.dot.activeRadius }}
-              />
-              <Line
-                yAxisId="right"
-                type="monotone"
-                dataKey="risk"
-                name="Risk"
-                stroke={chartConfig.risk.color}
-                strokeWidth={styles.strokeWidth}
-                dot={{ fill: chartConfig.risk.color, r: styles.dot.radius }}
-                activeDot={{ r: styles.dot.activeRadius }}
-              />
-            </LineChart>
-          </ChartContainer>
+          />
         </CardContent>
       </Card>
 
