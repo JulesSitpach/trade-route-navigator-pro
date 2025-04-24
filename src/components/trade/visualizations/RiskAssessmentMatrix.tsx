@@ -1,11 +1,12 @@
-
 import { Card, CardContent } from "@/components/ui/card";
 import { 
   ChartContainer, 
   ChartTooltip, 
-  ChartTooltipContent 
+  ChartTooltipContent,
+  ChartLegend,
+  ChartLegendContent 
 } from "@/components/ui/chart";
-import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, ZAxis, Cell, ResponsiveContainer } from "recharts";
+import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, ZAxis, Cell } from "recharts";
 import { chartConfig } from "./chartConfig";
 import { chartCommonConfig, chartDimensions } from "@/utils/chartUtils";
 
@@ -47,6 +48,11 @@ const RiskAssessmentMatrix = () => {
                   strokeDasharray={chartCommonConfig.grid.strokeDasharray} 
                   stroke={chartCommonConfig.grid.stroke}
                   strokeOpacity={chartCommonConfig.grid.strokeOpacity}
+                />
+                <ChartLegend 
+                  content={<ChartLegendContent />}
+                  verticalAlign="top"
+                  align="center"
                 />
                 <XAxis 
                   type="number"

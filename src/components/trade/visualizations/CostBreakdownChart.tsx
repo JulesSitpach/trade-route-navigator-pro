@@ -39,12 +39,12 @@ const CostBreakdownChart = () => {
           <div className="h-[400px]">
             <ChartContainer config={chartConfig}>
               <PieChart margin={chartCommonConfig.margins.default}>
-                <ChartTooltip content={<ChartTooltipContent />} />
                 <ChartLegend 
                   content={<ChartLegendContent />}
-                  verticalAlign="bottom"
+                  verticalAlign="top"
                   align="center"
                 />
+                <ChartTooltip content={<ChartTooltipContent />} />
                 <Pie
                   data={costData}
                   cx="50%"

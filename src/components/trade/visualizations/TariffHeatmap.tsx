@@ -3,15 +3,16 @@ import { Card, CardContent } from "@/components/ui/card";
 import { 
   ChartContainer, 
   ChartTooltip, 
-  ChartTooltipContent 
+  ChartTooltipContent,
+  ChartLegend,
+  ChartLegendContent 
 } from "@/components/ui/chart";
-import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Cell, ResponsiveContainer } from "recharts";
+import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Cell } from "recharts";
 import { chartConfig } from "./chartConfig";
 import { chartCommonConfig, chartDimensions } from "@/utils/chartUtils";
-import TariffScatterChart from "./tariff/TariffScatterChart";
+import { useTariffData } from "./tariff/useTariffData";
 import TariffLegend from "./tariff/TariffLegend";
 import TariffInsights from "./tariff/TariffInsights";
-import { useTariffData } from "./tariff/useTariffData";
 
 const TariffHeatmap = () => {
   const { tariffData, getTariffColor } = useTariffData();
@@ -34,6 +35,11 @@ const TariffHeatmap = () => {
                   strokeDasharray={chartCommonConfig.grid.strokeDasharray}
                   stroke={chartCommonConfig.grid.stroke}
                   strokeOpacity={chartCommonConfig.grid.strokeOpacity}
+                />
+                <ChartLegend 
+                  content={<ChartLegendContent />}
+                  verticalAlign="top"
+                  align="center"
                 />
                 <XAxis 
                   type="category"
