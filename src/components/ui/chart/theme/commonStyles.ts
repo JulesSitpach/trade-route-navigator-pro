@@ -37,7 +37,7 @@ export const tooltipStyles = {
   },
 };
 
-// Standardize legend styles
+// Update legend styles with standardized values
 export const legendStyles = {
   container: {
     display: 'flex',
@@ -47,17 +47,18 @@ export const legendStyles = {
   item: {
     display: 'flex',
     alignItems: 'center',
-    marginRight: '16px'
+    marginRight: '24px'
   },
-  colorIndicator: {
+  icon: {
     width: '12px',
     height: '12px',
-    marginRight: '6px',
+    marginRight: '8px',
     borderRadius: '2px'
   },
   text: {
-    fontSize: '12px',
-    color: '#4b5563'
+    fontSize: '14px',
+    color: '#4b5563',
+    fontWeight: 400
   },
   wrapper: {
     padding: '8px',
@@ -65,7 +66,7 @@ export const legendStyles = {
     gap: '16px',
     flexWrap: 'wrap' as const,
     justifyContent: 'center',
-  },
+  }
 };
 
 export const cursorStyles = {
