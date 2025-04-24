@@ -1,4 +1,3 @@
-
 import { Card, CardContent } from "@/components/ui/card";
 import { 
   ChartContainer, 
@@ -6,7 +5,7 @@ import {
   ChartTooltipContent,
   ChartLegend,
   ChartLegendContent,
-  AxisTitle
+  createAxisTitle
 } from "@/components/ui/chart";
 import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Cell } from "recharts";
 import { chartConfig } from "./chartConfig";
@@ -17,16 +16,6 @@ import TariffInsights from "./tariff/TariffInsights";
 
 const TariffHeatmap = () => {
   const { tariffData, getTariffColor } = useTariffData();
-
-  // Define a default theme for axis titles
-  const axisTheme = {
-    fontFamily: 'inherit',
-    fontSize: '0.75rem',
-    fontWeight: 400,
-    color: '#64748b',
-    padding: 0,
-    offset: { x: 0, y: 0 }
-  };
 
   return (
     <div className="space-y-6">
@@ -62,12 +51,7 @@ const TariffHeatmap = () => {
                   angle={-45}
                   textAnchor="end"
                   height={80}
-                  label={AxisTitle({ 
-                    text: 'Countries', 
-                    axis: 'x',
-                    offset: { y: 30 },
-                    theme: axisTheme
-                  })}
+                  label={createAxisTitle('Countries', 'x', { offset: 30 })}
                 />
                 <YAxis
                   type="number"
@@ -76,12 +60,7 @@ const TariffHeatmap = () => {
                   tick={chartCommonConfig.axis.tick}
                   axisLine={chartCommonConfig.axis.line}
                   tickLine={false}
-                  label={AxisTitle({ 
-                    text: 'Tariff Rate (%)', 
-                    axis: 'y',
-                    offset: { x: 10 },
-                    theme: axisTheme
-                  })}
+                  label={createAxisTitle('Tariff Rate (%)', 'y', { offset: 10 })}
                 />
                 <ChartTooltip content={<ChartTooltipContent />} />
                 <Scatter 

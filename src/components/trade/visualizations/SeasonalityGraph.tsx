@@ -1,4 +1,3 @@
-
 import { Card, CardContent } from "@/components/ui/card";
 import { 
   ChartContainer, 
@@ -6,7 +5,7 @@ import {
   ChartTooltipContent,
   ChartLegend,
   ChartLegendContent,
-  AxisTitle
+  createAxisTitle
 } from "@/components/ui/chart";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid } from "recharts";
 import { chartConfig } from "./chartConfig";
@@ -14,7 +13,6 @@ import { chartCommonConfig } from "@/utils/chartUtils";
 import { LineChart as LineChartIcon } from "lucide-react";
 
 const SeasonalityGraph = () => {
-  // Sample seasonality data
   const seasonalityData = [
     { month: "Jan", freight: 100, congestion: 40, risk: 30 },
     { month: "Feb", freight: 105, congestion: 45, risk: 35 },
@@ -29,16 +27,6 @@ const SeasonalityGraph = () => {
     { month: "Nov", freight: 200, congestion: 60, risk: 40 },
     { month: "Dec", freight: 190, congestion: 50, risk: 45 }
   ];
-
-  // Define a default theme for axis titles
-  const axisTheme = {
-    fontFamily: 'inherit',
-    fontSize: '0.75rem',
-    fontWeight: 400,
-    color: '#64748b',
-    padding: 0,
-    offset: { x: 0, y: 0 }
-  };
 
   return (
     <div className="space-y-4">
@@ -73,22 +61,11 @@ const SeasonalityGraph = () => {
                   tick={chartCommonConfig.axis.tick}
                   axisLine={chartCommonConfig.axis.line}
                   tickLine={false}
-                  label={AxisTitle({ 
-                    text: 'Month', 
-                    axis: 'x',
-                    offset: { y: 10 },
-                    theme: axisTheme
-                  })}
+                  label={createAxisTitle('Month', 'x', { offset: 10 })}
                 />
                 <YAxis 
                   yAxisId="left"
-                  label={AxisTitle({ 
-                    text: 'Freight Cost Index', 
-                    axis: 'y',
-                    position: 'insideLeft',
-                    offset: { x: 5 },
-                    theme: axisTheme
-                  })}
+                  label={createAxisTitle('Freight Cost Index', 'y', { offset: 5 })}
                   tickLine={false}
                   axisLine={chartCommonConfig.axis.line}
                   tick={chartCommonConfig.axis.tick}
@@ -96,12 +73,9 @@ const SeasonalityGraph = () => {
                 <YAxis 
                   yAxisId="right"
                   orientation="right"
-                  label={AxisTitle({ 
-                    text: 'Risk/Congestion (%)', 
-                    axis: 'y',
-                    position: 'insideRight', 
-                    offset: { x: 5 },
-                    theme: axisTheme
+                  label={createAxisTitle('Risk/Congestion (%)', 'y', { 
+                    position: 'insideRight',
+                    offset: 5 
                   })}
                   tickLine={false}
                   axisLine={chartCommonConfig.axis.line}

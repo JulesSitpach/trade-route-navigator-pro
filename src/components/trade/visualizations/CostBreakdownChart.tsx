@@ -1,4 +1,3 @@
-
 import { Card, CardContent } from "@/components/ui/card";
 import { 
   ChartContainer, 
@@ -6,7 +5,7 @@ import {
   ChartLegendContent, 
   ChartTooltip, 
   ChartTooltipContent,
-  AxisTitle
+  createAxisTitle
 } from "@/components/ui/chart";
 import { PieChart, Pie, Cell } from "recharts";
 import { chartConfig } from "./chartConfig";

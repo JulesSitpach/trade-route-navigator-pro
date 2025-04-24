@@ -1,4 +1,3 @@
-
 import { Card, CardContent } from "@/components/ui/card";
 import { 
   ChartContainer, 
@@ -6,7 +5,7 @@ import {
   ChartTooltipContent,
   ChartLegend,
   ChartLegendContent,
-  AxisTitle
+  createAxisTitle
 } from "@/components/ui/chart";
 import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, ZAxis, Cell } from "recharts";
 import { chartConfig } from "./chartConfig";
@@ -30,16 +29,6 @@ const RiskAssessmentMatrix = () => {
       case "low": return chartConfig.lowRisk.color;
       default: return "#ccc";
     }
-  };
-
-  // Define a default theme for axis titles
-  const axisTheme = {
-    fontFamily: 'inherit',
-    fontSize: '0.75rem',
-    fontWeight: 400,
-    color: '#64748b',
-    padding: 0,
-    offset: { x: 0, y: 0 }
   };
 
   return (
@@ -75,12 +64,7 @@ const RiskAssessmentMatrix = () => {
                   tick={chartCommonConfig.axis.tick}
                   axisLine={chartCommonConfig.axis.line}
                   tickLine={false}
-                  label={AxisTitle({ 
-                    text: 'Total Cost ($)', 
-                    axis: 'x',
-                    offset: { y: 20 },
-                    theme: axisTheme
-                  })}
+                  label={createAxisTitle('Total Cost ($)', 'x', { offset: 20 })}
                 />
                 <YAxis
                   type="number"
@@ -90,12 +74,7 @@ const RiskAssessmentMatrix = () => {
                   tick={chartCommonConfig.axis.tick}
                   axisLine={chartCommonConfig.axis.line}
                   tickLine={false}
-                  label={AxisTitle({ 
-                    text: 'Risk Level (1-10)', 
-                    axis: 'y',
-                    offset: { x: 10 },
-                    theme: axisTheme
-                  })}
+                  label={createAxisTitle('Risk Level (1-10)', 'y', { offset: 10 })}
                 />
                 <ZAxis
                   type="number"

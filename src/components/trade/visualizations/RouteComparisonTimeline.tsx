@@ -1,4 +1,3 @@
-
 import { Card, CardContent } from "@/components/ui/card";
 import { 
   ChartContainer, 
@@ -6,7 +5,7 @@ import {
   ChartTooltipContent,
   ChartLegend,
   ChartLegendContent,
-  AxisTitle
+  createAxisTitle
 } from "@/components/ui/chart";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid } from "recharts";
 import { chartConfig } from "./chartConfig";
@@ -93,20 +92,10 @@ const RouteComparisonTimeline = () => {
                   height={80}
                   angle={-35}
                   textAnchor="end"
-                  label={AxisTitle({ 
-                    text: 'Shipping Routes', 
-                    axis: 'x',
-                    offset: { y: 30 },
-                    theme: axisTheme
-                  })}
+                  label={createAxisTitle('Shipping Routes', 'x', { offset: 30 })}
                 />
                 <YAxis 
-                  label={AxisTitle({ 
-                    text: 'Transit Days', 
-                    axis: 'y',
-                    offset: { x: 10 },
-                    theme: axisTheme
-                  })}
+                  label={createAxisTitle('Transit Days', 'y', { offset: 10 })}
                   tickLine={false}
                   axisLine={chartCommonConfig.axis.line}
                   tick={chartCommonConfig.axis.tick}
