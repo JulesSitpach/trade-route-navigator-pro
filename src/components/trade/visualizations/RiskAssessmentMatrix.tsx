@@ -1,19 +1,20 @@
+import React from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { 
-  ChartContainer, 
-  ChartTooltip, 
-  ChartTooltipContent,
-  ChartLegend,
-  ChartLegendContent
-} from "@/components/ui/chart";
-import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, ZAxis, Cell } from "recharts";
+  ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Cell, Tooltip, ResponsiveContainer, ZAxis 
+} from "recharts";
+import { useTariffData } from "./tariff/useTariffData";
+import { createAxisTitle, getTariffColor } from "@/utils/chartUtils";
+import { useChartResponsiveStyles } from "@/hooks/use-chart-responsive-styles";
+import { TariffTooltip } from './tariff/TariffTooltip';
+import { TariffAxisTick } from './tariff/TariffAxisTick';
+import { tooltipStyles, cursorStyles } from "@/components/ui/chart/theme/commonStyles";
+import { ChartCustomLegend } from '@/components/ui/chart/ChartCustomLegend';
 import { chartConfig } from "./chartConfig";
 import { chartCommonConfig } from "@/utils/chartUtils";
 import { lightTheme } from "@/components/ui/chart/chartTheme";
 import { formatCurrency } from "@/components/ui/chart/chartUtils";
-import { createAxisTitle } from "@/components/ui/chart/axisConfig";
 import { calculateBubbleSize } from "@/components/ui/chart/theme/commonStyles";
-import { cursorStyles, tooltipStyles } from "@/components/ui/chart/theme/commonStyles";
 
 const RiskAssessmentMatrix = () => {
   // Sample risk assessment data
@@ -39,6 +40,9 @@ const RiskAssessmentMatrix = () => {
   const zValues = riskData.map(item => item.z);
   const minZ = Math.min(...zValues);
   const maxZ = Math.max(...zValues);
+  const { tariffData } = useTariffData();
+  const margins = { top: 30, right: 20, bottom: 60, left: 60 };
+  const chartStyles = useChartResponsiveStyles();
 
   return (
     <div className="space-y-6">
@@ -51,18 +55,14 @@ const RiskAssessmentMatrix = () => {
       
       <Card>
         <CardContent className="p-6">
-          <div className="h-[450px]">
-            <ChartContainer config={chartConfig}>
-              <ScatterChart margin={{ top: 20, right: 30, bottom: 60, left: 50 }}>
+          {/* Replace custom legend with ChartCustomLegend */}
+          <div className="h-[500px]">
+            <ResponsiveContainer width="100%" height="100%">
+              <ScatterChart margin={margins}>
                 <CartesianGrid 
                   strokeDasharray={chartCommonConfig.grid.strokeDasharray} 
                   stroke={chartCommonConfig.grid.stroke}
                   opacity={0.15}
-                />
-                <ChartLegend 
-                  content={<ChartLegendContent />}
-                  verticalAlign="top"
-                  align="center"
                 />
                 <XAxis 
                   type="number"
@@ -99,11 +99,18 @@ const RiskAssessmentMatrix = () => {
                   range={[60, 200]}
                   name="Reliability"
                 />
-                <ChartTooltip 
-                  content={<ChartTooltipContent />} 
+                <Tooltip 
+                  content={<TariffTooltip />} 
                   cursor={cursorStyles.scatter}
                   wrapperStyle={tooltipStyles.wrapper}
                   contentStyle={tooltipStyles.contentStyle}
+                />
+                <Legend 
+                  content={<ChartCustomLegend />}
+                  verticalAlign="top"
+                  align="center"
+                  height={36}
+                  wrapperStyle={{ paddingBottom: '20px' }}
                 />
                 <Scatter data={riskData} fill={lightTheme.colors.primary}>
                   {riskData.map((entry, index) => {
@@ -120,35 +127,10 @@ const RiskAssessmentMatrix = () => {
                   })}
                 </Scatter>
               </ScatterChart>
-            </ChartContainer>
+            </ResponsiveContainer>
           </div>
         </CardContent>
       </Card>
-
-      <div className="flex items-center justify-center gap-8 mt-6">
-        <div className="flex items-center gap-2">
-          <div className="w-3 h-3 rounded-full" style={{ backgroundColor: chartConfig.lowRisk.color }}></div>
-          <span className="text-sm text-muted-foreground">Low Risk</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <div className="w-3 h-3 rounded-full" style={{ backgroundColor: chartConfig.mediumRisk.color }}></div>
-          <span className="text-sm text-muted-foreground">Medium Risk</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <div className="w-3 h-3 rounded-full" style={{ backgroundColor: chartConfig.highRisk.color }}></div>
-          <span className="text-sm text-muted-foreground">High Risk</span>
-        </div>
-      </div>
-
-      <div className="text-sm mt-6">
-        <p className="font-medium mb-2">Risk Assessment Insights:</p>
-        <ul className="list-disc pl-5 space-y-1 text-muted-foreground">
-          <li>Air freight offers the lowest risk profile but at significant cost premium</li>
-          <li>East Coast route provides a balanced risk-cost profile</li>
-          <li>Alternative ocean routes may save costs but introduce higher risks</li>
-          <li>Bubble size indicates reliability score (larger = more reliable)</li>
-        </ul>
-      </div>
     </div>
   );
 };

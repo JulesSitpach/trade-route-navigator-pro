@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { 
@@ -10,6 +11,7 @@ import { chartConfig } from "./chartConfig";
 import { chartCommonConfig } from "@/utils/chartUtils";
 import { StyleDebugger } from './debug/StyleDebugger';
 import { tooltipStyles, cursorStyles } from "@/components/ui/chart/theme/commonStyles";
+import { ChartCustomLegend } from '@/components/ui/chart/ChartCustomLegend';
 
 const RouteComparisonTimeline = () => {
   // Sample route comparison data with simplified names
@@ -75,6 +77,7 @@ const RouteComparisonTimeline = () => {
                   vertical={false}
                 />
                 <Legend 
+                  content={<ChartCustomLegend />}
                   verticalAlign="top"
                   align="center"
                   height={36}
@@ -131,3 +134,4 @@ const RouteComparisonTimeline = () => {
 };
 
 export default RouteComparisonTimeline;
+
