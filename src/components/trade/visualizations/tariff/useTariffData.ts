@@ -28,9 +28,32 @@ export const useTariffData = () => {
     return "#EF4444"; // Red for high tariffs
   };
 
+  const getTariffInsights = () => {
+    const countryGroups = {
+      low: tariffData.filter(item => item.tariffRate <= 5),
+      medium: tariffData.filter(item => item.tariffRate > 5 && item.tariffRate <= 15),
+      high: tariffData.filter(item => item.tariffRate > 15)
+    };
+
+    const totalVolume = tariffData.reduce((sum, item) => sum + item.volume, 0);
+
+    const volumeByCategory = {
+      low: countryGroups.low.reduce((sum, item) => sum + item.volume, 0),
+      medium: countryGroups.medium.reduce((sum, item) => sum + item.volume, 0),
+      high: countryGroups.high.reduce((sum, item) => sum + item.volume, 0)
+    };
+
+    return {
+      countryGroups,
+      volumeByCategory,
+      totalVolume
+    };
+  };
+
   return {
     tariffData,
-    getTariffColor
+    getTariffColor,
+    getTariffInsights
   };
 };
 
