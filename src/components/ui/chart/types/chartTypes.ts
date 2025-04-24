@@ -1,8 +1,8 @@
 
-import { ReactNode } from 'react';
+import { ReactElement } from 'react';
 
 export interface BaseChartProps {
-  children: ReactNode;
+  children: ReactElement;  // Changed from ReactNode to ReactElement
   title?: string;
   subtitle?: string;
   height?: number | string;

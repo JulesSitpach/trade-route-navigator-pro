@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { ResponsiveContainer } from 'recharts';
 import { chartTheme } from './chartTheme';
 import { BaseChartProps } from './types/chartTypes';
@@ -15,6 +15,11 @@ export const BaseChart: React.FC<BaseChartProps> = ({
 }) => {
   const heightStyle = typeof height === 'number' ? `${height}px` : height;
   const widthStyle = typeof width === 'number' ? `${width}px` : width;
+  
+  // Ensure children is a valid React element
+  const chartElement = React.isValidElement(children) 
+    ? children 
+    : null;
   
   return (
     <div 
@@ -42,7 +47,7 @@ export const BaseChart: React.FC<BaseChartProps> = ({
         }}
       >
         <ResponsiveContainer width="100%" height="100%">
-          {children}
+          {chartElement}
         </ResponsiveContainer>
       </div>
     </div>
