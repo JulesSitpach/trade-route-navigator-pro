@@ -1,5 +1,5 @@
 
-import { lightTheme } from './chartTheme';
+import { lightTheme } from '../chartTheme';
 
 export const tooltipStyles = {
   wrapper: {
