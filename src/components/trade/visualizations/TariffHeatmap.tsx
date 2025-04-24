@@ -1,3 +1,4 @@
+import React from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { 
   ChartContainer, 
@@ -161,7 +162,7 @@ const TariffHeatmap = () => {
               payload={[
                 { value: 'Low Tariff (0-5%)', color: TARIFF_COLORS.low },
                 { value: 'Medium Tariff (6-15%)', color: TARIFF_COLORS.medium },
-                { value: 'High Tariff (>15%)', color: TARIFF_COLORS.high }
+                { value: `High Tariff (>15%)`, color: TARIFF_COLORS.high }
               ]}
             />
           </ChartLegend>
