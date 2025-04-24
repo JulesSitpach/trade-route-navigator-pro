@@ -1,4 +1,3 @@
-
 import { Card, CardContent } from "@/components/ui/card";
 import { 
   ChartContainer, 
@@ -52,14 +51,11 @@ const RouteComparisonTimeline = () => {
       
       <Card>
         <CardContent className="pt-4">
-          {/* Adjusted height */}
           <div className="h-[400px]">
             <ChartContainer config={chartConfig}>
               <BarChart
                 data={routeData}
-                /* Adjusted margins */
-                margin={{ top: 10, right: 30, left: 40, bottom: 60 }}
-                /* Increased bar size */
+                margin={{ top: 40, right: 30, left: 40, bottom: 60 }} // Increased top margin for legend
                 barSize={30}
               >
                 <CartesianGrid strokeDasharray="3 3" />
@@ -67,9 +63,7 @@ const RouteComparisonTimeline = () => {
                   dataKey="name"
                   tick={{ fontSize: 11 }}
                   tickLine={false}
-                  /* Increased height for labels */
                   height={60}
-                  /* Angled text for better readability */
                   angle={-25}
                   textAnchor="end"
                 />
@@ -87,7 +81,7 @@ const RouteComparisonTimeline = () => {
                 />
                 <ChartLegend 
                   content={<ChartLegendContent />}
-                  verticalAlign="top"
+                  verticalAlign="top" // Move legend to top
                   height={36}
                 />
                 <Bar dataKey="shipping" stackId="a" name="Shipping" fill={chartConfig.primaryRoute.color} />

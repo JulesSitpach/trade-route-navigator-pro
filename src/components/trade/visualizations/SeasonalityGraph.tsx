@@ -1,4 +1,3 @@
-
 import { Card, CardContent } from "@/components/ui/card";
 import { 
   ChartContainer, 
@@ -43,10 +42,10 @@ const SeasonalityGraph = () => {
               <LineChart
                 data={seasonalityData}
                 margin={{
-                  top: 20,
+                  top: 40,
                   right: 50,
                   left: 20,
-                  bottom: 60, // Increased bottom margin to accommodate legend
+                  bottom: 60,
                 }}
               >
                 <CartesianGrid 
@@ -61,7 +60,7 @@ const SeasonalityGraph = () => {
                   tickLine={{ stroke: '#e6e6e6' }}
                   axisLine={{ stroke: '#e6e6e6' }}
                   padding={{ left: 0, right: 0 }}
-                  height={30} // Fixed height to ensure labels stay within bounds
+                  height={30}
                 />
                 <YAxis 
                   yAxisId="left"
@@ -99,10 +98,9 @@ const SeasonalityGraph = () => {
                 <ChartTooltip
                   content={<ChartTooltipContent />}
                 />
-                {/* Move legend to bottom outside of chart area */}
                 <ChartLegend 
                   content={<ChartLegendContent />}
-                  verticalAlign="bottom"
+                  verticalAlign="top"
                   height={36}
                 />
                 <Line
@@ -142,7 +140,6 @@ const SeasonalityGraph = () => {
         </CardContent>
       </Card>
 
-      {/* Key Seasonal Factors card is now completely separated from the chart */}
       <Card className="bg-slate-50 mt-6">
         <CardContent className="p-4">
           <p className="font-medium mb-2">Key Seasonal Factors:</p>
