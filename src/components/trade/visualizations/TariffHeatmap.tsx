@@ -1,4 +1,3 @@
-
 import { Card, CardContent } from "@/components/ui/card";
 import { 
   ChartContainer, 
@@ -12,6 +11,7 @@ import { chartConfig } from "./chartConfig";
 import { useTariffData } from "./tariff/useTariffData";
 import TariffInsights from "./tariff/TariffInsights";
 import { createAxisTitle, getChartMargins } from "@/utils/chartUtils";
+import { chartCommonConfig } from "@/utils/chartUtils";
 
 const CustomTooltip = ({ active, payload }: any) => {
   if (!active || !payload?.length) return null;
@@ -54,7 +54,6 @@ const CustomXAxisTick = ({ x, y, payload }: any) => (
   </g>
 );
 
-// Define tariff color constants
 const TARIFF_COLORS = {
   low: "#10b981",    // Green color for low tariffs
   medium: "#f59e0b", // Amber color for medium tariffs
@@ -108,15 +107,20 @@ const TariffHeatmap = () => {
                   type="number"
                   dataKey="tariffRate"
                   name="Tariff Rate"
-                  axisLine={{ stroke: 'currentColor', strokeWidth: 1 }}
+                  tick={{
+                    fontSize: 12,
+                    dx: -10,
+                  }}
+                  axisLine={chartCommonConfig.axis.line}
                   tickLine={false}
                   domain={[0, 'dataMax + 5']}
                   label={createAxisTitle('Tariff Rate (%)', 'y', { 
-                    offset: 60, 
+                    offset: -45, 
                     position: 'insideLeft',
                     angle: -90
                   })}
-                  width={60}
+                  tickFormatter={(value) => `${value}%`}
+                  width={65}
                   padding={{ top: 20, bottom: 20 }}
                 />
                 <ChartTooltip content={<CustomTooltip />} cursor={{ strokeDasharray: '3 3' }} />
