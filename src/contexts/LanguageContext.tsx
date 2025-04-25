@@ -1,3 +1,4 @@
+
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
 type Language = 'en' | 'es';
@@ -51,10 +52,8 @@ const translations = {
     'analysis.routes': 'Alternative Routes',
     'analysis.tariffs': 'Tariff Analysis',
     'analysis.regulations': 'Regulations',
-    'analysis.seasonality': 'Seasonality Analysis',
-    'analysis.risks': 'Risk Assessment',
-    'analysis.supply': 'Supply Chain',
-    'analysis.compliance': 'Compliance',
+    'analysis.visualizations': 'Visualizations',
+    'analysis.visualizations.description': 'Visual representation of your trade data',
     
     // Tabs and Navigation
     'tab.costs': 'Cost Breakdown',
@@ -92,6 +91,41 @@ const translations = {
     // Notes and Helpers
     'note.required': 'Required field',
     'note.optional': 'Optional',
+    
+    // Tariff Analysis
+    'tariff.basic': 'Basic Tariff',
+    'tariff.hscode': 'HS Code',
+    'tariff.countryComparison': 'Country Comparison',
+    'tariff.rulesOfOrigin': 'Rules of Origin',
+    'tariff.engineering': 'Tariff Engineering',
+    'tariff.specialPrograms': 'Special Programs',
+    'tariff.historicalTrends': 'Historical Trends',
+    'tariff.exclusionBreakdown': 'Exclusion Breakdown',
+    
+    // Alternative Routes
+    'routes.title': 'Alternative Routes and Transportation Methods',
+    'routes.description': 'Strategic shipping options tailored for small and medium-sized businesses to optimize costs, timeline, and market opportunities.',
+    
+    // Regulations
+    'regulations.documents': 'Required Documents',
+    'regulations.timeline': 'Regulatory Timeline',
+    'regulations.requirements': 'Country Requirements',
+    'regulations.productRegs': 'Product Regulations',
+    'regulations.permits': 'Permit Guidance',
+    'regulations.updates': 'Regulatory Updates',
+    'regulations.compliance': 'Compliance Cost Summary',
+    'regulations.resources': 'Helpful Resources',
+    
+    // Strategy Recommendations
+    'strategy.recommended': 'Recommended Strategy',
+    
+    // Misc
+    'yes': 'Yes',
+    'no': 'No',
+    'missing.fields': 'Missing Required Fields',
+    'missing.fields.description': 'Please fill in all mandatory fields:',
+    'analysis.generated': 'Analysis Generated',
+    'analysis.generated.description': 'Your trade analysis has been calculated successfully.',
   },
   es: {
     // General
@@ -135,10 +169,8 @@ const translations = {
     'analysis.routes': 'Rutas Alternativas',
     'analysis.tariffs': 'Análisis de Aranceles',
     'analysis.regulations': 'Regulaciones',
-    'analysis.seasonality': 'Análisis de Estacionalidad',
-    'analysis.risks': 'Evaluación de Riesgos',
-    'analysis.supply': 'Cadena de Suministro',
-    'analysis.compliance': 'Cumplimiento',
+    'analysis.visualizations': 'Visualizaciones',
+    'analysis.visualizations.description': 'Representación visual de sus datos comerciales',
     
     // Tabs and Navigation
     'tab.costs': 'Desglose de Costos',
@@ -176,6 +208,41 @@ const translations = {
     // Notes and Helpers
     'note.required': 'Campo obligatorio',
     'note.optional': 'Opcional',
+    
+    // Tariff Analysis
+    'tariff.basic': 'Arancel Básico',
+    'tariff.hscode': 'Código HS',
+    'tariff.countryComparison': 'Comparación de Países',
+    'tariff.rulesOfOrigin': 'Reglas de Origen',
+    'tariff.engineering': 'Ingeniería Arancelaria',
+    'tariff.specialPrograms': 'Programas Especiales',
+    'tariff.historicalTrends': 'Tendencias Históricas',
+    'tariff.exclusionBreakdown': 'Desglose de Exclusiones',
+    
+    // Alternative Routes
+    'routes.title': 'Rutas Alternativas y Métodos de Transporte',
+    'routes.description': 'Opciones de envío estratégicas adaptadas para pequeñas y medianas empresas para optimizar costos, plazos y oportunidades de mercado.',
+    
+    // Regulations
+    'regulations.documents': 'Documentos Requeridos',
+    'regulations.timeline': 'Cronograma Regulatorio',
+    'regulations.requirements': 'Requisitos por País',
+    'regulations.productRegs': 'Regulaciones del Producto',
+    'regulations.permits': 'Guía de Permisos',
+    'regulations.updates': 'Actualizaciones Regulatorias',
+    'regulations.compliance': 'Resumen de Costos de Cumplimiento',
+    'regulations.resources': 'Recursos Útiles',
+    
+    // Strategy Recommendations
+    'strategy.recommended': 'Estrategia Recomendada',
+    
+    // Misc
+    'yes': 'Sí',
+    'no': 'No',
+    'missing.fields': 'Faltan Campos Obligatorios',
+    'missing.fields.description': 'Por favor complete todos los campos obligatorios:',
+    'analysis.generated': 'Análisis Generado',
+    'analysis.generated.description': 'Su análisis comercial ha sido calculado exitosamente.',
   }
 };
 

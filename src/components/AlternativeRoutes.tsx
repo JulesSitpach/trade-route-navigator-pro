@@ -1,19 +1,21 @@
 
 import { Route } from './trade/types';
 import RouteCard from './trade/routes/RouteCard';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface AlternativeRoutesProps {
   routes: Route[];
 }
 
 const AlternativeRoutes = ({ routes }: AlternativeRoutesProps) => {
+  const { t } = useLanguage();
+  
   return (
     <div className="space-y-6">
       <div className="space-y-2">
-        <h2 className="text-lg font-semibold">Alternative Routes and Transportation Methods</h2>
+        <h2 className="text-lg font-semibold">{t('routes.title')}</h2>
         <p className="text-gray-600 mb-4">
-          Strategic shipping options tailored for small and medium-sized businesses to optimize costs, 
-          timeline, and market opportunities.
+          {t('routes.description')}
         </p>
       </div>
       

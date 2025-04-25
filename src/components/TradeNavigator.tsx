@@ -1,3 +1,4 @@
+
 import { useState, useRef } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -77,8 +78,8 @@ const TradeNavigator = () => {
 
     if (missingFields.length > 0) {
       toast({
-        title: "Missing Required Fields",
-        description: `Please fill in all mandatory fields: ${missingFields.join(', ')}`,
+        title: t('missing.fields'),
+        description: `${t('missing.fields.description')} ${missingFields.join(', ')}`,
         variant: "destructive"
       });
       return false;
@@ -94,8 +95,8 @@ const TradeNavigator = () => {
 
     setShowAnalysis(true);
     toast({
-      title: "Analysis Generated",
-      description: "Your trade analysis has been calculated successfully.",
+      title: t('analysis.generated'),
+      description: t('analysis.generated.description'),
       duration: 3000
     });
     

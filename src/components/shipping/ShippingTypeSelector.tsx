@@ -108,8 +108,8 @@ const ShippingTypeSelector = ({
             <SelectValue placeholder={t('shipping.dangerous')} />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="no">No</SelectItem>
-            <SelectItem value="yes">Si</SelectItem>
+            <SelectItem value="no">{t('no')}</SelectItem>
+            <SelectItem value="yes">{t('yes')}</SelectItem>
           </SelectContent>
         </Select>
       </div>
