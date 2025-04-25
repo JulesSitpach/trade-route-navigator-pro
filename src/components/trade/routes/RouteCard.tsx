@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -32,7 +31,6 @@ const RouteCard = ({ route }: RouteCardProps) => {
     
     const viaMatch = route.description.match(/via ([^.]+)/);
     if (viaMatch) {
-      // Fix the interpolation by using string replacement
       const viaText = t('routes.description.via').replace('{{points}}', viaMatch[1]);
       return `${transportText} ${viaText} ${serviceText}`;
     }
@@ -52,6 +50,13 @@ const RouteCard = ({ route }: RouteCardProps) => {
     return riskTranslations[riskLevel] || riskLevel;
   };
   
+  const tabs = [
+    { value: 'advantages', label: 'routecard.smb' },
+    { value: 'markets', label: 'routecard.markets' },
+    { value: 'risks', label: 'routecard.risks' },
+    { value: 'growth', label: 'routecard.growth' }
+  ];
+
   return (
     <Card className="p-6">
       <div className="flex flex-col space-y-6">
@@ -97,18 +102,11 @@ const RouteCard = ({ route }: RouteCardProps) => {
         
         <Tabs defaultValue="advantages" className="w-full">
           <TabsList className="grid grid-cols-2 md:grid-cols-4">
-            <TabsTrigger value="advantages">
-              {t('routecard.smb')}
-            </TabsTrigger>
-            <TabsTrigger value="markets">
-              {t('routecard.markets')}
-            </TabsTrigger>
-            <TabsTrigger value="risks">
-              {t('routecard.risks')}
-            </TabsTrigger>
-            <TabsTrigger value="growth">
-              {t('routecard.growth')}
-            </TabsTrigger>
+            {tabs.map(tab => (
+              <TabsTrigger key={tab.value} value={tab.value}>
+                {t(tab.label)}
+              </TabsTrigger>
+            ))}
           </TabsList>
           
           <TabsContent value="advantages">
