@@ -1,4 +1,3 @@
-
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import AlternativeRoutes from './AlternativeRoutes';
 import TradeOpportunities from './TradeOpportunities';
@@ -7,7 +6,7 @@ import CostAnalysisTab from './trade/CostAnalysisTab';
 import RegulationsTab from './trade/RegulationsTab';
 import VisualizationsTab from './trade/VisualizationsTab';
 import { Route } from './trade/types';
-import { routes, opportunities } from './trade/data';
+import { generateDynamicRoutes } from './trade/utils/routeGenerator';
 
 interface TradeAnalysisProps {
   data: {
@@ -34,6 +33,12 @@ interface TradeAnalysisProps {
 }
 
 const TradeAnalysis = ({ data }: TradeAnalysisProps) => {
+  const dynamicRoutes = generateDynamicRoutes({
+    origin: data.product.originCountry,
+    destination: data.product.destinationCountry,
+    transportMode: data.shipping.transportMode || 'sea'
+  });
+
   return (
     <div className="p-6">
       <h2 className="text-xl font-semibold text-gray-800 mb-6">Trade Analysis Results</h2>
@@ -52,7 +57,7 @@ const TradeAnalysis = ({ data }: TradeAnalysisProps) => {
         </TabsContent>
 
         <TabsContent value="routes">
-          <AlternativeRoutes routes={routes} />
+          <AlternativeRoutes routes={dynamicRoutes} />
         </TabsContent>
 
         <TabsContent value="tariffs">

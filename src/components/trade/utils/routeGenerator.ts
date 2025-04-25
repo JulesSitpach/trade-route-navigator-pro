@@ -1,4 +1,3 @@
-
 import { Route } from '../types';
 
 interface RouteGenerationParams {
@@ -123,4 +122,69 @@ export const generateRoute = (params: RouteGenerationParams): Route => {
       simplificationPotential: 'AEO certification could streamline customs'
     }
   };
+};
+
+export const generateDynamicRoutes = (params: {
+  origin: string;
+  destination: string;
+  transportMode?: string;
+}): Route[] => {
+  const routes: Route[] = [];
+  const { origin, destination, transportMode = 'sea' } = params;
+
+  // Generate sea route
+  routes.push(
+    generateRoute({
+      origin,
+      destination,
+      viaPoints: getNearestPorts(origin, destination),
+      transportMode: 'sea'
+    })
+  );
+
+  // Generate air route
+  routes.push(
+    generateRoute({
+      origin,
+      destination,
+      viaPoints: [],
+      transportMode: 'air'
+    })
+  );
+
+  // Generate multimodal route if applicable
+  if (isMultimodalViable(origin, destination)) {
+    routes.push(
+      generateRoute({
+        origin,
+        destination,
+        viaPoints: getMultimodalHubs(origin, destination),
+        transportMode: 'multimodal'
+      })
+    );
+  }
+
+  return routes;
+};
+
+const getNearestPorts = (origin: string, destination: string): string[] => {
+  // This is a simplified version. In a real app, you'd have a database of ports
+  // and calculate the nearest ones based on coordinates
+  if (origin === 'Canada' && destination === 'Chile') {
+    return ['Panama Canal', 'Valparaiso'];
+  }
+  return ['nearest major port'];
+};
+
+const isMultimodalViable = (origin: string, destination: string): boolean => {
+  // Simplified logic - in reality would check distances, infrastructure, etc
+  return true;
+};
+
+const getMultimodalHubs = (origin: string, destination: string): string[] => {
+  // Simplified - would normally check actual logistics hubs between locations
+  if (origin === 'Canada' && destination === 'Chile') {
+    return ['Mexico City', 'Lima'];
+  }
+  return ['major logistics hub'];
 };
