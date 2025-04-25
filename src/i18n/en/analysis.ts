@@ -1,4 +1,3 @@
-
 export const analysisTranslations = {
   'analysis.title': 'Trade Analysis Results',
   'analysis.costs': 'Cost Breakdown',
@@ -56,5 +55,6 @@ export const analysisTranslations = {
   // Compliance
   'compliance.title': 'Regulatory Compliance Dashboard',
   'compliance.description': 'Track compliance status across different regulations and countries',
-  'compliance.visualization': 'Regulatory compliance dashboard visualization'
+  'compliance.visualization': 'Regulatory compliance dashboard visualization',
+  'cost.total.shipment.value': 'Total Shipment Value ($)',
 };
