@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -51,12 +50,11 @@ const RouteCard = ({ route }: RouteCardProps) => {
     return riskTranslations[riskLevel] || riskLevel;
   };
   
-  // Define tabs with proper translation keys
   const tabs = [
-    { value: 'advantages', translationKey: 'routecard.smb' },
-    { value: 'markets', translationKey: 'routecard.markets' },
-    { value: 'risks', translationKey: 'routecard.risks' },
-    { value: 'growth', translationKey: 'routecard.growth' }
+    { value: 'advantages', label: 'routecard.smb' },
+    { value: 'markets', label: 'routecard.markets' },
+    { value: 'risks', label: 'routecard.risks' },
+    { value: 'growth', label: 'routecard.growth' }
   ];
 
   return (
@@ -106,7 +104,7 @@ const RouteCard = ({ route }: RouteCardProps) => {
           <TabsList className="grid grid-cols-2 md:grid-cols-4">
             {tabs.map(tab => (
               <TabsTrigger key={tab.value} value={tab.value}>
-                {t(tab.translationKey)}
+                {t(tab.label)}
               </TabsTrigger>
             ))}
           </TabsList>
