@@ -1,4 +1,3 @@
-
 export const esTranslations = {
   // General
   'title': 'Navegador de Estrategia de Comercio Global',
@@ -216,8 +215,11 @@ export const esTranslations = {
   'tarifflegend.highdesc': 'Barreras comerciales significativas que requieren una cuidadosa consideración de costos',
   'tarifflegend.note': 'Nota',
   'tarifflegend.notedesc': 'El tamaño de la burbuja representa el volumen comercial en unidades. Las burbujas más grandes indican un mayor volumen comercial con el país correspondiente.',
-
+  
   // Compliance Dashboard
   'compliance.title': 'Panel de Cumplimiento Regulatorio',
   'compliance.description': 'Controle su estado de cumplimiento y gestione los requisitos de documentación',
+  
+  // New route-related translations
+  'route.recommended': 'Recomendada',
 };

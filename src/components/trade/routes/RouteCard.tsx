@@ -49,7 +49,7 @@ const RouteCard = ({ route }: RouteCardProps) => {
       // Extract the via points from the original description if possible
       const viaMatch = route.description.match(/via ([^.]+)/);
       const viaPoints = viaMatch ? viaMatch[1] : '';
-      translatedDesc = t('routes.description.via', { points: viaPoints });
+      translatedDesc += ` ${t('routes.description.via', { points: viaPoints })}`;
     } else {
       translatedDesc += ` ${t('routes.description.direct')}`;
     }
@@ -80,7 +80,7 @@ const RouteCard = ({ route }: RouteCardProps) => {
               <h3 className="font-semibold">{route.path}</h3>
               {route.recommended && (
                 <Badge className="bg-green-100 text-green-800 hover:bg-green-200">
-                  {language === 'en' ? 'Recommended' : 'Recomendada'}
+                  {t('route.recommended')}
                 </Badge>
               )}
             </div>

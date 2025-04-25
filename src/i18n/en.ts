@@ -1,4 +1,3 @@
-
 export const enTranslations = {
   // General
   'title': 'Global Trade Strategy Navigator',
@@ -216,8 +215,11 @@ export const enTranslations = {
   'tarifflegend.highdesc': 'Significant trade barriers that require careful cost consideration',
   'tarifflegend.note': 'Note',
   'tarifflegend.notedesc': 'Bubble size represents trade volume in units. Larger bubbles indicate higher trade volume with the corresponding country.',
-
+  
   // Compliance Dashboard
   'compliance.title': 'Regulatory Compliance Dashboard',
   'compliance.description': 'Track your compliance status and manage documentation requirements',
+  
+  // New route-related translations
+  'route.recommended': 'Recommended',
 };
