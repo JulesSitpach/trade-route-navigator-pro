@@ -20,7 +20,7 @@ export const DocumentChecklist = ({ requiredDocuments }: DocumentChecklistProps)
         {requiredDocuments.map((doc, index) => (
           <RequirementItem 
             key={index} 
-            label={t(`documents.${doc.name.replace(/\s+/g, '').toLowerCase()}`)} 
+            label={t(`documents.${doc.name.replace(/\s+/g, '').replace(/^([A-Z])(.*)$/, (_, first, rest) => first.toLowerCase() + rest)}`)} 
             status={doc.status} 
           />
         ))}
