@@ -12,50 +12,35 @@ export const ProductCategoryField = ({
   value, 
   onChange 
 }: ProductCategoryFieldProps) => {
-  const { language } = useLanguage();
-  
-  const getTranslatedCategory = (category: string): string => {
-    const translations: Record<string, string> = {
-      'agricultural': 'Agrícola',
-      'industrial': 'Industrial',
-      'textiles': 'Textiles',
-      'electronics': 'Electrónicos',
-      'automobiles': 'Automóviles'
-    };
-    
-    return language === 'en' ? category : (translations[category] || category);
-  };
+  const { t } = useLanguage();
   
   return (
     <div className="space-y-2">
       <Label htmlFor="productCategory">
-        {language === 'en' ? 'Product Category' : 'Categoría del Producto'}
+        {t('product.category')}
       </Label>
       <Select 
         value={value} 
         onValueChange={onChange}
       >
         <SelectTrigger id="productCategory">
-          <SelectValue placeholder={language === 'en' 
-            ? "Select Product Category" 
-            : "Seleccione Categoría del Producto"} 
-          />
+          <SelectValue placeholder={t('product.category.placeholder')} />
         </SelectTrigger>
         <SelectContent>
           <SelectItem value="agricultural">
-            {getTranslatedCategory('agricultural')}
+            {t('agricultural')}
           </SelectItem>
           <SelectItem value="industrial">
-            {getTranslatedCategory('industrial')}
+            {t('industrial')}
           </SelectItem>
           <SelectItem value="textiles">
-            {getTranslatedCategory('textiles')}
+            {t('textiles')}
           </SelectItem>
           <SelectItem value="electronics">
-            {getTranslatedCategory('electronics')}
+            {t('electronics')}
           </SelectItem>
           <SelectItem value="automobiles">
-            {getTranslatedCategory('automobiles')}
+            {t('automobiles')}
           </SelectItem>
         </SelectContent>
       </Select>

@@ -3,6 +3,16 @@ export const esTranslations = {
   // General
   'title': 'Navegador de Estrategia Comercial Global',
   'subtitle': 'Diversifica tus rutas comerciales, fortalece el futuro de tu negocio',
+  'yes': 'Sí',
+  'no': 'No',
+  'suggest': 'Sugerir',
+  
+  // Product Categories
+  'agricultural': 'Agrícola',
+  'industrial': 'Industrial',
+  'textiles': 'Textiles',
+  'electronics': 'Electrónicos',
+  'automobiles': 'Automóviles',
   
   // Product Details Form
   'product.details': 'Detalles del Producto',
@@ -109,8 +119,6 @@ export const esTranslations = {
   'strategy.recommended': 'Estrategia Recomendada',
   
   // Misc
-  'yes': 'Sí',
-  'no': 'No',
   'missing.fields': 'Faltan Campos Obligatorios',
   'missing.fields.description': 'Por favor complete todos los campos obligatorios:',
   'analysis.generated': 'Análisis Generado',
@@ -141,6 +149,15 @@ export const esTranslations = {
   'route.carbon': 'Huella de Carbono',
   'route.days': 'días',
   
+  // Route Card Tabs
+  'routecard.smb': 'Ventajas PYME',
+  'routecard.markets': 'Oportunidades de Mercado',
+  'routecard.risks': 'Riesgo & Finanzas',
+  'routecard.growth': 'Crecimiento & Escalabilidad',
+  
+  // Route Advantages Tab
+  'routeadvantages.title': 'Ventajas Específicas para PYMES',
+    
   // Seasonality
   'seasonality.title': 'Análisis de Estacionalidad',
   'seasonality.description': 'Siga cómo los costos de envío, tiempos de tránsito y riesgos fluctúan a lo largo del año',
@@ -174,26 +191,10 @@ export const esTranslations = {
   'tariffheatmap.advice': 'Considere desviar el volumen comercial de países con altos aranceles a países con bajos aranceles cuando sea posible para optimizar costos. Evalúe acuerdos comerciales y zonas económicas especiales para posibles reducciones arancelarias.',
   
   // Risk Matrix
-  'riskmatrix.title': 'Matriz de Evaluación de Riesgos',
-  'riskmatrix.description': 'Compare rutas basadas en factores de costo vs riesgo para encontrar su balance óptimo',
   'riskmatrix.route': 'Ruta',
   'riskmatrix.cost': 'Costo',
   'riskmatrix.risklevel': 'Nivel de Riesgo',
   'riskmatrix.reliability': 'Fiabilidad',
-  
-  // Supply Chain Flow
-  'supplychain.title': 'Diagrama de Flujo de la Cadena de Suministro',
-  'supplychain.description': 'Visualice toda su cadena de suministro para identificar cuellos de botella y puntos críticos de transferencia',
-  
-  // Compliance Dashboard
-  'compliance.title': 'Panel de Cumplimiento Regulatorio',
-  'compliance.description': 'Siga su estado de cumplimiento y gestione los requisitos de documentación',
-  
-  // Route Card Tabs
-  'routecard.smb': 'Ventajas PYME',
-  'routecard.markets': 'Oportunidades de Mercado',
-  'routecard.risks': 'Riesgo & Finanzas',
-  'routecard.growth': 'Crecimiento & Escalabilidad',
   
   // Tariff Legend
   'tarifflegend.title': 'Leyenda de Categorías Arancelarias',
@@ -206,14 +207,7 @@ export const esTranslations = {
   'tarifflegend.note': 'Nota',
   'tarifflegend.notedesc': 'El tamaño de la burbuja representa el volumen comercial en unidades. Las burbujas más grandes indican mayor volumen comercial con el país correspondiente.',
   
-  // Route Advantages Tab
-  'routeadvantages.title': 'Ventajas Específicas para PYMES',
-  'routeadvantages.consolidated': 'Envío Consolidado',
-  'routeadvantages.consolidated.desc': 'Costos más bajos mediante envíos combinados',
-  'routeadvantages.shared': 'Contenedor Compartido',
-  'routeadvantages.shared.desc': 'Divida los costos de contenedores con otros negocios',
-  'routeadvantages.flexible': 'Recogida Flexible',
-  'routeadvantages.flexible.desc': 'Se adapta a horarios de envío irregulares',
-  'routeadvantages.minimum': 'Menor Cantidad Mínima',
-  'routeadvantages.minimum.desc': 'Adaptado para volúmenes de pedido más pequeños',
+  // Compliance Dashboard
+  'compliance.title': 'Panel de Cumplimiento Regulatorio',
+  'compliance.description': 'Siga su estado de cumplimiento y gestione los requisitos de documentación',
 };

@@ -17,7 +17,7 @@ export const ProductValueField = ({
   onChange, 
   onValidate 
 }: ProductValueFieldProps) => {
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
   
   // Translate error message if it's the default validation error
   const getTranslatedError = (errorMsg?: string) => {

@@ -3,6 +3,16 @@ export const enTranslations = {
   // General
   'title': 'Global Trade Strategy Navigator',
   'subtitle': 'Diversify your trade routes, strengthen your business future',
+  'yes': 'Yes',
+  'no': 'No',
+  'suggest': 'Suggest',
+  
+  // Product Categories
+  'agricultural': 'Agricultural',
+  'industrial': 'Industrial',
+  'textiles': 'Textiles',
+  'electronics': 'Electronics',
+  'automobiles': 'Automobiles',
   
   // Product Details Form
   'product.details': 'Product Details',
@@ -109,8 +119,6 @@ export const enTranslations = {
   'strategy.recommended': 'Recommended Strategy',
   
   // Misc
-  'yes': 'Yes',
-  'no': 'No',
   'missing.fields': 'Missing Required Fields',
   'missing.fields.description': 'Please fill in all mandatory fields:',
   'analysis.generated': 'Analysis Generated',
@@ -140,6 +148,15 @@ export const enTranslations = {
   'route.risk': 'Risk Level',
   'route.carbon': 'Carbon Footprint',
   'route.days': 'days',
+  
+  // Route Card Tabs
+  'routecard.smb': 'SMB Advantages',
+  'routecard.markets': 'Market Opportunities',
+  'routecard.risks': 'Risk & Finance',
+  'routecard.growth': 'Growth & Scaling',
+  
+  // Route Advantages Tab
+  'routeadvantages.title': 'SMB-Specific Advantages',
   
   // Seasonality
   'seasonality.title': 'Seasonality Analysis',
@@ -179,12 +196,6 @@ export const enTranslations = {
   'riskmatrix.risklevel': 'Risk Level',
   'riskmatrix.reliability': 'Reliability',
   
-  // Route Card Tabs
-  'routecard.smb': 'SMB Advantages',
-  'routecard.markets': 'Market Opportunities',
-  'routecard.risks': 'Risk & Finance',
-  'routecard.growth': 'Growth & Scaling',
-  
   // Tariff Legend
   'tarifflegend.title': 'Tariff Categories Legend',
   'tarifflegend.low': 'Low Tariff (0-5%)',
@@ -195,4 +206,8 @@ export const enTranslations = {
   'tarifflegend.highdesc': 'Significant trade barriers that require careful cost consideration',
   'tarifflegend.note': 'Note',
   'tarifflegend.notedesc': 'Bubble size represents trade volume in units. Larger bubbles indicate higher trade volume with the corresponding country.',
+
+  // Compliance Dashboard
+  'compliance.title': 'Regulatory Compliance Dashboard',
+  'compliance.description': 'Track your compliance status and manage documentation requirements',
 };

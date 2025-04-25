@@ -7,7 +7,7 @@ interface RouteAdvantagesTabProps {
 }
 
 const RouteAdvantagesTab = ({ route }: RouteAdvantagesTabProps) => {
-  const { language } = useLanguage();
+  const { language, t } = useLanguage();
   
   // Sample advantages for visualization
   const smbAdvantages = [
@@ -56,7 +56,7 @@ const RouteAdvantagesTab = ({ route }: RouteAdvantagesTabProps) => {
   return (
     <div className="pt-4">
       <h4 className="font-medium mb-3">
-        {language === 'en' ? 'SMB-Specific Advantages' : 'Ventajas Específicas para PYMES'}
+        {t('routeadvantages.title')}
       </h4>
       <div className="space-y-2">
         {smbAdvantages.map((advantage, index) => (

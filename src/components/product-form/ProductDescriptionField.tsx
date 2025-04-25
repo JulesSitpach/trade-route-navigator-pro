@@ -17,17 +17,17 @@ export const ProductDescriptionField = ({
   onChange, 
   onValidate 
 }: ProductDescriptionFieldProps) => {
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
   
   return (
     <div className="space-y-2">
       <Label htmlFor="productDescription" className="flex items-center gap-1">
-        {language === 'en' ? 'Product Description' : 'Descripción del Producto'}
+        {t('product.description')}
         <span className="text-red-500">*</span>
       </Label>
       <Input 
         id="productDescription" 
-        placeholder={language === 'en' ? "Enter product description" : "Ingrese descripción del producto"}
+        placeholder={t('product.description.placeholder')}
         value={value}
         onChange={(e) => {
           onChange(e.target.value);

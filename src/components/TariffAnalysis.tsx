@@ -131,4 +131,3 @@ const TariffAnalysis = ({
 };
 
 export default TariffAnalysis;
-

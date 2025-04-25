@@ -40,7 +40,7 @@ const ShippingDetailsForm = ({ onChange }: { onChange: (data: any) => void }) =>
 
   const validateField = (field: string, value: string) => {
     if (!value || value.trim() === '') {
-      setErrors(prev => ({ ...prev, [field]: 'This field is required' }));
+      setErrors(prev => ({ ...prev, [field]: t('validation.required') }));
       return false;
     }
     

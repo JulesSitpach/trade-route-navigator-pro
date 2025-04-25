@@ -18,13 +18,13 @@ export const CountryFields = ({
   errors, 
   onCountryChange 
 }: CountryFieldsProps) => {
-  const { language } = useLanguage();
+  const { t } = useLanguage();
   
   return (
     <>
       <div className="space-y-2">
         <Label htmlFor="originCountry" className="flex items-center gap-1">
-          {language === 'en' ? 'Origin Country' : 'País de Origen'}
+          {t('product.origin')}
           <span className="text-red-500">*</span>
         </Label>
         <Select 
@@ -37,7 +37,7 @@ export const CountryFields = ({
               errors.originCountry && "border-red-500 focus-visible:ring-red-500"
             )}
           >
-            <SelectValue placeholder={language === 'en' ? "Select Origin Country" : "Seleccione País de Origen"} />
+            <SelectValue placeholder={t('product.origin')} />
           </SelectTrigger>
           <SelectContent>
             {countryTariffData.map((country) => (
@@ -48,13 +48,13 @@ export const CountryFields = ({
           </SelectContent>
         </Select>
         {errors.originCountry && (
-          <p className="text-sm text-red-500 mt-1">{errors.originCountry}</p>
+          <p className="text-sm text-red-500 mt-1">{t('validation.required')}</p>
         )}
       </div>
 
       <div className="space-y-2">
         <Label htmlFor="destinationCountry" className="flex items-center gap-1">
-          {language === 'en' ? 'Destination Country' : 'País de Destino'}
+          {t('product.destination')}
           <span className="text-red-500">*</span>
         </Label>
         <Select 
@@ -67,7 +67,7 @@ export const CountryFields = ({
               errors.destinationCountry && "border-red-500 focus-visible:ring-red-500"
             )}
           >
-            <SelectValue placeholder={language === 'en' ? "Select Destination Country" : "Seleccione País de Destino"} />
+            <SelectValue placeholder={t('product.destination')} />
           </SelectTrigger>
           <SelectContent>
             {countryTariffData.map((country) => (
@@ -78,7 +78,7 @@ export const CountryFields = ({
           </SelectContent>
         </Select>
         {errors.destinationCountry && (
-          <p className="text-sm text-red-500 mt-1">{errors.destinationCountry}</p>
+          <p className="text-sm text-red-500 mt-1">{t('validation.required')}</p>
         )}
       </div>
     </>

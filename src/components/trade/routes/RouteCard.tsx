@@ -73,10 +73,10 @@ const RouteCard = ({ route }: RouteCardProps) => {
           
           <div className="flex flex-col gap-2">
             <Button variant="default">
-              {language === 'en' ? 'Select Route' : 'Seleccionar Ruta'}
+              {t('route.select')}
             </Button>
             <Button variant="outline">
-              {language === 'en' ? 'Compare' : 'Comparar'}
+              {t('route.compare')}
             </Button>
           </div>
         </div>
@@ -84,17 +84,17 @@ const RouteCard = ({ route }: RouteCardProps) => {
         {/* Core metrics */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <MetricCard icon={<Clock className="h-5 w-5 text-blue-500" />} 
-                     title={language === 'en' ? "Transit Time" : "Tiempo de Tránsito"} 
+                     title={t('route.transitTime')} 
                      value={route.transitTime} />
           <MetricCard icon={<DollarSign className="h-5 w-5 text-green-500" />} 
-                     title={language === 'en' ? "Total Cost" : "Costo Total"} 
+                     title={t('route.cost')} 
                      value={route.cost} />
           <MetricCard icon={<Shield className="h-5 w-5 text-amber-500" />} 
-                     title={language === 'en' ? "Risk Level" : "Nivel de Riesgo"} 
+                     title={t('route.risk')} 
                      value={getTranslatedRiskLevel(route.riskLevel)} />
           {route.carbonFootprint && (
             <MetricCard icon={<TrendingUp className="h-5 w-5 text-emerald-500" />} 
-                       title={language === 'en' ? "Carbon Footprint" : "Huella de Carbono"} 
+                       title={t('route.carbon')} 
                        value={route.carbonFootprint} />
           )}
         </div>
@@ -103,16 +103,16 @@ const RouteCard = ({ route }: RouteCardProps) => {
         <Tabs defaultValue="advantages" className="w-full">
           <TabsList className="grid grid-cols-2 md:grid-cols-4">
             <TabsTrigger value="advantages">
-              {language === 'en' ? 'SMB Advantages' : 'Ventajas PYME'}
+              {t('routecard.smb')}
             </TabsTrigger>
             <TabsTrigger value="markets">
-              {language === 'en' ? 'Market Opportunities' : 'Oportunidades de Mercado'}
+              {t('routecard.markets')}
             </TabsTrigger>
             <TabsTrigger value="risks">
-              {language === 'en' ? 'Risk & Finance' : 'Riesgo & Finanzas'}
+              {t('routecard.risks')}
             </TabsTrigger>
             <TabsTrigger value="growth">
-              {language === 'en' ? 'Growth & Scaling' : 'Crecimiento & Escalabilidad'}
+              {t('routecard.growth')}
             </TabsTrigger>
           </TabsList>
           
