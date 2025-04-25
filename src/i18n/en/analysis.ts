@@ -1,3 +1,4 @@
+
 export const analysisTranslations = {
   'analysis.title': 'Trade Analysis Results',
   'analysis.costs': 'Cost Breakdown',
@@ -20,6 +21,12 @@ export const analysisTranslations = {
   'cost.transport': 'Inland Transportation',
   'cost.warehouse': 'Warehousing',
   'cost.taxes': 'Other Taxes and Fees',
+  'cost.total.shipment.value': 'Total Shipment Value ($)',
+  'cost.breakdown': 'Cost Breakdown',
+  
+  // Route Comparison
+  'route.comparison': 'Route Comparison',
+  'tariff.analysis': 'Tariff Analysis',
   
   // Risk Assessment
   'risk.assessment.title': 'Risk Assessment Matrix',
@@ -56,7 +63,6 @@ export const analysisTranslations = {
   'compliance.title': 'Regulatory Compliance Dashboard',
   'compliance.description': 'Track compliance status across different regulations and countries',
   'compliance.visualization': 'Regulatory compliance dashboard visualization',
-  'cost.total.shipment.value': 'Total Shipment Value ($)',
   
   // Disclaimer
   'disclaimer.title': 'Important Notice',

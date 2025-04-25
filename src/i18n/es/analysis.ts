@@ -1,3 +1,4 @@
+
 export const analysisTranslations = {
   'analysis.title': 'Resultados del Análisis Comercial',
   'analysis.costs': 'Desglose de Costos',
@@ -21,6 +22,11 @@ export const analysisTranslations = {
   'cost.warehouse': 'Almacenamiento',
   'cost.taxes': 'Otros Impuestos y Tarifas',
   'cost.total.shipment.value': 'Valor Total del Envío ($)',
+  'cost.breakdown': 'Desglose de Costos',
+  
+  // Route Comparison
+  'route.comparison': 'Comparación de Rutas',
+  'tariff.analysis': 'Análisis de Aranceles',
   
   // Risk Assessment
   'risk.assessment.title': 'Matriz de Evaluación de Riesgos',
