@@ -26,7 +26,15 @@ const VisualizationsTab = ({ data, routes }: VisualizationsTabProps) => {
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <CostBreakdownChart />
+            <CostBreakdownChart 
+              productValue={parseFloat(data.product.productValue)}
+              originCountry={data.product.originCountry}
+              destinationCountry={data.product.destinationCountry}
+              productCategory={data.product.productCategory}
+              transportMode={data.shipping.transportMode}
+              quantity={parseInt(data.shipping.quantity)}
+              weight={parseFloat(data.shipping.weight)}
+            />
             
             <RouteComparisonTimeline routes={routes} />
             

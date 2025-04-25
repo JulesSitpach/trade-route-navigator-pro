@@ -1,45 +1,115 @@
 
 import { Card, CardContent } from "@/components/ui/card";
-import { ChartContainer, ChartLegend, ChartLegendContent, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
-import { chartConfig } from "./chartConfig";
+import { ChartContainer, ChartLegend, ChartLegendContent, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 import { Donut } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { useTradeData } from "@/contexts/TradeDataContext";
+import { calculateTariff } from '@/data/countryTariffData';
+import { calculateFreightCost } from '../data/calculations/freightCosts';
+import { calculateInlandTransportation } from '../data/calculations/inlandTransportation';
+import { formatCurrency } from '../data/utils/formatters';
 
-const CostBreakdownChart = () => {
-  const { costItems } = useTradeData();
+interface CostBreakdownChartProps {
+  productValue: number;
+  originCountry: string;
+  destinationCountry: string;
+  productCategory: string;
+  transportMode: string;
+  quantity: number;
+  weight: number;
+}
+
+const CostBreakdownChart = ({
+  productValue,
+  originCountry,
+  destinationCountry,
+  productCategory,
+  transportMode,
+  quantity,
+  weight
+}: CostBreakdownChartProps) => {
   const { language } = useLanguage();
 
-  const translateLabel = (label: string): string => {
-    const translations: { [key: string]: string } = {
-      "Product Value": "Valor del Producto",
-      "Import Duty": "Arancel de Importación",
-      "Freight Cost": "Costo de Flete",
-      "Insurance": "Seguro",
-      "Documentation Fees": "Tarifas de Documentación",
-      "Customs Clearance": "Despacho Aduanero",
-      "Inland Transportation": "Transporte Terrestre",
-      "Warehousing": "Almacenaje",
-      "Other Taxes and Fees": "Otros Impuestos y Tarifas"
-    };
-    return translations[label] || label;
-  };
+  const totalProductValue = productValue * quantity;
+  const importDutyRate = calculateTariff(originCountry, destinationCountry, productCategory);
+  const importDuty = (totalProductValue * importDutyRate) / 100;
+  
+  const freightCost = calculateFreightCost(weight, productValue, transportMode, quantity);
+  
+  const insuranceRate = 1.5;
+  const insuranceRateAdjustment = totalProductValue > 10000 ? 1.2 : 1;
+  const insurance = Math.max((totalProductValue * insuranceRate * insuranceRateAdjustment) / 100, 50);
+  
+  const documentationFees = transportMode === 'air' ? 95 : 125;
+  
+  const customsClearance = Math.max(175, totalProductValue * 0.01) * (totalProductValue > 50000 ? 1.2 : 1);
+  
+  const inlandTransportation = calculateInlandTransportation(
+    originCountry,
+    destinationCountry,
+    transportMode,
+    quantity,
+    weight,
+    totalProductValue,
+    productCategory
+  );
+  
+  const warehouseDailyRate = transportMode === 'air' ? 1.5 : 4;
+  const estimatedDays = transportMode === 'air' ? 2 : 7;
+  const warehouseBaseCharge = transportMode === 'air' ? 75 : 100;
+  const quantityFactor = Math.min(Math.sqrt(quantity) * 1.2, quantity * 0.3);
+  const warehouseCostRaw = warehouseBaseCharge + 
+    (warehouseDailyRate * estimatedDays * quantityFactor) * 
+    (totalProductValue > 20000 ? 1.15 : 1);
+  const warehouseCost = Math.min(warehouseCostRaw, transportMode === 'air' ? 800 : 2000);
+  
+  const otherFeesRate = totalProductValue > 15000 ? 2.5 : 2.0;
+  const otherFees = (totalProductValue * otherFeesRate) / 100;
 
-  const chartData = costItems.map((item, index) => {
-    const colors = [
-      "#3498db", "#e74c3c", "#2ecc71", "#f39c12", "#9b59b6",
-      "#16a085", "#d35400", "#8e44ad", "#7f8c8d"
-    ];
-    
-    const value = parseFloat(item.value.replace(/[$,]/g, ''));
-    
-    return {
-      name: language === 'es' ? translateLabel(item.label) : item.label,
-      value: value,
-      color: colors[index % colors.length]
-    };
-  });
+  const chartData = [
+    {
+      name: language === 'es' ? 'Arancel de Importación' : 'Import Duty',
+      value: importDuty
+    },
+    {
+      name: language === 'es' ? 'Costo de Flete' : 'Freight Cost',
+      value: freightCost
+    },
+    {
+      name: language === 'es' ? 'Seguro' : 'Insurance',
+      value: insurance
+    },
+    {
+      name: language === 'es' ? 'Tarifas de Documentación' : 'Documentation Fees',
+      value: documentationFees
+    },
+    {
+      name: language === 'es' ? 'Despacho Aduanero' : 'Customs Clearance',
+      value: customsClearance
+    },
+    {
+      name: language === 'es' ? 'Transporte Terrestre' : 'Inland Transportation',
+      value: inlandTransportation
+    },
+    {
+      name: language === 'es' ? 'Almacenaje' : 'Warehousing',
+      value: warehouseCost
+    },
+    {
+      name: language === 'es' ? 'Otros Impuestos y Tarifas' : 'Other Taxes and Fees',
+      value: otherFees
+    }
+  ].filter(item => item.value > 0);
+
+  const colors = [
+    "#3498db", "#e74c3c", "#2ecc71", "#f39c12", "#9b59b6",
+    "#16a085", "#d35400", "#8e44ad", "#7f8c8d"
+  ];
+
+  const renderLabel = (entry: any) => {
+    const percentage = ((entry.value / chartData.reduce((sum: number, item: any) => sum + item.value, 0)) * 100).toFixed(1);
+    return `${percentage}%`;
+  };
 
   return (
     <div className="space-y-4">
@@ -60,12 +130,7 @@ const CostBreakdownChart = () => {
               }
             </div>
           ) : (
-            <ChartContainer 
-              config={chartConfig} 
-              height={400}
-              className="w-full"
-              title={language === 'en' ? "Cost Distribution" : "Distribución de Costos"}
-            >
+            <ChartContainer height={400} className="w-full">
               <ResponsiveContainer width="100%" height={400}>
                 <PieChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
                   <ChartLegend 
@@ -73,7 +138,6 @@ const CostBreakdownChart = () => {
                     verticalAlign="top"
                     align="center"
                     layout="horizontal"
-                    wrapperStyle={{ paddingBottom: "20px" }}
                   />
                   <ChartTooltip content={<ChartTooltipContent />} />
                   <Pie
@@ -81,18 +145,16 @@ const CostBreakdownChart = () => {
                     cx="50%"
                     cy="50%"
                     labelLine={false}
+                    label={renderLabel}
                     outerRadius={140}
                     innerRadius={100}
                     paddingAngle={2}
                     dataKey="value"
                     nameKey="name"
                     cornerRadius={4}
-                    isAnimationActive={true}
-                    animationBegin={0}
-                    animationDuration={800}
                   >
                     {chartData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={entry.color} />
+                      <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
                     ))}
                   </Pie>
                 </PieChart>
