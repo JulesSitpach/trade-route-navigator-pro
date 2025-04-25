@@ -33,58 +33,79 @@ export const generateCostItems = ({
   }
 }: CostBreakdownInput & { shippingData?: { quantity: string; weight: string; transportMode: string } }): CostItem[] => {
   const quantity = parseInt(shippingData.quantity) || 1;
-  const weight = parseFloat(shippingData.weight) || 10; // Default to 10kg if weight is 0
+  const weight = parseFloat(shippingData.weight) || 100; // Default to 100kg if weight is 0
   
-  // More realistic freight rates based on industry standards
+  // Industry standard freight rates for SMB shipments
   const baseFreightRate = {
     air: {
-      base: 15.0, // USD per kg for air freight
-      minimum: 250 // Minimum cost for air shipment
+      base: 6.0, // USD per kg for air freight (standard rate for NA routes)
+      minimum: 600 // Minimum cost for air shipment
     },
     sea: {
-      base: 5.5, // USD per kg for sea freight
-      minimum: 500  // Minimum cost for sea shipment
+      LCL: {
+        base: 55.0, // USD per cbm for LCL
+        minimum: 500 // Minimum cost for LCL shipment
+      },
+      FCL: {
+        twenty: 2200, // Base rate for 20ft container
+        forty: 3400,  // Base rate for 40ft container
+      }
     }
   };
 
-  // Calculate base freight cost
-  let freightCost = weight * 
-    (shippingData.transportMode === 'air' ? baseFreightRate.air.base : baseFreightRate.sea.base) * 
-    quantity;
-
-  // Apply minimum freight costs - realistic minimums for SMB international shipments
-  freightCost = Math.max(
-    freightCost, 
-    shippingData.transportMode === 'air' ? baseFreightRate.air.minimum : baseFreightRate.sea.minimum
-  );
-
-  // Volume-based discounts for larger quantities
-  if (quantity > 5) {
-    freightCost *= 0.92; // 8% discount for bulk shipping
-  }
-  if (quantity > 20) {
-    freightCost *= 0.95; // Additional 5% discount for larger volumes
+  // Calculate freight cost based on mode and volume
+  let freightCost = 0;
+  if (shippingData.transportMode === 'air') {
+    // Air freight calculation
+    freightCost = weight * baseFreightRate.air.base;
+    freightCost = Math.max(freightCost, baseFreightRate.air.minimum);
+  } else {
+    // Sea freight calculation - assuming LCL for SMB
+    const estimatedCBM = (weight / 1000) * 2; // Rough CBM estimation
+    freightCost = estimatedCBM * baseFreightRate.sea.LCL.base;
+    freightCost = Math.max(freightCost, baseFreightRate.sea.LCL.minimum);
   }
 
-  // Value-based additional costs
-  if (productValue > 1000) {
-    freightCost += (productValue * 0.012); // 1.2% surcharge for valuable items
+  // Volume-based discounts
+  if (quantity > 10) {
+    freightCost *= 0.95; // 5% discount for medium volume
   }
-  
-  // Additional distance-based costs if applicable
-  if (shippingData.transportMode === 'sea') {
-    // Add a buffer for longer sea routes
+  if (quantity > 50) {
+    freightCost *= 0.90; // Additional 10% discount for large volume
+  }
+
+  // Peak season surcharge (example: 15% during peak months)
+  const currentMonth = new Date().getMonth();
+  if (currentMonth >= 6 && currentMonth <= 8) { // Peak season July-September
     freightCost *= 1.15;
   }
 
-  // Calculate other costs with more realistic rates
+  // Value-based additional costs
+  if (productValue > 5000) {
+    freightCost *= 1.1; // 10% surcharge for high-value shipments
+  }
+
+  // Calculate other costs with realistic rates
   const importDuty = (productValue * importDutyRate) / 100;
-  const insuranceRate = 1.5; // 1.5% of value
-  const insurance = Math.max((productValue * insuranceRate) / 100, 50); // 1.5% of value or minimum $50
-  const documentationFees = Math.max(95 * (shippingData.transportMode === 'air' ? 1.2 : 1), 75);
+  const insuranceRate = 1.5; // Standard 1.5% of value
+  const insurance = Math.max((productValue * insuranceRate) / 100, 50); // Minimum $50
+  
+  const documentationFees = shippingData.transportMode === 'air' 
+    ? 95  // Air freight documentation
+    : 125; // Ocean freight documentation (more complex)
+    
   const customsClearance = Math.max(175, productValue * 0.01); // Greater of $175 or 1% of value
-  const inlandTransportation = Math.max(250 * quantity, 150); // Minimum $150
-  const warehousingCost = Math.max(180 * quantity, productValue * 0.015); // Greater of $180/unit or 1.5% of value
+  
+  // Inland transportation based on mode and distance
+  const inlandTransportation = shippingData.transportMode === 'air'
+    ? Math.max(200 * quantity, 150) // Air freight local delivery
+    : Math.max(250 * quantity, 200); // Ocean freight local delivery (usually higher)
+    
+  // Warehousing costs - different for air vs ocean
+  const warehousingCost = shippingData.transportMode === 'air'
+    ? Math.max(50 * quantity, productValue * 0.01) // Minimal for air freight
+    : Math.max(180 * quantity, productValue * 0.015); // Higher for ocean freight
+    
   const otherFeesRate = 2.0; // 2% for miscellaneous fees
   const otherFees = (productValue * otherFeesRate) / 100;
 
