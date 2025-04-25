@@ -20,8 +20,15 @@ export const calculateInlandTransportation = (
                   (transportMode === 'air' ? countryRates.air : countryRates.sea);
   
   const distanceFactor = getDistanceFactor(originCountry, destinationCountry);
-  const perUnitCost = calculatePerUnitCost(quantity);
-  const weightFactor = Math.min(1 + (weight / 5000), 2.5);
+  
+  // Modified calculation for per unit cost - reduced for air transport
+  const perUnitCost = calculatePerUnitCost(quantity, transportMode);
+  
+  // Modified weight factor - reduced impact for air transport
+  const weightFactor = transportMode === 'air' 
+    ? Math.min(1 + (weight / 10000), 1.75) 
+    : Math.min(1 + (weight / 5000), 2.5);
+    
   const valueFactor = getValueFactor(productValue);
   const specialHandlingFactor = productCategory === 'fragile' || 
                                productCategory === 'bulky' ? 1.25 : 1.0;
@@ -29,7 +36,12 @@ export const calculateInlandTransportation = (
   let cost = baseRate + perUnitCost;
   cost *= distanceFactor * weightFactor * valueFactor * specialHandlingFactor;
   
-  const maxCap = getMaxCap(destinationCountry);
+  // Apply air discount factor
+  if (transportMode === 'air') {
+    cost *= 0.85; // 15% discount for air transport inland costs
+  }
+  
+  const maxCap = getMaxCap(destinationCountry, transportMode);
   const valueScalingFactor = getValueScalingFactor(productValue);
   
   return Math.min(Math.round(cost * valueScalingFactor), maxCap);
@@ -48,11 +60,14 @@ const getDistanceFactor = (origin: string, destination: string): number => {
   return distanceFactors[pair] || 1.0;
 };
 
-const calculatePerUnitCost = (quantity: number): number => {
-  if (quantity <= 5) return 60 * quantity;
-  if (quantity <= 20) return 300 + ((quantity - 5) * 40);
-  if (quantity <= 50) return 900 + ((quantity - 20) * 25);
-  return 1650 + ((quantity - 50) * 15);
+// Modified to reduce costs for air transport
+const calculatePerUnitCost = (quantity: number, transportMode: string): number => {
+  const airFactor = transportMode === 'air' ? 0.7 : 1.0;
+  
+  if (quantity <= 5) return 60 * quantity * airFactor;
+  if (quantity <= 20) return (300 + ((quantity - 5) * 40)) * airFactor;
+  if (quantity <= 50) return (900 + ((quantity - 20) * 25)) * airFactor;
+  return (1650 + ((quantity - 50) * 15)) * airFactor;
 };
 
 const getValueFactor = (productValue: number): number => {
@@ -62,12 +77,13 @@ const getValueFactor = (productValue: number): number => {
   return 1.3;
 };
 
-const getMaxCap = (destinationCountry: string): number => {
+// Modified to provide lower maxCap for air transport
+const getMaxCap = (destinationCountry: string, transportMode: string): number => {
   const maxCaps: Record<string, number> = {
-    us: 2000,
-    ca: 2200,
-    mx: 1800,
-    default: 2500
+    us: transportMode === 'air' ? 1500 : 2000,
+    ca: transportMode === 'air' ? 1700 : 2200,
+    mx: transportMode === 'air' ? 1400 : 1800,
+    default: transportMode === 'air' ? 1800 : 2500
   };
   return maxCaps[destinationCountry.toLowerCase()] || maxCaps.default;
 };

@@ -60,13 +60,28 @@ export const generateCostItems = ({
     productCategory
   );
 
-  const warehouseDailyRate = shippingData.transportMode === 'air' ? 2 : 4;
-  const estimatedDays = shippingData.transportMode === 'air' ? 3 : 7;
-  const warehouseBaseCharge = 100;
-  const warehouseCostRaw = warehouseBaseCharge + 
-    (warehouseDailyRate * estimatedDays * quantity) * 
-    (totalProductValue > 20000 ? 1.15 : 1);
-  const warehousingCost = Math.min(warehouseCostRaw, 2000);
+  // Modified warehousing calculation for more reasonable costs
+  const warehouseCost = (() => {
+    // Lower daily rates for air shipments
+    const warehouseDailyRate = shippingData.transportMode === 'air' ? 1.5 : 4;
+    
+    // Fewer estimated days for air shipments
+    const estimatedDays = shippingData.transportMode === 'air' ? 2 : 7;
+    
+    // Lower base charge for air shipments
+    const warehouseBaseCharge = shippingData.transportMode === 'air' ? 75 : 100;
+    
+    // Apply quantity scaling with diminishing returns
+    const quantityFactor = Math.min(Math.sqrt(quantity) * 1.2, quantity * 0.3);
+    
+    // Calculate total
+    const warehouseCostRaw = warehouseBaseCharge + 
+      (warehouseDailyRate * estimatedDays * quantityFactor) * 
+      (totalProductValue > 20000 ? 1.15 : 1);
+    
+    // Cap it at a reasonable maximum
+    return Math.min(warehouseCostRaw, shippingData.transportMode === 'air' ? 800 : 2000);
+  })();
 
   const otherFeesRate = totalProductValue > 15000 ? 2.5 : 2.0;
   const otherFees = (totalProductValue * otherFeesRate) / 100;
@@ -79,7 +94,7 @@ export const generateCostItems = ({
     { label: "Documentation Fees", value: formatCurrency(documentationFees) },
     { label: "Customs Clearance", value: formatCurrency(customsClearance) },
     { label: "Inland Transportation", value: formatCurrency(inlandTransportation) },
-    { label: "Warehousing", value: formatCurrency(warehousingCost) },
+    { label: "Warehousing", value: formatCurrency(warehouseCost) },
     { label: `Other Taxes and Fees (${otherFeesRate}%)`, value: formatCurrency(otherFees) }
   ];
   
