@@ -1,4 +1,3 @@
-
 import { useState, useRef } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -115,10 +114,10 @@ const TradeNavigator = () => {
             <LanguageToggle />
           </div>
           <h1 className="text-3xl md:text-4xl font-bold text-center mb-4">
-            {t('general:title')}
+            {t('header.title')}
           </h1>
           <p className="text-lg text-center text-blue-100">
-            {t('general:subtitle')}
+            {t('header.subtitle')}
           </p>
         </div>
       </header>
@@ -139,7 +138,7 @@ const TradeNavigator = () => {
             size="lg"
           >
             <ChartBar className="mr-2" />
-            {t('general:button.calculate')}
+            {t('button.calculate')}
           </Button>
         </div>
 
