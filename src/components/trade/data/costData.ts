@@ -33,11 +33,20 @@ export const generateCostItems = ({
   }
 }: CostBreakdownInput & { shippingData?: { quantity: string; weight: string; transportMode: string } }): CostItem[] => {
   const quantity = parseInt(shippingData.quantity) || 1;
-  const weight = parseFloat(shippingData.weight) || 0;
+  const weight = parseFloat(shippingData.weight) || 10; // Default to 10kg if weight is 0
   const baseFreightRate = shippingData.transportMode === 'air' ? 8.5 : 2.5; // USD per kg
   
+  // Calculate more realistic freight cost
+  let freightCost = weight * baseFreightRate * quantity;
+  // Ensure minimum freight cost
+  freightCost = Math.max(freightCost, 75 * (shippingData.transportMode === 'air' ? 3 : 1));
+  
+  // If product value is above minimal threshold, add percentage-based component
+  if (productValue > 1000) {
+    freightCost += (productValue * 0.015); // Add 1.5% of product value for higher value items
+  }
+  
   const importDuty = (productValue * importDutyRate) / 100;
-  const freightCost = weight * baseFreightRate * quantity;
   const insurance = (productValue * 1.2) / 100; // 1.2% of product value
   const documentationFees = 75 * (shippingData.transportMode === 'air' ? 1.5 : 1);
   const customsClearance = 150;
