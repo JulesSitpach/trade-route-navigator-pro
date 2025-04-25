@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { requiredDocuments } from "./data";
 import { generateCostItems, calculateTotalCost } from "./data/costData";
 import { useLanguage } from '@/contexts/LanguageContext';
+import { formatCurrency } from "./data/utils/formatters";
 
 interface CostAnalysisTabProps {
   data: {
@@ -35,6 +36,9 @@ const CostAnalysisTab = ({ data }: CostAnalysisTabProps) => {
       // Generate cost items based on product value and shipping details
       const items = generateCostItems({
         productValue,
+        originCountry: data.product.originCountry,
+        destinationCountry: data.product.destinationCountry,
+        productCategory: data.product.productCategory,
         shippingData: {
           quantity: data.shipping.quantity,
           weight: data.shipping.weight,
@@ -43,6 +47,10 @@ const CostAnalysisTab = ({ data }: CostAnalysisTabProps) => {
       });
       
       setCostItems(items);
+
+      // Calculate total landed cost (excluding the product value itself)
+      const total = calculateTotalCost(items);
+      setTotalLandedCost(formatCurrency(total));
 
       // Generate recommendation based on inputs
       const totalValue = productValue * (parseInt(data.shipping.quantity) || 1);
@@ -91,7 +99,6 @@ const CostAnalysisTab = ({ data }: CostAnalysisTabProps) => {
     return `$${savings.toLocaleString(undefined, { maximumFractionDigits: 0 })}`;
   };
 
-  // Translate cost item labels if in Spanish mode
   const getTranslatedCostItems = () => {
     if (language === 'en') return costItems;
     

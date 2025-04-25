@@ -26,7 +26,7 @@ export const generateCostItems = ({
 
   const freightCost = calculateFreightCost(
     weight,
-    productValue,
+    productValue, // Keep single unit value for freight cost
     shippingData.transportMode,
     quantity
   );
@@ -71,7 +71,7 @@ export const generateCostItems = ({
   const otherFeesRate = totalProductValue > 15000 ? 2.5 : 2.0;
   const otherFees = (totalProductValue * otherFeesRate) / 100;
 
-  return [
+  const items = [
     { label: "Total Product Value", value: formatCurrency(totalProductValue) },
     { label: `Import Duty (${importDutyRate}%)`, value: formatCurrency((totalProductValue * importDutyRate) / 100) },
     { label: "Freight Cost", value: formatCurrency(freightCost) },
@@ -82,10 +82,16 @@ export const generateCostItems = ({
     { label: "Warehousing", value: formatCurrency(warehousingCost) },
     { label: `Other Taxes and Fees (${otherFeesRate}%)`, value: formatCurrency(otherFees) }
   ];
+  
+  return items;
 };
 
 export const calculateTotalCost = (items: Array<{ value: string }>) => {
-  return items.reduce((sum, item) => {
+  // Skip the first item which is the product value itself as it shouldn't be included in the total cost
+  return items.reduce((sum, item, index) => {
+    // Skip the first item (Total Product Value) when calculating total landed cost
+    if (index === 0) return sum;
+    
     const value = parseFloat(item.value.replace(/[$,]/g, '')) || 0;
     return sum + value;
   }, 0);
