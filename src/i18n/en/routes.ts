@@ -34,4 +34,11 @@ export const routeTranslations = {
   'tab.risks': 'Risks',
   'tab.supply': 'Supply Chain',
   'tab.compliance': 'Compliance',
+  'route.tab.costs': 'Costs',
+  'route.tab.routes': 'Routes',
+  'route.tab.tariffs': 'Tariffs',
+  'route.tab.seasonality': 'Seasonality',
+  'route.tab.risks': 'Risks',
+  'route.tab.supply': 'Supply Chain',
+  'route.tab.compliance': 'Compliance',
 };

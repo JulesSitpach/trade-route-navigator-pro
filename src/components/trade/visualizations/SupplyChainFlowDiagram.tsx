@@ -5,49 +5,41 @@ import { NetworkIcon } from "lucide-react";
 import { useLanguage } from '@/contexts/LanguageContext';
 
 const SupplyChainFlowDiagram = () => {
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
 
   // Supply chain diagram steps and nodes with translations
   const supplyChainSteps = [
     {
       id: 'manufacturer',
-      labelEn: 'Manufacturer',
-      labelEs: 'Fabricante',
+      labelKey: 'supplychain.step.manufacturer',
     },
     {
       id: 'port-origin',
-      labelEn: 'Port of Origin',
-      labelEs: 'Puerto de Origen',
+      labelKey: 'supplychain.step.port.origin',
     },
     {
       id: 'transport',
-      labelEn: 'Transport',
-      labelEs: 'Transporte',
+      labelKey: 'supplychain.step.transport',
     },
     {
       id: 'port-destination',
-      labelEn: 'Port of Destination',
-      labelEs: 'Puerto de Destino',
+      labelKey: 'supplychain.step.port.destination',
     },
     {
       id: 'customs',
-      labelEn: 'Customs',
-      labelEs: 'Aduanas',
+      labelKey: 'supplychain.step.customs',
     },
     {
       id: 'warehouse',
-      labelEn: 'Warehouse',
-      labelEs: 'Almacén',
+      labelKey: 'supplychain.step.warehouse',
     },
     {
       id: 'distribution',
-      labelEn: 'Distribution',
-      labelEs: 'Distribución',
+      labelKey: 'supplychain.step.distribution',
     },
     {
       id: 'customer',
-      labelEn: 'Customer',
-      labelEs: 'Cliente',
+      labelKey: 'supplychain.step.customer',
     }
   ];
 
@@ -79,7 +71,7 @@ const SupplyChainFlowDiagram = () => {
                       <span className="text-blue-700 font-medium">{index + 1}</span>
                     </div>
                     <span className="text-sm font-medium text-center max-w-[80px]">
-                      {language === 'en' ? step.labelEn : step.labelEs}
+                      {t(step.labelKey)}
                     </span>
                   </div>
                 ))}
@@ -88,13 +80,13 @@ const SupplyChainFlowDiagram = () => {
               {/* Legend */}
               <div className="mt-12 bg-white p-4 rounded-md border border-gray-200">
                 <h4 className="text-sm font-medium mb-2">
-                  {language === 'en' ? 'Supply Chain Stages' : 'Etapas de la Cadena de Suministro'}
+                  {t('supplychain.stages')}
                 </h4>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-xs">
                   {supplyChainSteps.map((step, index) => (
                     <div key={`legend-${step.id}`} className="flex items-center gap-1.5">
                       <span className="w-4 h-4 rounded-full bg-blue-100 border border-blue-300 flex items-center justify-center text-[10px] text-blue-700">{index + 1}</span>
-                      <span>{language === 'en' ? step.labelEn : step.labelEs}</span>
+                      <span>{t(step.labelKey)}</span>
                     </div>
                   ))}
                 </div>

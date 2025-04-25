@@ -34,4 +34,11 @@ export const routeTranslations = {
   'tab.risks': 'Riesgos',
   'tab.supply': 'Cadena de Suministro',
   'tab.compliance': 'Cumplimiento',
+  'route.tab.costs': 'Costos',
+  'route.tab.routes': 'Rutas',
+  'route.tab.tariffs': 'Aranceles',
+  'route.tab.seasonality': 'Estacionalidad',
+  'route.tab.risks': 'Riesgos',
+  'route.tab.supply': 'Cadena de Suministro',
+  'route.tab.compliance': 'Cumplimiento',
 };

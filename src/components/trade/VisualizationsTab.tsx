@@ -17,13 +17,13 @@ const VisualizationsTab = ({ data, routes }: VisualizationsTabProps) => {
   const { t } = useLanguage();
 
   const tabs = [
-    { id: 'cost-breakdown', label: t('analysis.tabs.costs'), icon: 'Costs' },
-    { id: 'route-comparison', label: t('analysis.tabs.routes'), icon: 'Routes' },
-    { id: 'tariff-heatmap', label: t('analysis.tabs.tariffs'), icon: 'Tariffs' },
-    { id: 'seasonality', label: t('analysis.tabs.seasonality'), icon: 'Seasonality' },
-    { id: 'risk-matrix', label: t('analysis.tabs.risks'), icon: 'Risks' },
-    { id: 'supply-chain', label: t('analysis.tabs.supply'), icon: 'Supply Chain' },
-    { id: 'compliance', label: t('analysis.tabs.compliance'), icon: 'Compliance' },
+    { id: 'cost-breakdown', label: t('route.tab.costs'), icon: 'Costs' },
+    { id: 'route-comparison', label: t('route.tab.routes'), icon: 'Routes' },
+    { id: 'tariff-heatmap', label: t('route.tab.tariffs'), icon: 'Tariffs' },
+    { id: 'seasonality', label: t('route.tab.seasonality'), icon: 'Seasonality' },
+    { id: 'risk-matrix', label: t('route.tab.risks'), icon: 'Risks' },
+    { id: 'supply-chain', label: t('route.tab.supply'), icon: 'Supply Chain' },
+    { id: 'compliance', label: t('route.tab.compliance'), icon: 'Compliance' },
   ];
 
   return (

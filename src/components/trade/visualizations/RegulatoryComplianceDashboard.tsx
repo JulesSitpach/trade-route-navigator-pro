@@ -5,7 +5,7 @@ import { ClipboardCheckIcon } from "lucide-react";
 import { useLanguage } from '@/contexts/LanguageContext';
 
 const RegulatoryComplianceDashboard = () => {
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
 
   return (
     <div className="space-y-6">
@@ -24,9 +24,7 @@ const RegulatoryComplianceDashboard = () => {
           {/* Compliance dashboard visualization would be here */}
           <div className="h-[400px] flex items-center justify-center border border-dashed border-gray-300 rounded-lg bg-gray-50">
             <p className="text-muted-foreground">
-              {language === 'en' 
-                ? 'Regulatory compliance dashboard visualization' 
-                : 'Visualización del panel de cumplimiento regulatorio'}
+              {t('compliance.visualization')}
             </p>
           </div>
         </CardContent>
