@@ -16,14 +16,11 @@ const TariffHeatmap = () => {
       <div className="flex items-center gap-2">
         <TableIcon className="h-5 w-5 text-muted-foreground" />
         <h3 className="text-lg font-medium">
-          {language === 'en' ? 'Tariff Analysis by Country' : 'Análisis de Aranceles por País'}
+          {t('tariffheatmap.title')}
         </h3>
       </div>
       <p className="text-sm text-muted-foreground">
-        {language === 'en' 
-          ? 'Visualize tariff rates across different countries to identify optimal trade routes'
-          : 'Visualice las tasas arancelarias en diferentes países para identificar rutas comerciales óptimas'
-        }
+        {t('tariffheatmap.description')}
       </p>
       
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">

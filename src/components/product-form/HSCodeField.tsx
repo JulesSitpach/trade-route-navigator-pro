@@ -2,6 +2,7 @@
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface HSCodeFieldProps {
   value: string;
@@ -10,6 +11,8 @@ interface HSCodeFieldProps {
 }
 
 export const HSCodeField = ({ value, productCategory, onChange }: HSCodeFieldProps) => {
+  const { language } = useLanguage();
+  
   const suggestHsCode = () => {
     const hsCodes = {
       'agricultural': '0713.10',
@@ -25,11 +28,13 @@ export const HSCodeField = ({ value, productCategory, onChange }: HSCodeFieldPro
 
   return (
     <div className="space-y-2">
-      <Label htmlFor="hsCode">HS Code (Optional)</Label>
+      <Label htmlFor="hsCode">
+        {language === 'en' ? 'HS Code (Optional)' : 'Código HS (Opcional)'}
+      </Label>
       <div className="flex gap-2">
         <Input 
           id="hsCode" 
-          placeholder="Enter HS Code"
+          placeholder={language === 'en' ? "Enter HS Code" : "Ingrese Código HS"}
           className="flex-1 bg-white"
           value={value}
           onChange={(e) => onChange(e.target.value)}
@@ -39,7 +44,7 @@ export const HSCodeField = ({ value, productCategory, onChange }: HSCodeFieldPro
           className="bg-[#3498db] hover:bg-[#2980b9] text-white"
           onClick={suggestHsCode}
         >
-          Suggest
+          {language === 'en' ? 'Suggest' : 'Sugerir'}
         </Button>
       </div>
     </div>

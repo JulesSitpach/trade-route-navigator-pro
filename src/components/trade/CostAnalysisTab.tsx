@@ -1,4 +1,3 @@
-
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { CostItem } from "./shared/CostItem";
@@ -92,6 +91,29 @@ const CostAnalysisTab = ({ data }: CostAnalysisTabProps) => {
     return `$${savings.toLocaleString(undefined, { maximumFractionDigits: 0 })}`;
   };
 
+  // Translate cost item labels if in Spanish mode
+  const getTranslatedCostItems = () => {
+    if (language === 'en') return costItems;
+    
+    return costItems.map(item => {
+      const labelTranslations: Record<string, string> = {
+        'Product Value': 'Valor del Producto',
+        'Import Duty': 'Arancel de Importación',
+        'Freight Cost': 'Costo de Flete',
+        'Insurance': 'Seguro',
+        'Documentation Fees': 'Tarifas de Documentación',
+        'Customs Clearance': 'Despacho Aduanero',
+        'Inland Transportation': 'Transporte Terrestre',
+        'Warehousing': 'Almacenaje',
+        'Other Taxes and Fees': 'Otros Impuestos y Tarifas'
+      };
+
+      // Try to find a direct translation, otherwise keep the original label
+      const translatedLabel = labelTranslations[item.label] || item.label;
+      return { ...item, label: translatedLabel };
+    });
+  };
+
   return (
     <div className="space-y-6">
       {recommendedStrategy && (
@@ -102,7 +124,7 @@ const CostAnalysisTab = ({ data }: CostAnalysisTabProps) => {
       )}
 
       <div className="space-y-4">
-        {costItems.map((item, index) => (
+        {getTranslatedCostItems().map((item, index) => (
           <CostItem 
             key={index}
             label={item.label}

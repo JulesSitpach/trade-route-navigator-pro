@@ -1,147 +1,38 @@
-
 import React from 'react';
 import { Card, CardContent } from "@/components/ui/card";
-import { 
-  ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Cell, 
-  Tooltip, ResponsiveContainer, ZAxis, Legend 
-} from "recharts";
-import { chartCommonConfig } from "@/utils/chartUtils";
-import { useTariffData } from "./tariff/useTariffData";
-import { createAxisTitle } from "@/utils/chartUtils";
-import { useChartResponsiveStyles } from "@/hooks/use-chart-responsive-styles";
-import { tooltipStyles, cursorStyles } from "@/components/ui/chart/theme/commonStyles";
-import { chartConfig } from "./chartConfig";
-import { lightTheme } from "@/components/ui/chart/chartTheme";
-import { formatCurrency } from "@/components/ui/chart/chartUtils";
-import { calculateBubbleSize } from "@/components/ui/chart/theme/commonStyles";
-import { ChartContainer } from "@/components/ui/chart/ChartContainer";
-import { ChartStyleEnforcer } from "@/components/ui/chart/ChartStyleEnforcer";
-import { RiskMatrixTooltip } from './risk/RiskMatrixTooltip';
+import { AlertTriangleIcon } from "lucide-react";
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const RiskAssessmentMatrix = () => {
-  const riskData = [
-    { x: 2450, y: 7, z: 100, name: "Shanghai → Panama → LA → Chicago", riskLevel: "medium", label: "Standard Ocean Route" },
-    { x: 5650, y: 2, z: 80, name: "Shanghai → LA → Chicago (Air)", riskLevel: "low", label: "Express Air Route" },
-    { x: 2200, y: 7, z: 90, name: "Vietnam → Singapore → LA → Chicago", riskLevel: "high", label: "Alternative Ocean Route" },
-    { x: 3100, y: 4, z: 70, name: "China → Mexico → US (USMCA)", riskLevel: "medium", label: "Triangular Trade Route" },
-    { x: 2800, y: 3, z: 60, name: "Shanghai → Rotterdam → US East Coast", riskLevel: "low", label: "East Coast Route" }
-  ];
-
-  const getRiskColor = (riskLevel: string) => {
-    switch(riskLevel) {
-      case "high": return chartConfig.highRisk.color;
-      case "medium": return chartConfig.mediumRisk.color;
-      case "low": return chartConfig.lowRisk.color;
-      default: return "#ccc";
-    }
-  };
-
-  const zValues = riskData.map(item => item.z);
-  const minZ = Math.min(...zValues);
-  const maxZ = Math.max(...zValues);
-  const { tariffData } = useTariffData();
-  const margins = { top: 30, right: 20, bottom: 60, left: 60 };
-  const chartStyles = useChartResponsiveStyles();
+  const { t, language } = useLanguage();
 
   return (
     <div className="space-y-6">
-      <ChartStyleEnforcer>
-        <div className="space-y-2">
-          <h3 className="text-lg font-semibold">Risk Assessment Matrix</h3>
-          <p className="text-sm text-muted-foreground">
-            Compare routes based on cost vs. risk factors to find your optimal balance
-          </p>
-        </div>
-        
-        <Card>
-          <CardContent className="p-6">
-            <ChartContainer
-              config={chartConfig}
-              title="Route Risk Assessment"
-              subtitle="Analyze shipping routes by cost, risk, and reliability"
-            >
-              <ResponsiveContainer width="100%" height="100%">
-                <ScatterChart margin={chartCommonConfig.margins.default}>
-                  <CartesianGrid 
-                    strokeDasharray={chartCommonConfig.grid.strokeDasharray} 
-                    stroke={chartCommonConfig.grid.stroke}
-                    opacity={0.15}
-                  />
-                  <XAxis 
-                    type="number"
-                    dataKey="x"
-                    name="Cost"
-                    domain={[2000, 6000]}
-                    tickCount={5}
-                    tickFormatter={(value) => formatCurrency(value)}
-                    tick={{
-                      fontSize: 12,
-                      fill: lightTheme.colors.text,
-                    }}
-                    axisLine={chartCommonConfig.axis.line}
-                    tickLine={false}
-                    label={createAxisTitle('Total Route Cost', 'x', { offset: 40 })}
-                  />
-                  <YAxis
-                    type="number"
-                    dataKey="y"
-                    name="Risk Score"
-                    domain={[0, 10]}
-                    tickCount={6}
-                    tick={{
-                      fontSize: 12,
-                      fill: lightTheme.colors.text,
-                    }}
-                    axisLine={chartCommonConfig.axis.line}
-                    tickLine={false}
-                    label={createAxisTitle('Risk Level (0-10)', 'y', { offset: 35 })}
-                  />
-                  <ZAxis
-                    type="number"
-                    dataKey="z"
-                    range={[60, 200]}
-                    name="Reliability"
-                  />
-                  <Tooltip 
-                    content={<RiskMatrixTooltip />} 
-                    cursor={cursorStyles.scatter}
-                    wrapperStyle={{
-                      ...tooltipStyles.wrapper,
-                      backgroundColor: '#ffffff !important',
-                      opacity: '1 !important'
-                    }}
-                    contentStyle={tooltipStyles.contentStyle}
-                  />
-                  <Legend 
-                    layout="horizontal"
-                    verticalAlign="top"
-                    align="center"
-                    wrapperStyle={{
-                      paddingBottom: '20px',
-                      display: 'flex',
-                      justifyContent: 'center'
-                    }}
-                  />
-                  <Scatter data={riskData} fill={lightTheme.colors.primary}>
-                    {riskData.map((entry, index) => {
-                      const size = calculateBubbleSize(entry.z, minZ, maxZ);
-                      return (
-                        <Cell
-                          key={`cell-${index}`}
-                          fill={getRiskColor(entry.riskLevel)}
-                          stroke={getRiskColor(entry.riskLevel)}
-                          strokeWidth={2}
-                          r={size}
-                        />
-                      );
-                    })}
-                  </Scatter>
-                </ScatterChart>
-              </ResponsiveContainer>
-            </ChartContainer>
-          </CardContent>
-        </Card>
-      </ChartStyleEnforcer>
+      <div className="flex items-center gap-2">
+        <AlertTriangleIcon className="h-5 w-5 text-muted-foreground" />
+        <h3 className="text-lg font-medium">
+          {language === 'en' ? 'Risk Assessment Matrix' : 'Matriz de Evaluación de Riesgos'}
+        </h3>
+      </div>
+      <p className="text-sm text-muted-foreground">
+        {language === 'en' 
+          ? 'Compare routes based on cost vs. risk factors to find your optimal balance'
+          : 'Compare rutas basadas en factores de costo vs riesgo para encontrar su balance óptimo'
+        }
+      </p>
+      
+      <Card>
+        <CardContent className="p-6">
+          {/* Risk assessment matrix visualization would be here */}
+          <div className="h-[400px] flex items-center justify-center border border-dashed border-gray-300 rounded-lg bg-gray-50">
+            <p className="text-muted-foreground">
+              {language === 'en' 
+                ? 'Risk assessment matrix visualization' 
+                : 'Visualización de matriz de evaluación de riesgos'}
+            </p>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 };

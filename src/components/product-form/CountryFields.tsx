@@ -3,6 +3,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { countryTariffData } from '@/data/countryTariffData';
 import { cn } from '@/lib/utils';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface CountryFieldsProps {
   originCountry: string;
@@ -17,11 +18,13 @@ export const CountryFields = ({
   errors, 
   onCountryChange 
 }: CountryFieldsProps) => {
+  const { language } = useLanguage();
+  
   return (
     <>
       <div className="space-y-2">
         <Label htmlFor="originCountry" className="flex items-center gap-1">
-          Origin Country
+          {language === 'en' ? 'Origin Country' : 'País de Origen'}
           <span className="text-red-500">*</span>
         </Label>
         <Select 
@@ -34,7 +37,7 @@ export const CountryFields = ({
               errors.originCountry && "border-red-500 focus-visible:ring-red-500"
             )}
           >
-            <SelectValue placeholder="Select Origin Country" />
+            <SelectValue placeholder={language === 'en' ? "Select Origin Country" : "Seleccione País de Origen"} />
           </SelectTrigger>
           <SelectContent>
             {countryTariffData.map((country) => (
@@ -51,7 +54,7 @@ export const CountryFields = ({
 
       <div className="space-y-2">
         <Label htmlFor="destinationCountry" className="flex items-center gap-1">
-          Destination Country
+          {language === 'en' ? 'Destination Country' : 'País de Destino'}
           <span className="text-red-500">*</span>
         </Label>
         <Select 
@@ -64,7 +67,7 @@ export const CountryFields = ({
               errors.destinationCountry && "border-red-500 focus-visible:ring-red-500"
             )}
           >
-            <SelectValue placeholder="Select Destination Country" />
+            <SelectValue placeholder={language === 'en' ? "Select Destination Country" : "Seleccione País de Destino"} />
           </SelectTrigger>
           <SelectContent>
             {countryTariffData.map((country) => (

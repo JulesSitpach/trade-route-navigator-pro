@@ -1,77 +1,74 @@
 
-import { Badge } from "@/components/ui/badge";
-import { Building, Package } from "lucide-react";
 import { Route } from '../../trade/types';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface RouteAdvantagesTabProps {
   route: Route;
 }
 
 const RouteAdvantagesTab = ({ route }: RouteAdvantagesTabProps) => {
+  const { language } = useLanguage();
+  
+  // Sample advantages for visualization
+  const smbAdvantages = [
+    { 
+      en: {
+        title: 'Consolidated Shipping', 
+        description: 'Lower costs through combined shipments'
+      },
+      es: {
+        title: 'Envío Consolidado', 
+        description: 'Costos más bajos mediante envíos combinados'
+      }
+    },
+    { 
+      en: {
+        title: 'Shared Container', 
+        description: 'Split container costs with other businesses'
+      },
+      es: {
+        title: 'Contenedor Compartido', 
+        description: 'Divida los costos de contenedores con otros negocios'
+      }
+    },
+    { 
+      en: {
+        title: 'Flexible Pickup', 
+        description: 'Accommodates irregular shipping schedules'
+      },
+      es: {
+        title: 'Recogida Flexible', 
+        description: 'Se adapta a horarios de envío irregulares'
+      }
+    },
+    { 
+      en: {
+        title: 'Lower Minimum Quantity', 
+        description: 'Suited for smaller order volumes'
+      },
+      es: {
+        title: 'Menor Cantidad Mínima', 
+        description: 'Adaptado para volúmenes de pedido más pequeños'
+      }
+    }
+  ];
+  
   return (
-    <div className="space-y-4 pt-4">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="space-y-4">
-          <h4 className="font-medium flex items-center gap-2">
-            <Package className="h-4 w-4" />
-            SMB-Specific Advantages
-          </h4>
-          <div className="space-y-2">
-            {route.smbAdvantages?.consolidatedShipping && (
-              <div className="flex items-center gap-2">
-                <Badge variant="outline" className="bg-blue-50">Consolidated Shipping</Badge>
-                <span className="text-sm text-gray-600">Lower costs through combined shipments</span>
-              </div>
-            )}
-            {route.smbAdvantages?.sharedContainer && (
-              <div className="flex items-center gap-2">
-                <Badge variant="outline" className="bg-blue-50">Shared Container</Badge>
-                <span className="text-sm text-gray-600">Split container costs with other businesses</span>
-              </div>
-            )}
-            {route.smbAdvantages?.flexiblePickup && (
-              <div className="flex items-center gap-2">
-                <Badge variant="outline" className="bg-blue-50">Flexible Pickup</Badge>
-                <span className="text-sm text-gray-600">Accommodates irregular shipping schedules</span>
-              </div>
-            )}
-            {route.smbAdvantages?.lowerMinimumQuantity && (
-              <div className="flex items-center gap-2">
-                <Badge variant="outline" className="bg-blue-50">Lower Minimum Quantity</Badge>
-                <span className="text-sm text-gray-600">Suited for smaller order volumes</span>
-              </div>
-            )}
+    <div className="pt-4">
+      <h4 className="font-medium mb-3">
+        {language === 'en' ? 'SMB-Specific Advantages' : 'Ventajas Específicas para PYMES'}
+      </h4>
+      <div className="space-y-2">
+        {smbAdvantages.map((advantage, index) => (
+          <div key={index} className="flex flex-col space-y-1">
+            <p className="font-medium">
+              {language === 'en' ? advantage.en.title : advantage.es.title}
+            </p>
+            <p className="text-sm text-gray-600">
+              {language === 'en' ? advantage.en.description : advantage.es.description}
+            </p>
           </div>
-        </div>
-        
-        <div className="space-y-4">
-          <h4 className="font-medium flex items-center gap-2">
-            <Building className="h-4 w-4" />
-            Partnership Opportunities
-          </h4>
-          <div className="space-y-2 text-sm text-gray-700">
-            {route.partnerships?.distributors && route.partnerships.distributors.length > 0 && (
-              <div>
-                <span className="font-medium">Local Distributors:</span> {route.partnerships.distributors.join(", ")}
-              </div>
-            )}
-            {route.partnerships?.warehousing && route.partnerships.warehousing.length > 0 && (
-              <div>
-                <span className="font-medium">Warehousing Partners:</span> {route.partnerships.warehousing.join(", ")}
-              </div>
-            )}
-            {route.partnerships?.fulfillment && route.partnerships.fulfillment.length > 0 && (
-              <div>
-                <span className="font-medium">Fulfillment Services:</span> {route.partnerships.fulfillment.join(", ")}
-              </div>
-            )}
-            {route.partnerships?.lastMile && route.partnerships.lastMile.length > 0 && (
-              <div>
-                <span className="font-medium">Last-Mile Options:</span> {route.partnerships.lastMile.join(", ")}
-              </div>
-            )}
-          </div>
-        </div>
+        ))}
       </div>
     </div>
   );

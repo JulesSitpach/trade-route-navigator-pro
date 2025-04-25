@@ -17,7 +17,42 @@ interface RouteCardProps {
 }
 
 const RouteCard = ({ route }: RouteCardProps) => {
-  const { language } = useLanguage();
+  const { language, t } = useLanguage();
+  
+  // Translate route description if in Spanish mode
+  const getTranslatedDescription = () => {
+    if (language === 'en') return route.description;
+    
+    // Simple translation logic for route descriptions
+    if (route.description.includes('SEA freight route')) {
+      return route.description.replace('SEA freight route via nearest major port. Standard shipping service.', 
+        'Ruta de carga MARÍTIMA a través del puerto principal más cercano. Servicio de envío estándar.');
+    } else if (route.description.includes('AIR freight')) {
+      return route.description.replace('AIR freight expedited service.', 
+        'Servicio acelerado de carga AÉREA.');
+    } else if (route.description.includes('MULTIMODAL')) {
+      return route.description.replace('MULTIMODAL route combining road and rail transport.', 
+        'Ruta MULTIMODAL que combina transporte terrestre y ferroviario.');
+    } else if (route.description.includes('RAIL')) {
+      return route.description.replace('RAIL freight using international rail corridors.', 
+        'Carga FERROVIARIA utilizando corredores ferroviarios internacionales.');
+    }
+    
+    return route.description;
+  };
+  
+  // Translate risk level
+  const getTranslatedRiskLevel = (riskLevel: string) => {
+    if (language === 'en') return riskLevel;
+    
+    const riskTranslations: Record<string, string> = {
+      'Low': 'Bajo',
+      'Medium': 'Medio',
+      'High': 'Alto',
+    };
+    
+    return riskTranslations[riskLevel] || riskLevel;
+  };
   
   return (
     <Card className="p-6">
@@ -33,7 +68,7 @@ const RouteCard = ({ route }: RouteCardProps) => {
                 </Badge>
               )}
             </div>
-            <p className="text-gray-600 text-sm">{route.description}</p>
+            <p className="text-gray-600 text-sm">{getTranslatedDescription()}</p>
           </div>
           
           <div className="flex flex-col gap-2">
@@ -56,7 +91,7 @@ const RouteCard = ({ route }: RouteCardProps) => {
                      value={route.cost} />
           <MetricCard icon={<Shield className="h-5 w-5 text-amber-500" />} 
                      title={language === 'en' ? "Risk Level" : "Nivel de Riesgo"} 
-                     value={route.riskLevel} />
+                     value={getTranslatedRiskLevel(route.riskLevel)} />
           {route.carbonFootprint && (
             <MetricCard icon={<TrendingUp className="h-5 w-5 text-emerald-500" />} 
                        title={language === 'en' ? "Carbon Footprint" : "Huella de Carbono"} 

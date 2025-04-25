@@ -2,6 +2,7 @@
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { cn } from '@/lib/utils';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface ProductValueFieldProps {
   value: string;
@@ -16,16 +17,18 @@ export const ProductValueField = ({
   onChange, 
   onValidate 
 }: ProductValueFieldProps) => {
+  const { language } = useLanguage();
+  
   return (
     <div className="space-y-2">
       <Label htmlFor="productValue" className="flex items-center gap-1">
-        Product Value (USD)
+        {language === 'en' ? 'Product Value (USD)' : 'Valor del Producto (USD)'}
         <span className="text-red-500">*</span>
       </Label>
       <Input 
         id="productValue" 
         type="number" 
-        placeholder="Enter product value"
+        placeholder={language === 'en' ? "Enter product value" : "Ingrese valor del producto"}
         value={value}
         onChange={(e) => {
           onChange(e.target.value);

@@ -11,7 +11,7 @@ interface RouteComparisonTooltipProps {
 }
 
 export const RouteComparisonTooltip: React.FC<RouteComparisonTooltipProps> = ({ active, payload, label }) => {
-  const { language } = useLanguage();
+  const { language, t } = useLanguage();
   
   if (!active || !payload || !payload.length) {
     return null;
@@ -19,6 +19,22 @@ export const RouteComparisonTooltip: React.FC<RouteComparisonTooltipProps> = ({ 
   
   const data = payload[0]?.payload;
   const total = payload.reduce((sum, entry) => sum + entry.value, 0);
+  
+  // Translate entry names if needed
+  const getTranslatedName = (name: string): string => {
+    if (language === 'en') return name;
+    
+    const translations: Record<string, string> = {
+      'Shipping': 'Envío',
+      'Customs': 'Aduanas',
+      'Distribution': 'Distribución',
+      'Processing': 'Procesamiento',
+      'Documentation': 'Documentación',
+      'Handling': 'Manipulación'
+    };
+    
+    return translations[name] || name;
+  };
   
   return (
     <div style={tooltipStyles.wrapper}>
@@ -28,7 +44,7 @@ export const RouteComparisonTooltip: React.FC<RouteComparisonTooltipProps> = ({ 
       <div className="space-y-1" style={tooltipStyles.content}>
         {payload.map((entry, index) => (
           <div key={`item-${index}`} style={tooltipStyles.row}>
-            <span>{entry.name}:</span>
+            <span>{getTranslatedName(entry.name)}:</span>
             <Badge 
               variant="outline" 
               className="ml-2 font-medium text-xs"
