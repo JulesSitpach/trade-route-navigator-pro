@@ -10,12 +10,15 @@ import RouteAdvantagesTab from './RouteAdvantagesTab';
 import RouteMarketsTab from './RouteMarketsTab';
 import RouteRisksTab from './RouteRisksTab';
 import RouteGrowthTab from './RouteGrowthTab';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface RouteCardProps {
   route: Route;
 }
 
 const RouteCard = ({ route }: RouteCardProps) => {
+  const { language } = useLanguage();
+  
   return (
     <Card className="p-6">
       <div className="flex flex-col space-y-6">
@@ -25,32 +28,38 @@ const RouteCard = ({ route }: RouteCardProps) => {
             <div className="flex items-center gap-2">
               <h3 className="font-semibold">{route.path}</h3>
               {route.recommended && (
-                <Badge className="bg-green-100 text-green-800 hover:bg-green-200">Recommended</Badge>
+                <Badge className="bg-green-100 text-green-800 hover:bg-green-200">
+                  {language === 'en' ? 'Recommended' : 'Recomendada'}
+                </Badge>
               )}
             </div>
             <p className="text-gray-600 text-sm">{route.description}</p>
           </div>
           
           <div className="flex flex-col gap-2">
-            <Button variant="default">Select Route</Button>
-            <Button variant="outline">Compare</Button>
+            <Button variant="default">
+              {language === 'en' ? 'Select Route' : 'Seleccionar Ruta'}
+            </Button>
+            <Button variant="outline">
+              {language === 'en' ? 'Compare' : 'Comparar'}
+            </Button>
           </div>
         </div>
         
         {/* Core metrics */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <MetricCard icon={<Clock className="h-5 w-5 text-blue-500" />} 
-                     title="Transit Time" 
+                     title={language === 'en' ? "Transit Time" : "Tiempo de Tránsito"} 
                      value={route.transitTime} />
           <MetricCard icon={<DollarSign className="h-5 w-5 text-green-500" />} 
-                     title="Total Cost" 
+                     title={language === 'en' ? "Total Cost" : "Costo Total"} 
                      value={route.cost} />
           <MetricCard icon={<Shield className="h-5 w-5 text-amber-500" />} 
-                     title="Risk Level" 
+                     title={language === 'en' ? "Risk Level" : "Nivel de Riesgo"} 
                      value={route.riskLevel} />
           {route.carbonFootprint && (
             <MetricCard icon={<TrendingUp className="h-5 w-5 text-emerald-500" />} 
-                       title="Carbon Footprint" 
+                       title={language === 'en' ? "Carbon Footprint" : "Huella de Carbono"} 
                        value={route.carbonFootprint} />
           )}
         </div>
@@ -58,10 +67,18 @@ const RouteCard = ({ route }: RouteCardProps) => {
         {/* Tabs for detailed information */}
         <Tabs defaultValue="advantages" className="w-full">
           <TabsList className="grid grid-cols-2 md:grid-cols-4">
-            <TabsTrigger value="advantages">SMB Advantages</TabsTrigger>
-            <TabsTrigger value="markets">Market Opportunities</TabsTrigger>
-            <TabsTrigger value="risks">Risk & Finance</TabsTrigger>
-            <TabsTrigger value="growth">Growth & Scaling</TabsTrigger>
+            <TabsTrigger value="advantages">
+              {language === 'en' ? 'SMB Advantages' : 'Ventajas PYME'}
+            </TabsTrigger>
+            <TabsTrigger value="markets">
+              {language === 'en' ? 'Market Opportunities' : 'Oportunidades de Mercado'}
+            </TabsTrigger>
+            <TabsTrigger value="risks">
+              {language === 'en' ? 'Risk & Finance' : 'Riesgo & Finanzas'}
+            </TabsTrigger>
+            <TabsTrigger value="growth">
+              {language === 'en' ? 'Growth & Scaling' : 'Crecimiento & Escalabilidad'}
+            </TabsTrigger>
           </TabsList>
           
           <TabsContent value="advantages">

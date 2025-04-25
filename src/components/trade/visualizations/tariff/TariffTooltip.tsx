@@ -2,6 +2,7 @@
 import React from 'react';
 import { Badge } from "@/components/ui/badge";
 import { getTariffColor } from "@/utils/chartUtils";
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface TariffTooltipProps {
   active?: boolean;
@@ -9,6 +10,8 @@ interface TariffTooltipProps {
 }
 
 export const TariffTooltip: React.FC<TariffTooltipProps> = ({ active, payload }) => {
+  const { language } = useLanguage();
+  
   if (active && payload && payload.length) {
     const data = payload[0].payload;
     const tariffColor = getTariffColor(data.tariffRate);
@@ -20,7 +23,9 @@ export const TariffTooltip: React.FC<TariffTooltipProps> = ({ active, payload })
         </div>
         <div className="space-y-1">
           <div className="flex justify-between items-center">
-            <span className="text-xs text-gray-600">Tariff Rate:</span>
+            <span className="text-xs text-gray-600">
+              {language === 'en' ? 'Tariff Rate:' : 'Tasa Arancelaria:'}
+            </span>
             <Badge 
               variant="outline" 
               className="ml-2 font-medium text-xs" 
@@ -34,13 +39,17 @@ export const TariffTooltip: React.FC<TariffTooltipProps> = ({ active, payload })
             </Badge>
           </div>
           <div className="flex justify-between items-center">
-            <span className="text-xs text-gray-600">Trade Volume:</span>
+            <span className="text-xs text-gray-600">
+              {language === 'en' ? 'Trade Volume:' : 'Volumen Comercial:'}
+            </span>
             <span className="font-medium text-xs text-gray-800">
               ${Number(data.volume).toLocaleString()}
             </span>
           </div>
           <div className="flex justify-between items-center">
-            <span className="text-xs text-gray-600">Category:</span>
+            <span className="text-xs text-gray-600">
+              {language === 'en' ? 'Category:' : 'Categoría:'}
+            </span>
             <span className="font-medium text-xs text-gray-800">
               {data.productCategory}
             </span>

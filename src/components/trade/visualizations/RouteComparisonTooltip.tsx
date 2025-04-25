@@ -1,6 +1,8 @@
+
 import React from 'react';
 import { Badge } from "@/components/ui/badge";
 import { tooltipStyles } from "@/components/ui/chart/theme/commonStyles";
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface RouteComparisonTooltipProps {
   active?: boolean;
@@ -9,6 +11,8 @@ interface RouteComparisonTooltipProps {
 }
 
 export const RouteComparisonTooltip: React.FC<RouteComparisonTooltipProps> = ({ active, payload, label }) => {
+  const { language } = useLanguage();
+  
   if (!active || !payload || !payload.length) {
     return null;
   }
@@ -34,14 +38,16 @@ export const RouteComparisonTooltip: React.FC<RouteComparisonTooltipProps> = ({ 
                 borderColor: `${entry.fill}30`
               }}
             >
-              {entry.value} days
+              {entry.value} {language === 'en' ? 'days' : 'días'}
             </Badge>
           </div>
         ))}
         <div style={{ ...tooltipStyles.row, marginTop: '8px', borderTop: '1px solid #f3f4f6', paddingTop: '8px' }}>
-          <span className="font-medium">Total:</span>
+          <span className="font-medium">
+            {language === 'en' ? 'Total:' : 'Total:'}
+          </span>
           <Badge variant="outline" className="ml-2 font-medium text-xs bg-gray-50">
-            {total} days
+            {total} {language === 'en' ? 'days' : 'días'}
           </Badge>
         </div>
       </div>

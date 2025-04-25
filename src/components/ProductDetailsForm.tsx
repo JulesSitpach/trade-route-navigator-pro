@@ -6,13 +6,15 @@ import { ProductCategoryField } from './product-form/ProductCategoryField';
 import { HSCodeField } from './product-form/HSCodeField';
 import { CountryFields } from './product-form/CountryFields';
 import { useProductForm } from './product-form/useProductForm';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const ProductDetailsForm = ({ onChange }: { onChange: (data: any) => void }) => {
   const { values, errors, updateField, validateField } = useProductForm(onChange);
+  const { t } = useLanguage();
 
   return (
     <div className="p-6">
-      <h2 className="text-xl font-semibold text-gray-800 mb-6">Product Details</h2>
+      <h2 className="text-xl font-semibold text-gray-800 mb-6">{t('product.details')}</h2>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <ProductDescriptionField

@@ -112,7 +112,7 @@ const CostAnalysisTab = ({ data }: CostAnalysisTabProps) => {
 
         <div className="border-t-2 border-gray-200 pt-4 mt-6">
           <CostItem 
-            label={language === 'en' ? "Total Landed Cost" : "Costo Total Desembarcado"} 
+            label={t('cost.total')} 
             value={totalLandedCost} 
             className="text-lg font-bold"
           />

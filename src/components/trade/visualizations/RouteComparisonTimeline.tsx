@@ -12,8 +12,11 @@ import { BarChartIcon } from "lucide-react";
 import { chartConfig } from "./chartConfig";
 import { tooltipStyles, cursorStyles } from "@/components/ui/chart/theme/commonStyles";
 import { RouteComparisonTimelineProps } from './types/visualizationTypes';
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const RouteComparisonTimeline = ({ routes }: RouteComparisonTimelineProps) => {
+  const { language } = useLanguage();
+  
   const routeData = routes.map(route => {
     // Ensure all required properties have default values
     const name = route.name || route.path.split(' → ')[0] + ' to ' + route.path.split(' → ').pop();
@@ -34,16 +37,24 @@ const RouteComparisonTimeline = ({ routes }: RouteComparisonTimelineProps) => {
     <div className="space-y-4">
       {routeData.length === 0 && (
         <div className="text-center text-muted-foreground py-12">
-          No route comparison data available
+          {language === 'en' 
+            ? 'No route comparison data available' 
+            : 'No hay datos de comparación de rutas disponibles'
+          }
         </div>
       )}
       
       <div className="flex items-center gap-2">
         <BarChartIcon className="h-5 w-5 text-muted-foreground" />
-        <h3 className="text-lg font-medium">Route Comparison Timeline</h3>
+        <h3 className="text-lg font-medium">
+          {language === 'en' ? 'Route Comparison Timeline' : 'Línea de Tiempo de Comparación de Rutas'}
+        </h3>
       </div>
       <p className="text-sm text-muted-foreground">
-        Compare transit times across different shipping routes and methods
+        {language === 'en' 
+          ? 'Compare transit times across different shipping routes and methods' 
+          : 'Compare tiempos de tránsito entre diferentes rutas y métodos de envío'
+        }
       </p>
       
       <Card>
@@ -78,13 +89,22 @@ const RouteComparisonTimeline = ({ routes }: RouteComparisonTimelineProps) => {
                     axisLine={chartCommonConfig.axis.line}
                     tickLine={false}
                     height={60}
-                    label={{ value: 'Shipping Routes', position: 'insideBottom', offset: -10 }}
+                    label={{ 
+                      value: language === 'en' ? 'Shipping Routes' : 'Rutas de Envío', 
+                      position: 'insideBottom', 
+                      offset: -10 
+                    }}
                   />
                   <YAxis 
                     tickLine={false}
                     axisLine={chartCommonConfig.axis.line}
                     tick={chartCommonConfig.axis.tick}
-                    label={{ value: 'Transit Days', angle: -90, position: 'insideLeft', dx: -10 }}
+                    label={{ 
+                      value: language === 'en' ? 'Transit Days' : 'Días de Tránsito', 
+                      angle: -90, 
+                      position: 'insideLeft', 
+                      dx: -10 
+                    }}
                   />
                   <Tooltip 
                     content={<RouteComparisonTooltip />}
@@ -95,21 +115,21 @@ const RouteComparisonTimeline = ({ routes }: RouteComparisonTimelineProps) => {
                   <Bar 
                     dataKey="shipping" 
                     stackId="a" 
-                    name="Shipping" 
+                    name={language === 'en' ? "Shipping" : "Envío"}
                     fill={chartConfig.primaryRoute.color}
                     radius={[4, 4, 0, 0]}
                   />
                   <Bar 
                     dataKey="customs" 
                     stackId="a" 
-                    name="Customs" 
+                    name={language === 'en' ? "Customs" : "Aduana"}
                     fill={chartConfig.customs.color}
                     radius={[0, 0, 0, 0]}
                   />
                   <Bar 
                     dataKey="distribution" 
                     stackId="a" 
-                    name="Distribution" 
+                    name={language === 'en' ? "Distribution" : "Distribución"}
                     fill={chartConfig.lastMile.color}
                     radius={[0, 0, 4, 4]}
                   />

@@ -5,18 +5,25 @@ import { useTariffData } from './tariff/useTariffData';
 import TariffScatterChart from './tariff/TariffScatterChart';
 import TariffInsights from './tariff/TariffInsights';
 import { TableIcon } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const TariffHeatmap = () => {
   const { tariffData, getTariffColor } = useTariffData();
+  const { t, language } = useLanguage();
 
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-2">
         <TableIcon className="h-5 w-5 text-muted-foreground" />
-        <h3 className="text-lg font-medium">Tariff Analysis by Country</h3>
+        <h3 className="text-lg font-medium">
+          {language === 'en' ? 'Tariff Analysis by Country' : 'Análisis de Aranceles por País'}
+        </h3>
       </div>
       <p className="text-sm text-muted-foreground">
-        Visualize tariff rates across different countries to identify optimal trade routes
+        {language === 'en' 
+          ? 'Visualize tariff rates across different countries to identify optimal trade routes'
+          : 'Visualice las tasas arancelarias en diferentes países para identificar rutas comerciales óptimas'
+        }
       </p>
       
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">

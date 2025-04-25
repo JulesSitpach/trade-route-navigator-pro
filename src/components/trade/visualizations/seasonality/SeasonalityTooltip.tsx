@@ -2,6 +2,7 @@
 import React from 'react';
 import { Badge } from "@/components/ui/badge";
 import { tooltipStyles } from "@/components/ui/chart/theme/commonStyles";
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface SeasonalityTooltipProps {
   active?: boolean;
@@ -9,6 +10,8 @@ interface SeasonalityTooltipProps {
 }
 
 export const SeasonalityTooltip: React.FC<SeasonalityTooltipProps> = ({ active, payload }) => {
+  const { language } = useLanguage();
+  
   if (active && payload && payload.length) {
     const data = payload[0].payload;
     
@@ -19,7 +22,9 @@ export const SeasonalityTooltip: React.FC<SeasonalityTooltipProps> = ({ active, 
         </div>
         <div className="space-y-1">
           <div className="flex justify-between items-center">
-            <span className="text-xs text-gray-600">Freight:</span>
+            <span className="text-xs text-gray-600">
+              {language === 'en' ? 'Freight:' : 'Flete:'}
+            </span>
             <Badge 
               variant="outline" 
               className="ml-2 font-medium text-xs"
@@ -33,7 +38,9 @@ export const SeasonalityTooltip: React.FC<SeasonalityTooltipProps> = ({ active, 
             </Badge>
           </div>
           <div className="flex justify-between items-center">
-            <span className="text-xs text-gray-600">Congestion:</span>
+            <span className="text-xs text-gray-600">
+              {language === 'en' ? 'Congestion:' : 'Congestión:'}
+            </span>
             <Badge 
               variant="outline" 
               className="ml-2 font-medium text-xs"
@@ -47,7 +54,9 @@ export const SeasonalityTooltip: React.FC<SeasonalityTooltipProps> = ({ active, 
             </Badge>
           </div>
           <div className="flex justify-between items-center">
-            <span className="text-xs text-gray-600">Risk:</span>
+            <span className="text-xs text-gray-600">
+              {language === 'en' ? 'Risk:' : 'Riesgo:'}
+            </span>
             <Badge 
               variant="outline" 
               className="ml-2 font-medium text-xs"

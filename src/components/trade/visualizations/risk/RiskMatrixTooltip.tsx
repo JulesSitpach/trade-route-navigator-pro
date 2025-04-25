@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { Badge } from "@/components/ui/badge";
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface RiskMatrixTooltipProps {
   active?: boolean;
@@ -8,6 +9,8 @@ interface RiskMatrixTooltipProps {
 }
 
 export const RiskMatrixTooltip: React.FC<RiskMatrixTooltipProps> = ({ active, payload }) => {
+  const { language } = useLanguage();
+  
   if (active && payload && payload.length) {
     const data = payload[0].payload;
     
@@ -29,19 +32,25 @@ export const RiskMatrixTooltip: React.FC<RiskMatrixTooltipProps> = ({ active, pa
         </div>
         <div className="space-y-1">
           <div className="flex justify-between items-center">
-            <span className="text-xs text-gray-600">Route:</span>
+            <span className="text-xs text-gray-600">
+              {language === 'en' ? 'Route:' : 'Ruta:'}
+            </span>
             <span className="font-medium text-xs text-gray-800">
               {data.name}
             </span>
           </div>
           <div className="flex justify-between items-center">
-            <span className="text-xs text-gray-600">Cost:</span>
+            <span className="text-xs text-gray-600">
+              {language === 'en' ? 'Cost:' : 'Costo:'}
+            </span>
             <span className="font-medium text-xs text-gray-800">
               ${data.x.toLocaleString()}
             </span>
           </div>
           <div className="flex justify-between items-center">
-            <span className="text-xs text-gray-600">Risk Level:</span>
+            <span className="text-xs text-gray-600">
+              {language === 'en' ? 'Risk Level:' : 'Nivel de Riesgo:'}
+            </span>
             <Badge 
               variant="outline" 
               className="ml-2 font-medium text-xs" 
@@ -55,7 +64,9 @@ export const RiskMatrixTooltip: React.FC<RiskMatrixTooltipProps> = ({ active, pa
             </Badge>
           </div>
           <div className="flex justify-between items-center">
-            <span className="text-xs text-gray-600">Reliability:</span>
+            <span className="text-xs text-gray-600">
+              {language === 'en' ? 'Reliability:' : 'Fiabilidad:'}
+            </span>
             <span className="font-medium text-xs text-gray-800">
               {data.z}%
             </span>
