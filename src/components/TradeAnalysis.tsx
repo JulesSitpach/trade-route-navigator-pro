@@ -1,3 +1,4 @@
+
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import AlternativeRoutes from './AlternativeRoutes';
 import TradeOpportunities from './TradeOpportunities';
@@ -7,6 +8,7 @@ import RegulationsTab from './trade/RegulationsTab';
 import VisualizationsTab from './trade/VisualizationsTab';
 import { Route } from './trade/types';
 import { generateDynamicRoutes } from './trade/utils/routeGenerator';
+import { ChartBar, Route as RouteIcon, FileText, ScrollText, BarChart } from 'lucide-react';
 
 interface TradeAnalysisProps {
   data: {
@@ -44,12 +46,27 @@ const TradeAnalysis = ({ data }: TradeAnalysisProps) => {
       <h2 className="text-xl font-semibold text-gray-800 mb-6">Trade Analysis Results</h2>
       
       <Tabs defaultValue="costs" className="space-y-4">
-        <TabsList className="w-full">
-          <TabsTrigger value="costs">Cost Breakdown</TabsTrigger>
-          <TabsTrigger value="routes">Alternative Routes</TabsTrigger>
-          <TabsTrigger value="tariffs">Tariff Analysis</TabsTrigger>
-          <TabsTrigger value="regulations">Regulations</TabsTrigger>
-          <TabsTrigger value="visualizations">Visualizations</TabsTrigger>
+        <TabsList className="grid w-full grid-cols-2 md:grid-cols-5 gap-2">
+          <TabsTrigger value="costs" className="flex items-center gap-2">
+            <ChartBar className="h-4 w-4" />
+            Cost Breakdown
+          </TabsTrigger>
+          <TabsTrigger value="routes" className="flex items-center gap-2">
+            <RouteIcon className="h-4 w-4" />
+            Alternative Routes
+          </TabsTrigger>
+          <TabsTrigger value="tariffs" className="flex items-center gap-2">
+            <FileText className="h-4 w-4" />
+            Tariff Analysis
+          </TabsTrigger>
+          <TabsTrigger value="regulations" className="flex items-center gap-2">
+            <ScrollText className="h-4 w-4" />
+            Regulations
+          </TabsTrigger>
+          <TabsTrigger value="visualizations" className="flex items-center gap-2">
+            <BarChart className="h-4 w-4" />
+            Visualizations
+          </TabsTrigger>
         </TabsList>
 
         <TabsContent value="costs">
@@ -61,15 +78,29 @@ const TradeAnalysis = ({ data }: TradeAnalysisProps) => {
         </TabsContent>
 
         <TabsContent value="tariffs">
-          <TariffAnalysis />
+          <TariffAnalysis 
+            productCategory={data.product.productCategory}
+            originCountry={data.product.originCountry}
+            destinationCountry={data.product.destinationCountry}
+            productValue={parseFloat(data.product.productValue)}
+          />
         </TabsContent>
 
         <TabsContent value="regulations">
-          <RegulationsTab />
+          <RegulationsTab 
+            productCategory={data.product.productCategory}
+            originCountry={data.product.originCountry}
+            destinationCountry={data.product.destinationCountry}
+            isDangerous={data.shipping.dangerousGoods === 'yes'}
+            transportMode={data.shipping.transportMode}
+          />
         </TabsContent>
 
         <TabsContent value="visualizations">
-          <VisualizationsTab />
+          <VisualizationsTab 
+            data={data}
+            routes={dynamicRoutes}
+          />
         </TabsContent>
       </Tabs>
     </div>
