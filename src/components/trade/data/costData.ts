@@ -1,3 +1,4 @@
+
 import { calculateTariff } from '@/data/countryTariffData';
 
 interface CostItem {
@@ -104,10 +105,76 @@ export const generateCostItems = ({
     return Math.max(baseMinimum, valuePercentage) * progressiveFactor;
   })();
 
-  const inlandBaseRate = shippingData.transportMode === 'air' ? 150 : 200;
-  const inlandPerUnit = Math.min(50 * quantity, 500);
-  const inlandTransportation = Math.min(inlandBaseRate + inlandPerUnit, 1500) * 
-    (productValue > 10000 ? 1.1 : 1);
+  // Updated dynamic calculation for inland transportation
+  const calculateInlandTransportation = () => {
+    // Base rates vary by transport mode and destination country
+    const baseRates: Record<string, Record<string, number>> = {
+      us: { air: 120, sea: 180, road: 150 },
+      ca: { air: 140, sea: 195, road: 160 },
+      mx: { air: 130, sea: 185, road: 140 },
+      default: { air: 150, sea: 200, road: 170 }
+    };
+    
+    // Get base rate for destination and transport mode
+    const countryRates = baseRates[destinationCountry.toLowerCase()] || baseRates.default;
+    const baseRate = countryRates[shippingData.transportMode] || 
+                    (shippingData.transportMode === 'air' ? countryRates.air : countryRates.sea);
+    
+    // Distance factor - simulated based on origin/destination pair
+    // In a real system, this would use actual distance calculations
+    const distanceFactor = (() => {
+      const pair = `${originCountry}-${destinationCountry}`.toLowerCase();
+      const distanceFactors: Record<string, number> = {
+        'us-ca': 0.9,
+        'ca-us': 0.9,
+        'us-mx': 1.1,
+        'mx-us': 1.1,
+        'ca-mx': 1.3,
+        'mx-ca': 1.3
+      };
+      return distanceFactors[pair] || 1.0;
+    })();
+    
+    // Calculate per unit costs with diminishing returns for higher quantities
+    const perUnitCost = (() => {
+      if (quantity <= 5) return 60 * quantity;
+      if (quantity <= 20) return 300 + ((quantity - 5) * 40);
+      if (quantity <= 50) return 900 + ((quantity - 20) * 25);
+      return 1650 + ((quantity - 50) * 15);
+    })();
+    
+    // Weight factor - heavier shipments cost more per distance
+    const weightFactor = Math.min(1 + (weight / 5000), 2.5);
+    
+    // Value factor - higher value goods have higher transport insurance costs built in
+    const valueFactor = (() => {
+      if (productValue < 5000) return 1.0;
+      if (productValue < 25000) return 1.1;
+      if (productValue < 100000) return 1.2;
+      return 1.3;
+    })();
+    
+    // Special handling for bulky or fragile items
+    const specialHandlingFactor = productCategory === 'fragile' || 
+                                 productCategory === 'bulky' ? 1.25 : 1.0;
+    
+    // Calculate final cost with all factors
+    let cost = baseRate + perUnitCost;
+    cost *= distanceFactor * weightFactor * valueFactor * specialHandlingFactor;
+    
+    // Apply maximum cap based on destination
+    const maxCaps: Record<string, number> = {
+      us: 2000,
+      ca: 2200,
+      mx: 1800,
+      default: 2500
+    };
+    const maxCap = maxCaps[destinationCountry.toLowerCase()] || maxCaps.default;
+    
+    return Math.min(Math.round(cost), maxCap);
+  };
+
+  const inlandTransportation = calculateInlandTransportation();
 
   const warehouseDailyRate = shippingData.transportMode === 'air' ? 2 : 4;
   const estimatedDays = shippingData.transportMode === 'air' ? 3 : 7;
