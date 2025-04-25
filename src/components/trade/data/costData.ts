@@ -21,6 +21,9 @@ export const generateCostItems = ({
   const quantity = parseInt(shippingData.quantity) || 1;
   const weight = parseFloat(shippingData.weight) || 100;
 
+  // Calculate total product value
+  const totalProductValue = productValue * quantity;
+
   const freightCost = calculateFreightCost(
     weight,
     productValue,
@@ -29,21 +32,21 @@ export const generateCostItems = ({
   );
 
   const insuranceRate = 1.5;
-  const insuranceRateAdjustment = productValue > 10000 ? 1.2 : 1;
+  const insuranceRateAdjustment = totalProductValue > 10000 ? 1.2 : 1;
   const insurance = Math.max(
-    (productValue * insuranceRate * insuranceRateAdjustment) / 100,
+    (totalProductValue * insuranceRate * insuranceRateAdjustment) / 100,
     50
   );
 
   const documentationFees = (() => {
     const baseFee = shippingData.transportMode === 'air' ? 95 : 125;
-    return baseFee * (productValue > 5000 ? 1.1 : 1);
+    return baseFee * (totalProductValue > 5000 ? 1.1 : 1);
   })();
 
   const customsClearance = (() => {
     const baseMinimum = 175;
-    const valuePercentage = productValue * 0.01;
-    const progressiveFactor = productValue > 50000 ? 1.2 : 1;
+    const valuePercentage = totalProductValue * 0.01;
+    const progressiveFactor = totalProductValue > 50000 ? 1.2 : 1;
     return Math.max(baseMinimum, valuePercentage) * progressiveFactor;
   })();
 
@@ -53,7 +56,7 @@ export const generateCostItems = ({
     shippingData.transportMode,
     quantity,
     weight,
-    productValue,
+    totalProductValue,
     productCategory
   );
 
@@ -62,15 +65,15 @@ export const generateCostItems = ({
   const warehouseBaseCharge = 100;
   const warehouseCostRaw = warehouseBaseCharge + 
     (warehouseDailyRate * estimatedDays * quantity) * 
-    (productValue > 20000 ? 1.15 : 1);
+    (totalProductValue > 20000 ? 1.15 : 1);
   const warehousingCost = Math.min(warehouseCostRaw, 2000);
 
-  const otherFeesRate = productValue > 15000 ? 2.5 : 2.0;
-  const otherFees = (productValue * otherFeesRate) / 100;
+  const otherFeesRate = totalProductValue > 15000 ? 2.5 : 2.0;
+  const otherFees = (totalProductValue * otherFeesRate) / 100;
 
   return [
-    { label: "Product Value", value: formatCurrency(productValue) },
-    { label: `Import Duty (${importDutyRate}%)`, value: formatCurrency((productValue * importDutyRate) / 100) },
+    { label: "Total Product Value", value: formatCurrency(totalProductValue) },
+    { label: `Import Duty (${importDutyRate}%)`, value: formatCurrency((totalProductValue * importDutyRate) / 100) },
     { label: "Freight Cost", value: formatCurrency(freightCost) },
     { label: `Insurance (${insuranceRate}%)`, value: formatCurrency(insurance) },
     { label: "Documentation Fees", value: formatCurrency(documentationFees) },
