@@ -13,18 +13,7 @@ import RegulatoryComplianceDashboard from './visualizations/RegulatoryCompliance
 import { VisualizationsTabProps } from './visualizations/types/visualizationTypes';
 
 const VisualizationsTab = ({ data, routes }: VisualizationsTabProps) => {
-  const [activeChart, setActiveChart] = useState('cost-breakdown');
   const { t } = useLanguage();
-
-  const tabs = [
-    { id: 'cost-breakdown', label: t('route.tab.costs'), icon: 'Costs' },
-    { id: 'route-comparison', label: t('route.tab.routes'), icon: 'Routes' },
-    { id: 'tariff-heatmap', label: t('route.tab.tariffs'), icon: 'Tariffs' },
-    { id: 'seasonality', label: t('route.tab.seasonality'), icon: 'Seasonality' },
-    { id: 'risk-matrix', label: t('route.tab.risks'), icon: 'Risks' },
-    { id: 'supply-chain', label: t('route.tab.supply'), icon: 'Supply Chain' },
-    { id: 'compliance', label: t('route.tab.compliance'), icon: 'Compliance' },
-  ];
 
   return (
     <div className="space-y-6">
@@ -36,43 +25,21 @@ const VisualizationsTab = ({ data, routes }: VisualizationsTabProps) => {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <Tabs value={activeChart} onValueChange={setActiveChart} className="w-full">
-            <TabsList className="grid grid-cols-4 w-full md:grid-cols-4 lg:grid-cols-7">
-              {tabs.map((tab) => (
-                <TabsTrigger key={tab.id} value={tab.id}>
-                  {tab.label}
-                </TabsTrigger>
-              ))}
-            </TabsList>
-
-            <TabsContent value="cost-breakdown" className="pt-6">
-              <CostBreakdownChart />
-            </TabsContent>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <CostBreakdownChart />
             
-            <TabsContent value="route-comparison" className="pt-6">
-              <RouteComparisonTimeline routes={routes} />
-            </TabsContent>
+            <RouteComparisonTimeline routes={routes} />
             
-            <TabsContent value="tariff-heatmap" className="pt-6">
-              <TariffHeatmap />
-            </TabsContent>
+            <TariffHeatmap />
             
-            <TabsContent value="seasonality" className="pt-6">
-              <SeasonalityGraph />
-            </TabsContent>
+            <SeasonalityGraph />
             
-            <TabsContent value="risk-matrix" className="pt-6">
-              <RiskAssessmentMatrix />
-            </TabsContent>
+            <RiskAssessmentMatrix />
             
-            <TabsContent value="supply-chain" className="pt-6">
-              <SupplyChainFlowDiagram />
-            </TabsContent>
+            <SupplyChainFlowDiagram />
             
-            <TabsContent value="compliance" className="pt-6">
-              <RegulatoryComplianceDashboard />
-            </TabsContent>
-          </Tabs>
+            <RegulatoryComplianceDashboard />
+          </div>
         </CardContent>
       </Card>
     </div>
