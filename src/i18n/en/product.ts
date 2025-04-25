@@ -12,7 +12,7 @@ export const productTranslations = {
   'product.description.placeholder': 'Enter product description',
   'product.category': 'Product Category',
   'product.category.placeholder': 'Select product category',
-  'product.value': 'Product Value (Per Unit)',
+  'product.value': 'Product Value (Per Unit, US$)',
   'product.value.placeholder': 'Enter product value',
   'product.origin': 'Origin Country',
   'product.destination': 'Destination Country',
