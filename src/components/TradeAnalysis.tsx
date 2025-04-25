@@ -1,12 +1,14 @@
+
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { ChartBar, Route as RouteIcon, FileText, ScrollText, BarChart } from 'lucide-react';
-import { useLanguage } from '@/contexts/LanguageContext';
+import { Route } from './trade/types';
+import { generateDynamicRoutes } from './trade/utils/routeGenerator';
 import AlternativeRoutes from './AlternativeRoutes';
 import TariffAnalysis from './TariffAnalysis';
 import CostAnalysisTab from './trade/CostAnalysisTab';
 import RegulationsTab from './trade/RegulationsTab';
 import VisualizationsTab from './trade/VisualizationsTab';
-import { generateDynamicRoutes } from './trade/utils/routeGenerator';
+import { ChartBar, Route as RouteIcon, FileText, ScrollText, BarChart } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface TradeAnalysisProps {
   data: {
@@ -49,23 +51,23 @@ const TradeAnalysis = ({ data }: TradeAnalysisProps) => {
         <TabsList className="grid w-full grid-cols-2 md:grid-cols-5 gap-2">
           <TabsTrigger value="costs" className="flex items-center gap-2">
             <ChartBar className="h-4 w-4" />
-            {t('tabs.main.costs')}
+            {t('analysis.costs')}
           </TabsTrigger>
           <TabsTrigger value="routes" className="flex items-center gap-2">
             <RouteIcon className="h-4 w-4" />
-            {t('tabs.main.routes')}
+            {t('analysis.routes')}
           </TabsTrigger>
           <TabsTrigger value="tariffs" className="flex items-center gap-2">
             <FileText className="h-4 w-4" />
-            {t('tabs.main.tariffs')}
+            {t('analysis.tariffs')}
           </TabsTrigger>
           <TabsTrigger value="regulations" className="flex items-center gap-2">
             <ScrollText className="h-4 w-4" />
-            {t('tabs.main.regulations')}
+            {t('analysis.regulations')}
           </TabsTrigger>
           <TabsTrigger value="visualizations" className="flex items-center gap-2">
             <BarChart className="h-4 w-4" />
-            {t('tabs.main.visualizations')}
+            {t('analysis.visualizations')}
           </TabsTrigger>
         </TabsList>
 

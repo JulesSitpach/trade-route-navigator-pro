@@ -1,3 +1,4 @@
+
 export const esTranslations = {
   // General
   'title': 'Navegador de Estrategia Comercial Global',
@@ -215,25 +216,4 @@ export const esTranslations = {
   'routeadvantages.flexible.desc': 'Se adapta a horarios de envío irregulares',
   'routeadvantages.minimum': 'Menor Cantidad Mínima',
   'routeadvantages.minimum.desc': 'Adaptado para volúmenes de pedido más pequeños',
-  
-  // Main Navigation Tabs
-  'tabs.main': {
-    'costs': 'Desglose de Costos',
-    'routes': 'Rutas Alternativas',
-    'tariffs': 'Análisis de Aranceles',
-    'regulations': 'Regulaciones',
-    'visualizations': 'Visualizaciones'
-  },
-
-  // Tariff Analysis Nested Tabs
-  'tabs.tariff': {
-    'basic': 'Arancel Básico',
-    'hscode': 'Código HS',
-    'countryComparison': 'Comparación de Países',
-    'rulesOfOrigin': 'Reglas de Origen',
-    'engineering': 'Ingeniería Arancelaria',
-    'specialPrograms': 'Programas Especiales',
-    'historicalTrends': 'Tendencias Históricas',
-    'exclusionBreakdown': 'Desglose de Exclusiones'
-  },
 };
