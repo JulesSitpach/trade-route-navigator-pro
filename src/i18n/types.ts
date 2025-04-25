@@ -1,7 +1,8 @@
 
 export type Language = 'en' | 'es';
 
-// Define a more flexible return type for the translation function
+export type TranslationKey = keyof typeof import('./en').enTranslations;
+
 export interface LanguageContextType {
   language: Language;
   setLanguage: (lang: Language) => void;
