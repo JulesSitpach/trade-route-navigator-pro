@@ -6,9 +6,10 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ChartStyleEnforcer } from "@/components/ui/chart/ChartStyleEnforcer";
 import { LanguageProvider } from "./contexts/LanguageContext";
+import { TradeDataProvider } from "./contexts/TradeDataContext";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
-import "./i18n/config"; // Import i18next configuration
+import "./i18n/config";
 
 const queryClient = new QueryClient();
 
@@ -17,14 +18,16 @@ const App = () => (
     <TooltipProvider>
       <ChartStyleEnforcer>
         <LanguageProvider>
-          <BrowserRouter>
-            <Toaster />
-            <Sonner />
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </BrowserRouter>
+          <TradeDataProvider>
+            <BrowserRouter>
+              <Toaster />
+              <Sonner />
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </BrowserRouter>
+          </TradeDataProvider>
         </LanguageProvider>
       </ChartStyleEnforcer>
     </TooltipProvider>

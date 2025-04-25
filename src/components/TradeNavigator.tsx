@@ -8,6 +8,7 @@ import ShippingDetailsForm from './ShippingDetailsForm';
 import TradeAnalysis from './TradeAnalysis';
 import LanguageToggle from './LanguageToggle';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useTradeData } from "@/contexts/TradeDataContext";
 
 const TradeNavigator = () => {
   const [formData, setFormData] = useState({
@@ -35,8 +36,8 @@ const TradeNavigator = () => {
   const { toast } = useToast();
   const [showAnalysis, setShowAnalysis] = useState(false);
   const analysisRef = useRef<HTMLDivElement>(null);
-
   const { t } = useLanguage();
+  const { updateCostData } = useTradeData();
 
   const handleProductDetailsChange = (productData: any) => {
     setFormData(prev => ({
@@ -91,6 +92,19 @@ const TradeNavigator = () => {
     if (!validateForm()) {
       return;
     }
+
+    // Update cost data in context
+    updateCostData({
+      productValue: parseFloat(formData.product.productValue) || 0,
+      originCountry: formData.product.originCountry,
+      destinationCountry: formData.product.destinationCountry,
+      productCategory: formData.product.productCategory,
+      shippingData: {
+        quantity: formData.shipping.quantity,
+        weight: formData.shipping.weight,
+        transportMode: formData.shipping.transportMode
+      }
+    });
 
     setShowAnalysis(true);
     toast({
