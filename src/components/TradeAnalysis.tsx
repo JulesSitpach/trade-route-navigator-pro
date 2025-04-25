@@ -1,3 +1,4 @@
+
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import AlternativeRoutes from './AlternativeRoutes';
 import TradeOpportunities from './TradeOpportunities';
@@ -51,7 +52,7 @@ const TradeAnalysis = ({ data }: TradeAnalysisProps) => {
         </TabsContent>
 
         <TabsContent value="routes">
-          <AlternativeRoutes routes={sampleRoutes} />
+          <AlternativeRoutes routes={routes} />
         </TabsContent>
 
         <TabsContent value="tariffs">

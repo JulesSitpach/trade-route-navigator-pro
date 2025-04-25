@@ -14,11 +14,20 @@ const TradeNavigator = () => {
       productDescription: '',
       originCountry: '',
       destinationCountry: '',
-      productValue: ''
+      productValue: '',
+      productCategory: '' // Added missing field
     },
     shipping: {
       quantity: '',
-      transportMode: ''
+      transportMode: '',
+      shipmentType: '',
+      packageType: '',
+      dangerousGoods: '',
+      weight: '',
+      length: '',
+      width: '',
+      height: '',
+      specialRequirements: ''
     }
   });
   
@@ -143,4 +152,3 @@ const TradeNavigator = () => {
 };
 
 export default TradeNavigator;
-
