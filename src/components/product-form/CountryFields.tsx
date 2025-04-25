@@ -25,7 +25,7 @@ export const CountryFields = ({
       <div className="space-y-2">
         <Label htmlFor="originCountry" className="flex items-center gap-1">
           {t('product.origin')}
-          <span className="text-red-500">*</span>
+          <span className="text-red-500">{t('common:required')}</span>
         </Label>
         <Select 
           value={originCountry} 
@@ -55,7 +55,7 @@ export const CountryFields = ({
       <div className="space-y-2">
         <Label htmlFor="destinationCountry" className="flex items-center gap-1">
           {t('product.destination')}
-          <span className="text-red-500">*</span>
+          <span className="text-red-500">{t('common:required')}</span>
         </Label>
         <Select 
           value={destinationCountry} 

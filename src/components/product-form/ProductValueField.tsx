@@ -34,7 +34,7 @@ export const ProductValueField = ({
     <div className="space-y-2">
       <Label htmlFor="productValue" className="flex items-center gap-1">
         {t('product.value')}
-        <span className="text-red-500">*</span>
+        <span className="text-red-500">{t('common:required')}</span>
       </Label>
       <Input 
         id="productValue" 
