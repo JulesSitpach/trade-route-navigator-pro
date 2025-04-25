@@ -96,15 +96,19 @@ export const generateCostItems = ({
     
   const customsClearance = Math.max(175, productValue * 0.01); // Greater of $175 or 1% of value
   
-  // Inland transportation based on mode and distance
-  const inlandTransportation = shippingData.transportMode === 'air'
-    ? Math.max(200 * quantity, 150) // Air freight local delivery
-    : Math.max(250 * quantity, 200); // Ocean freight local delivery (usually higher)
+  // Inland transportation based on weight and quantity (with realistic ceiling caps)
+  // Fixed base rate plus per unit charge, with a maximum cap
+  const inlandBaseRate = shippingData.transportMode === 'air' ? 150 : 200;
+  const inlandPerUnit = Math.min(50 * quantity, 500); // Cap at $500 for quantity-based charge
+  const inlandTransportation = Math.min(inlandBaseRate + inlandPerUnit, 1500); // Cap total at $1500
     
-  // Warehousing costs - different for air vs ocean
-  const warehousingCost = shippingData.transportMode === 'air'
-    ? Math.max(50 * quantity, productValue * 0.01) // Minimal for air freight
-    : Math.max(180 * quantity, productValue * 0.015); // Higher for ocean freight
+  // Warehousing costs - realistic rates with caps
+  const warehouseDailyRate = shippingData.transportMode === 'air' ? 2 : 4; // $ per day per unit
+  const estimatedDays = shippingData.transportMode === 'air' ? 3 : 7; // Estimated storage days
+  const warehouseBaseCharge = 100; // Base handling charge
+  const warehouseCostRaw = warehouseBaseCharge + (warehouseDailyRate * estimatedDays * quantity);
+  // Cap warehousing at a reasonable maximum
+  const warehousingCost = Math.min(warehouseCostRaw, 2000); 
     
   const otherFeesRate = 2.0; // 2% for miscellaneous fees
   const otherFees = (productValue * otherFeesRate) / 100;
