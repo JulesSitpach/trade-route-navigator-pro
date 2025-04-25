@@ -1,4 +1,3 @@
-
 export const regulationTranslations = {
   'regulations.title': 'Cumplimiento Regulatorio',
   'regulations.countryRequirements': 'Requisitos Específicos del País',
@@ -17,6 +16,9 @@ export const regulationTranslations = {
   'regulations.status.compliant': 'Conforme',
   'regulations.status.pending': 'Pendiente',
   'regulations.status.attention': 'Requiere Atención',
+  'regulations.status.required': 'Requerido',
+  'regulations.status.warning': 'Advertencia',
+  'regulations.status.not-required': 'No Requerido',
   
   'regulations.actions.download': 'Descargar Requisitos',
   'regulations.actions.verify': 'Verificar Cumplimiento',
