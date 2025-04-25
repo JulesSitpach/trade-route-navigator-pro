@@ -115,10 +115,10 @@ const TradeNavigator = () => {
             <LanguageToggle />
           </div>
           <h1 className="text-3xl md:text-4xl font-bold text-center mb-4">
-            {t('title')}
+            {t('general:title')}
           </h1>
           <p className="text-lg text-center text-blue-100">
-            {t('subtitle')}
+            {t('general:subtitle')}
           </p>
         </div>
       </header>
@@ -139,7 +139,7 @@ const TradeNavigator = () => {
             size="lg"
           >
             <ChartBar className="mr-2" />
-            {t('button.calculate')}
+            {t('general:button.calculate')}
           </Button>
         </div>
 

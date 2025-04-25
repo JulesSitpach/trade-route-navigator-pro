@@ -16,6 +16,16 @@ const VisualizationsTab = ({ data, routes }: VisualizationsTabProps) => {
   const [activeChart, setActiveChart] = useState('cost-breakdown');
   const { t } = useLanguage();
 
+  const tabs = [
+    { id: 'cost-breakdown', label: 'analysis.tabs.costs', icon: 'Costs' },
+    { id: 'route-comparison', label: 'analysis.tabs.routes', icon: 'Routes' },
+    { id: 'tariff-heatmap', label: 'analysis.tabs.tariffs', icon: 'Tariffs' },
+    { id: 'seasonality', label: 'analysis.tabs.seasonality', icon: 'Seasonality' },
+    { id: 'risk-matrix', label: 'analysis.tabs.risks', icon: 'Risks' },
+    { id: 'supply-chain', label: 'analysis.tabs.supply', icon: 'Supply Chain' },
+    { id: 'compliance', label: 'analysis.tabs.compliance', icon: 'Compliance' },
+  ];
+
   return (
     <div className="space-y-6">
       <Card>
@@ -28,13 +38,11 @@ const VisualizationsTab = ({ data, routes }: VisualizationsTabProps) => {
         <CardContent>
           <Tabs value={activeChart} onValueChange={setActiveChart} className="w-full">
             <TabsList className="grid grid-cols-4 w-full md:grid-cols-4 lg:grid-cols-7">
-              <TabsTrigger value="cost-breakdown">{t('tab.costs')}</TabsTrigger>
-              <TabsTrigger value="route-comparison">{t('tab.routes')}</TabsTrigger>
-              <TabsTrigger value="tariff-heatmap">{t('tab.tariffs')}</TabsTrigger>
-              <TabsTrigger value="seasonality">{t('tab.seasonality')}</TabsTrigger>
-              <TabsTrigger value="risk-matrix">{t('tab.risks')}</TabsTrigger>
-              <TabsTrigger value="supply-chain">{t('tab.supply')}</TabsTrigger>
-              <TabsTrigger value="compliance">{t('tab.compliance')}</TabsTrigger>
+              {tabs.map((tab) => (
+                <TabsTrigger key={tab.id} value={tab.id}>
+                  {t(tab.label)}
+                </TabsTrigger>
+              ))}
             </TabsList>
 
             <TabsContent value="cost-breakdown" className="pt-6">
