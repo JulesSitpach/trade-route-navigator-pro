@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
@@ -250,7 +251,11 @@ const TariffAnalysis = ({
         </TabsContent>
 
         <TabsContent value="hscode">
-          <HSCodeAnalysis hsCode={hsCode} alternativeHSCodes={alternativeHSCodes} totalRate={totalRate} />
+          <HSCodeAnalysis 
+            hsCode={hsCode} 
+            alternativeHSCodes={alternativeHSCodes} 
+            totalRate={totalRate} 
+          />
         </TabsContent>
 
         <TabsContent value="countries">
