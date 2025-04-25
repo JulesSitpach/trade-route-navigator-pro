@@ -1,4 +1,3 @@
-
 import { calculateTariff } from '@/data/countryTariffData';
 
 interface CostItem {
@@ -44,77 +43,86 @@ export const generateCostItems = ({
   const quantity = parseInt(shippingData.quantity) || 1;
   const weight = parseFloat(shippingData.weight) || 100;
 
-  const baseFreightRate = {
+  const baseFreightRates = {
     air: {
-      base: 6.0,
-      minimum: 600
+      base: 6.0 * (weight / 100),
+      minimum: 600 * (productValue > 5000 ? 1.1 : 1)
     },
     sea: {
       LCL: {
-        base: 55.0,
-        minimum: 500
+        base: 55.0 * (weight / 1000),
+        minimum: 500 * (productValue > 10000 ? 1.2 : 1)
       },
       FCL: {
-        twenty: 2200,
-        forty: 3400
+        twenty: 2200 * (quantity > 10 ? 0.95 : 1),
+        forty: 3400 * (quantity > 10 ? 0.95 : 1)
       }
     }
   };
 
   let freightCost = 0;
   if (shippingData.transportMode === 'air') {
-    freightCost = weight * baseFreightRate.air.base;
-    freightCost = Math.max(freightCost, baseFreightRate.air.minimum);
+    freightCost = weight * baseFreightRates.air.base;
+    freightCost = Math.max(freightCost, baseFreightRates.air.minimum);
   } else {
     const estimatedCBM = (weight / 1000) * 2;
-    freightCost = estimatedCBM * baseFreightRate.sea.LCL.base;
-    freightCost = Math.max(freightCost, baseFreightRate.sea.LCL.minimum);
+    freightCost = estimatedCBM * baseFreightRates.sea.LCL.base;
+    freightCost = Math.max(freightCost, baseFreightRates.sea.LCL.minimum);
   }
 
-  if (quantity > 10) {
-    freightCost *= 0.95;  // 5% discount for bulk
-  }
-  if (quantity > 50) {
-    freightCost *= 0.90;  // Additional 10% discount for larger bulk
-  }
+  const seasonalityFactor = (() => {
+    const currentMonth = new Date().getMonth();
+    if (currentMonth >= 6 && currentMonth <= 8) return 1.15;
+    if (currentMonth >= 11 || currentMonth <= 1) return 1.05;
+    return 1;
+  })();
 
-  // Seasonal adjustment
-  const currentMonth = new Date().getMonth();
-  if (currentMonth >= 6 && currentMonth <= 8) {
-    freightCost *= 1.15; // Peak season surcharge
-  }
+  const bulkDiscountFactor = (() => {
+    if (quantity > 50) return 0.85;
+    if (quantity > 10) return 0.92;
+    return 1;
+  })();
 
-  // Value-based adjustment
-  if (productValue > 5000) {
-    freightCost *= 1.1; // High-value surcharge
-  }
+  freightCost *= seasonalityFactor * bulkDiscountFactor;
 
-  const importDuty = (productValue * importDutyRate) / 100;
-  const insuranceRate = 1.5; // Standard insurance rate
-  const insurance = Math.max((productValue * insuranceRate) / 100, 50); // Minimum insurance of $50
+  const insuranceRate = 1.5;
+  const insuranceRateAdjustment = productValue > 10000 ? 1.2 : 1;
+  const insurance = Math.max(
+    (productValue * insuranceRate * insuranceRateAdjustment) / 100,
+    50
+  );
 
-  const documentationFees = shippingData.transportMode === 'air' 
-    ? 95  // Air freight documentation
-    : 125; // Sea freight documentation
+  const documentationFees = (() => {
+    const baseFee = shippingData.transportMode === 'air' ? 95 : 125;
+    return baseFee * (productValue > 5000 ? 1.1 : 1);
+  })();
 
-  const customsClearance = Math.max(175, productValue * 0.01); // Minimum $175 or 1% of value
+  const customsClearance = (() => {
+    const baseMinimum = 175;
+    const valuePercentage = productValue * 0.01;
+    const progressiveFactor = productValue > 50000 ? 1.2 : 1;
+    return Math.max(baseMinimum, valuePercentage) * progressiveFactor;
+  })();
 
   const inlandBaseRate = shippingData.transportMode === 'air' ? 150 : 200;
   const inlandPerUnit = Math.min(50 * quantity, 500);
-  const inlandTransportation = Math.min(inlandBaseRate + inlandPerUnit, 1500);
+  const inlandTransportation = Math.min(inlandBaseRate + inlandPerUnit, 1500) * 
+    (productValue > 10000 ? 1.1 : 1);
 
   const warehouseDailyRate = shippingData.transportMode === 'air' ? 2 : 4;
   const estimatedDays = shippingData.transportMode === 'air' ? 3 : 7;
   const warehouseBaseCharge = 100;
-  const warehouseCostRaw = warehouseBaseCharge + (warehouseDailyRate * estimatedDays * quantity);
+  const warehouseCostRaw = warehouseBaseCharge + 
+    (warehouseDailyRate * estimatedDays * quantity) * 
+    (productValue > 20000 ? 1.15 : 1);
   const warehousingCost = Math.min(warehouseCostRaw, 2000);
 
-  const otherFeesRate = 2.0;
+  const otherFeesRate = productValue > 15000 ? 2.5 : 2.0;
   const otherFees = (productValue * otherFeesRate) / 100;
 
   return [
     { label: "Product Value", value: formatCurrency(productValue) },
-    { label: `Import Duty (${importDutyRate}%)`, value: formatCurrency(importDuty) },
+    { label: `Import Duty (${importDutyRate}%)`, value: formatCurrency((productValue * importDutyRate) / 100) },
     { label: "Freight Cost", value: formatCurrency(freightCost) },
     { label: `Insurance (${insuranceRate}%)`, value: formatCurrency(insurance) },
     { label: "Documentation Fees", value: formatCurrency(documentationFees) },
