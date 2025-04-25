@@ -1,3 +1,4 @@
+
 export const regulationTranslations = {
   'regulations.title': 'Cumplimiento Regulatorio',
   'regulations.countryRequirements': 'Requisitos Específicos del País',
@@ -30,4 +31,14 @@ export const regulationTranslations = {
   'regulations.fees.total': 'Costos Totales de Cumplimiento',
   'regulations.preparation.time': 'Tiempo estimado de preparación para cumplimiento',
   'regulations.weeks': 'semanas',
+
+  'documents.commercialInvoice': 'Factura Comercial',
+  'documents.packingList': 'Lista de Empaque',
+  'documents.billOfLading': 'Conocimiento de Embarque',
+  'documents.certificateOfOrigin': 'Certificado de Origen',
+  'documents.importLicense': 'Licencia de Importación',
+  'documents.exportLicense': 'Licencia de Exportación',
+  'documents.importDeclaration': 'Declaración de Importación',
+  'documents.paymentReceipt': 'Recibo de Pago'
 };
+
