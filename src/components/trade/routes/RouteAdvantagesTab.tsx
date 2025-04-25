@@ -59,16 +59,27 @@ const RouteAdvantagesTab = ({ route }: RouteAdvantagesTabProps) => {
         {t('routeadvantages.title')}
       </h4>
       <div className="space-y-2">
-        {smbAdvantages.map((advantage, index) => (
-          <div key={index} className="flex flex-col space-y-1">
-            <p className="font-medium">
-              {language === 'en' ? advantage.en.title : advantage.es.title}
-            </p>
-            <p className="text-sm text-gray-600">
-              {language === 'en' ? advantage.en.description : advantage.es.description}
-            </p>
-          </div>
-        ))}
+        {smbAdvantages.map((advantage, index) => {
+          // Only show advantages that apply to this route
+          const showAdvantage = 
+            (index === 0 && route.smbAdvantages?.consolidatedShipping) || 
+            (index === 1 && route.smbAdvantages?.sharedContainer) ||
+            (index === 2 && route.smbAdvantages?.flexiblePickup) ||
+            (index === 3 && route.smbAdvantages?.lowerMinimumQuantity);
+            
+          if (!showAdvantage) return null;
+          
+          return (
+            <div key={index} className="flex flex-col space-y-1">
+              <p className="font-medium">
+                {language === 'en' ? advantage.en.title : advantage.es.title}
+              </p>
+              <p className="text-sm text-gray-600">
+                {language === 'en' ? advantage.en.description : advantage.es.description}
+              </p>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

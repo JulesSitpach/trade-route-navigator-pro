@@ -1,7 +1,7 @@
 
 export const esTranslations = {
   // General
-  'title': 'Navegador de Estrategia Comercial Global',
+  'title': 'Navegador de Estrategia de Comercio Global',
   'subtitle': 'Diversifica tus rutas comerciales, fortalece el futuro de tu negocio',
   'yes': 'Sí',
   'no': 'No',
@@ -19,7 +19,7 @@ export const esTranslations = {
   'product.description': 'Descripción del Producto',
   'product.description.placeholder': 'Ingrese descripción del producto',
   'product.category': 'Categoría del Producto',
-  'product.category.placeholder': 'Seleccione categoría',
+  'product.category.placeholder': 'Seleccione categoría del producto',
   'product.value': 'Valor del Producto',
   'product.value.placeholder': 'Ingrese valor del producto',
   'product.origin': 'País de Origen',
@@ -52,12 +52,12 @@ export const esTranslations = {
   'analysis.tariffs': 'Análisis de Aranceles',
   'analysis.regulations': 'Regulaciones',
   'analysis.visualizations': 'Visualizaciones',
-  'analysis.visualizations.description': 'Representación visual de sus datos comerciales',
+  'analysis.visualizations.description': 'Representación visual de tus datos comerciales',
   
   // Tabs and Navigation
   'tab.costs': 'Desglose de Costos',
-  'tab.routes': 'Línea de Tiempo de Rutas',
-  'tab.tariffs': 'Mapa de Calor de Aranceles',
+  'tab.routes': 'Cronología de Rutas',
+  'tab.tariffs': 'Mapa de Aranceles',
   'tab.seasonality': 'Estacionalidad',
   'tab.risks': 'Matriz de Riesgos',
   'tab.supply': 'Cadena de Suministro',
@@ -72,7 +72,7 @@ export const esTranslations = {
   
   // Shipment Types
   'shipment.fcl': 'Contenedor Completo (FCL)',
-  'shipment.lcl': 'Contenedor Parcial (LCL)',
+  'shipment.lcl': 'Menos de Contenedor Completo (LCL)',
   'shipment.bulk': 'Carga a Granel',
   'shipment.breakbulk': 'Carga Fraccionada',
   'shipment.roro': 'Roll-on/Roll-off',
@@ -103,13 +103,23 @@ export const esTranslations = {
   
   // Alternative Routes
   'routes.title': 'Rutas Alternativas y Métodos de Transporte',
-  'routes.description': 'Opciones de envío estratégicas adaptadas para pequeñas y medianas empresas para optimizar costos, plazos y oportunidades de mercado.',
+  'routes.description': 'Opciones estratégicas de envío adaptadas para pequeñas y medianas empresas para optimizar costos, plazos y oportunidades de mercado.',
+  
+  // Route Descriptions
+  'routes.description.sea': 'Ruta de carga MARÍTIMA',
+  'routes.description.air': 'Ruta de carga AÉREA',
+  'routes.description.rail': 'Ruta de carga FERROVIARIA',
+  'routes.description.multimodal': 'Ruta de carga MULTIMODAL',
+  'routes.description.standard': 'Servicio de envío estándar.',
+  'routes.description.premium': 'Servicio premium para envíos urgentes.',
+  'routes.description.via': 'vía {{points}}.',
+  'routes.description.direct': 'ruta directa.',
   
   // Regulations
   'regulations.documents': 'Documentos Requeridos',
-  'regulations.timeline': 'Cronograma Regulatorio',
-  'regulations.requirements': 'Requisitos por País',
-  'regulations.productRegs': 'Regulaciones del Producto',
+  'regulations.timeline': 'Cronología Regulatoria',
+  'regulations.requirements': 'Requisitos del País',
+  'regulations.productRegs': 'Regulaciones de Productos',
   'regulations.permits': 'Guía de Permisos',
   'regulations.updates': 'Actualizaciones Regulatorias',
   'regulations.compliance': 'Resumen de Costos de Cumplimiento',
@@ -122,7 +132,7 @@ export const esTranslations = {
   'missing.fields': 'Faltan Campos Obligatorios',
   'missing.fields.description': 'Por favor complete todos los campos obligatorios:',
   'analysis.generated': 'Análisis Generado',
-  'analysis.generated.description': 'Su análisis comercial ha sido calculado exitosamente.',
+  'analysis.generated.description': 'Su análisis comercial ha sido calculado con éxito.',
   
   // Cost Breakdown
   'cost.total': 'Costo Total Desembarcado',
@@ -131,15 +141,15 @@ export const esTranslations = {
   'cost.freight': 'Costo de Flete',
   'cost.insurance': 'Seguro',
   'cost.docs': 'Tarifas de Documentación',
-  'cost.customs': 'Despacho Aduanero',
+  'cost.customs': 'Despacho de Aduana',
   'cost.transport': 'Transporte Terrestre',
-  'cost.warehouse': 'Almacenaje',
+  'cost.warehouse': 'Almacenamiento',
   'cost.taxes': 'Otros Impuestos y Tarifas',
   
   // Route Comparison
-  'route.comparison': 'Línea de Tiempo de Comparación de Rutas',
+  'route.comparison': 'Cronograma Comparativo de Rutas',
   'route.shipping': 'Envío',
-  'route.customs': 'Aduana',
+  'route.customs': 'Aduanas',
   'route.distribution': 'Distribución',
   'route.select': 'Seleccionar Ruta',
   'route.compare': 'Comparar',
@@ -150,33 +160,33 @@ export const esTranslations = {
   'route.days': 'días',
   
   // Route Card Tabs
-  'routecard.smb': 'Ventajas PYME',
+  'routecard.smb': 'Ventajas PYMES',
   'routecard.markets': 'Oportunidades de Mercado',
-  'routecard.risks': 'Riesgo & Finanzas',
-  'routecard.growth': 'Crecimiento & Escalabilidad',
+  'routecard.risks': 'Riesgo y Finanzas',
+  'routecard.growth': 'Crecimiento y Escalado',
   
   // Route Advantages Tab
   'routeadvantages.title': 'Ventajas Específicas para PYMES',
-    
+  
   // Seasonality
   'seasonality.title': 'Análisis de Estacionalidad',
-  'seasonality.description': 'Siga cómo los costos de envío, tiempos de tránsito y riesgos fluctúan a lo largo del año',
+  'seasonality.description': 'Seguimiento de cómo fluctúan los costos de envío, los tiempos de tránsito y los riesgos durante todo el año',
   'seasonality.annual': 'Tendencias Anuales de Envío',
-  'seasonality.monthly': 'Costos de flete mensuales, congestion y indicadores de riesgo',
+  'seasonality.monthly': 'Costos de flete mensuales, congestión e indicadores de riesgo',
   'seasonality.freight': 'Flete',
   'seasonality.congestion': 'Congestión',
   'seasonality.risk': 'Riesgo',
   'seasonality.factors': 'Factores Estacionales Clave',
-  'seasonality.q4': 'Las tarifas de envío de Q4 alcanzan su máximo durante la temporada navideña (octubre-diciembre)',
+  'seasonality.q4': 'Las tarifas de envío del Q4 alcanzan su punto máximo durante la temporada de vacaciones (octubre-diciembre)',
   'seasonality.chinese': 'El Año Nuevo Chino (enero-febrero) causa retrasos en la fabricación',
   'seasonality.summer': 'Los meses de verano muestran mayor congestión portuaria',
-  'seasonality.q2': 'Considere envíos en Q2 para un balance óptimo entre costo y eficiencia',
+  'seasonality.q2': 'Considere enviar en Q2 para un equilibrio óptimo entre costo y eficiencia',
   
   // Tariff Heatmap
   'tariffheatmap.title': 'Análisis de Aranceles por País',
   'tariffheatmap.description': 'Visualice las tasas arancelarias en diferentes países para identificar rutas comerciales óptimas',
-  'tariffheatmap.insights': 'Información Clave',
-  'tariffheatmap.distribution': 'Distribución del Volumen Comercial',
+  'tariffheatmap.insights': 'Ideas Clave',
+  'tariffheatmap.distribution': 'Distribución de Volumen Comercial',
   'tariffheatmap.low': 'Países con Aranceles Bajos',
   'tariffheatmap.medium': 'Países con Aranceles Medios',
   'tariffheatmap.high': 'Países con Aranceles Altos',
@@ -199,15 +209,15 @@ export const esTranslations = {
   // Tariff Legend
   'tarifflegend.title': 'Leyenda de Categorías Arancelarias',
   'tarifflegend.low': 'Arancel Bajo (0-5%)',
-  'tarifflegend.lowdesc': 'Barreras comerciales mínimas o inexistentes, ideal para importaciones rentables',
+  'tarifflegend.lowdesc': 'Barreras comerciales mínimas o nulas, ideal para importaciones rentables',
   'tarifflegend.medium': 'Arancel Medio (6-15%)',
-  'tarifflegend.mediumdesc': 'Barreras comerciales moderadas que pueden impactar en los cálculos de costos',
+  'tarifflegend.mediumdesc': 'Barreras comerciales moderadas que pueden afectar los cálculos de costos',
   'tarifflegend.high': 'Arancel Alto (>15%)',
   'tarifflegend.highdesc': 'Barreras comerciales significativas que requieren una cuidadosa consideración de costos',
   'tarifflegend.note': 'Nota',
-  'tarifflegend.notedesc': 'El tamaño de la burbuja representa el volumen comercial en unidades. Las burbujas más grandes indican mayor volumen comercial con el país correspondiente.',
-  
+  'tarifflegend.notedesc': 'El tamaño de la burbuja representa el volumen comercial en unidades. Las burbujas más grandes indican un mayor volumen comercial con el país correspondiente.',
+
   // Compliance Dashboard
   'compliance.title': 'Panel de Cumplimiento Regulatorio',
-  'compliance.description': 'Siga su estado de cumplimiento y gestione los requisitos de documentación',
+  'compliance.description': 'Controle su estado de cumplimiento y gestione los requisitos de documentación',
 };

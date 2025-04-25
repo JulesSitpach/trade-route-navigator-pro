@@ -19,26 +19,42 @@ interface RouteCardProps {
 const RouteCard = ({ route }: RouteCardProps) => {
   const { language, t } = useLanguage();
   
-  // Translate route description if in Spanish mode
+  // Translate route description based on transport mode and characteristics
   const getTranslatedDescription = () => {
     if (language === 'en') return route.description;
     
-    // Simple translation logic for route descriptions
-    if (route.description.includes('SEA freight route')) {
-      return route.description.replace('SEA freight route via nearest major port. Standard shipping service.', 
-        'Ruta de carga MARÍTIMA a través del puerto principal más cercano. Servicio de envío estándar.');
-    } else if (route.description.includes('AIR freight')) {
-      return route.description.replace('AIR freight expedited service.', 
-        'Servicio acelerado de carga AÉREA.');
-    } else if (route.description.includes('MULTIMODAL')) {
-      return route.description.replace('MULTIMODAL route combining road and rail transport.', 
-        'Ruta MULTIMODAL que combina transporte terrestre y ferroviario.');
-    } else if (route.description.includes('RAIL')) {
-      return route.description.replace('RAIL freight using international rail corridors.', 
-        'Carga FERROVIARIA utilizando corredores ferroviarios internacionales.');
+    const transportModeKey = route.description.includes('SEA') ? 'sea' :
+                             route.description.includes('AIR') ? 'air' :
+                             route.description.includes('RAIL') ? 'rail' : 
+                             route.description.includes('MULTIMODAL') ? 'multimodal' : 'sea';
+    
+    const isStandard = route.description.includes('Standard shipping service');
+    const isPremium = route.description.includes('Premium service');
+    const isTimeSensitive = route.description.includes('time-sensitive');
+    
+    // Check if the route mentions via points or direct route
+    const hasViaPoints = !route.description.includes('direct route');
+    
+    let translatedDesc = t(`routes.description.${transportModeKey}`);
+    
+    // Add service type description
+    if (isPremium && isTimeSensitive) {
+      translatedDesc += ` ${t('routes.description.premium')}`;
+    } else if (isStandard) {
+      translatedDesc += ` ${t('routes.description.standard')}`;
     }
     
-    return route.description;
+    // Add via points mention or direct route
+    if (hasViaPoints) {
+      // Extract the via points from the original description if possible
+      const viaMatch = route.description.match(/via ([^.]+)/);
+      const viaPoints = viaMatch ? viaMatch[1] : '';
+      translatedDesc = t('routes.description.via', { points: viaPoints });
+    } else {
+      translatedDesc += ` ${t('routes.description.direct')}`;
+    }
+    
+    return translatedDesc;
   };
   
   // Translate risk level

@@ -105,6 +105,16 @@ export const enTranslations = {
   'routes.title': 'Alternative Routes and Transportation Methods',
   'routes.description': 'Strategic shipping options tailored for small and medium-sized businesses to optimize costs, timeline, and market opportunities.',
   
+  // Route Descriptions
+  'routes.description.sea': 'SEA freight route',
+  'routes.description.air': 'AIR freight route',
+  'routes.description.rail': 'RAIL freight route',
+  'routes.description.multimodal': 'MULTIMODAL freight route',
+  'routes.description.standard': 'Standard shipping service.',
+  'routes.description.premium': 'Premium service for time-sensitive shipments.',
+  'routes.description.via': 'via {{points}}.',
+  'routes.description.direct': 'direct route.',
+  
   // Regulations
   'regulations.documents': 'Required Documents',
   'regulations.timeline': 'Regulatory Timeline',
