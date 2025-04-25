@@ -1,3 +1,4 @@
+
 import { Card, CardContent } from "@/components/ui/card";
 import { 
   ChartContainer, 
@@ -13,14 +14,33 @@ import { useState, useEffect } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { generateCostItems } from "../data/costData";
 
+interface CostBreakdownChartProps {
+  productValue?: number;
+  shippingData?: {
+    quantity: string;
+    weight: string;
+    transportMode: string;
+  };
+}
+
 // Transform cost data from costData.ts to chart format
-const useCostData = () => {
+const useCostData = (props: CostBreakdownChartProps) => {
   const { language } = useLanguage();
   const [costData, setCostData] = useState([]);
 
   useEffect(() => {
-    // Get cost items with default product value
-    const items = generateCostItems({ productValue: 10000 });
+    // Get cost items with user's product value or fall back to 0
+    const productValue = props.productValue || 0;
+    
+    // Generate cost items based on actual user data
+    const items = generateCostItems({
+      productValue,
+      shippingData: props.shippingData || {
+        quantity: '1',
+        weight: '0',
+        transportMode: 'sea'
+      }
+    });
     
     // Transform to chart data format with colors
     const chartData = items.map((item, index) => {
@@ -39,7 +59,7 @@ const useCostData = () => {
     });
 
     setCostData(chartData);
-  }, [language]);
+  }, [language, props.productValue, props.shippingData]);
 
   return { costData };
 };
@@ -60,8 +80,8 @@ const translateLabel = (label: string): string => {
   return translations[label] || label;
 };
 
-const CostBreakdownChart = () => {
-  const { costData } = useCostData();
+const CostBreakdownChart = ({ productValue, shippingData }: CostBreakdownChartProps) => {
+  const { costData } = useCostData({ productValue, shippingData });
   const { t, language } = useLanguage();
 
   return (

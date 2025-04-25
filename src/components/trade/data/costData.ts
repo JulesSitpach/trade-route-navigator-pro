@@ -58,15 +58,9 @@ export const generateCostItems = ({
   ];
 };
 
-// Default cost items using the generate function
-export const defaultCostItems = generateCostItems({
-  productValue: 10000
-});
-
 export const calculateTotalCost = (items: Array<{ value: string }>) => {
   return items.reduce((sum, item) => {
     const value = parseFloat(item.value.replace(/[$,]/g, '')) || 0;
     return sum + value;
   }, 0);
 };
-
