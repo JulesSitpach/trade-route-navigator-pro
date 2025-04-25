@@ -18,39 +18,25 @@ interface RouteCardProps {
 const RouteCard = ({ route }: RouteCardProps) => {
   const { language, t } = useLanguage();
   
-  // Translate route description based on transport mode and characteristics
   const getTranslatedDescription = () => {
-    if (language === 'en') return route.description;
-    
-    // Determine transport mode
     const transportMode = route.description.includes('SEA') ? 'sea' :
                          route.description.includes('AIR') ? 'air' :
                          route.description.includes('RAIL') ? 'rail' : 
                          route.description.includes('MULTIMODAL') ? 'multimodal' : 'sea';
     
-    // Determine service type
     const serviceType = route.description.includes('Premium service') ? 'premium' : 'standard';
     
-    // Check if the route has via points
+    const transportText = t(`routes.description.${transportMode}`);
+    const serviceText = t(`routes.description.${serviceType}`);
+    
     const viaMatch = route.description.match(/via ([^.]+)/);
-    
-    // Build the translated description
-    let translatedDesc = t(`routes.description.${transportMode}`);
-    
-    // Add routing information (via points or direct)
     if (viaMatch) {
-      translatedDesc += ` ${t('routes.description.via', { points: viaMatch[1] })}`;
-    } else {
-      translatedDesc += ` ${t('routes.description.direct')}`;
+      return `${transportText} ${t('routes.description.via')} ${viaMatch[1]}. ${serviceText}`;
     }
     
-    // Add service type description
-    translatedDesc += ` ${t(`routes.description.${serviceType}`)}`;
-    
-    return translatedDesc;
+    return `${transportText} ${t('routes.description.direct')} ${serviceText}`;
   };
   
-  // Translate risk level
   const getTranslatedRiskLevel = (riskLevel: string) => {
     if (language === 'en') return riskLevel;
     
@@ -66,7 +52,6 @@ const RouteCard = ({ route }: RouteCardProps) => {
   return (
     <Card className="p-6">
       <div className="flex flex-col space-y-6">
-        {/* Header with basic route information */}
         <div className="flex flex-wrap justify-between items-start gap-4">
           <div className="space-y-1 flex-1">
             <div className="flex items-center gap-2">
@@ -90,7 +75,6 @@ const RouteCard = ({ route }: RouteCardProps) => {
           </div>
         </div>
         
-        {/* Core metrics */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <MetricCard icon={<Clock className="h-5 w-5 text-blue-500" />} 
                      title={t('route.transitTime')} 
@@ -108,7 +92,6 @@ const RouteCard = ({ route }: RouteCardProps) => {
           )}
         </div>
         
-        {/* Tabs for detailed information */}
         <Tabs defaultValue="advantages" className="w-full">
           <TabsList className="grid grid-cols-2 md:grid-cols-4">
             <TabsTrigger value="advantages">
