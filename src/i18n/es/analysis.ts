@@ -56,5 +56,9 @@ export const analysisTranslations = {
   // Compliance
   'compliance.title': 'Panel de Cumplimiento Regulatorio',
   'compliance.description': 'Seguimiento del estado de cumplimiento en diferentes regulaciones y países',
-  'compliance.visualization': 'Visualización del panel de cumplimiento regulatorio'
+  'compliance.visualization': 'Visualización del panel de cumplimiento regulatorio',
+  
+  // Disclaimer
+  'disclaimer.title': 'Aviso Importante',
+  'disclaimer.message': 'Los cálculos de costos y análisis proporcionados son aproximaciones destinadas a ayudar a las empresas a explorar opciones de comercio internacional. Estas estimaciones no deben considerarse como cotizaciones exactas y pueden variar según las condiciones actuales del mercado, requisitos específicos y otros factores.',
 };

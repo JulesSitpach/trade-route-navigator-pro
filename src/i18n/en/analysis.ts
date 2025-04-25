@@ -57,4 +57,8 @@ export const analysisTranslations = {
   'compliance.description': 'Track compliance status across different regulations and countries',
   'compliance.visualization': 'Regulatory compliance dashboard visualization',
   'cost.total.shipment.value': 'Total Shipment Value ($)',
+  
+  // Disclaimer
+  'disclaimer.title': 'Important Notice',
+  'disclaimer.message': 'The cost calculations and analysis provided are approximations intended to help businesses explore international trade options. These estimates should not be considered as exact quotes and may vary based on current market conditions, specific requirements, and other factors.',
 };

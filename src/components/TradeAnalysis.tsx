@@ -7,6 +7,7 @@ import TariffAnalysis from './TariffAnalysis';
 import CostAnalysisTab from './trade/CostAnalysisTab';
 import RegulationsTab from './trade/RegulationsTab';
 import VisualizationsTab from './trade/VisualizationsTab';
+import Disclaimer from './trade/Disclaimer';
 import { ChartBar, Route as RouteIcon, FileText, ScrollText, BarChart } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 
@@ -46,6 +47,8 @@ const TradeAnalysis = ({ data }: TradeAnalysisProps) => {
   return (
     <div className="p-6">
       <h2 className="text-xl font-semibold text-gray-800 mb-6">{t('analysis.title')}</h2>
+      
+      <Disclaimer />
       
       <Tabs defaultValue="costs" className="space-y-4">
         <TabsList className="grid w-full grid-cols-2 md:grid-cols-5 gap-2">
