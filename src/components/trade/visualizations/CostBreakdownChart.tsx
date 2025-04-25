@@ -1,4 +1,3 @@
-
 import { Card, CardContent } from "@/components/ui/card";
 import { 
   ChartContainer, 
@@ -12,52 +11,53 @@ import { chartConfig } from "./chartConfig";
 import { Donut } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { generateCostItems } from "../data/costData";
 
-// Transform cost data from the format in CostAnalysisTab to the format needed for the chart
+// Transform cost data from costData.ts to chart format
 const useCostData = () => {
-  const [costData, setCostData] = useState([
-    { name: "Product Value", value: 10000, color: "#3498db" },
-    { name: "Import Duty", value: 850, color: "#e74c3c" },
-    { name: "Freight Cost", value: 1200, color: "#2ecc71" },
-    { name: "Insurance", value: 120, color: "#f39c12" },
-    { name: "Documentation Fees", value: 75, color: "#9b59b6" },
-    { name: "Customs Clearance", value: 150, color: "#16a085" },
-    { name: "Inland Transportation", value: 300, color: "#d35400" },
-    { name: "Warehousing", value: 200, color: "#8e44ad" },
-    { name: "Other Taxes and Fees", value: 180, color: "#7f8c8d" }
-  ]);
-  
   const { language } = useLanguage();
-  
+  const [costData, setCostData] = useState([]);
+
   useEffect(() => {
-    if (language === 'es') {
-      setCostData([
-        { name: "Valor del Producto", value: 10000, color: "#3498db" },
-        { name: "Arancel de Importación", value: 850, color: "#e74c3c" },
-        { name: "Costo de Flete", value: 1200, color: "#2ecc71" },
-        { name: "Seguro", value: 120, color: "#f39c12" },
-        { name: "Tarifas de Documentación", value: 75, color: "#9b59b6" },
-        { name: "Despacho Aduanero", value: 150, color: "#16a085" },
-        { name: "Transporte Terrestre", value: 300, color: "#d35400" },
-        { name: "Almacenaje", value: 200, color: "#8e44ad" },
-        { name: "Otros Impuestos y Tarifas", value: 180, color: "#7f8c8d" }
-      ]);
-    } else {
-      setCostData([
-        { name: "Product Value", value: 10000, color: "#3498db" },
-        { name: "Import Duty", value: 850, color: "#e74c3c" },
-        { name: "Freight Cost", value: 1200, color: "#2ecc71" },
-        { name: "Insurance", value: 120, color: "#f39c12" },
-        { name: "Documentation Fees", value: 75, color: "#9b59b6" },
-        { name: "Customs Clearance", value: 150, color: "#16a085" },
-        { name: "Inland Transportation", value: 300, color: "#d35400" },
-        { name: "Warehousing", value: 200, color: "#8e44ad" },
-        { name: "Other Taxes and Fees", value: 180, color: "#7f8c8d" }
-      ]);
-    }
+    // Get cost items with default product value
+    const items = generateCostItems({ productValue: 10000 });
+    
+    // Transform to chart data format with colors
+    const chartData = items.map((item, index) => {
+      const colors = [
+        "#3498db", "#e74c3c", "#2ecc71", "#f39c12", "#9b59b6",
+        "#16a085", "#d35400", "#8e44ad", "#7f8c8d"
+      ];
+      
+      const value = parseFloat(item.value.replace(/[$,]/g, ''));
+      
+      return {
+        name: language === 'es' ? translateLabel(item.label) : item.label,
+        value: value,
+        color: colors[index % colors.length]
+      };
+    });
+
+    setCostData(chartData);
   }, [language]);
 
   return { costData };
+};
+
+// Helper function to translate labels to Spanish
+const translateLabel = (label: string): string => {
+  const translations: { [key: string]: string } = {
+    "Product Value": "Valor del Producto",
+    "Import Duty": "Arancel de Importación",
+    "Freight Cost": "Costo de Flete",
+    "Insurance": "Seguro",
+    "Documentation Fees": "Tarifas de Documentación",
+    "Customs Clearance": "Despacho Aduanero",
+    "Inland Transportation": "Transporte Terrestre",
+    "Warehousing": "Almacenaje",
+    "Other Taxes and Fees": "Otros Impuestos y Tarifas"
+  };
+  return translations[label] || label;
 };
 
 const CostBreakdownChart = () => {
