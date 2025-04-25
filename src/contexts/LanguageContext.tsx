@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Language, LanguageContextType } from '../i18n/types';
@@ -16,8 +15,14 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
     setLanguage(lang);
   };
 
-  // Simple translation function that gets a value by key
+  // Enhanced translation function that can handle both direct keys and namespaced keys
   const t = (key: string): string => {
+    // Check if the key contains a namespace prefix (e.g., 'shipping:quantity')
+    if (key.includes(':')) {
+      const [namespace, actualKey] = key.split(':');
+      return i18n.t(actualKey, { ns: namespace });
+    }
+    // Otherwise use the default namespace
     return i18n.t(key);
   };
 
