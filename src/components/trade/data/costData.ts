@@ -35,15 +35,15 @@ export const generateCostItems = ({
   const quantity = parseInt(shippingData.quantity) || 1;
   const weight = parseFloat(shippingData.weight) || 10; // Default to 10kg if weight is 0
   
-  // Updated freight rates based on current market averages
+  // More realistic freight rates based on industry standards
   const baseFreightRate = {
     air: {
-      base: 12.5, // USD per kg for air freight
-      minimum: 150 // Minimum cost for air shipment
+      base: 15.0, // USD per kg for air freight
+      minimum: 250 // Minimum cost for air shipment
     },
     sea: {
-      base: 3.8, // USD per kg for sea freight
-      minimum: 85  // Minimum cost for sea shipment
+      base: 5.5, // USD per kg for sea freight
+      minimum: 500  // Minimum cost for sea shipment
     }
   };
 
@@ -52,7 +52,7 @@ export const generateCostItems = ({
     (shippingData.transportMode === 'air' ? baseFreightRate.air.base : baseFreightRate.sea.base) * 
     quantity;
 
-  // Apply minimum freight costs
+  // Apply minimum freight costs - realistic minimums for SMB international shipments
   freightCost = Math.max(
     freightCost, 
     shippingData.transportMode === 'air' ? baseFreightRate.air.minimum : baseFreightRate.sea.minimum
@@ -60,33 +60,44 @@ export const generateCostItems = ({
 
   // Volume-based discounts for larger quantities
   if (quantity > 5) {
-    freightCost *= 0.9; // 10% discount for bulk shipping
+    freightCost *= 0.92; // 8% discount for bulk shipping
+  }
+  if (quantity > 20) {
+    freightCost *= 0.95; // Additional 5% discount for larger volumes
   }
 
   // Value-based additional costs
   if (productValue > 1000) {
-    freightCost += (productValue * 0.018); // 1.8% surcharge for valuable items
+    freightCost += (productValue * 0.012); // 1.2% surcharge for valuable items
+  }
+  
+  // Additional distance-based costs if applicable
+  if (shippingData.transportMode === 'sea') {
+    // Add a buffer for longer sea routes
+    freightCost *= 1.15;
   }
 
   // Calculate other costs with more realistic rates
   const importDuty = (productValue * importDutyRate) / 100;
-  const insurance = Math.max((productValue * 1.5) / 100, 50); // 1.5% of value or minimum $50
+  const insuranceRate = 1.5; // 1.5% of value
+  const insurance = Math.max((productValue * insuranceRate) / 100, 50); // 1.5% of value or minimum $50
   const documentationFees = Math.max(95 * (shippingData.transportMode === 'air' ? 1.2 : 1), 75);
   const customsClearance = Math.max(175, productValue * 0.01); // Greater of $175 or 1% of value
   const inlandTransportation = Math.max(250 * quantity, 150); // Minimum $150
   const warehousingCost = Math.max(180 * quantity, productValue * 0.015); // Greater of $180/unit or 1.5% of value
-  const otherFees = (productValue * 2) / 100; // 2% for miscellaneous fees
+  const otherFeesRate = 2.0; // 2% for miscellaneous fees
+  const otherFees = (productValue * otherFeesRate) / 100;
 
   return [
     { label: "Product Value", value: formatCurrency(productValue) },
     { label: `Import Duty (${importDutyRate}%)`, value: formatCurrency(importDuty) },
     { label: "Freight Cost", value: formatCurrency(freightCost) },
-    { label: "Insurance (1.5%)", value: formatCurrency(insurance) },
+    { label: `Insurance (${insuranceRate}%)`, value: formatCurrency(insurance) },
     { label: "Documentation Fees", value: formatCurrency(documentationFees) },
     { label: "Customs Clearance", value: formatCurrency(customsClearance) },
     { label: "Inland Transportation", value: formatCurrency(inlandTransportation) },
     { label: "Warehousing", value: formatCurrency(warehousingCost) },
-    { label: "Other Taxes and Fees", value: formatCurrency(otherFees) }
+    { label: `Other Taxes and Fees (${otherFeesRate}%)`, value: formatCurrency(otherFees) }
   ];
 };
 
