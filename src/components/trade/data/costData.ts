@@ -1,3 +1,4 @@
+
 import { calculateTariff } from '@/data/countryTariffData';
 
 interface CostItem {
@@ -71,30 +72,32 @@ export const generateCostItems = ({
   }
 
   if (quantity > 10) {
-    freightCost *= 0.95;
+    freightCost *= 0.95;  // 5% discount for bulk
   }
   if (quantity > 50) {
-    freightCost *= 0.90;
+    freightCost *= 0.90;  // Additional 10% discount for larger bulk
   }
 
+  // Seasonal adjustment
   const currentMonth = new Date().getMonth();
   if (currentMonth >= 6 && currentMonth <= 8) {
-    freightCost *= 1.15;
+    freightCost *= 1.15; // Peak season surcharge
   }
 
+  // Value-based adjustment
   if (productValue > 5000) {
-    freightCost *= 1.1;
+    freightCost *= 1.1; // High-value surcharge
   }
 
   const importDuty = (productValue * importDutyRate) / 100;
-  const insuranceRate = 1.5;
-  const insurance = Math.max((productValue * insuranceRate) / 100, 50);
+  const insuranceRate = 1.5; // Standard insurance rate
+  const insurance = Math.max((productValue * insuranceRate) / 100, 50); // Minimum insurance of $50
 
   const documentationFees = shippingData.transportMode === 'air' 
-    ? 95
-    : 125;
+    ? 95  // Air freight documentation
+    : 125; // Sea freight documentation
 
-  const customsClearance = Math.max(175, productValue * 0.01);
+  const customsClearance = Math.max(175, productValue * 0.01); // Minimum $175 or 1% of value
 
   const inlandBaseRate = shippingData.transportMode === 'air' ? 150 : 200;
   const inlandPerUnit = Math.min(50 * quantity, 500);
