@@ -8,6 +8,7 @@ import { calculateTariff } from '@/data/countryTariffData';
 import { calculateFreightCost } from '../data/calculations/freightCosts';
 import { calculateInlandTransportation } from '../data/calculations/inlandTransportation';
 import { formatCurrency } from '../data/utils/formatters';
+import { chartConfig } from './chartConfig';
 
 interface CostBreakdownChartProps {
   productValue: number;
@@ -130,7 +131,11 @@ const CostBreakdownChart = ({
               }
             </div>
           ) : (
-            <ChartContainer height={400} className="w-full">
+            <ChartContainer 
+              height={400} 
+              className="w-full"
+              config={chartConfig}
+            >
               <ResponsiveContainer width="100%" height={400}>
                 <PieChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
                   <ChartLegend 
