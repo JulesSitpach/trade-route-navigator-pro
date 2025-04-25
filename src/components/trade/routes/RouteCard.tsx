@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -31,7 +32,9 @@ const RouteCard = ({ route }: RouteCardProps) => {
     
     const viaMatch = route.description.match(/via ([^.]+)/);
     if (viaMatch) {
-      return `${transportText} ${t('routes.description.via')} ${viaMatch[1]}. ${serviceText}`;
+      // Fix the interpolation by using string replacement
+      const viaText = t('routes.description.via').replace('{{points}}', viaMatch[1]);
+      return `${transportText} ${viaText} ${serviceText}`;
     }
     
     return `${transportText} ${t('routes.description.direct')} ${serviceText}`;
