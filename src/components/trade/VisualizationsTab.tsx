@@ -1,6 +1,8 @@
 
 import { useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { useLanguage } from '@/contexts/LanguageContext';
 import CostBreakdownChart from './visualizations/CostBreakdownChart';
 import RouteComparisonTimeline from './visualizations/RouteComparisonTimeline';
 import TariffHeatmap from './visualizations/TariffHeatmap';
@@ -8,32 +10,31 @@ import SeasonalityGraph from './visualizations/SeasonalityGraph';
 import RiskAssessmentMatrix from './visualizations/RiskAssessmentMatrix';
 import SupplyChainFlowDiagram from './visualizations/SupplyChainFlowDiagram';
 import RegulatoryComplianceDashboard from './visualizations/RegulatoryComplianceDashboard';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { VisualizationsTabProps } from './visualizations/types/visualizationTypes';
-import { Route } from './types';
 
 const VisualizationsTab = ({ data, routes }: VisualizationsTabProps) => {
   const [activeChart, setActiveChart] = useState('cost-breakdown');
+  const { t } = useLanguage();
 
   return (
     <div className="space-y-6">
       <Card>
         <CardHeader>
-          <CardTitle>Trade Data Visualizations</CardTitle>
+          <CardTitle>{t('analysis.visualizations')}</CardTitle>
           <CardDescription>
-            Interactive visualizations to help you understand your global trade data and opportunities
+            {t('analysis.visualizations.description')}
           </CardDescription>
         </CardHeader>
         <CardContent>
           <Tabs value={activeChart} onValueChange={setActiveChart} className="w-full">
             <TabsList className="grid grid-cols-4 w-full md:grid-cols-4 lg:grid-cols-7">
-              <TabsTrigger value="cost-breakdown">Cost Breakdown</TabsTrigger>
-              <TabsTrigger value="route-comparison">Routes Timeline</TabsTrigger>
-              <TabsTrigger value="tariff-heatmap">Tariff Heatmap</TabsTrigger>
-              <TabsTrigger value="seasonality">Seasonality</TabsTrigger>
-              <TabsTrigger value="risk-matrix">Risk Matrix</TabsTrigger>
-              <TabsTrigger value="supply-chain">Supply Chain</TabsTrigger>
-              <TabsTrigger value="compliance">Compliance</TabsTrigger>
+              <TabsTrigger value="cost-breakdown">{t('tab.costs')}</TabsTrigger>
+              <TabsTrigger value="route-comparison">{t('tab.routes')}</TabsTrigger>
+              <TabsTrigger value="tariff-heatmap">{t('tab.tariffs')}</TabsTrigger>
+              <TabsTrigger value="seasonality">{t('tab.seasonality')}</TabsTrigger>
+              <TabsTrigger value="risk-matrix">{t('tab.risks')}</TabsTrigger>
+              <TabsTrigger value="supply-chain">{t('tab.supply')}</TabsTrigger>
+              <TabsTrigger value="compliance">{t('tab.compliance')}</TabsTrigger>
             </TabsList>
 
             <TabsContent value="cost-breakdown" className="pt-6">

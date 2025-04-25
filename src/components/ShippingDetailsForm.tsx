@@ -1,12 +1,13 @@
-
 import { useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { cn } from '@/lib/utils';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const ShippingDetailsForm = ({ onChange }: { onChange: (data: any) => void }) => {
+  const { t } = useLanguage();
   const [values, setValues] = useState({
     quantity: '',
     transportMode: '',
@@ -23,10 +24,8 @@ const ShippingDetailsForm = ({ onChange }: { onChange: (data: any) => void }) =>
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   const updateField = (field: string, value: string) => {
-    // Update the local state
     setValues(prev => ({ ...prev, [field]: value }));
     
-    // Clear the error for this field if it has a value
     if (value) {
       setErrors(prev => {
         const newErrors = { ...prev };
@@ -35,7 +34,6 @@ const ShippingDetailsForm = ({ onChange }: { onChange: (data: any) => void }) =>
       });
     }
     
-    // Update the parent component
     onChange({ [field]: value });
   };
 
@@ -56,12 +54,14 @@ const ShippingDetailsForm = ({ onChange }: { onChange: (data: any) => void }) =>
 
   return (
     <div className="p-6">
-      <h2 className="text-xl font-semibold text-gray-800 mb-6">Shipping Details</h2>
+      <h2 className="text-xl font-semibold text-gray-800 mb-6">
+        {t('shipping.details')}
+      </h2>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="space-y-2">
           <Label htmlFor="quantity" className="flex items-center gap-1">
-            Quantity
+            {t('shipping.quantity')}
             <span className="text-red-500">*</span>
           </Label>
           <Input 
@@ -69,7 +69,7 @@ const ShippingDetailsForm = ({ onChange }: { onChange: (data: any) => void }) =>
             type="number" 
             min="1"
             value={values.quantity}
-            placeholder="Enter quantity"
+            placeholder={t('shipping.quantity.placeholder')}
             onChange={(e) => {
               updateField('quantity', e.target.value);
               validateField('quantity', e.target.value);
@@ -79,13 +79,13 @@ const ShippingDetailsForm = ({ onChange }: { onChange: (data: any) => void }) =>
             )}
           />
           {errors.quantity && (
-            <p className="text-sm text-red-500 mt-1">{errors.quantity}</p>
+            <p className="text-sm text-red-500 mt-1">{t('validation.required')}</p>
           )}
         </div>
 
         <div className="space-y-2">
           <Label htmlFor="transportMode" className="flex items-center gap-1">
-            Transport Mode
+            {t('shipping.mode')}
             <span className="text-red-500">*</span>
           </Label>
           <Select 
@@ -101,66 +101,66 @@ const ShippingDetailsForm = ({ onChange }: { onChange: (data: any) => void }) =>
                 errors.transportMode && "border-red-500 focus-visible:ring-red-500"
               )}
             >
-              <SelectValue placeholder="Select Transport Mode" />
+              <SelectValue placeholder={t('shipping.mode.placeholder')} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="ocean">Ocean</SelectItem>
-              <SelectItem value="air">Air</SelectItem>
-              <SelectItem value="road">Road</SelectItem>
-              <SelectItem value="rail">Rail</SelectItem>
-              <SelectItem value="multimodal">Multimodal</SelectItem>
+              <SelectItem value="ocean">{t('transport.ocean')}</SelectItem>
+              <SelectItem value="air">{t('transport.air')}</SelectItem>
+              <SelectItem value="road">{t('transport.road')}</SelectItem>
+              <SelectItem value="rail">{t('transport.rail')}</SelectItem>
+              <SelectItem value="multimodal">{t('transport.multimodal')}</SelectItem>
             </SelectContent>
           </Select>
           {errors.transportMode && (
-            <p className="text-sm text-red-500 mt-1">{errors.transportMode}</p>
+            <p className="text-sm text-red-500 mt-1">{t('validation.required')}</p>
           )}
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="shipmentType">Shipment Type</Label>
+          <Label htmlFor="shipmentType">{t('shipping.type')}</Label>
           <Select 
             value={values.shipmentType} 
             onValueChange={(value) => updateField('shipmentType', value)}
           >
             <SelectTrigger id="shipmentType">
-              <SelectValue placeholder="Select Shipment Type" />
+              <SelectValue placeholder={t('shipping.type.placeholder')} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="fcl">Full Container Load (FCL)</SelectItem>
-              <SelectItem value="lcl">Less than Container Load (LCL)</SelectItem>
-              <SelectItem value="bulk">Bulk Cargo</SelectItem>
-              <SelectItem value="breakbulk">Break Bulk</SelectItem>
-              <SelectItem value="roro">Roll-on/Roll-off</SelectItem>
+              <SelectItem value="fcl">{t('shipment.fcl')}</SelectItem>
+              <SelectItem value="lcl">{t('shipment.lcl')}</SelectItem>
+              <SelectItem value="bulk">{t('shipment.bulk')}</SelectItem>
+              <SelectItem value="breakbulk">{t('shipment.breakbulk')}</SelectItem>
+              <SelectItem value="roro">{t('shipment.roro')}</SelectItem>
             </SelectContent>
           </Select>
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="weight">Weight (kg)</Label>
+          <Label htmlFor="weight">{t('shipping.weight')}</Label>
           <Input 
             id="weight" 
             type="number" 
             value={values.weight}
-            placeholder="Enter weight in kg"
+            placeholder={t('shipping.weight')}
             onChange={(e) => updateField('weight', e.target.value)}
           />
         </div>
 
         <div className="space-y-2">
-          <Label>Dimensions (cm)</Label>
+          <Label>{t('shipping.dimensions')}</Label>
           <div className="grid grid-cols-3 gap-4">
             <Input 
-              placeholder="Length" 
+              placeholder={t('shipping.length')} 
               value={values.length}
               onChange={(e) => updateField('length', e.target.value)}
             />
             <Input 
-              placeholder="Width" 
+              placeholder={t('shipping.width')} 
               value={values.width}
               onChange={(e) => updateField('width', e.target.value)}
             />
             <Input 
-              placeholder="Height" 
+              placeholder={t('shipping.height')} 
               value={values.height}
               onChange={(e) => updateField('height', e.target.value)}
             />
@@ -168,45 +168,45 @@ const ShippingDetailsForm = ({ onChange }: { onChange: (data: any) => void }) =>
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="packageType">Packaging Type</Label>
+          <Label htmlFor="packageType">{t('shipping.package')}</Label>
           <Select 
             value={values.packageType} 
             onValueChange={(value) => updateField('packageType', value)}
           >
             <SelectTrigger id="packageType">
-              <SelectValue placeholder="Select Package Type" />
+              <SelectValue placeholder={t('shipping.package.placeholder')} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="boxes">Boxes</SelectItem>
-              <SelectItem value="pallets">Pallets</SelectItem>
-              <SelectItem value="drums">Drums</SelectItem>
-              <SelectItem value="bags">Bags</SelectItem>
-              <SelectItem value="crates">Crates</SelectItem>
+              <SelectItem value="boxes">{t('package.boxes')}</SelectItem>
+              <SelectItem value="pallets">{t('package.pallets')}</SelectItem>
+              <SelectItem value="drums">{t('package.drums')}</SelectItem>
+              <SelectItem value="bags">{t('package.bags')}</SelectItem>
+              <SelectItem value="crates">{t('package.crates')}</SelectItem>
             </SelectContent>
           </Select>
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="dangerousGoods">Dangerous Goods</Label>
+          <Label htmlFor="dangerousGoods">{t('shipping.dangerous')}</Label>
           <Select 
             value={values.dangerousGoods} 
             onValueChange={(value) => updateField('dangerousGoods', value)}
           >
             <SelectTrigger id="dangerousGoods">
-              <SelectValue placeholder="Select Dangerous Goods Status" />
+              <SelectValue placeholder={t('shipping.dangerous')} />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="no">No</SelectItem>
-              <SelectItem value="yes">Yes</SelectItem>
+              <SelectItem value="yes">Si</SelectItem>
             </SelectContent>
           </Select>
         </div>
 
         <div className="col-span-2 space-y-2">
-          <Label htmlFor="specialRequirements">Special Requirements</Label>
+          <Label htmlFor="specialRequirements">{t('shipping.requirements')}</Label>
           <Textarea 
             id="specialRequirements" 
-            placeholder="Enter any special shipping requirements or notes"
+            placeholder={t('shipping.requirements')}
             value={values.specialRequirements}
             className="min-h-[100px]"
             onChange={(e) => updateField('specialRequirements', e.target.value)}
