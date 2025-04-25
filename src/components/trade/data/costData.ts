@@ -1,31 +1,9 @@
+
 import { calculateTariff } from '@/data/countryTariffData';
-
-interface CostItem {
-  label: string;
-  value: string;
-}
-
-interface CostBreakdownInput {
-  productValue: number;
-  importDutyRate?: number;
-  freightCost?: number;
-  insuranceRate?: number;
-  documentationFees?: number;
-  customsClearance?: number;
-  inlandTransportation?: number;
-  warehousingCost?: number;
-  otherFeesRate?: number;
-  originCountry?: string;
-  destinationCountry?: string;
-  productCategory?: string;
-}
-
-const formatCurrency = (value: number): string => {
-  return `$${value.toLocaleString(undefined, { 
-    minimumFractionDigits: 2, 
-    maximumFractionDigits: 2 
-  })}`;
-};
+import { CostItem, CostBreakdownInput } from './types/costTypes';
+import { formatCurrency } from './utils/formatters';
+import { calculateFreightCost } from './calculations/freightCosts';
+import { calculateInlandTransportation } from './calculations/inlandTransportation';
 
 export const generateCostItems = ({
   productValue,
@@ -43,47 +21,12 @@ export const generateCostItems = ({
   const quantity = parseInt(shippingData.quantity) || 1;
   const weight = parseFloat(shippingData.weight) || 100;
 
-  const baseFreightRates = {
-    air: {
-      base: 6.0 * (weight / 100),
-      minimum: 600 * (productValue > 5000 ? 1.1 : 1)
-    },
-    sea: {
-      LCL: {
-        base: 55.0 * (weight / 1000),
-        minimum: 500 * (productValue > 10000 ? 1.2 : 1)
-      },
-      FCL: {
-        twenty: 2200 * (quantity > 10 ? 0.95 : 1),
-        forty: 3400 * (quantity > 10 ? 0.95 : 1)
-      }
-    }
-  };
-
-  let freightCost = 0;
-  if (shippingData.transportMode === 'air') {
-    freightCost = weight * baseFreightRates.air.base;
-    freightCost = Math.max(freightCost, baseFreightRates.air.minimum);
-  } else {
-    const estimatedCBM = (weight / 1000) * 2;
-    freightCost = estimatedCBM * baseFreightRates.sea.LCL.base;
-    freightCost = Math.max(freightCost, baseFreightRates.sea.LCL.minimum);
-  }
-
-  const seasonalityFactor = (() => {
-    const currentMonth = new Date().getMonth();
-    if (currentMonth >= 6 && currentMonth <= 8) return 1.15;
-    if (currentMonth >= 11 || currentMonth <= 1) return 1.05;
-    return 1;
-  })();
-
-  const bulkDiscountFactor = (() => {
-    if (quantity > 50) return 0.85;
-    if (quantity > 10) return 0.92;
-    return 1;
-  })();
-
-  freightCost *= seasonalityFactor * bulkDiscountFactor;
+  const freightCost = calculateFreightCost(
+    weight,
+    productValue,
+    shippingData.transportMode,
+    quantity
+  );
 
   const insuranceRate = 1.5;
   const insuranceRateAdjustment = productValue > 10000 ? 1.2 : 1;
@@ -104,74 +47,15 @@ export const generateCostItems = ({
     return Math.max(baseMinimum, valuePercentage) * progressiveFactor;
   })();
 
-  const calculateInlandTransportation = () => {
-    const baseRates: Record<string, Record<string, number>> = {
-      us: { air: 120, sea: 180, road: 150 },
-      ca: { air: 140, sea: 195, road: 160 },
-      mx: { air: 130, sea: 185, road: 140 },
-      default: { air: 150, sea: 200, road: 170 }
-    };
-    
-    const countryRates = baseRates[destinationCountry.toLowerCase()] || baseRates.default;
-    const baseRate = countryRates[shippingData.transportMode] || 
-                    (shippingData.transportMode === 'air' ? countryRates.air : countryRates.sea);
-    
-    const distanceFactor = (() => {
-      const pair = `${originCountry}-${destinationCountry}`.toLowerCase();
-      const distanceFactors: Record<string, number> = {
-        'us-ca': 0.9,
-        'ca-us': 0.9,
-        'us-mx': 1.1,
-        'mx-us': 1.1,
-        'ca-mx': 1.3,
-        'mx-ca': 1.3
-      };
-      return distanceFactors[pair] || 1.0;
-    })();
-    
-    const perUnitCost = (() => {
-      if (quantity <= 5) return 60 * quantity;
-      if (quantity <= 20) return 300 + ((quantity - 5) * 40);
-      if (quantity <= 50) return 900 + ((quantity - 20) * 25);
-      return 1650 + ((quantity - 50) * 15);
-    })();
-    
-    const weightFactor = Math.min(1 + (weight / 5000), 2.5);
-    
-    const valueFactor = (() => {
-      if (productValue < 5000) return 1.0;
-      if (productValue < 25000) return 1.1;
-      if (productValue < 100000) return 1.2;
-      return 1.3;
-    })();
-    
-    const specialHandlingFactor = productCategory === 'fragile' || 
-                                 productCategory === 'bulky' ? 1.25 : 1.0;
-    
-    let cost = baseRate + perUnitCost;
-    cost *= distanceFactor * weightFactor * valueFactor * specialHandlingFactor;
-    
-    const maxCaps: Record<string, number> = {
-      us: 2000,
-      ca: 2200,
-      mx: 1800,
-      default: 2500
-    };
-    const maxCap = maxCaps[destinationCountry.toLowerCase()] || maxCaps.default;
-    
-    const valueScalingFactor = (() => {
-      if (productValue <= 1) return 0.05;
-      if (productValue <= 10) return 0.15;
-      if (productValue <= 50) return 0.3;
-      if (productValue <= 100) return 0.5;
-      if (productValue <= 500) return 0.7;
-      return 1.0;
-    })();
-    
-    return Math.min(Math.round(cost * valueScalingFactor), maxCap);
-  };
-
-  const inlandTransportation = calculateInlandTransportation();
+  const inlandTransportation = calculateInlandTransportation(
+    originCountry,
+    destinationCountry,
+    shippingData.transportMode,
+    quantity,
+    weight,
+    productValue,
+    productCategory
+  );
 
   const warehouseDailyRate = shippingData.transportMode === 'air' ? 2 : 4;
   const estimatedDays = shippingData.transportMode === 'air' ? 3 : 7;
