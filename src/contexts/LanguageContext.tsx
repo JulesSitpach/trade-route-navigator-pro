@@ -9,22 +9,43 @@ const translations = {
   es: esTranslations,
 };
 
+// Create the context with undefined as the initial value
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {
   const [language, setLanguage] = useState<Language>('en');
 
+  // Simple translation function that gets a value by key
   const t = (key: string): string => {
-    return translations[language][key as keyof typeof enTranslations] || key;
+    const keys = key.split('.');
+    let result: any = translations[language];
+    
+    for (const k of keys) {
+      if (result && typeof result === 'object' && k in result) {
+        result = result[k];
+      } else {
+        return key; // Return the key if translation not found
+      }
+    }
+    
+    return typeof result === 'string' ? result : key;
+  };
+
+  // Create the context value object
+  const contextValue: LanguageContextType = {
+    language,
+    setLanguage,
+    t
   };
 
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, t }}>
+    <LanguageContext.Provider value={contextValue}>
       {children}
     </LanguageContext.Provider>
   );
 };
 
+// Custom hook that makes sure the context is being used within a provider
 export const useLanguage = () => {
   const context = useContext(LanguageContext);
   if (context === undefined) {

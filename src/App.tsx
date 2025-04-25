@@ -16,9 +16,9 @@ const App = () => (
     <LanguageProvider>
       <TooltipProvider>
         <ChartStyleEnforcer>
-          <Toaster />
-          <Sonner />
           <BrowserRouter>
+            <Toaster />
+            <Sonner />
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="*" element={<NotFound />} />
