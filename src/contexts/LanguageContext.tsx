@@ -1,3 +1,4 @@
+
 import React, { createContext, useContext, useState, useCallback, ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Language, LanguageContextType } from '../i18n/types';
@@ -17,19 +18,12 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
 
   // Enhanced translation function with proper interpolation handling
   const t = useCallback((key: string, options?: Record<string, any>): string => {
-    // Ensure we can handle interpolation
-    if (options) {
-      return i18n.t(key, options);
-    }
+    // Use as string to ensure we always return a string type
+    // This is necessary because i18n.t can return different types
+    const translation = i18n.t(key, options);
     
-    // Check if the key contains a namespace prefix (e.g., 'shipping:quantity')
-    if (key.includes(':')) {
-      const [namespace, actualKey] = key.split(':');
-      return i18n.t(actualKey, { ns: namespace });
-    }
-    
-    // Otherwise use the default namespace
-    return i18n.t(key);
+    // Force the return type to be string to match our interface
+    return typeof translation === 'string' ? translation : String(translation);
   }, [i18n]);
 
   // Create the context value object
