@@ -1,3 +1,4 @@
+import { calculateTariff } from '@/data/countryTariffData';
 
 interface CostItem {
   label: string;
@@ -14,6 +15,9 @@ interface CostBreakdownInput {
   inlandTransportation?: number;
   warehousingCost?: number;
   otherFeesRate?: number;
+  originCountry?: string;
+  destinationCountry?: string;
+  productCategory?: string;
 }
 
 const formatCurrency = (value: number): string => {
@@ -25,92 +29,84 @@ const formatCurrency = (value: number): string => {
 
 export const generateCostItems = ({
   productValue,
-  importDutyRate = 8.5,
+  originCountry = 'us',
+  destinationCountry = 'us',
+  productCategory = 'general',
   shippingData = {
     quantity: '1',
     weight: '0',
     transportMode: 'sea'
   }
 }: CostBreakdownInput & { shippingData?: { quantity: string; weight: string; transportMode: string } }): CostItem[] => {
-  const quantity = parseInt(shippingData.quantity) || 1;
-  const weight = parseFloat(shippingData.weight) || 100; // Default to 100kg if weight is 0
+  const importDutyRate = calculateTariff(originCountry, destinationCountry, productCategory);
   
-  // Industry standard freight rates for SMB shipments
+  const quantity = parseInt(shippingData.quantity) || 1;
+  const weight = parseFloat(shippingData.weight) || 100;
+
   const baseFreightRate = {
     air: {
-      base: 6.0, // USD per kg for air freight (standard rate for NA routes)
-      minimum: 600 // Minimum cost for air shipment
+      base: 6.0,
+      minimum: 600
     },
     sea: {
       LCL: {
-        base: 55.0, // USD per cbm for LCL
-        minimum: 500 // Minimum cost for LCL shipment
+        base: 55.0,
+        minimum: 500
       },
       FCL: {
-        twenty: 2200, // Base rate for 20ft container
-        forty: 3400,  // Base rate for 40ft container
+        twenty: 2200,
+        forty: 3400
       }
     }
   };
 
-  // Calculate freight cost based on mode and volume
   let freightCost = 0;
   if (shippingData.transportMode === 'air') {
-    // Air freight calculation
     freightCost = weight * baseFreightRate.air.base;
     freightCost = Math.max(freightCost, baseFreightRate.air.minimum);
   } else {
-    // Sea freight calculation - assuming LCL for SMB
-    const estimatedCBM = (weight / 1000) * 2; // Rough CBM estimation
+    const estimatedCBM = (weight / 1000) * 2;
     freightCost = estimatedCBM * baseFreightRate.sea.LCL.base;
     freightCost = Math.max(freightCost, baseFreightRate.sea.LCL.minimum);
   }
 
-  // Volume-based discounts
   if (quantity > 10) {
-    freightCost *= 0.95; // 5% discount for medium volume
+    freightCost *= 0.95;
   }
   if (quantity > 50) {
-    freightCost *= 0.90; // Additional 10% discount for large volume
+    freightCost *= 0.90;
   }
 
-  // Peak season surcharge (example: 15% during peak months)
   const currentMonth = new Date().getMonth();
-  if (currentMonth >= 6 && currentMonth <= 8) { // Peak season July-September
+  if (currentMonth >= 6 && currentMonth <= 8) {
     freightCost *= 1.15;
   }
 
-  // Value-based additional costs
   if (productValue > 5000) {
-    freightCost *= 1.1; // 10% surcharge for high-value shipments
+    freightCost *= 1.1;
   }
 
-  // Calculate other costs with realistic rates
   const importDuty = (productValue * importDutyRate) / 100;
-  const insuranceRate = 1.5; // Standard 1.5% of value
-  const insurance = Math.max((productValue * insuranceRate) / 100, 50); // Minimum $50
-  
+  const insuranceRate = 1.5;
+  const insurance = Math.max((productValue * insuranceRate) / 100, 50);
+
   const documentationFees = shippingData.transportMode === 'air' 
-    ? 95  // Air freight documentation
-    : 125; // Ocean freight documentation (more complex)
-    
-  const customsClearance = Math.max(175, productValue * 0.01); // Greater of $175 or 1% of value
-  
-  // Inland transportation based on weight and quantity (with realistic ceiling caps)
-  // Fixed base rate plus per unit charge, with a maximum cap
+    ? 95
+    : 125;
+
+  const customsClearance = Math.max(175, productValue * 0.01);
+
   const inlandBaseRate = shippingData.transportMode === 'air' ? 150 : 200;
-  const inlandPerUnit = Math.min(50 * quantity, 500); // Cap at $500 for quantity-based charge
-  const inlandTransportation = Math.min(inlandBaseRate + inlandPerUnit, 1500); // Cap total at $1500
-    
-  // Warehousing costs - realistic rates with caps
-  const warehouseDailyRate = shippingData.transportMode === 'air' ? 2 : 4; // $ per day per unit
-  const estimatedDays = shippingData.transportMode === 'air' ? 3 : 7; // Estimated storage days
-  const warehouseBaseCharge = 100; // Base handling charge
+  const inlandPerUnit = Math.min(50 * quantity, 500);
+  const inlandTransportation = Math.min(inlandBaseRate + inlandPerUnit, 1500);
+
+  const warehouseDailyRate = shippingData.transportMode === 'air' ? 2 : 4;
+  const estimatedDays = shippingData.transportMode === 'air' ? 3 : 7;
+  const warehouseBaseCharge = 100;
   const warehouseCostRaw = warehouseBaseCharge + (warehouseDailyRate * estimatedDays * quantity);
-  // Cap warehousing at a reasonable maximum
-  const warehousingCost = Math.min(warehouseCostRaw, 2000); 
-    
-  const otherFeesRate = 2.0; // 2% for miscellaneous fees
+  const warehousingCost = Math.min(warehouseCostRaw, 2000);
+
+  const otherFeesRate = 2.0;
   const otherFees = (productValue * otherFeesRate) / 100;
 
   return [
