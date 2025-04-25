@@ -17,18 +17,29 @@ export const ProductValueField = ({
   onChange, 
   onValidate 
 }: ProductValueFieldProps) => {
-  const { language } = useLanguage();
+  const { t, language } = useLanguage();
+  
+  // Translate error message if it's the default validation error
+  const getTranslatedError = (errorMsg?: string) => {
+    if (!errorMsg) return undefined;
+    
+    if (errorMsg === 'This field is required') {
+      return t('validation.required');
+    }
+    
+    return errorMsg;
+  };
   
   return (
     <div className="space-y-2">
       <Label htmlFor="productValue" className="flex items-center gap-1">
-        {language === 'en' ? 'Product Value (USD)' : 'Valor del Producto (USD)'}
+        {t('product.value')}
         <span className="text-red-500">*</span>
       </Label>
       <Input 
         id="productValue" 
         type="number" 
-        placeholder={language === 'en' ? "Enter product value" : "Ingrese valor del producto"}
+        placeholder={t('product.value.placeholder')}
         value={value}
         onChange={(e) => {
           onChange(e.target.value);
@@ -40,7 +51,7 @@ export const ProductValueField = ({
         )}
       />
       {error && (
-        <p className="text-sm text-red-500 mt-1">{error}</p>
+        <p className="text-sm text-red-500 mt-1">{getTranslatedError(error)}</p>
       )}
     </div>
   );
