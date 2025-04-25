@@ -1,4 +1,3 @@
-
 import { useState, useRef } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -7,6 +6,8 @@ import { ChartBar } from 'lucide-react';
 import ProductDetailsForm from './ProductDetailsForm';
 import ShippingDetailsForm from './ShippingDetailsForm';
 import TradeAnalysis from './TradeAnalysis';
+import LanguageToggle from './LanguageToggle';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const TradeNavigator = () => {
   const [formData, setFormData] = useState({
@@ -15,7 +16,7 @@ const TradeNavigator = () => {
       originCountry: '',
       destinationCountry: '',
       productValue: '',
-      productCategory: '' // Added missing field
+      productCategory: ''
     },
     shipping: {
       quantity: '',
@@ -35,12 +36,13 @@ const TradeNavigator = () => {
   const [showAnalysis, setShowAnalysis] = useState(false);
   const analysisRef = useRef<HTMLDivElement>(null);
 
+  const { t } = useLanguage();
+
   const handleProductDetailsChange = (productData: any) => {
     setFormData(prev => ({
       ...prev,
       product: { ...prev.product, ...productData }
     }));
-    // Hide analysis when inputs change
     if (showAnalysis) setShowAnalysis(false);
   };
 
@@ -49,7 +51,6 @@ const TradeNavigator = () => {
       ...prev,
       shipping: { ...prev.shipping, ...shippingData }
     }));
-    // Hide analysis when inputs change
     if (showAnalysis) setShowAnalysis(false);
   };
 
@@ -98,7 +99,6 @@ const TradeNavigator = () => {
       duration: 3000
     });
     
-    // Scroll to analysis after short delay to ensure it's rendered
     setTimeout(() => {
       if (analysisRef.current) {
         analysisRef.current.scrollIntoView({ behavior: 'smooth' });
@@ -110,11 +110,14 @@ const TradeNavigator = () => {
     <div className="min-h-screen bg-gray-50">
       <header className="bg-[#3A4756] text-white py-12 px-4">
         <div className="max-w-6xl mx-auto">
+          <div className="flex justify-end mb-4">
+            <LanguageToggle />
+          </div>
           <h1 className="text-3xl md:text-4xl font-bold text-center mb-4">
-            Global Trade Strategy Navigator
+            {t('title')}
           </h1>
           <p className="text-lg text-center text-blue-100">
-            Diversify your trade routes, strengthen your business future
+            {t('subtitle')}
           </p>
         </div>
       </header>
@@ -135,7 +138,7 @@ const TradeNavigator = () => {
             size="lg"
           >
             <ChartBar className="mr-2" />
-            Calculate Trade Analysis
+            {t('button.calculate')}
           </Button>
         </div>
 
