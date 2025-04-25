@@ -32,12 +32,15 @@ export const regulationTranslations = {
   'regulations.preparation.time': 'Estimated compliance preparation time',
   'regulations.weeks': 'weeks',
 
-  'documents.commercialinvoice': 'Commercial Invoice',
-  'documents.packinglist': 'Packing List',
-  'documents.billofLading': 'Bill of Lading',
-  'documents.certificateoforigin': 'Certificate of Origin',
-  'documents.importlicense': 'Import License',
-  'documents.exportlicense': 'Export License',
-  'documents.importdeclaration': 'Import Declaration',
-  'documents.paymentreceipt': 'Payment Receipt'
+  // Document translations with camelCase keys
+  'documents.commercialInvoice': 'Commercial Invoice',
+  'documents.packingList': 'Packing List',
+  'documents.billOfLading': 'Bill of Lading',
+  'documents.certificateOfOrigin': 'Certificate of Origin',
+  'documents.importLicense': 'Import License',
+  'documents.exportLicense': 'Export License',
+  'documents.importDeclaration': 'Import Declaration',
+  'documents.paymentReceipt': 'Payment Receipt',
+  'documents.phytosanitaryCertificate': 'Phytosanitary Certificate',
+  'documents.safetyComplianceCertifications': 'Safety/Compliance Certifications'
 };
