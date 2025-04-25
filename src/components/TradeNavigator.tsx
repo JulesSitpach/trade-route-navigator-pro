@@ -93,7 +93,6 @@ const TradeNavigator = () => {
       return;
     }
 
-    // Update cost data in context
     updateCostData({
       productValue: parseFloat(formData.product.productValue) || 0,
       originCountry: formData.product.originCountry,

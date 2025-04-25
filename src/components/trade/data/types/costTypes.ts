@@ -17,6 +17,11 @@ export interface CostBreakdownInput {
   originCountry?: string;
   destinationCountry?: string;
   productCategory?: string;
+  shippingData?: {
+    quantity: string;
+    weight: string;
+    transportMode: string;
+  };
 }
 
 export interface ShippingData {

@@ -16,9 +16,6 @@ const VisualizationsTab = ({ data, routes }: VisualizationsTabProps) => {
   const [activeChart, setActiveChart] = useState('cost-breakdown');
   const { t } = useLanguage();
 
-  // Parse product value from the input data
-  const productValue = parseFloat(data?.product?.productValue) || 0;
-
   const tabs = [
     { id: 'cost-breakdown', label: t('route.tab.costs'), icon: 'Costs' },
     { id: 'route-comparison', label: t('route.tab.routes'), icon: 'Routes' },
@@ -49,10 +46,7 @@ const VisualizationsTab = ({ data, routes }: VisualizationsTabProps) => {
             </TabsList>
 
             <TabsContent value="cost-breakdown" className="pt-6">
-              <CostBreakdownChart 
-                productValue={productValue}
-                shippingData={data.shipping}
-              />
+              <CostBreakdownChart />
             </TabsContent>
             
             <TabsContent value="route-comparison" className="pt-6">
