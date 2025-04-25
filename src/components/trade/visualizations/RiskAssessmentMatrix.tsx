@@ -1,7 +1,7 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent } from "@/components/ui/card";
-import { AlertTriangleIcon } from "lucide-react";
+import { AlertTriangleIcon, InfoIcon } from "lucide-react";
 import { useLanguage } from '@/contexts/LanguageContext';
 import {
   ResponsiveContainer,
@@ -13,21 +13,23 @@ import {
   Tooltip,
   Legend,
   CartesianGrid,
-  Cell
+  Cell,
+  Label
 } from 'recharts';
 import { RiskMatrixTooltip } from './risk/RiskMatrixTooltip';
 
 const RiskAssessmentMatrix = () => {
   const { t } = useLanguage();
+  const [activeRiskType, setActiveRiskType] = useState<string | null>(null);
 
-  // Sample risk data for different routes
+  // Enhanced risk data for different routes with more details
   const riskData = [
-    { name: 'Sea Route A', x: 5000, y: 3, z: 92, label: 'Port Delays', riskLevel: 'low' },
-    { name: 'Sea Route B', x: 4800, y: 5, z: 85, label: 'Weather Disruption', riskLevel: 'medium' },
-    { name: 'Air Route A', x: 9500, y: 2, z: 95, label: 'Capacity Constraints', riskLevel: 'low' },
-    { name: 'Air Route B', x: 8900, y: 4, z: 88, label: 'Fuel Price Volatility', riskLevel: 'medium' },
-    { name: 'Multimodal A', x: 6200, y: 7, z: 75, label: 'Border Closures', riskLevel: 'high' },
-    { name: 'Rail Route', x: 5400, y: 6, z: 78, label: 'Infrastructure Issues', riskLevel: 'medium' }
+    { name: 'Sea Route A', x: 5000, y: 3, z: 92, label: 'Port Delays', riskLevel: 'low', details: 'Low risk of port congestion at both ends' },
+    { name: 'Sea Route B', x: 4800, y: 5, z: 85, label: 'Weather Disruption', riskLevel: 'medium', details: 'Moderate risk due to seasonal weather patterns' },
+    { name: 'Air Route A', x: 9500, y: 2, z: 95, label: 'Capacity Constraints', riskLevel: 'low', details: 'Reliable capacity with minor seasonal fluctuations' },
+    { name: 'Air Route B', x: 8900, y: 4, z: 88, label: 'Fuel Price Volatility', riskLevel: 'medium', details: 'Moderate exposure to fuel price changes' },
+    { name: 'Multimodal A', x: 6200, y: 7, z: 75, label: 'Border Closures', riskLevel: 'high', details: 'High risk due to multiple border crossings' },
+    { name: 'Rail Route', x: 5400, y: 6, z: 78, label: 'Infrastructure Issues', riskLevel: 'medium', details: 'Occasional infrastructure maintenance delays' }
   ];
 
   const getRiskColor = (riskLevel: string) => {
@@ -39,10 +41,15 @@ const RiskAssessmentMatrix = () => {
     }
   };
 
+  const filterData = (data: typeof riskData) => {
+    if (!activeRiskType) return data;
+    return data.filter(item => item.riskLevel === activeRiskType);
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-2">
-        <AlertTriangleIcon className="h-5 w-5 text-muted-foreground" />
+        <AlertTriangleIcon className="h-5 w-5 text-amber-500" />
         <h3 className="text-lg font-medium">
           {t('risk.assessment.title')}
         </h3>
@@ -53,10 +60,17 @@ const RiskAssessmentMatrix = () => {
       
       <Card>
         <CardContent className="p-6">
+          <div className="flex items-center justify-end mb-4 gap-3">
+            <div className="flex items-center space-x-1">
+              <InfoIcon className="h-4 w-4 text-muted-foreground" />
+              <span className="text-xs text-muted-foreground">{t('risk.matrix.help')}</span>
+            </div>
+          </div>
+
           <div className="h-[400px]">
             <ResponsiveContainer width="100%" height="100%">
               <ScatterChart
-                margin={{ top: 20, right: 20, bottom: 20, left: 20 }}
+                margin={{ top: 20, right: 20, bottom: 60, left: 40 }}
               >
                 <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
                 <XAxis 
@@ -65,29 +79,42 @@ const RiskAssessmentMatrix = () => {
                   name="Cost" 
                   unit="$" 
                   domain={['dataMin - 500', 'dataMax + 500']}
-                  label={{ value: t('risk.cost'), position: 'bottom', offset: 0 }}
-                />
+                  tickFormatter={(value) => `$${value}`}
+                >
+                  <Label value={t('risk.cost')} position="bottom" offset={20} />
+                </XAxis>
                 <YAxis 
                   type="number" 
                   dataKey="y" 
                   name="Risk Level" 
                   unit="/10"
                   domain={[0, 10]}
-                  label={{ value: t('risk.level'), angle: -90, position: 'left' }}
-                />
+                  tickCount={6}
+                >
+                  <Label value={t('risk.level')} angle={-90} position="left" offset={-20} />
+                </YAxis>
                 <ZAxis 
                   type="number" 
                   dataKey="z" 
-                  range={[50, 400]} 
+                  range={[60, 400]} 
                   name="Reliability" 
                   unit="%" 
                 />
                 <Tooltip content={<RiskMatrixTooltip />} />
-                <Legend />
-                <Scatter name={t('risk.routes')} data={riskData}>
+                <Legend 
+                  verticalAlign="bottom" 
+                  height={36} 
+                  formatter={(value, entry) => <span className="text-sm font-medium">{value}</span>} 
+                />
+                <Scatter name={t('risk.routes')} data={filterData(riskData)}>
                   {
                     riskData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={getRiskColor(entry.riskLevel)} />
+                      <Cell 
+                        key={`cell-${index}`} 
+                        fill={getRiskColor(entry.riskLevel)} 
+                        stroke={getRiskColor(entry.riskLevel)}
+                        strokeWidth={1}
+                      />
                     ))
                   }
                 </Scatter>
@@ -96,18 +123,27 @@ const RiskAssessmentMatrix = () => {
           </div>
           
           <div className="mt-6 border-t pt-4 grid grid-cols-1 sm:grid-cols-3 gap-3">
-            <div className="flex items-center space-x-2">
+            <button 
+              onClick={() => setActiveRiskType(activeRiskType === 'high' ? null : 'high')}
+              className={`flex items-center space-x-2 px-3 py-1.5 rounded-md transition-colors ${activeRiskType === 'high' ? 'bg-red-100' : 'hover:bg-gray-100'}`}
+            >
               <div className="w-3 h-3 rounded-full bg-red-500"></div>
               <span className="text-sm">{t('risk.high')}</span>
-            </div>
-            <div className="flex items-center space-x-2">
+            </button>
+            <button 
+              onClick={() => setActiveRiskType(activeRiskType === 'medium' ? null : 'medium')}
+              className={`flex items-center space-x-2 px-3 py-1.5 rounded-md transition-colors ${activeRiskType === 'medium' ? 'bg-amber-100' : 'hover:bg-gray-100'}`}
+            >
               <div className="w-3 h-3 rounded-full bg-amber-500"></div>
               <span className="text-sm">{t('risk.medium')}</span>
-            </div>
-            <div className="flex items-center space-x-2">
+            </button>
+            <button 
+              onClick={() => setActiveRiskType(activeRiskType === 'low' ? null : 'low')}
+              className={`flex items-center space-x-2 px-3 py-1.5 rounded-md transition-colors ${activeRiskType === 'low' ? 'bg-green-100' : 'hover:bg-gray-100'}`}
+            >
               <div className="w-3 h-3 rounded-full bg-green-500"></div>
               <span className="text-sm">{t('risk.low')}</span>
-            </div>
+            </button>
           </div>
         </CardContent>
       </Card>
