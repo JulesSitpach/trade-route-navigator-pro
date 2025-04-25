@@ -1,0 +1,29 @@
+
+export const tariffTranslations = {
+  'tariff.basic': 'Arancel Básico',
+  'tariff.hscode': 'Código HS',
+  'tariff.countryComparison': 'Comparación de Países',
+  'tariff.rulesOfOrigin': 'Reglas de Origen',
+  'tariff.engineering': 'Ingeniería Arancelaria',
+  'tariff.specialPrograms': 'Programas Especiales',
+  'tariff.historicalTrends': 'Tendencias Históricas',
+  'tariff.exclusionBreakdown': 'Desglose de Exclusiones',
+  
+  // Tariff Heatmap
+  'tariffheatmap.title': 'Análisis de Aranceles por País',
+  'tariffheatmap.description': 'Visualice las tasas arancelarias en diferentes países para identificar rutas comerciales óptimas',
+  'tariffheatmap.insights': 'Ideas Clave',
+  'tariffheatmap.distribution': 'Distribución de Volumen Comercial',
+  'tariffheatmap.low': 'Países con Aranceles Bajos',
+  'tariffheatmap.medium': 'Países con Aranceles Medios',
+  'tariffheatmap.high': 'Países con Aranceles Altos',
+  'tariffheatmap.countries': 'países',
+  'tariffheatmap.volume': 'del volumen total',
+  'tariffheatmap.recommendations': 'Recomendaciones',
+  'tariffheatmap.optimal': 'Rutas Comerciales Óptimas',
+  'tariffheatmap.highrisk': 'Rutas de Alto Riesgo',
+  'tariffheatmap.tariff': 'arancel',
+  'tariffheatmap.units': 'unidades',
+  'tariffheatmap.tip': 'Consejo Estratégico',
+  'tariffheatmap.advice': 'Considere desviar el volumen comercial de países con altos aranceles a países con bajos aranceles cuando sea posible para optimizar costos. Evalúe acuerdos comerciales y zonas económicas especiales para posibles reducciones arancelarias.',
+};

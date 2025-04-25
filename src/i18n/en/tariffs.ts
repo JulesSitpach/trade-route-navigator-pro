@@ -1,0 +1,29 @@
+
+export const tariffTranslations = {
+  'tariff.basic': 'Basic Tariff',
+  'tariff.hscode': 'HS Code',
+  'tariff.countryComparison': 'Country Comparison',
+  'tariff.rulesOfOrigin': 'Rules of Origin',
+  'tariff.engineering': 'Tariff Engineering',
+  'tariff.specialPrograms': 'Special Programs',
+  'tariff.historicalTrends': 'Historical Trends',
+  'tariff.exclusionBreakdown': 'Exclusion Breakdown',
+  
+  // Tariff Heatmap
+  'tariffheatmap.title': 'Tariff Analysis by Country',
+  'tariffheatmap.description': 'Visualize tariff rates across different countries to identify optimal trade routes',
+  'tariffheatmap.insights': 'Key Insights',
+  'tariffheatmap.distribution': 'Trade Volume Distribution',
+  'tariffheatmap.low': 'Low Tariff Countries',
+  'tariffheatmap.medium': 'Medium Tariff Countries',
+  'tariffheatmap.high': 'High Tariff Countries',
+  'tariffheatmap.countries': 'countries',
+  'tariffheatmap.volume': 'of total volume',
+  'tariffheatmap.recommendations': 'Recommendations',
+  'tariffheatmap.optimal': 'Optimal Trade Routes',
+  'tariffheatmap.highrisk': 'High-Risk Routes',
+  'tariffheatmap.tariff': 'tariff',
+  'tariffheatmap.units': 'units',
+  'tariffheatmap.tip': 'Strategy Tip',
+  'tariffheatmap.advice': 'Consider diverting trade volume from high-tariff countries to low-tariff countries where possible to optimize costs. Evaluate trade agreements and special economic zones for potential tariff reductions.',
+};
