@@ -7,7 +7,7 @@ interface RouteGenerationParams {
   transportMode: 'sea' | 'air' | 'rail' | 'multimodal';
 }
 
-const calculateTransitTime = (params: RouteGenerationParams): string => {
+const calculateTransitTime = (params: RouteGenerationParams): number => {
   const baseTime = {
     sea: 20,
     air: 2,
@@ -17,10 +17,10 @@ const calculateTransitTime = (params: RouteGenerationParams): string => {
 
   // Add 2 days for each via point
   const viaPointsTime = (params.viaPoints?.length || 0) * 2;
-  return `${baseTime + viaPointsTime} days`;
+  return baseTime + viaPointsTime;
 };
 
-const calculateCost = (params: RouteGenerationParams): string => {
+const calculateCost = (params: RouteGenerationParams): number => {
   const baseCost = {
     sea: 2000,
     air: 5000,
@@ -30,7 +30,7 @@ const calculateCost = (params: RouteGenerationParams): string => {
 
   // Add $500 for each via point
   const viaPointsCost = (params.viaPoints?.length || 0) * 500;
-  return `$${(baseCost + viaPointsCost).toLocaleString()}`;
+  return baseCost + viaPointsCost;
 };
 
 const generateRiskLevel = (params: RouteGenerationParams): string => {
