@@ -1,12 +1,6 @@
 
 import { Card, CardContent } from "@/components/ui/card";
-import { 
-  ChartContainer, 
-  ChartLegend,
-  ChartLegendContent, 
-  ChartTooltip, 
-  ChartTooltipContent
-} from "@/components/ui/chart";
+import { ChartContainer, ChartLegend, ChartLegendContent, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 import { chartConfig } from "./chartConfig";
 import { Donut } from "lucide-react";
