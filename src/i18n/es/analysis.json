@@ -1,0 +1,11 @@
+
+{
+  "title": "Resultados del Análisis Comercial",
+  "tabs": {
+    "main": {
+      "costs": "Análisis de Costos",
+      "routes": "Análisis de Rutas",
+      "tariffs": "Análisis de Aranceles"
+    }
+  }
+}

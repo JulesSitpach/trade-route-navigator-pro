@@ -1,0 +1,12 @@
+
+{
+  "quantity": "Quantity",
+  "mode": "Transport Mode",
+  "transport": {
+    "ocean": "Ocean",
+    "air": "Air",
+    "road": "Road",
+    "rail": "Rail",
+    "multimodal": "Multimodal"
+  }
+}

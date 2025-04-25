@@ -1,8 +1,8 @@
 
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { useLanguage } from '@/contexts/LanguageContext';
 import { cn } from '@/lib/utils';
+import { useTranslation } from 'react-i18next';
 
 interface ShippingBasicDetailsProps {
   quantity: string;
@@ -17,20 +17,20 @@ const ShippingBasicDetails = ({
   errors, 
   validateField 
 }: ShippingBasicDetailsProps) => {
-  const { t } = useLanguage();
+  const { t } = useTranslation(['shipping', 'common']);
 
   return (
     <div className="space-y-2">
       <Label htmlFor="quantity" className="flex items-center gap-1">
-        {t('shipping.quantity')}
-        <span className="text-red-500">*</span>
+        {t('shipping:quantity')}
+        <span className="text-red-500">{t('common:required')}</span>
       </Label>
       <Input 
         id="quantity" 
         type="number" 
         min="1"
         value={quantity}
-        placeholder={t('shipping.quantity.placeholder')}
+        placeholder={t('shipping:quantity')}
         onChange={(e) => {
           onQuantityChange(e.target.value);
           validateField('quantity', e.target.value);
@@ -40,7 +40,7 @@ const ShippingBasicDetails = ({
         )}
       />
       {errors.quantity && (
-        <p className="text-sm text-red-500 mt-1">{t('validation.required')}</p>
+        <p className="text-sm text-red-500 mt-1">{t('common:validation.required')}</p>
       )}
     </div>
   );

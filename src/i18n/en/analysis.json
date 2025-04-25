@@ -1,0 +1,11 @@
+
+{
+  "title": "Trade Analysis Results",
+  "tabs": {
+    "main": {
+      "costs": "Cost Analysis",
+      "routes": "Route Analysis",
+      "tariffs": "Tariff Analysis"
+    }
+  }
+}
