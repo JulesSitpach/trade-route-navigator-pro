@@ -1,3 +1,4 @@
+
 export const regulationTranslations = {
   'regulations.documents': 'Required Documents',
   'regulations.timeline': 'Regulatory Timeline',
@@ -15,7 +16,7 @@ export const regulationTranslations = {
   'regulations.certifications': 'Required Certifications',
   'regulations.documentation': 'Required Documentation',
   'regulations.restrictions': 'Import Restrictions',
-  'regulations.compliance': 'Compliance Steps',
+  'regulations.complianceSteps': 'Compliance Steps',
   
   // Regulation types
   'regulations.type.safety': 'Safety Regulations',
