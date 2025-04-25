@@ -1,13 +1,12 @@
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Route } from './trade/types';
+import { generateDynamicRoutes } from './trade/utils/routeGenerator';
 import AlternativeRoutes from './AlternativeRoutes';
-import TradeOpportunities from './TradeOpportunities';
 import TariffAnalysis from './TariffAnalysis';
 import CostAnalysisTab from './trade/CostAnalysisTab';
 import RegulationsTab from './trade/RegulationsTab';
 import VisualizationsTab from './trade/VisualizationsTab';
-import { Route } from './trade/types';
-import { generateDynamicRoutes } from './trade/utils/routeGenerator';
 import { ChartBar, Route as RouteIcon, FileText, ScrollText, BarChart } from 'lucide-react';
 
 interface TradeAnalysisProps {
@@ -82,7 +81,6 @@ const TradeAnalysis = ({ data }: TradeAnalysisProps) => {
             productCategory={data.product.productCategory}
             originCountry={data.product.originCountry}
             destinationCountry={data.product.destinationCountry}
-            productValue={parseFloat(data.product.productValue)}
           />
         </TabsContent>
 
@@ -97,10 +95,7 @@ const TradeAnalysis = ({ data }: TradeAnalysisProps) => {
         </TabsContent>
 
         <TabsContent value="visualizations">
-          <VisualizationsTab 
-            data={data}
-            routes={dynamicRoutes}
-          />
+          <VisualizationsTab data={data} routes={dynamicRoutes} />
         </TabsContent>
       </Tabs>
     </div>

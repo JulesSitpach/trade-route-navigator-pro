@@ -7,55 +7,24 @@ import {
 } from 'recharts';
 import { chartCommonConfig } from "@/utils/chartUtils";
 import { RouteComparisonTooltip } from './RouteComparisonTooltip';
+import { Route } from '../types';
 import { BarChartIcon } from "lucide-react";
 import { chartConfig } from "./chartConfig";
-import { StyleDebugger } from './debug/StyleDebugger';
 import { tooltipStyles, cursorStyles } from "@/components/ui/chart/theme/commonStyles";
-import { ChartCustomLegend } from '@/components/ui/chart/ChartCustomLegend';
 
-const RouteComparisonTimeline = () => {
-  const routeData = [
-    {
-      name: "Shanghai → LA → Chicago",
-      shipping: 20,
-      customs: 4,
-      distribution: 4,
-      cost: "$4,800",
-      totalDays: 28
-    },
-    {
-      name: "Shanghai → Air → Chicago",
-      shipping: 3,
-      customs: 2,
-      distribution: 3,
-      cost: "$9,500",
-      totalDays: 8
-    },
-    {
-      name: "Guangzhou → Singapore → Rotterdam",
-      shipping: 28,
-      customs: 5,
-      distribution: 7,
-      cost: "$5,200",
-      totalDays: 40
-    },
-    {
-      name: "Vietnam → Singapore → LA",
-      shipping: 25,
-      customs: 5,
-      distribution: 5,
-      cost: "$4,500",
-      totalDays: 35
-    },
-    {
-      name: "China → Mexico → US",
-      shipping: 24,
-      customs: 7,
-      distribution: 3,
-      cost: "$4,300",
-      totalDays: 34
-    }
-  ];
+interface RouteComparisonTimelineProps {
+  routes: Route[];
+}
+
+const RouteComparisonTimeline = ({ routes }: RouteComparisonTimelineProps) => {
+  const routeData = routes.map(route => ({
+    name: route.name,
+    shipping: route.transitTime,
+    customs: route.customsClearance || 4,
+    distribution: route.localDelivery || 3,
+    cost: `$${route.cost.toLocaleString()}`,
+    totalDays: (route.transitTime + (route.customsClearance || 4) + (route.localDelivery || 3))
+  }));
 
   return (
     <div className="space-y-4">
