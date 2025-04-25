@@ -1,3 +1,4 @@
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -30,6 +31,7 @@ import {
   FileCheck
 } from "lucide-react";
 import { countryTariffData, getCountryByCode } from "@/data/countryTariffData";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface TariffAnalysisProps {
   originCountry?: string;
@@ -44,35 +46,83 @@ const TariffAnalysis = ({
   productCategory = "electronics",
   hsCode = "8471.30.0100"
 }: TariffAnalysisProps) => {
+  const { t, language } = useLanguage();
+
   // Dummy data for visualization purposes
   const origin = getCountryByCode(originCountry);
   const destination = getCountryByCode(destinationCountry);
   
   const tariffRates = [
-    { type: "MFN Rate", rate: 7.5, description: "Standard Most Favored Nation rate" },
-    { type: "Section 301", rate: 25.0, description: "Additional tariffs on Chinese goods" },
-    { type: "Merchandise Processing", rate: 0.3464, description: "Customs processing fee" },
-    { type: "Harbor Maintenance", rate: 0.125, description: "Port usage fee" }
+    { 
+      type: language === 'en' ? "MFN Rate" : "Tarifa NMF", 
+      rate: 7.5, 
+      description: language === 'en' ? "Standard Most Favored Nation rate" : "Tarifa estándar de Nación Más Favorecida" 
+    },
+    { 
+      type: language === 'en' ? "Section 301" : "Sección 301", 
+      rate: 25.0, 
+      description: language === 'en' ? "Additional tariffs on Chinese goods" : "Aranceles adicionales sobre productos chinos" 
+    },
+    { 
+      type: language === 'en' ? "Merchandise Processing" : "Procesamiento de Mercancías", 
+      rate: 0.3464, 
+      description: language === 'en' ? "Customs processing fee" : "Tarifa de procesamiento aduanero" 
+    },
+    { 
+      type: language === 'en' ? "Harbor Maintenance" : "Mantenimiento Portuario", 
+      rate: 0.125, 
+      description: language === 'en' ? "Port usage fee" : "Tarifa de uso portuario"
+    }
   ];
   
   // Total effective rate
   const totalRate = tariffRates.reduce((sum, item) => sum + item.rate, 0);
 
-  // Country comparison data
+  // Country comparison data - translate country names if in Spanish
   const countryComparisonData = [
-    { country: "United States", rate: 32.97 },
-    { country: "European Union", rate: 12.5 },
-    { country: "Canada", rate: 8.0 },
-    { country: "Mexico", rate: 15.0 },
-    { country: "Japan", rate: 10.0 },
-    { country: "South Korea", rate: 13.0 }
+    { 
+      country: language === 'en' ? "United States" : "Estados Unidos", 
+      rate: 32.97 
+    },
+    { 
+      country: language === 'en' ? "European Union" : "Unión Europea", 
+      rate: 12.5 
+    },
+    { 
+      country: language === 'en' ? "Canada" : "Canadá", 
+      rate: 8.0 
+    },
+    { 
+      country: language === 'en' ? "Mexico" : "México", 
+      rate: 15.0 
+    },
+    { 
+      country: language === 'en' ? "Japan" : "Japón", 
+      rate: 10.0 
+    },
+    { 
+      country: language === 'en' ? "South Korea" : "Corea del Sur", 
+      rate: 13.0 
+    }
   ];
 
   // Alternative HS codes
   const alternativeHSCodes = [
-    { code: "8471.30.0100", description: "Laptop computers", rate: 32.97 },
-    { code: "8471.41.0150", description: "Processing units", rate: 25.0 },
-    { code: "8473.30.5100", description: "Parts and accessories", rate: 15.0 }
+    { 
+      code: "8471.30.0100", 
+      description: language === 'en' ? "Laptop computers" : "Computadoras portátiles", 
+      rate: 32.97 
+    },
+    { 
+      code: "8471.41.0150", 
+      description: language === 'en' ? "Processing units" : "Unidades de procesamiento", 
+      rate: 25.0 
+    },
+    { 
+      code: "8473.30.5100", 
+      description: language === 'en' ? "Parts and accessories" : "Partes y accesorios", 
+      rate: 15.0 
+    }
   ];
 
   // Historical trends data
@@ -88,71 +138,86 @@ const TariffAnalysis = ({
 
   // Rules of origin requirements
   const originRequirements = [
-    { requirement: "Regional Value Content", threshold: "60% or higher", status: "Met" },
-    { requirement: "Tariff Shift", threshold: "Change in HS chapter", status: "Met" },
-    { requirement: "Specific Processing", threshold: "Assembly in FTA country", status: "Not Met" }
+    { 
+      requirement: language === 'en' ? "Regional Value Content" : "Contenido de Valor Regional", 
+      threshold: language === 'en' ? "60% or higher" : "60% o superior", 
+      status: language === 'en' ? "Met" : "Cumplido" 
+    },
+    { 
+      requirement: language === 'en' ? "Tariff Shift" : "Cambio Arancelario", 
+      threshold: language === 'en' ? "Change in HS chapter" : "Cambio en capítulo HS", 
+      status: language === 'en' ? "Met" : "Cumplido" 
+    },
+    { 
+      requirement: language === 'en' ? "Specific Processing" : "Procesamiento Específico", 
+      threshold: language === 'en' ? "Assembly in FTA country" : "Ensamblaje en país con TLC", 
+      status: language === 'en' ? "Not Met" : "No Cumplido" 
+    }
   ];
 
   // Tariff engineering options
   const engineeringOptions = [
     {
-      option: "Component Separation",
-      description: "Ship display and computing unit separately",
+      option: language === 'en' ? "Component Separation" : "Separación de Componentes",
+      description: language === 'en' ? "Ship display and computing unit separately" : "Enviar pantalla y unidad de cómputo por separado",
       savings: "7.5%",
-      complexity: "Medium"
+      complexity: language === 'en' ? "Medium" : "Media"
     },
     {
-      option: "Assembly Relocation",
-      description: "Final assembly in Mexico",
+      option: language === 'en' ? "Assembly Relocation" : "Reubicación de Ensamblaje",
+      description: language === 'en' ? "Final assembly in Mexico" : "Ensamblaje final en México",
       savings: "25.0%",
-      complexity: "High"
+      complexity: language === 'en' ? "High" : "Alta"
     },
     {
-      option: "Material Substitution",
-      description: "Replace certain materials with duty-free alternatives",
+      option: language === 'en' ? "Material Substitution" : "Sustitución de Materiales",
+      description: language === 'en' ? "Replace certain materials with duty-free alternatives" : "Reemplazar ciertos materiales con alternativas libres de aranceles",
       savings: "3.2%",
-      complexity: "Low"
+      complexity: language === 'en' ? "Low" : "Baja"
     }
   ];
 
   // Special programs
   const specialPrograms = [
     {
-      program: "First Sale Rule",
-      eligibility: "Eligible",
+      program: language === 'en' ? "First Sale Rule" : "Regla de Primera Venta",
+      eligibility: language === 'en' ? "Eligible" : "Elegible",
       savings: "8.2%",
-      requirements: "Proper transaction documentation, arms-length pricing"
+      requirements: language === 'en' ? "Proper transaction documentation, arms-length pricing" : "Documentación adecuada de transacción, precios de libre competencia"
     },
     {
-      program: "Foreign Trade Zone",
-      eligibility: "Eligible",
-      savings: "Duty deferral",
-      requirements: "Use of authorized FTZ facility"
+      program: language === 'en' ? "Foreign Trade Zone" : "Zona de Comercio Exterior",
+      eligibility: language === 'en' ? "Eligible" : "Elegible",
+      savings: language === 'en' ? "Duty deferral" : "Aplazamiento de aranceles",
+      requirements: language === 'en' ? "Use of authorized FTZ facility" : "Uso de instalaciones ZCE autorizadas"
     },
     {
-      program: "Duty Drawback",
-      eligibility: "Eligible",
-      savings: "Up to 99% of duties paid",
-      requirements: "Re-export within 5 years with proper documentation"
+      program: language === 'en' ? "Duty Drawback" : "Devolución de Aranceles",
+      eligibility: language === 'en' ? "Eligible" : "Elegible",
+      savings: language === 'en' ? "Up to 99% of duties paid" : "Hasta el 99% de aranceles pagados",
+      requirements: language === 'en' ? "Re-export within 5 years with proper documentation" : "Reexportar en 5 años con documentación adecuada"
     }
   ];
 
   // Exclusion information
   const exclusionInfo = {
     available: true,
-    process: "Section 301 Exclusion Request",
-    criteria: "Not available domestically, significant economic harm, strategic importance",
-    timeline: "90-120 days for review",
-    successRate: "~33% approval rate historically"
+    process: language === 'en' ? "Section 301 Exclusion Request" : "Solicitud de Exclusión Sección 301",
+    criteria: language === 'en' ? "Not available domestically, significant economic harm, strategic importance" : "No disponible nacionalmente, daño económico significativo, importancia estratégica",
+    timeline: language === 'en' ? "90-120 days for review" : "90-120 días para revisión",
+    successRate: language === 'en' ? "~33% approval rate historically" : "~33% tasa de aprobación histórica"
   };
 
   return (
     <div className="space-y-8">
       <div className="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6">
-        <h4 className="text-blue-700 font-semibold mb-2">Tariff Strategy Insight</h4>
+        <h4 className="text-blue-700 font-semibold mb-2">
+          {language === 'en' ? "Tariff Strategy Insight" : "Información Estratégica de Aranceles"}
+        </h4>
         <p className="text-gray-700">
-          Based on your product classification and origin, we recommend exploring the First Sale Rule 
-          and Mexico assembly options to potentially reduce duties by up to 25%.
+          {language === 'en' 
+            ? "Based on your product classification and origin, we recommend exploring the First Sale Rule and Mexico assembly options to potentially reduce duties by up to 25%."
+            : "Según la clasificación y origen de su producto, recomendamos explorar la Regla de Primera Venta y opciones de ensamblaje en México para potencialmente reducir aranceles hasta un 25%."}
         </p>
       </div>
 
@@ -160,35 +225,35 @@ const TariffAnalysis = ({
         <TabsList className="w-full">
           <TabsTrigger value="basic" className="flex items-center gap-2">
             <DollarSign className="h-4 w-4" />
-            <span>Basic Tariff</span>
+            <span>{t('tariff.basic')}</span>
           </TabsTrigger>
           <TabsTrigger value="hscode" className="flex items-center gap-2">
             <FileSearch className="h-4 w-4" />
-            <span>HS Code</span>
+            <span>{t('tariff.hscode')}</span>
           </TabsTrigger>
           <TabsTrigger value="countries" className="flex items-center gap-2">
             <Flag className="h-4 w-4" />
-            <span>Country Comparison</span>
+            <span>{t('tariff.countryComparison')}</span>
           </TabsTrigger>
           <TabsTrigger value="origin" className="flex items-center gap-2">
             <FileText className="h-4 w-4" />
-            <span>Rules of Origin</span>
+            <span>{t('tariff.rulesOfOrigin')}</span>
           </TabsTrigger>
           <TabsTrigger value="engineering" className="flex items-center gap-2">
             <Settings className="h-4 w-4" />
-            <span>Tariff Engineering</span>
+            <span>{t('tariff.engineering')}</span>
           </TabsTrigger>
           <TabsTrigger value="programs" className="flex items-center gap-2">
             <ChartBar className="h-4 w-4" />
-            <span>Special Programs</span>
+            <span>{t('tariff.specialPrograms')}</span>
           </TabsTrigger>
           <TabsTrigger value="trends" className="flex items-center gap-2">
             <TrendingUp className="h-4 w-4" />
-            <span>Historical Trends</span>
+            <span>{t('tariff.historicalTrends')}</span>
           </TabsTrigger>
           <TabsTrigger value="exclusions" className="flex items-center gap-2">
             <FileCheck className="h-4 w-4" />
-            <span>Exclusions</span>
+            <span>{t('tariff.exclusionBreakdown')}</span>
           </TabsTrigger>
         </TabsList>
 
@@ -197,15 +262,15 @@ const TariffAnalysis = ({
           <div className="grid gap-6 md:grid-cols-2">
             <Card>
               <CardHeader>
-                <CardTitle>Applicable Tariff Components</CardTitle>
+                <CardTitle>{language === 'en' ? "Applicable Tariff Components" : "Componentes Arancelarios Aplicables"}</CardTitle>
               </CardHeader>
               <CardContent>
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead>Component</TableHead>
-                      <TableHead>Rate</TableHead>
-                      <TableHead>Description</TableHead>
+                      <TableHead>{language === 'en' ? "Component" : "Componente"}</TableHead>
+                      <TableHead>{language === 'en' ? "Rate" : "Tasa"}</TableHead>
+                      <TableHead>{language === 'en' ? "Description" : "Descripción"}</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -221,7 +286,9 @@ const TariffAnalysis = ({
                 
                 <div className="mt-6 p-4 bg-gray-50 rounded-md">
                   <div className="flex justify-between items-center">
-                    <span className="font-semibold text-lg">Total Effective Rate:</span>
+                    <span className="font-semibold text-lg">
+                      {language === 'en' ? "Total Effective Rate:" : "Tasa Efectiva Total:"}
+                    </span>
                     <span className="font-bold text-xl text-blue-700">{totalRate.toFixed(2)}%</span>
                   </div>
                 </div>
@@ -230,46 +297,68 @@ const TariffAnalysis = ({
 
             <Card>
               <CardHeader>
-                <CardTitle>Preferential Rate Options</CardTitle>
+                <CardTitle>{language === 'en' ? "Preferential Rate Options" : "Opciones de Tasas Preferenciales"}</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
                   <div className="p-3 border rounded-md">
                     <div className="flex justify-between">
                       <div>
-                        <h4 className="font-medium">USMCA Preferential Rate</h4>
-                        <p className="text-sm text-gray-500">US-Mexico-Canada Agreement</p>
+                        <h4 className="font-medium">{language === 'en' ? "USMCA Preferential Rate" : "Tasa Preferencial T-MEC"}</h4>
+                        <p className="text-sm text-gray-500">
+                          {language === 'en' ? "US-Mexico-Canada Agreement" : "Tratado México-Estados Unidos-Canadá"}
+                        </p>
                       </div>
-                      <Badge variant="outline" className="bg-orange-50">Not Applicable</Badge>
+                      <Badge variant="outline" className="bg-orange-50">
+                        {language === 'en' ? "Not Applicable" : "No Aplicable"}
+                      </Badge>
                     </div>
                     <p className="mt-2 text-sm">
-                      Product doesn't meet North American origin requirements
+                      {language === 'en' 
+                        ? "Product doesn't meet North American origin requirements"
+                        : "El producto no cumple con los requisitos de origen norteamericano"}
                     </p>
                   </div>
 
                   <div className="p-3 border rounded-md">
                     <div className="flex justify-between">
                       <div>
-                        <h4 className="font-medium">US-China Phase One Agreement</h4>
-                        <p className="text-sm text-gray-500">Limited tariff reductions</p>
+                        <h4 className="font-medium">
+                          {language === 'en' ? "US-China Phase One Agreement" : "Acuerdo Fase Uno EE.UU.-China"}
+                        </h4>
+                        <p className="text-sm text-gray-500">
+                          {language === 'en' ? "Limited tariff reductions" : "Reducciones arancelarias limitadas"}
+                        </p>
                       </div>
-                      <Badge variant="outline" className="bg-orange-50">Not Applicable</Badge>
+                      <Badge variant="outline" className="bg-orange-50">
+                        {language === 'en' ? "Not Applicable" : "No Aplicable"}
+                      </Badge>
                     </div>
                     <p className="mt-2 text-sm">
-                      Electronics not covered under current exceptions
+                      {language === 'en'
+                        ? "Electronics not covered under current exceptions"
+                        : "Electrónicos no cubiertos bajo excepciones actuales"}
                     </p>
                   </div>
 
                   <div className="p-3 border rounded-md">
                     <div className="flex justify-between">
                       <div>
-                        <h4 className="font-medium">Third Country Routing</h4>
-                        <p className="text-sm text-gray-500">Via Vietnam or Mexico</p>
+                        <h4 className="font-medium">
+                          {language === 'en' ? "Third Country Routing" : "Ruta por Tercer País"}
+                        </h4>
+                        <p className="text-sm text-gray-500">
+                          {language === 'en' ? "Via Vietnam or Mexico" : "Vía Vietnam o México"}
+                        </p>
                       </div>
-                      <Badge variant="outline" className="bg-green-50 text-green-800">Potential Savings</Badge>
+                      <Badge variant="outline" className="bg-green-50 text-green-800">
+                        {language === 'en' ? "Potential Savings" : "Ahorros Potenciales"}
+                      </Badge>
                     </div>
                     <p className="mt-2 text-sm">
-                      Substantial transformation may qualify for lower rates
+                      {language === 'en'
+                        ? "Substantial transformation may qualify for lower rates"
+                        : "La transformación sustancial puede calificar para tasas más bajas"}
                     </p>
                   </div>
                 </div>
@@ -283,28 +372,44 @@ const TariffAnalysis = ({
           <div className="grid gap-6 md:grid-cols-2">
             <Card>
               <CardHeader>
-                <CardTitle>Current HS Classification</CardTitle>
+                <CardTitle>{language === 'en' ? "Current HS Classification" : "Clasificación HS Actual"}</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="p-4 border rounded-md mb-4">
                   <h3 className="text-lg font-bold">{hsCode}</h3>
-                  <p className="text-sm text-gray-600 mt-1">Portable automatic data processing machines, weighing not more than 10 kg, consisting of at least a central processing unit, a keyboard and a display</p>
+                  <p className="text-sm text-gray-600 mt-1">
+                    {language === 'en'
+                      ? "Portable automatic data processing machines, weighing not more than 10 kg, consisting of at least a central processing unit, a keyboard and a display"
+                      : "Máquinas automáticas para procesamiento de datos, portátiles, de peso inferior a 10 kg, que consten al menos de una unidad central de proceso, un teclado y una pantalla"}
+                  </p>
                   
                   <div className="mt-3 space-y-2">
                     <div className="flex justify-between">
-                      <span className="text-sm">Section:</span>
-                      <span className="text-sm font-medium">XVI - Machinery and Mechanical Appliances</span>
+                      <span className="text-sm">{language === 'en' ? "Section:" : "Sección:"}</span>
+                      <span className="text-sm font-medium">
+                        {language === 'en'
+                          ? "XVI - Machinery and Mechanical Appliances"
+                          : "XVI - Maquinaria y Aparatos Mecánicos"}
+                      </span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-sm">Chapter:</span>
-                      <span className="text-sm font-medium">84 - Nuclear Reactors, Boilers, Machinery</span>
+                      <span className="text-sm">{language === 'en' ? "Chapter:" : "Capítulo:"}</span>
+                      <span className="text-sm font-medium">
+                        {language === 'en'
+                          ? "84 - Nuclear Reactors, Boilers, Machinery"
+                          : "84 - Reactores Nucleares, Calderas, Maquinaria"}
+                      </span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-sm">Heading:</span>
-                      <span className="text-sm font-medium">8471 - Automatic Data Processing Machines</span>
+                      <span className="text-sm">{language === 'en' ? "Heading:" : "Partida:"}</span>
+                      <span className="text-sm font-medium">
+                        {language === 'en'
+                          ? "8471 - Automatic Data Processing Machines"
+                          : "8471 - Máquinas Automáticas para Procesamiento de Datos"}
+                      </span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-sm">Tariff Rate:</span>
+                      <span className="text-sm">{language === 'en' ? "Tariff Rate:" : "Tasa Arancelaria:"}</span>
                       <span className="text-sm font-bold">{totalRate.toFixed(2)}%</span>
                     </div>
                   </div>
@@ -314,15 +419,15 @@ const TariffAnalysis = ({
 
             <Card>
               <CardHeader>
-                <CardTitle>Alternative Classifications</CardTitle>
+                <CardTitle>{language === 'en' ? "Alternative Classifications" : "Clasificaciones Alternativas"}</CardTitle>
               </CardHeader>
               <CardContent>
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead>HS Code</TableHead>
-                      <TableHead>Description</TableHead>
-                      <TableHead>Rate</TableHead>
+                      <TableHead>{language === 'en' ? "HS Code" : "Código HS"}</TableHead>
+                      <TableHead>{language === 'en' ? "Description" : "Descripción"}</TableHead>
+                      <TableHead>{language === 'en' ? "Rate" : "Tasa"}</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -337,10 +442,13 @@ const TariffAnalysis = ({
                 </Table>
                 
                 <div className="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded-md">
-                  <h4 className="font-medium text-yellow-800">Classification Notes</h4>
+                  <h4 className="font-medium text-yellow-800">
+                    {language === 'en' ? "Classification Notes" : "Notas de Clasificación"}
+                  </h4>
                   <p className="text-sm mt-1">
-                    Consider classification under parts (8473.30.5100) if imported disassembled or 
-                    if the product could be marketed as components rather than a complete system.
+                    {language === 'en'
+                      ? "Consider classification under parts (8473.30.5100) if imported disassembled or if the product could be marketed as components rather than a complete system."
+                      : "Considere clasificación bajo partes (8473.30.5100) si se importa desmontado o si el producto podría comercializarse como componentes en lugar de un sistema completo."}
                   </p>
                 </div>
               </CardContent>
@@ -352,13 +460,13 @@ const TariffAnalysis = ({
         <TabsContent value="countries">
           <Card>
             <CardHeader>
-              <CardTitle>Country Rate Comparison</CardTitle>
+              <CardTitle>{language === 'en' ? "Country Rate Comparison" : "Comparación de Tasas por País"}</CardTitle>
             </CardHeader>
             <CardContent className="h-80">
               <ChartContainer
                 config={{
                   rate: {
-                    label: "Rate %",
+                    label: language === 'en' ? "Rate %" : "Tasa %",
                     color: "#8B5CF6"
                   }
                 }}
@@ -370,19 +478,20 @@ const TariffAnalysis = ({
                   <ChartTooltip
                     content={
                       <ChartTooltipContent
-                        formatter={(value) => [`${value}%`, "Tariff Rate"]}
+                        formatter={(value) => [`${value}%`, language === 'en' ? "Tariff Rate" : "Tasa Arancelaria"]}
                       />
                     }
                   />
                   <Legend />
-                  <Bar dataKey="rate" name="Tariff Rate %" fill="var(--color-rate)" />
+                  <Bar dataKey="rate" name={language === 'en' ? "Tariff Rate %" : "Tasa Arancelaria %"} fill="var(--color-rate)" />
                 </BarChart>
               </ChartContainer>
             </CardContent>
             <div className="px-6 pb-6">
               <p className="text-sm text-gray-600">
-                Shipping to Canada would yield the lowest tariff burden at 8.0%, a potential savings of 
-                24.97% compared to the current US rate.
+                {language === 'en'
+                  ? "Shipping to Canada would yield the lowest tariff burden at 8.0%, a potential savings of 24.97% compared to the current US rate."
+                  : "Enviar a Canadá resultaría en la menor carga arancelaria al 8.0%, un ahorro potencial del 24.97% comparado con la tasa actual de EE.UU."}
               </p>
             </div>
           </Card>
@@ -393,15 +502,15 @@ const TariffAnalysis = ({
           <div className="grid gap-6 md:grid-cols-2">
             <Card>
               <CardHeader>
-                <CardTitle>Origin Requirements Assessment</CardTitle>
+                <CardTitle>{language === 'en' ? "Origin Requirements Assessment" : "Evaluación de Requisitos de Origen"}</CardTitle>
               </CardHeader>
               <CardContent>
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead>Requirement</TableHead>
-                      <TableHead>Threshold</TableHead>
-                      <TableHead>Status</TableHead>
+                      <TableHead>{language === 'en' ? "Requirement" : "Requisito"}</TableHead>
+                      <TableHead>{language === 'en' ? "Threshold" : "Umbral"}</TableHead>
+                      <TableHead>{language === 'en' ? "Status" : "Estado"}</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -411,7 +520,7 @@ const TariffAnalysis = ({
                         <TableCell>{item.threshold}</TableCell>
                         <TableCell>
                           <Badge 
-                            variant={item.status === "Met" ? "default" : "destructive"}
+                            variant={item.status === (language === 'en' ? "Met" : "Cumplido") ? "default" : "destructive"}
                           >
                             {item.status}
                           </Badge>
@@ -422,10 +531,11 @@ const TariffAnalysis = ({
                 </Table>
                 
                 <div className="mt-4 p-3 bg-gray-50 rounded-md">
-                  <h4 className="font-medium">Current Origin Status</h4>
+                  <h4 className="font-medium">{language === 'en' ? "Current Origin Status" : "Estado de Origen Actual"}</h4>
                   <p className="text-sm mt-1">
-                    Product currently qualifies as Chinese origin. It does not meet the substantial 
-                    transformation requirements for any preferential trade agreements.
+                    {language === 'en'
+                      ? "Product currently qualifies as Chinese origin. It does not meet the substantial transformation requirements for any preferential trade agreements."
+                      : "El producto actualmente califica como de origen chino. No cumple con los requisitos de transformación sustancial para ningún acuerdo comercial preferencial."}
                   </p>
                 </div>
               </CardContent>
@@ -433,45 +543,52 @@ const TariffAnalysis = ({
 
             <Card>
               <CardHeader>
-                <CardTitle>Required Documentation</CardTitle>
+                <CardTitle>{language === 'en' ? "Required Documentation" : "Documentación Requerida"}</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-3">
                   <div className="p-3 border rounded-md">
                     <div className="flex justify-between">
-                      <h4 className="font-medium">Certificate of Origin</h4>
-                      <Badge>Required</Badge>
+                      <h4 className="font-medium">{language === 'en' ? "Certificate of Origin" : "Certificado de Origen"}</h4>
+                      <Badge>{language === 'en' ? "Required" : "Requerido"}</Badge>
                     </div>
                     <p className="text-sm mt-1">
-                      Must be issued by manufacturer or exporter and include production details
+                      {language === 'en'
+                        ? "Must be issued by manufacturer or exporter and include production details"
+                        : "Debe ser emitido por el fabricante o exportador e incluir detalles de producción"}
                     </p>
                   </div>
                   
                   <div className="p-3 border rounded-md">
                     <div className="flex justify-between">
-                      <h4 className="font-medium">Manufacturing Records</h4>
-                      <Badge>Required</Badge>
+                      <h4 className="font-medium">{language === 'en' ? "Manufacturing Records" : "Registros de Fabricación"}</h4>
+                      <Badge>{language === 'en' ? "Required" : "Requerido"}</Badge>
                     </div>
                     <p className="text-sm mt-1">
-                      Bill of materials, assembly instructions, component sourcing details
+                      {language === 'en'
+                        ? "Bill of materials, assembly instructions, component sourcing details"
+                        : "Lista de materiales, instrucciones de ensamblaje, detalles de origen de componentes"}
                     </p>
                   </div>
                   
                   <div className="p-3 border rounded-md">
                     <div className="flex justify-between">
-                      <h4 className="font-medium">Value Breakdown</h4>
-                      <Badge>Required</Badge>
+                      <h4 className="font-medium">{language === 'en' ? "Value Breakdown" : "Desglose de Valor"}</h4>
+                      <Badge>{language === 'en' ? "Required" : "Requerido"}</Badge>
                     </div>
                     <p className="text-sm mt-1">
-                      Document showing cost of materials by country of origin
+                      {language === 'en'
+                        ? "Document showing cost of materials by country of origin"
+                        : "Documento que muestre el costo de materiales por país de origen"}
                     </p>
                   </div>
                   
                   <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-md">
-                    <h4 className="font-medium text-blue-800">Strategy Tip</h4>
+                    <h4 className="font-medium text-blue-800">{language === 'en' ? "Strategy Tip" : "Consejo Estratégico"}</h4>
                     <p className="text-sm mt-1">
-                      Consider increasing regional value content through sourcing more components from 
-                      Mexico to potentially qualify for USMCA preferential rates.
+                      {language === 'en'
+                        ? "Consider increasing regional value content through sourcing more components from Mexico to potentially qualify for USMCA preferential rates."
+                        : "Considere aumentar el contenido de valor regional mediante la adquisición de más componentes de México para potencialmente calificar para tasas preferenciales T-MEC."}
                     </p>
                   </div>
                 </div>
@@ -484,7 +601,7 @@ const TariffAnalysis = ({
         <TabsContent value="engineering">
           <Card>
             <CardHeader>
-              <CardTitle>Tariff Engineering Opportunities</CardTitle>
+              <CardTitle>{language === 'en' ? "Tariff Engineering Opportunities" : "Oportunidades de Ingeniería Arancelaria"}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-6">
@@ -496,27 +613,31 @@ const TariffAnalysis = ({
                         <p className="text-gray-600 mt-1">{option.description}</p>
                       </div>
                       <div className="text-right">
-                        <div className="text-green-600 font-bold">{option.savings} potential savings</div>
+                        <div className="text-green-600 font-bold">
+                          {option.savings} {language === 'en' ? "potential savings" : "ahorros potenciales"}
+                        </div>
                         <Badge 
                           variant="outline" 
                           className={`mt-1 ${
-                            option.complexity === 'Low' ? 'bg-green-50 text-green-800' : 
-                            option.complexity === 'Medium' ? 'bg-yellow-50 text-yellow-800' :
+                            option.complexity === (language === 'en' ? 'Low' : 'Baja') ? 'bg-green-50 text-green-800' : 
+                            option.complexity === (language === 'en' ? 'Medium' : 'Media') ? 'bg-yellow-50 text-yellow-800' :
                             'bg-red-50 text-red-800'
                           }`}
                         >
-                          {option.complexity} complexity
+                          {language === 'en' 
+                            ? `${option.complexity} complexity` 
+                            : `complejidad ${option.complexity}`}
                         </Badge>
                       </div>
                     </div>
                     
                     {index === 1 && (
                       <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-md">
-                        <h4 className="font-medium text-blue-800">Implementation Details</h4>
+                        <h4 className="font-medium text-blue-800">{language === 'en' ? "Implementation Details" : "Detalles de Implementación"}</h4>
                         <p className="text-sm mt-1">
-                          Relocating final assembly to Mexico would require establishing a manufacturing 
-                          relationship with a Mexican facility, shipping components separately, and 
-                          ensuring proper documentation to qualify for USMCA preferential treatment.
+                          {language === 'en'
+                            ? "Relocating final assembly to Mexico would require establishing a manufacturing relationship with a Mexican facility, shipping components separately, and ensuring proper documentation to qualify for USMCA preferential treatment."
+                            : "Reubicar el ensamblaje final a México requeriría establecer una relación de fabricación con una instalación mexicana, enviar componentes por separado y asegurar la documentación adecuada para calificar para el trato preferencial T-MEC."}
                         </p>
                       </div>
                     )}
@@ -524,19 +645,19 @@ const TariffAnalysis = ({
                 ))}
                 
                 <div className="p-4 bg-gray-50 rounded-md">
-                  <h4 className="font-medium">Cost-Benefit Analysis</h4>
+                  <h4 className="font-medium">{language === 'en' ? "Cost-Benefit Analysis" : "Análisis Costo-Beneficio"}</h4>
                   <div className="mt-2 space-y-2">
                     <div className="flex justify-between">
-                      <span>Implementation Costs:</span>
+                      <span>{language === 'en' ? "Implementation Costs:" : "Costos de Implementación:"}</span>
                       <span className="font-medium">$15,000 - $75,000</span>
                     </div>
                     <div className="flex justify-between">
-                      <span>Annual Duty Savings:</span>
+                      <span>{language === 'en' ? "Annual Duty Savings:" : "Ahorro Anual en Aranceles:"}</span>
                       <span className="font-medium text-green-600">$37,500 - $125,000</span>
                     </div>
                     <div className="flex justify-between">
-                      <span>Payback Period:</span>
-                      <span className="font-medium">4-8 months</span>
+                      <span>{language === 'en' ? "Payback Period:" : "Período de Recuperación:"}</span>
+                      <span className="font-medium">{language === 'en' ? "4-8 months" : "4-8 meses"}</span>
                     </div>
                   </div>
                 </div>
@@ -556,30 +677,31 @@ const TariffAnalysis = ({
                 <CardContent>
                   <div className="space-y-4">
                     <div className="flex justify-between">
-                      <span className="text-gray-600">Eligibility:</span>
+                      <span className="text-gray-600">{language === 'en' ? "Eligibility:" : "Elegibilidad:"}</span>
                       <Badge
-                        variant={program.eligibility === "Eligible" ? "default" : "secondary"}
+                        variant={program.eligibility === (language === 'en' ? "Eligible" : "Elegible") ? "default" : "secondary"}
                       >
                         {program.eligibility}
                       </Badge>
                     </div>
                     
                     <div>
-                      <span className="text-gray-600">Potential Savings:</span>
+                      <span className="text-gray-600">{language === 'en' ? "Potential Savings:" : "Ahorros Potenciales:"}</span>
                       <div className="font-bold text-green-600 text-lg mt-1">{program.savings}</div>
                     </div>
                     
                     <div>
-                      <span className="text-gray-600">Requirements:</span>
+                      <span className="text-gray-600">{language === 'en' ? "Requirements:" : "Requisitos:"}</span>
                       <p className="mt-1">{program.requirements}</p>
                     </div>
                     
                     {index === 0 && (
                       <div className="p-3 bg-blue-50 border border-blue-200 rounded-md mt-4">
-                        <h4 className="font-medium text-blue-800">Implementation Note</h4>
+                        <h4 className="font-medium text-blue-800">{language === 'en' ? "Implementation Note" : "Nota de Implementación"}</h4>
                         <p className="text-sm mt-1">
-                          First Sale Rule requires two separate, bona fide sales with proper 
-                          documentation of the manufacturer's sale price to the middleman.
+                          {language === 'en'
+                            ? "First Sale Rule requires two separate, bona fide sales with proper documentation of the manufacturer's sale price to the middleman."
+                            : "La Regla de Primera Venta requiere dos ventas separadas y de buena fe con documentación adecuada del precio de venta del fabricante al intermediario."}
                         </p>
                       </div>
                     )}
@@ -590,31 +712,46 @@ const TariffAnalysis = ({
             
             <Card className="md:col-span-2">
               <CardHeader>
-                <CardTitle>Additional Program Considerations</CardTitle>
+                <CardTitle>{language === 'en' ? "Additional Program Considerations" : "Consideraciones Adicionales de Programas"}</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="grid gap-4 md:grid-cols-3">
                   <div className="p-3 border rounded-md">
-                    <h4 className="font-medium">Bonded Warehouse</h4>
+                    <h4 className="font-medium">{language === 'en' ? "Bonded Warehouse" : "Almacén Afianzado"}</h4>
                     <div className="text-sm mt-1">
-                      <p>Store goods without paying duties until they enter commerce</p>
-                      <p className="text-green-600 mt-1">Duty deferral benefit</p>
+                      <p>{language === 'en' 
+                        ? "Store goods without paying duties until they enter commerce" 
+                        : "Almacenar mercancías sin pagar aranceles hasta que entren al comercio"}
+                      </p>
+                      <p className="text-green-600 mt-1">
+                        {language === 'en' ? "Duty deferral benefit" : "Beneficio de aplazamiento arancelario"}
+                      </p>
                     </div>
                   </div>
                   
                   <div className="p-3 border rounded-md">
-                    <h4 className="font-medium">Temporary Importation Bond (TIB)</h4>
+                    <h4 className="font-medium">{language === 'en' ? "Temporary Importation Bond (TIB)" : "Fianza de Importación Temporal (TIB)"}</h4>
                     <div className="text-sm mt-1">
-                      <p>Import for repair, testing or samples without paying duty</p>
-                      <p className="text-green-600 mt-1">Full duty exemption possible</p>
+                      <p>{language === 'en'
+                        ? "Import for repair, testing or samples without paying duty"
+                        : "Importar para reparación, pruebas o muestras sin pagar aranceles"}
+                      </p>
+                      <p className="text-green-600 mt-1">
+                        {language === 'en' ? "Full duty exemption possible" : "Exención total de aranceles posible"}
+                      </p>
                     </div>
                   </div>
                   
                   <div className="p-3 border rounded-md">
-                    <h4 className="font-medium">Trusted Trader Programs</h4>
+                    <h4 className="font-medium">{language === 'en' ? "Trusted Trader Programs" : "Programas de Comerciante Confiable"}</h4>
                     <div className="text-sm mt-1">
-                      <p>CTPAT, AEO status for expedited processing</p>
-                      <p className="text-green-600 mt-1">Reduced inspection rates</p>
+                      <p>{language === 'en'
+                        ? "CTPAT, AEO status for expedited processing"
+                        : "Estado CTPAT, OEA para procesamiento acelerado"}
+                      </p>
+                      <p className="text-green-600 mt-1">
+                        {language === 'en' ? "Reduced inspection rates" : "Tasas de inspección reducidas"}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -627,13 +764,13 @@ const TariffAnalysis = ({
         <TabsContent value="trends">
           <Card>
             <CardHeader>
-              <CardTitle>Historical Tariff Rates & Projections</CardTitle>
+              <CardTitle>{language === 'en' ? "Historical Tariff Rates & Projections" : "Tasas Arancelarias Históricas y Proyecciones"}</CardTitle>
             </CardHeader>
             <CardContent className="h-80">
               <ChartContainer
                 config={{
                   rate: {
-                    label: "Rate %",
+                    label: language === 'en' ? "Rate %" : "Tasa %",
                     color: "#8B5CF6"
                   }
                 }}
@@ -647,7 +784,10 @@ const TariffAnalysis = ({
                       <ChartTooltipContent
                         formatter={(value, name, props) => {
                           const item = props.payload;
-                          return [`${value}%${item.projected ? ' (Projected)' : ''}`, "Tariff Rate"];
+                          return [
+                            `${value}%${item.projected ? (language === 'en' ? ' (Projected)' : ' (Proyectado)') : ''}`, 
+                            language === 'en' ? "Tariff Rate" : "Tasa Arancelaria"
+                          ];
                         }}
                       />
                     }
@@ -656,7 +796,7 @@ const TariffAnalysis = ({
                   <Line 
                     type="monotone" 
                     dataKey="rate" 
-                    name="Tariff Rate %" 
+                    name={language === 'en' ? "Tariff Rate %" : "Tasa Arancelaria %"}
                     stroke="var(--color-rate)"
                     strokeWidth={2}
                     dot={{ r: 6 }}
@@ -668,22 +808,54 @@ const TariffAnalysis = ({
             <div className="p-6">
               <div className="grid gap-4 md:grid-cols-2">
                 <div className="p-3 border rounded-md">
-                  <h4 className="font-medium">Key Drivers of Change</h4>
+                  <h4 className="font-medium">{language === 'en' ? "Key Drivers of Change" : "Factores Clave de Cambio"}</h4>
                   <ul className="mt-2 text-sm space-y-1 list-disc pl-5">
-                    <li>2018: Initial Section 301 tariffs implemented (25%)</li>
-                    <li>2019: Additional tranche of products affected</li>
-                    <li>2022: USMCA implementation complete</li>
-                    <li>2025: Potential new tariff increases projected</li>
+                    <li>
+                      {language === 'en'
+                        ? "2018: Initial Section 301 tariffs implemented (25%)"
+                        : "2018: Aranceles iniciales de Sección 301 implementados (25%)"}
+                    </li>
+                    <li>
+                      {language === 'en'
+                        ? "2019: Additional tranche of products affected"
+                        : "2019: Tramo adicional de productos afectados"}
+                    </li>
+                    <li>
+                      {language === 'en'
+                        ? "2022: USMCA implementation complete"
+                        : "2022: Implementación del T-MEC completa"}
+                    </li>
+                    <li>
+                      {language === 'en'
+                        ? "2025: Potential new tariff increases projected"
+                        : "2025: Potenciales nuevos aumentos arancelarios proyectados"}
+                    </li>
                   </ul>
                 </div>
                 
                 <div className="p-3 border rounded-md">
-                  <h4 className="font-medium">Future Outlook</h4>
+                  <h4 className="font-medium">{language === 'en' ? "Future Outlook" : "Perspectiva Futura"}</h4>
                   <ul className="mt-2 text-sm space-y-1 list-disc pl-5">
-                    <li>Continued high tariffs on Chinese electronics likely</li>
-                    <li>Increased focus on critical supply chains and reshoring</li>
-                    <li>Potential new trade agreements with Southeast Asian nations</li>
-                    <li>Expanding technology export controls possible</li>
+                    <li>
+                      {language === 'en'
+                        ? "Continued high tariffs on Chinese electronics likely"
+                        : "Probable continuidad de altos aranceles en electrónicos chinos"}
+                    </li>
+                    <li>
+                      {language === 'en'
+                        ? "Increased focus on critical supply chains and reshoring"
+                        : "Mayor enfoque en cadenas de suministro críticas y relocalización"}
+                    </li>
+                    <li>
+                      {language === 'en'
+                        ? "Potential new trade agreements with Southeast Asian nations"
+                        : "Posibles nuevos acuerdos comerciales con naciones del sudeste asiático"}
+                    </li>
+                    <li>
+                      {language === 'en'
+                        ? "Expanding technology export controls possible"
+                        : "Posible expansión de controles de exportación de tecnología"}
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -695,37 +867,37 @@ const TariffAnalysis = ({
         <TabsContent value="exclusions">
           <Card>
             <CardHeader>
-              <CardTitle>Tariff Exclusion Process</CardTitle>
+              <CardTitle>{language === 'en' ? "Tariff Exclusion Process" : "Proceso de Exclusión Arancelaria"}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="grid gap-6 md:grid-cols-2">
                 <div>
                   <div className="p-4 border rounded-md">
-                    <h3 className="text-lg font-medium">Exclusion Status</h3>
+                    <h3 className="text-lg font-medium">{language === 'en' ? "Exclusion Status" : "Estado de Exclusión"}</h3>
                     <div className="mt-3 space-y-2">
                       <div className="flex justify-between">
-                        <span>Process Available:</span>
+                        <span>{language === 'en' ? "Process Available:" : "Proceso Disponible:"}</span>
                         <Badge variant={exclusionInfo.available ? "default" : "secondary"}>
-                          {exclusionInfo.available ? "Yes" : "No"}
+                          {language === 'en' ? (exclusionInfo.available ? "Yes" : "No") : (exclusionInfo.available ? "Sí" : "No")}
                         </Badge>
                       </div>
                       <div className="flex justify-between">
-                        <span>Process Type:</span>
+                        <span>{language === 'en' ? "Process Type:" : "Tipo de Proceso:"}</span>
                         <span className="font-medium">{exclusionInfo.process}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span>Review Timeline:</span>
+                        <span>{language === 'en' ? "Review Timeline:" : "Cronograma de Revisión:"}</span>
                         <span className="font-medium">{exclusionInfo.timeline}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span>Historical Success Rate:</span>
+                        <span>{language === 'en' ? "Historical Success Rate:" : "Tasa de Éxito Histórica:"}</span>
                         <span className="font-medium">{exclusionInfo.successRate}</span>
                       </div>
                     </div>
                   </div>
 
                   <div className="p-4 border rounded-md mt-6">
-                    <h3 className="text-lg font-medium">Application Criteria</h3>
+                    <h3 className="text-lg font-medium">{language === 'en' ? "Application Criteria" : "Criterios de Solicitud"}</h3>
                     <ul className="mt-2 space-y-1 list-disc pl-5">
                       {exclusionInfo.criteria.split(", ").map((item, i) => (
                         <li key={i}>{item}</li>
@@ -734,62 +906,74 @@ const TariffAnalysis = ({
                   </div>
 
                   <div className="p-4 bg-blue-50 border border-blue-200 rounded-md mt-6">
-                    <h4 className="font-medium text-blue-800">Strategic Recommendation</h4>
+                    <h4 className="font-medium text-blue-800">{language === 'en' ? "Strategic Recommendation" : "Recomendación Estratégica"}</h4>
                     <p className="mt-2">
-                      Based on your product specifications and market conditions, an exclusion request 
-                      has moderate potential for success. Focus on demonstrating limited US manufacturing 
-                      alternatives and specific economic impact to strengthen your case.
+                      {language === 'en'
+                        ? "Based on your product specifications and market conditions, an exclusion request has moderate potential for success. Focus on demonstrating limited US manufacturing alternatives and specific economic impact to strengthen your case."
+                        : "Basado en las especificaciones de su producto y las condiciones del mercado, una solicitud de exclusión tiene un potencial moderado de éxito. Enfóquese en demostrar alternativas limitadas de fabricación en EE.UU. e impacto económico específico para fortalecer su caso."}
                     </p>
                   </div>
                 </div>
 
                 <div className="space-y-6">
                   <div className="p-4 border rounded-md">
-                    <h3 className="text-lg font-medium">Application Process</h3>
+                    <h3 className="text-lg font-medium">{language === 'en' ? "Application Process" : "Proceso de Solicitud"}</h3>
                     <ol className="mt-3 space-y-3 list-decimal pl-5">
                       <li>
-                        <div className="font-medium">Prepare Documentation</div>
+                        <div className="font-medium">{language === 'en' ? "Prepare Documentation" : "Preparar Documentación"}</div>
                         <p className="text-sm text-gray-600">
-                          Gather product specifications, import data, and business impact analysis
+                          {language === 'en'
+                            ? "Gather product specifications, import data, and business impact analysis"
+                            : "Recopilar especificaciones del producto, datos de importación y análisis de impacto empresarial"}
                         </p>
                       </li>
                       <li>
-                        <div className="font-medium">Submit via USTR Portal</div>
+                        <div className="font-medium">{language === 'en' ? "Submit via USTR Portal" : "Enviar a través del Portal USTR"}</div>
                         <p className="text-sm text-gray-600">
-                          Complete online application with all supporting documentation
+                          {language === 'en'
+                            ? "Complete online application with all supporting documentation"
+                            : "Completar solicitud en línea con toda la documentación de respaldo"}
                         </p>
                       </li>
                       <li>
-                        <div className="font-medium">Public Comment Period</div>
+                        <div className="font-medium">{language === 'en' ? "Public Comment Period" : "Período de Comentarios Públicos"}</div>
                         <p className="text-sm text-gray-600">
-                          30-day period for interested parties to support or oppose
+                          {language === 'en'
+                            ? "30-day period for interested parties to support or oppose"
+                            : "Período de 30 días para que partes interesadas apoyen u opongan"}
                         </p>
                       </li>
                       <li>
-                        <div className="font-medium">USTR Review</div>
+                        <div className="font-medium">{language === 'en' ? "USTR Review" : "Revisión de USTR"}</div>
                         <p className="text-sm text-gray-600">
-                          Evaluation based on availability, economic impact, and strategic importance
+                          {language === 'en'
+                            ? "Evaluation based on availability, economic impact, and strategic importance"
+                            : "Evaluación basada en disponibilidad, impacto económico e importancia estratégica"}
                         </p>
                       </li>
                       <li>
-                        <div className="font-medium">Determination</div>
+                        <div className="font-medium">{language === 'en' ? "Determination" : "Determinación"}</div>
                         <p className="text-sm text-gray-600">
-                          Decision published in Federal Register with effective dates if granted
+                          {language === 'en'
+                            ? "Decision published in Federal Register with effective dates if granted"
+                            : "Decisión publicada en el Registro Federal con fechas efectivas si se concede"}
                         </p>
                       </li>
                     </ol>
                   </div>
 
                   <div className="p-4 border rounded-md">
-                    <h3 className="text-lg font-medium">Documentation Required</h3>
+                    <h3 className="text-lg font-medium">{language === 'en' ? "Documentation Required" : "Documentación Requerida"}</h3>
                     <div className="mt-3 space-y-2">
                       <div className="flex items-start gap-2">
                         <div className="w-5 h-5 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0 mt-1">
                           <span className="text-xs font-bold text-blue-700">1</span>
                         </div>
                         <div>
-                          <div className="font-medium">Product Description & HTS Code</div>
-                          <p className="text-sm text-gray-600">Detailed technical specifications</p>
+                          <div className="font-medium">{language === 'en' ? "Product Description & HTS Code" : "Descripción del Producto y Código HTS"}</div>
+                          <p className="text-sm text-gray-600">
+                            {language === 'en' ? "Detailed technical specifications" : "Especificaciones técnicas detalladas"}
+                          </p>
                         </div>
                       </div>
                       <div className="flex items-start gap-2">
@@ -797,8 +981,10 @@ const TariffAnalysis = ({
                           <span className="text-xs font-bold text-blue-700">2</span>
                         </div>
                         <div>
-                          <div className="font-medium">Economic Impact Analysis</div>
-                          <p className="text-sm text-gray-600">Demonstrating financial harm from tariffs</p>
+                          <div className="font-medium">{language === 'en' ? "Economic Impact Analysis" : "Análisis de Impacto Económico"}</div>
+                          <p className="text-sm text-gray-600">
+                            {language === 'en' ? "Demonstrating financial harm from tariffs" : "Demostrar daño financiero por aranceles"}
+                          </p>
                         </div>
                       </div>
                       <div className="flex items-start gap-2">
@@ -806,8 +992,12 @@ const TariffAnalysis = ({
                           <span className="text-xs font-bold text-blue-700">3</span>
                         </div>
                         <div>
-                          <div className="font-medium">Sourcing Analysis</div>
-                          <p className="text-sm text-gray-600">Proof of inability to source from non-China origins</p>
+                          <div className="font-medium">{language === 'en' ? "Sourcing Analysis" : "Análisis de Abastecimiento"}</div>
+                          <p className="text-sm text-gray-600">
+                            {language === 'en' 
+                              ? "Proof of inability to source from non-China origins" 
+                              : "Prueba de incapacidad para abastecerse de orígenes no chinos"}
+                          </p>
                         </div>
                       </div>
                       <div className="flex items-start gap-2">
@@ -815,8 +1005,10 @@ const TariffAnalysis = ({
                           <span className="text-xs font-bold text-blue-700">4</span>
                         </div>
                         <div>
-                          <div className="font-medium">Import Data</div>
-                          <p className="text-sm text-gray-600">Historical import volumes and values</p>
+                          <div className="font-medium">{language === 'en' ? "Import Data" : "Datos de Importación"}</div>
+                          <p className="text-sm text-gray-600">
+                            {language === 'en' ? "Historical import volumes and values" : "Volúmenes y valores históricos de importación"}
+                          </p>
                         </div>
                       </div>
                     </div>
@@ -832,3 +1024,4 @@ const TariffAnalysis = ({
 };
 
 export default TariffAnalysis;
+
