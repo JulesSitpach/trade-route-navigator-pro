@@ -1,4 +1,3 @@
-
 export const enTranslations = {
   // General
   'title': 'Global Trade Strategy Navigator',
@@ -195,4 +194,25 @@ export const enTranslations = {
   'tarifflegend.highdesc': 'Significant trade barriers that require careful cost consideration',
   'tarifflegend.note': 'Note',
   'tarifflegend.notedesc': 'Bubble size represents trade volume in units. Larger bubbles indicate higher trade volume with the corresponding country.',
+  
+  // Main Navigation Tabs
+  'tabs.main': {
+    'costs': 'Cost Breakdown',
+    'routes': 'Alternative Routes',
+    'tariffs': 'Tariff Analysis',
+    'regulations': 'Regulations',
+    'visualizations': 'Visualizations'
+  },
+
+  // Tariff Analysis Nested Tabs
+  'tabs.tariff': {
+    'basic': 'Basic Tariff',
+    'hscode': 'HS Code',
+    'countryComparison': 'Country Comparison',
+    'rulesOfOrigin': 'Rules of Origin',
+    'engineering': 'Tariff Engineering',
+    'specialPrograms': 'Special Programs',
+    'historicalTrends': 'Historical Trends',
+    'exclusionBreakdown': 'Exclusion Breakdown'
+  },
 };

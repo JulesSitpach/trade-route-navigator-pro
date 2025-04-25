@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
@@ -35,8 +34,8 @@ const TariffAnalysis = ({
   productCategory = "electronics",
   hsCode = "8471.30.0100"
 }: TariffAnalysisProps) => {
-  const { t, language } = useLanguage();
-  const tariffData = getTariffData(language);
+  const { t } = useLanguage();
+  const tariffData = getTariffData(t('language'));
 
   // Calculate total rate
   const totalRate = tariffData.tariffRates.reduce((sum, item) => sum + item.rate, 0);
@@ -45,12 +44,10 @@ const TariffAnalysis = ({
     <div className="space-y-8">
       <div className="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6">
         <h4 className="text-blue-700 font-semibold mb-2">
-          {language === 'en' ? "Tariff Strategy Insight" : "Información Estratégica de Aranceles"}
+          {t('tariff.insight.title')}
         </h4>
         <p className="text-gray-700">
-          {language === 'en' 
-            ? "Based on your product classification and origin, we recommend exploring the First Sale Rule and Mexico assembly options to potentially reduce duties by up to 25%."
-            : "Según la clasificación y origen de su producto, recomendamos explorar la Regla de Primera Venta y opciones de ensamblaje en México para potencialmente reducir aranceles hasta un 25%."}
+          {t('tariff.insight.description')}
         </p>
       </div>
 
@@ -58,35 +55,35 @@ const TariffAnalysis = ({
         <TabsList className="w-full">
           <TabsTrigger value="basic" className="flex items-center gap-2">
             <DollarSign className="h-4 w-4" />
-            <span>{t('tariff.basic')}</span>
+            <span>{t('tabs.tariff.basic')}</span>
           </TabsTrigger>
           <TabsTrigger value="hscode" className="flex items-center gap-2">
             <FileSearch className="h-4 w-4" />
-            <span>{t('tariff.hscode')}</span>
+            <span>{t('tabs.tariff.hscode')}</span>
           </TabsTrigger>
           <TabsTrigger value="countries" className="flex items-center gap-2">
             <Flag className="h-4 w-4" />
-            <span>{t('tariff.countryComparison')}</span>
+            <span>{t('tabs.tariff.countryComparison')}</span>
           </TabsTrigger>
           <TabsTrigger value="origin" className="flex items-center gap-2">
             <FileText className="h-4 w-4" />
-            <span>{t('tariff.rulesOfOrigin')}</span>
+            <span>{t('tabs.tariff.rulesOfOrigin')}</span>
           </TabsTrigger>
           <TabsTrigger value="engineering" className="flex items-center gap-2">
             <Settings className="h-4 w-4" />
-            <span>{t('tariff.engineering')}</span>
+            <span>{t('tabs.tariff.engineering')}</span>
           </TabsTrigger>
           <TabsTrigger value="programs" className="flex items-center gap-2">
             <ChartBar className="h-4 w-4" />
-            <span>{t('tariff.specialPrograms')}</span>
+            <span>{t('tabs.tariff.specialPrograms')}</span>
           </TabsTrigger>
           <TabsTrigger value="trends" className="flex items-center gap-2">
             <TrendingUp className="h-4 w-4" />
-            <span>{t('tariff.historicalTrends')}</span>
+            <span>{t('tabs.tariff.historicalTrends')}</span>
           </TabsTrigger>
           <TabsTrigger value="exclusions" className="flex items-center gap-2">
             <FileCheck className="h-4 w-4" />
-            <span>{t('tariff.exclusionBreakdown')}</span>
+            <span>{t('tabs.tariff.exclusionBreakdown')}</span>
           </TabsTrigger>
         </TabsList>
 
@@ -131,4 +128,3 @@ const TariffAnalysis = ({
 };
 
 export default TariffAnalysis;
-
