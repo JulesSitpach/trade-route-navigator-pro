@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+
+import React, { createContext, useContext, useState, useCallback, ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Language, LanguageContextType } from '../i18n/types';
 
@@ -15,8 +16,8 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
     setLanguage(lang);
   };
 
-  // Enhanced translation function that can handle both direct keys and namespaced keys
-  const t = (key: string): string => {
+  // Enhanced translation function with proper namespace handling
+  const t = useCallback((key: string): string => {
     // Check if the key contains a namespace prefix (e.g., 'shipping:quantity')
     if (key.includes(':')) {
       const [namespace, actualKey] = key.split(':');
@@ -24,7 +25,7 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
     }
     // Otherwise use the default namespace
     return i18n.t(key);
-  };
+  }, [i18n]);
 
   // Create the context value object
   const contextValue: LanguageContextType = {
