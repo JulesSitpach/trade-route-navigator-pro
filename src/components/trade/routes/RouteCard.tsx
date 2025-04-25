@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -23,36 +22,30 @@ const RouteCard = ({ route }: RouteCardProps) => {
   const getTranslatedDescription = () => {
     if (language === 'en') return route.description;
     
-    const transportModeKey = route.description.includes('SEA') ? 'sea' :
-                             route.description.includes('AIR') ? 'air' :
-                             route.description.includes('RAIL') ? 'rail' : 
-                             route.description.includes('MULTIMODAL') ? 'multimodal' : 'sea';
+    // Determine transport mode
+    const transportMode = route.description.includes('SEA') ? 'sea' :
+                         route.description.includes('AIR') ? 'air' :
+                         route.description.includes('RAIL') ? 'rail' : 
+                         route.description.includes('MULTIMODAL') ? 'multimodal' : 'sea';
     
-    const isStandard = route.description.includes('Standard shipping service');
-    const isPremium = route.description.includes('Premium service');
-    const isTimeSensitive = route.description.includes('time-sensitive');
+    // Determine service type
+    const serviceType = route.description.includes('Premium service') ? 'premium' : 'standard';
     
-    // Check if the route mentions via points or direct route
-    const hasViaPoints = !route.description.includes('direct route');
+    // Check if the route has via points
+    const viaMatch = route.description.match(/via ([^.]+)/);
     
-    let translatedDesc = t(`routes.description.${transportModeKey}`);
+    // Build the translated description
+    let translatedDesc = t(`routes.description.${transportMode}`);
     
-    // Add service type description
-    if (isPremium && isTimeSensitive) {
-      translatedDesc += ` ${t('routes.description.premium')}`;
-    } else if (isStandard) {
-      translatedDesc += ` ${t('routes.description.standard')}`;
-    }
-    
-    // Add via points mention or direct route
-    if (hasViaPoints) {
-      // Extract the via points from the original description if possible
-      const viaMatch = route.description.match(/via ([^.]+)/);
-      const viaPoints = viaMatch ? viaMatch[1] : '';
-      translatedDesc += ` ${t('routes.description.via', { points: viaPoints })}`;
+    // Add routing information (via points or direct)
+    if (viaMatch) {
+      translatedDesc += ` ${t('routes.description.via', { points: viaMatch[1] })}`;
     } else {
       translatedDesc += ` ${t('routes.description.direct')}`;
     }
+    
+    // Add service type description
+    translatedDesc += ` ${t(`routes.description.${serviceType}`)}`;
     
     return translatedDesc;
   };
