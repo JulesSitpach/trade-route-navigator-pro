@@ -16,14 +16,15 @@ const VisualizationsTab = ({ data, routes }: VisualizationsTabProps) => {
   const [activeChart, setActiveChart] = useState('cost-breakdown');
   const { t } = useLanguage();
 
+  // Define tabs with their corresponding translation keys
   const tabs = [
-    { id: 'cost-breakdown', label: t('analysis.tabs.costs'), icon: 'Costs' },
-    { id: 'route-comparison', label: t('analysis.tabs.routes'), icon: 'Routes' },
-    { id: 'tariff-heatmap', label: t('analysis.tabs.tariffs'), icon: 'Tariffs' },
-    { id: 'seasonality', label: t('analysis.tabs.seasonality'), icon: 'Seasonality' },
-    { id: 'risk-matrix', label: t('analysis.tabs.risks'), icon: 'Risks' },
-    { id: 'supply-chain', label: t('analysis.tabs.supply'), icon: 'Supply Chain' },
-    { id: 'compliance', label: t('analysis.tabs.compliance'), icon: 'Compliance' },
+    { id: 'cost-breakdown', translationKey: 'analysis.tabs.costs', icon: 'Costs' },
+    { id: 'route-comparison', translationKey: 'analysis.tabs.routes', icon: 'Routes' },
+    { id: 'tariff-heatmap', translationKey: 'analysis.tabs.tariffs', icon: 'Tariffs' },
+    { id: 'seasonality', translationKey: 'analysis.tabs.seasonality', icon: 'Seasonality' },
+    { id: 'risk-matrix', translationKey: 'analysis.tabs.risks', icon: 'Risks' },
+    { id: 'supply-chain', translationKey: 'analysis.tabs.supply', icon: 'Supply Chain' },
+    { id: 'compliance', translationKey: 'analysis.tabs.compliance', icon: 'Compliance' },
   ];
 
   return (
@@ -40,7 +41,7 @@ const VisualizationsTab = ({ data, routes }: VisualizationsTabProps) => {
             <TabsList className="grid grid-cols-4 w-full md:grid-cols-4 lg:grid-cols-7">
               {tabs.map((tab) => (
                 <TabsTrigger key={tab.id} value={tab.id}>
-                  {tab.label}
+                  {t(tab.translationKey)}
                 </TabsTrigger>
               ))}
             </TabsList>
