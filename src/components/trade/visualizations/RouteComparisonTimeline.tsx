@@ -11,20 +11,24 @@ import { Route } from '../types';
 import { BarChartIcon } from "lucide-react";
 import { chartConfig } from "./chartConfig";
 import { tooltipStyles, cursorStyles } from "@/components/ui/chart/theme/commonStyles";
-
-interface RouteComparisonTimelineProps {
-  routes: Route[];
-}
+import { RouteComparisonTimelineProps } from './types/visualizationTypes';
 
 const RouteComparisonTimeline = ({ routes }: RouteComparisonTimelineProps) => {
-  const routeData = routes.map(route => ({
-    name: route.name,
-    shipping: route.transitTime,
-    customs: route.customsClearance || 4,
-    distribution: route.localDelivery || 3,
-    cost: `$${route.cost.toLocaleString()}`,
-    totalDays: (route.transitTime + (route.customsClearance || 4) + (route.localDelivery || 3))
-  }));
+  const routeData = routes.map(route => {
+    // Ensure all required properties have default values
+    const name = route.name || route.path.split(' → ')[0] + ' to ' + route.path.split(' → ').pop();
+    const customsClearance = route.customsClearance || 4;
+    const localDelivery = route.localDelivery || 3;
+    
+    return {
+      name: name,
+      shipping: route.transitTime,
+      customs: customsClearance,
+      distribution: localDelivery,
+      cost: `$${route.cost.toLocaleString()}`,
+      totalDays: (route.transitTime + customsClearance + localDelivery)
+    };
+  });
 
   return (
     <div className="space-y-4">

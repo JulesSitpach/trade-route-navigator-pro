@@ -1,8 +1,11 @@
 
 export interface Route {
   path: string;
-  transitTime: string;
-  cost: string;
+  name?: string;
+  transitTime: number;
+  customsClearance?: number;
+  localDelivery?: number;
+  cost: number;
   riskLevel: string;
   description: string;
   recommended?: boolean;
@@ -74,4 +77,3 @@ export interface Document {
   name: string;
   status: 'required' | 'warning' | 'not-required';
 }
-

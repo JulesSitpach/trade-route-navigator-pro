@@ -25,3 +25,7 @@ export interface VisualizationsTabProps {
   };
   routes: Route[];
 }
+
+export interface RouteComparisonTimelineProps {
+  routes: Route[];
+}

@@ -9,8 +9,10 @@ import RiskAssessmentMatrix from './visualizations/RiskAssessmentMatrix';
 import SupplyChainFlowDiagram from './visualizations/SupplyChainFlowDiagram';
 import RegulatoryComplianceDashboard from './visualizations/RegulatoryComplianceDashboard';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { VisualizationsTabProps } from './visualizations/types/visualizationTypes';
+import { Route } from './types';
 
-const VisualizationsTab = () => {
+const VisualizationsTab = ({ data, routes }: VisualizationsTabProps) => {
   const [activeChart, setActiveChart] = useState('cost-breakdown');
 
   return (
@@ -39,7 +41,7 @@ const VisualizationsTab = () => {
             </TabsContent>
             
             <TabsContent value="route-comparison" className="pt-6">
-              <RouteComparisonTimeline />
+              <RouteComparisonTimeline routes={routes} />
             </TabsContent>
             
             <TabsContent value="tariff-heatmap" className="pt-6">

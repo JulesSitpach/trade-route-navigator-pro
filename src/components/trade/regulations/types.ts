@@ -18,6 +18,12 @@ export interface TimelineStage {
   deadline: string;
 }
 
+export interface RequirementTimelineItem {
+  stage: string;
+  documents: string[];
+  deadline: string;
+}
+
 export interface CountryRequirement {
   country: string;
   requirements: string[];
@@ -34,4 +40,11 @@ export interface RegulatoryUpdate {
   date: string;
   title: string;
   description: string;
+}
+
+export interface SeasonalityDataPoint {
+  month: string;
+  freight: number;
+  congestion: number;
+  risk: number;
 }

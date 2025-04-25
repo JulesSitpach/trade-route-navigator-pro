@@ -7,8 +7,15 @@ import { RegulatoryUpdates } from "./regulations/RegulatoryUpdates";
 import { ProductRegulations } from "./regulations/ProductRegulations";
 import { ComplianceCostSummary } from "./regulations/ComplianceCostSummary";
 import { HelpfulResources } from "./regulations/HelpfulResources";
+import { RegulationsTabProps } from "./regulations/types";
 
-const RegulationsTab = () => {
+const RegulationsTab = ({ 
+  productCategory, 
+  originCountry, 
+  destinationCountry, 
+  isDangerous, 
+  transportMode 
+}: RegulationsTabProps) => {
   // Sample data - this will be replaced with real data in the future
   const requiredDocuments = [
     { name: "Commercial Invoice", status: 'required' as const },
