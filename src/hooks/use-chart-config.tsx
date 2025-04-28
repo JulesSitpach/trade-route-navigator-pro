@@ -10,12 +10,13 @@ import {
 } from '@/components/ui/chart/config';
 
 type ChartTheme = 'light' | 'dark';
+type ConfigOverrides = Record<string, any>;
 
 /**
  * Hook for accessing and potentially customizing chart configuration
  */
-export const useChartConfig = (initialOverrides = {}, theme: ChartTheme = 'light') => {
-  const [overrides, setOverrides] = useState(initialOverrides);
+export const useChartConfig = (initialOverrides: ConfigOverrides = {}, theme: ChartTheme = 'light') => {
+  const [overrides, setOverrides] = useState<ConfigOverrides>(initialOverrides);
   
   // Create a config with current overrides applied
   const config = createChartConfig({
@@ -33,21 +34,21 @@ export const useChartConfig = (initialOverrides = {}, theme: ChartTheme = 'light
         tooltipBorder: '#475569',
         axisColor: '#94a3b8'
       } : {}),
-      ...(overrides && typeof overrides === 'object' && 'colors' in overrides ? overrides.colors : {})
+      ...(overrides && 'colors' in overrides ? overrides.colors : {})
     }
   });
   
   // Function to update specific config parts
-  const updateConfig = useCallback((newOverrides: any) => {
+  const updateConfig = useCallback((newOverrides: ConfigOverrides) => {
     setOverrides(prev => {
       // Create safe nested updates to handle potentially missing properties
-      const prevColors = prev && typeof prev === 'object' && 'colors' in prev ? prev.colors : {};
-      const prevTypography = prev && typeof prev === 'object' && 'typography' in prev ? prev.typography : {};
-      const prevTypographyFontSize = prevTypography && typeof prevTypography === 'object' && 'fontSize' in prevTypography ? prevTypography.fontSize : {};
+      const prevColors = prev && 'colors' in prev ? prev.colors || {} : {};
+      const prevTypography = prev && 'typography' in prev ? prev.typography || {} : {};
+      const prevTypographyFontSize = prevTypography && 'fontSize' in prevTypography ? prevTypography.fontSize || {} : {};
       
-      const newColors = newOverrides && typeof newOverrides === 'object' && 'colors' in newOverrides ? newOverrides.colors : {};
-      const newTypography = newOverrides && typeof newOverrides === 'object' && 'typography' in newOverrides ? newOverrides.typography : {};
-      const newTypographyFontSize = newTypography && typeof newTypography === 'object' && 'fontSize' in newTypography ? newTypography.fontSize : {};
+      const newColors = newOverrides && 'colors' in newOverrides ? newOverrides.colors || {} : {};
+      const newTypography = newOverrides && 'typography' in newOverrides ? newOverrides.typography || {} : {};
+      const newTypographyFontSize = newTypography && 'fontSize' in newTypography ? newTypography.fontSize || {} : {};
 
       return {
         ...prev,

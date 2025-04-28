@@ -71,10 +71,7 @@ const RouteComparisonTimeline = ({ routes }: RouteComparisonTimelineProps) => {
               }
             </div>
           ) : (
-            <ChartContainer 
-              height={450}
-              className="w-full"
-            >
+            <ChartContainer height={450} className="w-full">
               <ResponsiveContainer width="100%" height={400}>
                 <BarChart
                   data={sortedRouteData}

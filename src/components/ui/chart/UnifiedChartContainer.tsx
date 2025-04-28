@@ -7,14 +7,13 @@ import { cn } from '@/lib/utils';
 import { defaultChartConfig } from './config';
 
 interface UnifiedChartContainerProps {
-  children: ReactElement; // Changed from ReactNode to ReactElement
+  children: ReactElement; // Changed from ReactNode to ReactElement for Recharts compatibility
   title?: string;
   subtitle?: string;
   height?: number | string;
   width?: number | string;
   className?: string;
   legendPosition?: 'top' | 'bottom' | 'right';
-  config?: any;
 }
 
 export const UnifiedChartContainer: React.FC<UnifiedChartContainerProps> = ({
@@ -24,8 +23,7 @@ export const UnifiedChartContainer: React.FC<UnifiedChartContainerProps> = ({
   height = 400,
   width = '100%',
   className,
-  legendPosition = 'top',
-  config = defaultChartConfig
+  legendPosition = 'top'
 }) => {
   const { theme } = useChartTheme();
   
@@ -51,8 +49,8 @@ export const UnifiedChartContainer: React.FC<UnifiedChartContainerProps> = ({
       )}
       data-legend-position={legendPosition}
       style={{
-        '--chart-font-family': config.typography?.fontFamily || fontStyles.family,
-        '--chart-text-size': config.typography?.fontSize?.tickLabel || fontStyles.sizes.axisLabel,
+        '--chart-font-family': theme.typography?.fontFamily || fontStyles.family,
+        '--chart-text-size': theme.typography?.fontSize?.tickLabel || fontStyles.sizes.axisLabel,
         width: widthStyle,
       } as React.CSSProperties}
     >
@@ -60,8 +58,8 @@ export const UnifiedChartContainer: React.FC<UnifiedChartContainerProps> = ({
         <h3 
           className="text-lg font-medium mb-2"
           style={{ 
-            fontSize: config.typography?.fontSize?.title || fontStyles.sizes.chartTitle,
-            fontWeight: config.typography?.fontWeight?.title || fontStyles.weights.semibold
+            fontSize: theme.typography?.fontSize?.title || fontStyles.sizes.chartTitle,
+            fontWeight: theme.typography?.fontWeight?.title || fontStyles.weights.semibold
           }}
         >
           {title}
@@ -71,7 +69,7 @@ export const UnifiedChartContainer: React.FC<UnifiedChartContainerProps> = ({
         <p 
           className="text-sm text-muted-foreground mb-4"
           style={{ 
-            fontSize: config.typography?.fontSize?.subtitle || fontStyles.sizes.tooltipBody
+            fontSize: theme.typography?.fontSize?.subtitle || fontStyles.sizes.tooltipBody
           }}
         >
           {subtitle}

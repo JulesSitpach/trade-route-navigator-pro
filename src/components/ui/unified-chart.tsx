@@ -8,7 +8,6 @@ export * from './chart/types/chartTypes';
 
 // Export chart configuration
 export * from './chart/config';
-export { defaultChartConfig } from './chart/config';
 
 // Re-export hooks
 export { useChartTheme, useChartColors } from '@/hooks/use-chart-theme';
