@@ -9,8 +9,13 @@ interface CostBreakdownPieProps {
 
 const CostBreakdownPie: React.FC<CostBreakdownPieProps> = ({ chartData }) => {
   const renderLabel = (entry: any) => {
-    const percentage = ((entry.value / chartData.reduce((sum: number, item: any) => sum + item.value, 0)) * 100).toFixed(1);
-    return percentage > 5 ? `${percentage}%` : '';
+    // Ensure we're working with numbers
+    const value = Number(entry.value);
+    const totalValue = chartData.reduce((sum: number, item: any) => sum + Number(item.value), 0);
+    const percentage = ((value / totalValue) * 100).toFixed(1);
+    
+    // Only show percentage label if it's greater than 5%
+    return Number(percentage) > 5 ? `${percentage}%` : '';
   };
 
   return (

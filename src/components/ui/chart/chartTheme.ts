@@ -5,7 +5,13 @@ import { typography } from './theme/typography';
 import { spacing } from './theme/spacing';
 import { LabelPosition } from 'recharts/types/component/Label';
 import { TextAnchor } from './types/textTypes';
-import { chartGridStyles } from './theme/commonStyles';
+
+// Define the chartGridStyles first, before it's used in the theme
+const chartGridStyles = {
+  stroke: '#ECF0F1',     // Light Gray
+  strokeDasharray: '4 4',
+  opacity: 0.3,
+};
 
 // Light theme default configuration
 export const lightTheme: ChartTheme = {
