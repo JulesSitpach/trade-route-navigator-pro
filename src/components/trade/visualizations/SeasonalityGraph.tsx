@@ -9,12 +9,11 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { SeasonalityTooltip } from "./seasonality/SeasonalityTooltip";
 import { chartConfig } from "./chartConfig";
 import { cursorStyles } from "@/components/ui/chart/theme/commonStyles";
-import { getChartTheme } from '@/components/ui/chart/chartTheme';
+import { enhancedColors } from '@/utils/chartUtils';
 
 const SeasonalityGraph = () => {
   const { seasonalityData, loading, error } = useSeasonalityData();
   const { t, language } = useLanguage();
-  const theme = getChartTheme();
 
   // Format data to ensure consistent month names and values
   const enhancedData = seasonalityData.map(item => ({
@@ -25,6 +24,13 @@ const SeasonalityGraph = () => {
                .replace('Aug', 'Ago')
                .replace('Dec', 'Dic')
   }));
+
+  // Custom distinct colors for better visibility
+  const lineColors = {
+    freight: enhancedColors.blue,    // Bright Blue
+    congestion: enhancedColors.orange, // Orange
+    risk: enhancedColors.red        // Red
+  };
 
   return (
     <div className="space-y-4">
@@ -122,31 +128,32 @@ const SeasonalityGraph = () => {
                     yAxisId="left" 
                     type="monotone" 
                     dataKey="freight" 
-                    stroke={theme.colors.lines?.freight || '#3b82f6'} 
-                    activeDot={{ r: 6 }} 
+                    stroke={lineColors.freight} 
+                    activeDot={{ r: 6, stroke: '#fff', strokeWidth: 2 }} 
                     name={language === 'en' ? "Freight" : "Flete"}
-                    strokeWidth={2}
-                    dot={{ strokeWidth: 2, r: 3 }}
+                    strokeWidth={3}
+                    dot={{ strokeWidth: 2, r: 4, fill: '#fff', stroke: lineColors.freight }}
                   />
                   <Line 
                     yAxisId="right" 
                     type="monotone" 
                     dataKey="congestion" 
-                    stroke={theme.colors.lines?.cost || '#f59e0b'} 
-                    activeDot={{ r: 6 }} 
+                    stroke={lineColors.congestion} 
+                    activeDot={{ r: 6, stroke: '#fff', strokeWidth: 2 }} 
                     name={language === 'en' ? "Congestion" : "Congestión"}
-                    strokeWidth={2}
-                    dot={{ strokeWidth: 2, r: 3 }}
+                    strokeWidth={3}
+                    dot={{ strokeWidth: 2, r: 4, fill: '#fff', stroke: lineColors.congestion }}
                   />
                   <Line 
                     yAxisId="right" 
                     type="monotone" 
                     dataKey="risk" 
-                    stroke={theme.colors.lines?.risk || '#ef4444'} 
-                    activeDot={{ r: 6 }} 
+                    stroke={lineColors.risk} 
+                    activeDot={{ r: 6, stroke: '#fff', strokeWidth: 2 }} 
                     name={language === 'en' ? "Risk" : "Riesgo"}
-                    strokeWidth={2}
-                    dot={{ strokeWidth: 2, r: 3 }}
+                    strokeWidth={3}
+                    dot={{ strokeWidth: 2, r: 4, fill: '#fff', stroke: lineColors.risk }}
+                    strokeDasharray="5 5"  // Make this line dashed for better distinction
                   />
                 </LineChart>
               </ResponsiveContainer>

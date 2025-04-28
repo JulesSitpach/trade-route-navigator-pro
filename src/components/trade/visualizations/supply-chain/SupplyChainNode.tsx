@@ -1,64 +1,59 @@
 
 import React from 'react';
-import { PackageIcon, ShipIcon, NetworkIcon, ClipboardCheckIcon, 
-         WarehouseIcon, TruckIcon, CircleDotIcon } from 'lucide-react';
 import { SupplyChainStep } from './types';
+import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from '@/components/ui/tooltip';
 
 interface SupplyChainNodeProps {
   step: SupplyChainStep;
   index: number;
   isActive: boolean;
   onClick: () => void;
+  color?: string;
 }
 
 const SupplyChainNode: React.FC<SupplyChainNodeProps> = ({ 
   step, 
   index, 
   isActive, 
-  onClick 
+  onClick,
+  color = '#3498DB' 
 }) => {
-  // Function to render the appropriate icon based on iconName
-  const renderIcon = () => {
-    switch(step.iconName) {
-      case 'package':
-        return <PackageIcon className="h-5 w-5" />;
-      case 'ship':
-        return <ShipIcon className="h-5 w-5" />;
-      case 'network':
-        return <NetworkIcon className="h-5 w-5" />;
-      case 'clipboard-check':
-        return <ClipboardCheckIcon className="h-5 w-5" />;
-      case 'warehouse':
-        return <WarehouseIcon className="h-5 w-5" />;
-      case 'truck':
-        return <TruckIcon className="h-5 w-5" />;
-      case 'circle-dot':
-        return <CircleDotIcon className="h-5 w-5" />;
-      default:
-        return <CircleDotIcon className="h-5 w-5" />;
-    }
-  };
+  // Generate styles based on active state and provided color
+  const nodeBaseClasses = "transition-all duration-300 ease-in-out cursor-pointer flex items-center justify-center";
+  const nodeActiveClasses = isActive
+    ? "w-20 h-20 border-4" 
+    : "w-16 h-16 border-2 hover:scale-110";
+  
+  // Create box shadow style with the provided color
+  const boxShadowStyle = isActive
+    ? `0 0 15px ${color}99` // Softer shadow for active node
+    : `0 0 10px ${color}66`; // Very subtle shadow for inactive
 
   return (
-    <div 
-      className={`flex flex-col items-center cursor-pointer transition-all ${isActive ? 'scale-110' : 'hover:scale-105'}`}
-      onClick={onClick}
-    >
-      <div 
-        className={`w-12 h-12 rounded-full flex items-center justify-center 
-                   ${isActive 
-                     ? 'bg-blue-500 text-white border-2 border-blue-600' 
-                     : 'bg-white border border-blue-300 text-blue-500'} 
-                   shadow-sm transition-all`}
-      >
-        {renderIcon()}
-      </div>
-      <div className="mt-2 text-[10px] sm:text-xs text-center">
-        <span className="inline-block bg-white px-1 rounded text-gray-700 whitespace-nowrap">
-          {index + 1}. {step.label}
-        </span>
-      </div>
-    </div>
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <div 
+            className={`${nodeBaseClasses} ${nodeActiveClasses} rounded-full`}
+            style={{ 
+              backgroundColor: color,
+              borderColor: isActive ? '#FFFFFF' : `${color}`,
+              boxShadow: boxShadowStyle
+            }}
+            onClick={onClick}
+          >
+            <div className="text-white text-center">
+              <div className="text-sm font-bold">{index + 1}</div>
+              {isActive && <div className="text-xs mt-1 font-medium">{step.label}</div>}
+            </div>
+          </div>
+        </TooltipTrigger>
+        <TooltipContent>
+          <p className="font-medium">{step.label}</p>
+          <p className="text-xs text-gray-500">{step.timeframe}</p>
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   );
 };
 

@@ -2,13 +2,27 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { PieChart, ResponsiveContainer, Tooltip } from "recharts";
 import { ChartContainer, ChartLegend } from "@/components/ui/chart";
-import { Donut } from "lucide-react";
+import { PieChart as PieChartIcon } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
-import chartConfig from '@/components/ui/chart/config';
 import { calculateCostBreakdown, CostBreakdownInput } from "./utils/costBreakdownCalculations";
 import CostBreakdownPie from "./components/CostBreakdownPie";
 import CostBreakdownLegend from "./components/CostBreakdownLegend";
 import CostBreakdownTooltip from "./components/CostBreakdownTooltip";
+import { enhancedColors } from '@/utils/chartUtils';
+
+// Enhanced vibrant colors for the chart segments
+const colorPalette = [
+  enhancedColors.blue,      // Bright Blue
+  enhancedColors.purple,    // Purple
+  enhancedColors.red,       // Red
+  enhancedColors.orange,    // Orange
+  enhancedColors.teal,      // Teal
+  enhancedColors.green,     // Green
+  enhancedColors.darkOrange,// Dark Orange
+  enhancedColors.darkPurple,// Dark Purple
+  enhancedColors.darkBlue,  // Dark Blue
+  enhancedColors.turquoise  // Turquoise
+];
 
 const CostBreakdownChart = ({
   productValue,
@@ -21,7 +35,8 @@ const CostBreakdownChart = ({
 }: CostBreakdownInput) => {
   const { language } = useLanguage();
 
-  const chartData = calculateCostBreakdown({
+  // Get raw cost breakdown data
+  const rawChartData = calculateCostBreakdown({
     productValue,
     originCountry,
     destinationCountry,
@@ -30,17 +45,23 @@ const CostBreakdownChart = ({
     quantity,
     weight
   }, language);
+  
+  // Enhance with vibrant colors
+  const chartData = rawChartData.map((item, index) => ({
+    ...item,
+    color: colorPalette[index % colorPalette.length]
+  }));
 
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-2">
-        <Donut className="h-5 w-5 text-muted-foreground" />
+        <PieChartIcon className="h-5 w-5 text-muted-foreground" />
         <h3 className="text-lg font-medium">
           {language === 'en' ? 'Cost Breakdown Analysis' : 'Análisis de Desglose de Costos'}
         </h3>
       </div>
       
-      <Card>
+      <Card className="border shadow">
         <CardContent className="p-6">
           {chartData.length === 0 ? (
             <div className="text-center text-muted-foreground py-12">
@@ -53,7 +74,6 @@ const CostBreakdownChart = ({
             <ChartContainer 
               height={400} 
               className="w-full"
-              config={chartConfig}
             >
               <ResponsiveContainer width="100%" height={400}>
                 <PieChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>

@@ -6,12 +6,24 @@ import { SupplyChainStep } from './types';
 interface SupplyChainDetailPanelProps {
   step: SupplyChainStep;
   language: string;
+  color?: string;
 }
 
-const SupplyChainDetailPanel: React.FC<SupplyChainDetailPanelProps> = ({ step, language }) => {
+const SupplyChainDetailPanel: React.FC<SupplyChainDetailPanelProps> = ({ step, language, color = '#3498DB' }) => {
   return (
-    <div className="mt-8 bg-white p-4 rounded-md border border-blue-200 shadow-sm">
-      <h4 className="text-sm font-medium mb-2 text-blue-700">
+    <div 
+      className="mt-8 bg-white p-5 rounded-md border shadow-md"
+      style={{
+        borderColor: color,
+        borderWidth: '1px',
+        borderLeftWidth: '4px',
+        boxShadow: `0 3px 10px ${color}33`
+      }}
+    >
+      <h4 
+        className="text-sm font-medium mb-2"
+        style={{ color }}
+      >
         {step.label} {language === 'en' ? 'Details' : 'Detalles'}
       </h4>
       <p className="text-xs text-gray-600 mb-3">

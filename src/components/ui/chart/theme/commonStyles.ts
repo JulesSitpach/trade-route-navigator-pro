@@ -9,8 +9,8 @@ export const tooltipStyles = {
     boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)',
     padding: '10px 12px',
     opacity: 1,  // Ensure full opacity
-    fontSize: lightTheme.typography.fontSize.label,
-    fontFamily: lightTheme.typography.fontFamily,
+    fontSize: '12px',
+    fontFamily: "'Inter', system-ui, sans-serif",
     minWidth: '160px', // Minimum width for tooltip
     maxWidth: '280px', // Maximum width for tooltip
   },
@@ -145,7 +145,6 @@ export const calculateBubbleSize = (value: number, minValue: number, maxValue: n
   return minRadius + scale * (maxRadius - minRadius);
 };
 
-// Helper function for generating responsive font sizes
 export const responsiveFontSize = (baseSize: number, minSize: number = 10, maxSize: number = 16) => {
   const fontSize = Math.max(minSize, Math.min(baseSize, maxSize));
   return `${fontSize}px`;

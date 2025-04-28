@@ -5,16 +5,22 @@ import {
   BarChart, Bar, XAxis, YAxis, 
   CartesianGrid, Legend, Tooltip, ResponsiveContainer, Label 
 } from 'recharts';
-import { chartCommonConfig } from "@/utils/chartUtils";
 import { RouteComparisonTooltip } from './RouteComparisonTooltip';
 import { BarChartIcon, InfoIcon } from "lucide-react";
-import { chartConfig } from "./chartConfig";
 import { tooltipStyles, cursorStyles } from "@/components/ui/chart/theme/commonStyles";
 import { RouteComparisonTimelineProps } from './types/visualizationTypes';
 import { useLanguage } from "@/contexts/LanguageContext";
+import { enhancedColors } from '@/utils/chartUtils';
 
 const RouteComparisonTimeline = ({ routes }: RouteComparisonTimelineProps) => {
   const { language, t } = useLanguage();
+  
+  // Enhanced colors for the stacked bars
+  const barColors = {
+    shipping: enhancedColors.blue,    // Bright Blue
+    customs: enhancedColors.purple,   // Purple
+    distribution: enhancedColors.green // Green
+  };
   
   const routeData = routes.map(route => {
     // Ensure all required properties have default values
@@ -70,8 +76,8 @@ const RouteComparisonTimeline = ({ routes }: RouteComparisonTimelineProps) => {
                     bottom: 60,
                     left: 20,
                   }}
-                  barSize={32}
-                  barGap={4}
+                  barSize={40}
+                  barGap={6}
                 >
                   <CartesianGrid 
                     strokeDasharray="4 4"
@@ -134,21 +140,21 @@ const RouteComparisonTimeline = ({ routes }: RouteComparisonTimelineProps) => {
                     dataKey="shipping" 
                     stackId="a" 
                     name={language === 'en' ? "Shipping" : "Envío"}
-                    fill={chartConfig.primaryRoute.color}
+                    fill={barColors.shipping}
                     radius={[4, 4, 0, 0]}
                   />
                   <Bar 
                     dataKey="customs" 
                     stackId="a" 
                     name={language === 'en' ? "Customs" : "Aduana"}
-                    fill={chartConfig.customs.color}
+                    fill={barColors.customs}
                     radius={[0, 0, 0, 0]}
                   />
                   <Bar 
                     dataKey="distribution" 
                     stackId="a" 
                     name={language === 'en' ? "Distribution" : "Distribución"}
-                    fill={chartConfig.lastMile.color}
+                    fill={barColors.distribution}
                     radius={[0, 0, 4, 4]}
                   />
                 </BarChart>

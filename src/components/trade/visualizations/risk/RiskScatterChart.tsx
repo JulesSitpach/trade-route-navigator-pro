@@ -16,6 +16,7 @@ import {
 import { RiskMatrixTooltip } from '../risk/RiskMatrixTooltip';
 import { cursorStyles, tooltipStyles } from '@/components/ui/chart/theme/commonStyles';
 import { getChartTheme } from '@/components/ui/chart/chartTheme';
+import { enhancedColors } from '@/utils/chartUtils';
 
 interface RiskData {
   name: string;
@@ -43,15 +44,16 @@ const RiskScatterChart: React.FC<RiskScatterChartProps> = ({
     return data.filter(item => item.riskLevel === activeRiskType);
   };
 
-  const theme = getChartTheme();
+  // Enhanced colors for risk levels
+  const riskColors = {
+    high: enhancedColors.red,     // Bright Red - high risk
+    medium: enhancedColors.orange, // Orange - medium risk
+    low: enhancedColors.green      // Green - low risk
+  };
 
+  // Get risk color with better contrast and vibrancy
   const getRiskColor = (riskLevel: string) => {
-    switch(riskLevel) {
-      case "high": return theme.colors.risk.high;
-      case "medium": return theme.colors.risk.medium;
-      case "low": return theme.colors.risk.low;
-      default: return "#ccc";
-    }
+    return riskColors[riskLevel as keyof typeof riskColors] || '#cccccc';
   };
 
   return (
@@ -60,7 +62,7 @@ const RiskScatterChart: React.FC<RiskScatterChartProps> = ({
         <ScatterChart
           margin={{ top: 20, right: 30, bottom: 60, left: 40 }}
         >
-          <CartesianGrid strokeDasharray="3 3" stroke={theme.grid.stroke} opacity={0.5} />
+          <CartesianGrid strokeDasharray="3 3" stroke={enhancedColors.purple + '20'} opacity={0.7} />
           <XAxis 
             type="number" 
             dataKey="x" 
@@ -68,16 +70,16 @@ const RiskScatterChart: React.FC<RiskScatterChartProps> = ({
             unit="$" 
             domain={['dataMin - 500', 'dataMax + 500']}
             tickFormatter={(value) => `$${value.toLocaleString()}`}
-            axisLine={{ stroke: theme.colors.grid, strokeWidth: 1 }}
+            axisLine={{ stroke: '#9ca3af', strokeWidth: 1 }}
             tick={{
-              fontSize: theme.typography.fontSize.axis,
-              fill: theme.colors.text
+              fontSize: 12,
+              fill: '#4b5563'
             }}
           >
             <Label 
               value={language === 'en' ? "Cost (USD)" : "Costo (USD)"} 
               position="bottom" 
-              style={{ textAnchor: 'middle', fill: theme.colors.text, fontSize: 14, fontWeight: 500 }}
+              style={{ textAnchor: 'middle', fill: '#4b5563', fontSize: 14, fontWeight: 500 }}
               offset={20} 
             />
           </XAxis>
@@ -88,17 +90,17 @@ const RiskScatterChart: React.FC<RiskScatterChartProps> = ({
             unit="/10"
             domain={[0, 10]}
             tickCount={6}
-            axisLine={{ stroke: theme.colors.grid, strokeWidth: 1 }}
+            axisLine={{ stroke: '#9ca3af', strokeWidth: 1 }}
             tick={{
-              fontSize: theme.typography.fontSize.axis,
-              fill: theme.colors.text
+              fontSize: 12,
+              fill: '#4b5563'
             }}
           >
             <Label 
               value={language === 'en' ? "Risk Level" : "Nivel de Riesgo"} 
               angle={-90} 
               position="left" 
-              style={{ textAnchor: 'middle', fill: theme.colors.text, fontSize: 14, fontWeight: 500 }}
+              style={{ textAnchor: 'middle', fill: '#4b5563', fontSize: 14, fontWeight: 500 }}
               offset={-25} 
             />
           </YAxis>
@@ -122,7 +124,24 @@ const RiskScatterChart: React.FC<RiskScatterChartProps> = ({
               paddingBottom: '20px',
               fontSize: '12px'
             }}
-            formatter={(value) => <span style={{ color: theme.colors.text, fontWeight: 500 }}>{language === 'en' ? value : value === "Shipping Routes" ? "Rutas de Envío" : value}</span>} 
+            formatter={(value) => (
+              <span style={{ 
+                color: '#4b5563', 
+                fontWeight: 500,
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px'
+              }}>
+                <span style={{ 
+                  display: 'inline-block',
+                  width: '12px',
+                  height: '12px',
+                  borderRadius: '50%',
+                  backgroundColor: enhancedColors.blue
+                }}></span>
+                {language === 'en' ? value : value === "Shipping Routes" ? "Rutas de Envío" : value}
+              </span>
+            )} 
           />
           <Scatter 
             name={language === 'en' ? "Shipping Routes" : "Rutas de Envío"} 
@@ -133,9 +152,9 @@ const RiskScatterChart: React.FC<RiskScatterChartProps> = ({
                 <Cell 
                   key={`cell-${index}`} 
                   fill={getRiskColor(entry.riskLevel)} 
-                  stroke={getRiskColor(entry.riskLevel)}
-                  strokeWidth={1}
-                  fillOpacity={0.7}
+                  stroke="#FFFFFF"
+                  strokeWidth={1.5}
+                  fillOpacity={0.85}
                 />
               ))
             }

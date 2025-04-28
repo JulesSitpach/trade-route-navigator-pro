@@ -18,6 +18,20 @@ const CostBreakdownPie: React.FC<CostBreakdownPieProps> = ({ chartData }) => {
     return Number(percentage) > 5 ? `${percentage}%` : '';
   };
 
+  // Enhanced vibrant colors
+  const colorPalette = [
+    "#3498DB", // Bright Blue
+    "#9B59B6", // Purple
+    "#E74C3C", // Red
+    "#F39C12", // Orange
+    "#16A085", // Teal
+    "#27AE60", // Green
+    "#D35400", // Dark Orange
+    "#8E44AD", // Dark Purple
+    "#2980B9", // Dark Blue
+    "#1ABC9C"  // Turquoise
+  ];
+
   return (
     <Pie
       data={chartData}
@@ -26,21 +40,21 @@ const CostBreakdownPie: React.FC<CostBreakdownPieProps> = ({ chartData }) => {
       labelLine={false}
       label={renderLabel}
       outerRadius={140}
-      innerRadius={100}
-      paddingAngle={2}
+      innerRadius={90}
+      paddingAngle={3}
       dataKey="value"
       nameKey="name"
-      cornerRadius={4}
+      cornerRadius={5}
     >
       {chartData.map((entry, index) => {
-        // Use the color from the entry if available, otherwise get it from the category
-        const fillColor = entry.color || getCategoryColor(entry.category);
+        // Use a vibrant color palette instead of category-based colors
+        const fillColor = entry.color || colorPalette[index % colorPalette.length];
         return (
           <Cell 
             key={`cell-${index}`} 
             fill={fillColor}
-            stroke={fillColor}
-            strokeWidth={1}
+            stroke="#FFFFFF"
+            strokeWidth={2}
           />
         );
       })}

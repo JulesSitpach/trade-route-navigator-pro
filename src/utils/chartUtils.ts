@@ -4,6 +4,20 @@ import { Props as LabelProps } from 'recharts/types/component/Label';
 import { LabelPosition } from 'recharts/types/component/Label';
 import { TextAnchor } from '@/components/ui/chart/types/textTypes';
 
+// Enhanced vibrant colors for charts
+export const enhancedColors = {
+  blue: "#3498DB",     // Bright Blue
+  purple: "#9B59B6",   // Purple
+  red: "#E74C3C",      // Red
+  orange: "#F39C12",   // Orange
+  teal: "#16A085",     // Teal
+  green: "#27AE60",    // Green
+  darkOrange: "#D35400", // Dark Orange
+  darkPurple: "#8E44AD", // Dark Purple
+  darkBlue: "#2980B9", // Dark Blue
+  turquoise: "#1ABC9C" // Turquoise
+};
+
 // Updated with consistent chart margins
 export const chartCommonConfig = {
   margins: {
@@ -113,54 +127,49 @@ export const getColorByThreshold = (
   value: number, 
   thresholds: { low: number; medium: number; high: number; }
 ): string => {
-  const theme = getChartTheme();
-  
-  if (value <= thresholds.low) return theme.colors.risk.low;
-  if (value <= thresholds.medium) return theme.colors.risk.medium;
-  if (value <= thresholds.high) return theme.colors.risk.high;
-  return theme.colors.risk.critical;
+  if (value <= thresholds.low) return enhancedColors.green;
+  if (value <= thresholds.medium) return enhancedColors.orange;
+  if (value <= thresholds.high) return enhancedColors.red;
+  return "#B03A2E"; // Darker Red
 };
 
 export const getTariffColor = (tariffRate: number): string => {
-  const theme = getChartTheme();
-  
-  if (tariffRate <= 5) return theme.colors.tariff.low;
-  if (tariffRate <= 15) return theme.colors.tariff.medium;
-  return theme.colors.tariff.high;
+  if (tariffRate <= 5) return enhancedColors.green;
+  if (tariffRate <= 15) return enhancedColors.orange;
+  return enhancedColors.red;
 };
 
-// Category-based color getter
+// Enhanced category-based color getter with vibrant colors
 export const getCategoryColor = (category: string): string => {
-  const theme = getChartTheme();
-  const categories = theme.colors.categories || {};
-  
-  if (category in categories) {
-    return categories[category as keyof typeof categories] || theme.colors.primary;
-  }
-  
-  // Default colors for common categories following the universal guidelines
-  switch (category.toLowerCase()) {
+  // Default colors for common categories with the enhanced color palette
+  switch(category.toLowerCase()) {
     case 'shipping':
     case 'transit':
-      return '#7C4DFF'; // Purple
+    case 'freight':
+      return enhancedColors.blue; 
     case 'customs':
-      return '#FF9800'; // Orange
+      return enhancedColors.purple;
     case 'distribution':
-      return '#FFC107'; // Yellow
+    case 'lastmile':
+      return enhancedColors.green;
     case 'import duty':
     case 'duty':
-      return '#03A9F4'; // Light Blue
-    case 'freight':
-    case 'freight cost':
-      return '#F44336'; // Red
+      return enhancedColors.teal;
     case 'insurance':
-      return '#4CAF50'; // Green
+      return enhancedColors.turquoise;
     case 'documentation':
-      return '#FFB300'; // Amber
+      return enhancedColors.orange;
     case 'warehousing':
-      return '#795548'; // Brown
+    case 'warehouse':
+      return enhancedColors.darkOrange;
+    case 'handling':
+      return enhancedColors.teal;
+    case 'compliance':
+      return enhancedColors.darkPurple;
+    case 'risk':
+      return enhancedColors.red;
     default:
-      return theme.colors.primary;
+      return enhancedColors.blue;
   }
 };
 
@@ -182,6 +191,7 @@ export const formatNumber = (value: number): string => {
 };
 
 export default {
+  enhancedColors,
   chartCommonConfig,
   createAxisTitle,
   getChartMargins,
