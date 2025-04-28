@@ -51,7 +51,6 @@ export const UnifiedChartContainer: React.FC<UnifiedChartContainerProps> = ({
       style={{
         '--chart-font-family': theme.typography?.fontFamily || fontStyles.family,
         '--chart-text-size': theme.typography?.fontSize?.tick || 
-                            theme.typography?.fontSize?.tickLabel || 
                             fontStyles.sizes.axisLabel,
         width: widthStyle,
       } as React.CSSProperties}
@@ -62,7 +61,7 @@ export const UnifiedChartContainer: React.FC<UnifiedChartContainerProps> = ({
           style={{ 
             fontSize: theme.typography?.fontSize?.title || fontStyles.sizes.chartTitle,
             fontWeight: theme.typography?.fontWeight?.semibold || 
-                       theme.typography?.fontWeight?.title || 
+                       theme.typography?.fontWeight?.bold || 
                        fontStyles.weights.semibold
           }}
         >

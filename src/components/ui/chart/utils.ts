@@ -1,4 +1,3 @@
-export {}
 
 import { ChartConfig, ExtendedChartConfig, isExtendedConfig } from "./types";
 
@@ -18,6 +17,8 @@ export function getPayloadConfigFromPayload(
       return {
         label: payload.name || key,
         color: payload.color,
+        // Add icon property to prevent TypeScript errors
+        icon: undefined
       }
     }
     return null;

@@ -1,3 +1,4 @@
+
 import * as React from "react"
 import * as RechartsPrimitive from "recharts"
 import { cn } from "@/lib/utils"
@@ -113,7 +114,7 @@ export const ChartTooltipContent = React.forwardRef<
                   formatter(item.value, item.name, item, index, item.payload)
                 ) : (
                   <>
-                    {itemConfig?.icon ? (
+                    {itemConfig && itemConfig.icon && typeof itemConfig.icon === 'function' ? (
                       <itemConfig.icon />
                     ) : (
                       !hideIndicator && (

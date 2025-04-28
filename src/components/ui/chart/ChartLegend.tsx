@@ -50,7 +50,7 @@ export const ChartLegendContent = React.forwardRef<
                 "[&>svg]:h-3 [&>svg]:w-3 [&>svg]:text-muted-foreground"
               )}
             >
-              {itemConfig?.icon && !hideIcon ? (
+              {itemConfig?.icon && typeof itemConfig.icon === 'function' && !hideIcon ? (
                 <itemConfig.icon />
               ) : (
                 <div
