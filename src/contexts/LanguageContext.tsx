@@ -17,10 +17,10 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
   };
 
   // Enhanced translation function with proper interpolation handling
-  const t = useCallback((key: string, options?: Record<string, any>): string => {
+  const t = useCallback((key: string, fallback?: string | Record<string, any>): string => {
     // Use as string to ensure we always return a string type
     // This is necessary because i18n.t can return different types
-    const translation = i18n.t(key, options);
+    const translation = i18n.t(key, fallback);
     
     // Force the return type to be string to match our interface
     return typeof translation === 'string' ? translation : String(translation);
