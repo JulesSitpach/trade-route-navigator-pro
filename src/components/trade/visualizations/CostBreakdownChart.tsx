@@ -1,7 +1,8 @@
+
 import { Card, CardContent } from "@/components/ui/card";
 import { PieChart, ResponsiveContainer, Tooltip } from "recharts";
 import { ChartContainer, ChartLegend } from "@/components/ui/chart";
-import { PieChart as PieChartIcon } from "lucide-react";
+import { PieChartIcon } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { calculateCostBreakdown, CostBreakdownInput } from "./utils/costBreakdownCalculations";
 import CostBreakdownPie from "./components/CostBreakdownPie";
@@ -73,7 +74,6 @@ const CostBreakdownChart = ({
             <ChartContainer 
               height={400} 
               className="w-full"
-              config={defaultChartConfig}
             >
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>

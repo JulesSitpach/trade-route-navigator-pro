@@ -76,31 +76,29 @@ export const useChartConfig = (initialOverrides = {}, theme: ChartTheme = 'light
   
   // Get a specific chart type config
   const getChartTypeConfig = useCallback((chartType: 'pie' | 'bar' | 'line' | 'area') => {
+    let baseConfig;
     switch (chartType) {
       case 'pie':
-        return createChartConfig({
-          ...pieChartConfig,
-          ...overrides
-        });
+        baseConfig = pieChartConfig;
+        break;
       case 'bar':
-        return createChartConfig({
-          ...barChartConfig,
-          ...overrides
-        });
+        baseConfig = barChartConfig;
+        break;
       case 'line':
-        return createChartConfig({
-          ...lineChartConfig,
-          ...overrides
-        });
+        baseConfig = lineChartConfig;
+        break;
       case 'area':
-        return createChartConfig({
-          ...areaChartConfig,
-          ...overrides
-        });
+        baseConfig = areaChartConfig;
+        break;
       default:
-        return config;
+        baseConfig = defaultChartConfig;
     }
-  }, [config, overrides]);
+    
+    return createChartConfig({
+      ...baseConfig,
+      ...overrides
+    });
+  }, [overrides]);
   
   return {
     config,

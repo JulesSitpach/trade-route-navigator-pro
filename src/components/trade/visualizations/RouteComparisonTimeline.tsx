@@ -10,8 +10,7 @@ import { BarChartIcon, InfoIcon } from "lucide-react";
 import { tooltipStyles, cursorStyles } from "@/components/ui/chart/theme/commonStyles";
 import { RouteComparisonTimelineProps } from './types/visualizationTypes';
 import { useLanguage } from "@/contexts/LanguageContext";
-import { enhancedColors } from '@/utils/chartUtils';
-import { defaultChartConfig } from '@/components/ui/chart/config';
+import { enhancedColors } from '@/utils/chart/enhancedColors';
 import { ChartContainer } from "@/components/ui/chart";
 
 const RouteComparisonTimeline = ({ routes }: RouteComparisonTimelineProps) => {
@@ -75,7 +74,6 @@ const RouteComparisonTimeline = ({ routes }: RouteComparisonTimelineProps) => {
             <ChartContainer 
               height={450}
               className="w-full"
-              config={defaultChartConfig}
             >
               <ResponsiveContainer width="100%" height={400}>
                 <BarChart
