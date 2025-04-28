@@ -32,6 +32,13 @@ export const analysisTranslations = {
   'risk.assessment.title': 'Risk Assessment Matrix',
   'risk.assessment.description': 'Compare routes based on cost vs. risk factors to find your optimal balance',
   'risk.assessment.visualization': 'Risk assessment matrix visualization',
+  'risk.cost': 'Cost (USD)',
+  'risk.level': 'Risk Level',
+  'risk.matrix.help': 'Filter by risk level using the buttons below',
+  'risk.routes': 'Shipping Routes',
+  'risk.high': 'High Risk',
+  'risk.medium': 'Medium Risk',
+  'risk.low': 'Low Risk',
   
   // Seasonality
   'seasonality.title': 'Seasonality Analysis',
@@ -58,6 +65,11 @@ export const analysisTranslations = {
   'supplychain.step.warehouse': 'Warehouse',
   'supplychain.step.distribution': 'Distribution',
   'supplychain.step.customer': 'Customer',
+  'supplychain.click.info': 'Click on any node to view detailed information',
+  
+  // Tariff Heatmap
+  'tariffheatmap.title': 'Tariff Rate Comparison',
+  'tariffheatmap.description': 'Compare tariff rates across different countries and identify optimal sourcing locations',
   
   // Compliance
   'compliance.title': 'Regulatory Compliance Dashboard',

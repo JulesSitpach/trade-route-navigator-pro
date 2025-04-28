@@ -3,19 +3,18 @@ import React from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { 
   BarChart, Bar, XAxis, YAxis, 
-  CartesianGrid, Legend, Tooltip, ResponsiveContainer 
+  CartesianGrid, Legend, Tooltip, ResponsiveContainer, Label 
 } from 'recharts';
 import { chartCommonConfig } from "@/utils/chartUtils";
 import { RouteComparisonTooltip } from './RouteComparisonTooltip';
-import { Route } from '../types';
-import { BarChartIcon } from "lucide-react";
+import { BarChartIcon, InfoIcon } from "lucide-react";
 import { chartConfig } from "./chartConfig";
 import { tooltipStyles, cursorStyles } from "@/components/ui/chart/theme/commonStyles";
 import { RouteComparisonTimelineProps } from './types/visualizationTypes';
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const RouteComparisonTimeline = ({ routes }: RouteComparisonTimelineProps) => {
-  const { language } = useLanguage();
+  const { language, t } = useLanguage();
   
   const routeData = routes.map(route => {
     // Ensure all required properties have default values
@@ -33,17 +32,11 @@ const RouteComparisonTimeline = ({ routes }: RouteComparisonTimelineProps) => {
     };
   });
 
+  // Sort routes by total transit time for better comparison
+  const sortedRouteData = [...routeData].sort((a, b) => a.totalDays - b.totalDays);
+
   return (
     <div className="space-y-4">
-      {routeData.length === 0 && (
-        <div className="text-center text-muted-foreground py-12">
-          {language === 'en' 
-            ? 'No route comparison data available' 
-            : 'No hay datos de comparación de rutas disponibles'
-          }
-        </div>
-      )}
-      
       <div className="flex items-center gap-2">
         <BarChartIcon className="h-5 w-5 text-muted-foreground" />
         <h3 className="text-lg font-medium">
@@ -59,18 +52,31 @@ const RouteComparisonTimeline = ({ routes }: RouteComparisonTimelineProps) => {
       
       <Card>
         <CardContent className="p-6">
-          {routeData.length > 0 ? (
+          {sortedRouteData.length === 0 ? (
+            <div className="text-center text-muted-foreground py-12">
+              {language === 'en' 
+                ? 'No route comparison data available' 
+                : 'No hay datos de comparación de rutas disponibles'
+              }
+            </div>
+          ) : (
             <div className="h-[450px]">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart
-                  data={routeData}
-                  margin={chartCommonConfig.margins.default}
+                  data={sortedRouteData}
+                  margin={{
+                    top: 20,
+                    right: 30,
+                    bottom: 60,
+                    left: 20,
+                  }}
                   barSize={32}
+                  barGap={4}
                 >
                   <CartesianGrid 
                     strokeDasharray="4 4"
-                    stroke="#e0e0e0"
-                    opacity={0.3}
+                    stroke="#e5e7eb"
+                    opacity={0.5}
                     vertical={false}
                   />
                   <Legend 
@@ -80,37 +86,49 @@ const RouteComparisonTimeline = ({ routes }: RouteComparisonTimelineProps) => {
                     wrapperStyle={{
                       paddingBottom: '20px',
                       display: 'flex',
-                      justifyContent: 'center'
+                      justifyContent: 'center',
+                      fontSize: '12px'
                     }}
                   />
                   <XAxis 
                     dataKey="name"
-                    tick={chartCommonConfig.axis.tick}
-                    axisLine={chartCommonConfig.axis.line}
+                    tick={{
+                      fontSize: 12,
+                      fill: '#4b5563', 
+                      width: 100,
+                      angle: -30, 
+                      textAnchor: 'end'
+                    }}
+                    axisLine={{ stroke: '#9ca3af', strokeWidth: 1 }}
                     tickLine={false}
                     height={60}
-                    label={{ 
-                      value: language === 'en' ? 'Shipping Routes' : 'Rutas de Envío', 
-                      position: 'insideBottom', 
-                      offset: -10 
-                    }}
-                  />
+                  >
+                    <Label 
+                      value={language === 'en' ? "Shipping Routes" : "Rutas de Envío"} 
+                      position="insideBottom" 
+                      style={{ textAnchor: 'middle', fill: '#4b5563', fontSize: 14, fontWeight: 500 }}
+                      offset={-15}
+                    />
+                  </XAxis>
                   <YAxis 
                     tickLine={false}
-                    axisLine={chartCommonConfig.axis.line}
-                    tick={chartCommonConfig.axis.tick}
-                    label={{ 
-                      value: language === 'en' ? 'Transit Days' : 'Días de Tránsito', 
-                      angle: -90, 
-                      position: 'insideLeft', 
-                      dx: -10 
+                    axisLine={{ stroke: '#9ca3af', strokeWidth: 1 }}
+                    tick={{
+                      fontSize: 12,
+                      fill: '#4b5563'
                     }}
-                  />
+                  >
+                    <Label 
+                      value={language === 'en' ? "Transit Days" : "Días de Tránsito"} 
+                      angle={-90} 
+                      position="insideLeft" 
+                      style={{ textAnchor: 'middle', fill: '#4b5563', fontSize: 14, fontWeight: 500 }}
+                      offset={-10}
+                    />
+                  </YAxis>
                   <Tooltip 
                     content={<RouteComparisonTooltip />}
                     cursor={cursorStyles.bar}
-                    wrapperStyle={tooltipStyles.wrapper}
-                    contentStyle={tooltipStyles.contentStyle}
                   />
                   <Bar 
                     dataKey="shipping" 
@@ -136,7 +154,19 @@ const RouteComparisonTimeline = ({ routes }: RouteComparisonTimelineProps) => {
                 </BarChart>
               </ResponsiveContainer>
             </div>
-          ) : null}
+          )}
+          
+          {sortedRouteData.length > 0 && (
+            <div className="mt-4 p-3 bg-slate-50 rounded border text-xs text-gray-600 flex items-start gap-2">
+              <InfoIcon className="h-4 w-4 text-blue-500 mt-0.5 shrink-0" />
+              <div>
+                {language === 'en' 
+                  ? 'Routes are sorted by total transit time. Hover over each segment to view detailed breakdown. For full route details, visit the Routes tab.'
+                  : 'Las rutas están ordenadas por tiempo total de tránsito. Coloque el cursor sobre cada segmento para ver el desglose detallado. Para detalles completos de rutas, visite la pestaña Rutas.'
+                }
+              </div>
+            </div>
+          )}
         </CardContent>
       </Card>
     </div>

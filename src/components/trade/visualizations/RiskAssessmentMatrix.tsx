@@ -17,9 +17,10 @@ import {
   Label
 } from 'recharts';
 import { RiskMatrixTooltip } from './risk/RiskMatrixTooltip';
+import { cursorStyles } from '@/components/ui/chart/theme/commonStyles';
 
 const RiskAssessmentMatrix = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [activeRiskType, setActiveRiskType] = useState<string | null>(null);
 
   // Enhanced risk data for different routes with more details
@@ -63,16 +64,21 @@ const RiskAssessmentMatrix = () => {
           <div className="flex items-center justify-end mb-4 gap-3">
             <div className="flex items-center space-x-1">
               <InfoIcon className="h-4 w-4 text-muted-foreground" />
-              <span className="text-xs text-muted-foreground">{t('risk.matrix.help')}</span>
+              <span className="text-xs text-muted-foreground">
+                {language === 'en' 
+                  ? 'Filter by risk level using buttons below' 
+                  : 'Filtrar por nivel de riesgo usando botones abajo'
+                }
+              </span>
             </div>
           </div>
 
           <div className="h-[400px]">
             <ResponsiveContainer width="100%" height="100%">
               <ScatterChart
-                margin={{ top: 20, right: 20, bottom: 60, left: 40 }}
+                margin={{ top: 20, right: 30, bottom: 60, left: 40 }}
               >
-                <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" opacity={0.5} />
                 <XAxis 
                   type="number" 
                   dataKey="x" 
@@ -80,8 +86,18 @@ const RiskAssessmentMatrix = () => {
                   unit="$" 
                   domain={['dataMin - 500', 'dataMax + 500']}
                   tickFormatter={(value) => `$${value}`}
+                  axisLine={{ stroke: '#9ca3af', strokeWidth: 1 }}
+                  tick={{
+                    fontSize: 12,
+                    fill: '#4b5563'
+                  }}
                 >
-                  <Label value={t('risk.cost')} position="bottom" offset={20} />
+                  <Label 
+                    value={language === 'en' ? "Cost (USD)" : "Costo (USD)"} 
+                    position="bottom" 
+                    style={{ textAnchor: 'middle', fill: '#4b5563', fontSize: 14, fontWeight: 500 }}
+                    offset={20} 
+                  />
                 </XAxis>
                 <YAxis 
                   type="number" 
@@ -90,8 +106,19 @@ const RiskAssessmentMatrix = () => {
                   unit="/10"
                   domain={[0, 10]}
                   tickCount={6}
+                  axisLine={{ stroke: '#9ca3af', strokeWidth: 1 }}
+                  tick={{
+                    fontSize: 12,
+                    fill: '#4b5563'
+                  }}
                 >
-                  <Label value={t('risk.level')} angle={-90} position="left" offset={-20} />
+                  <Label 
+                    value={language === 'en' ? "Risk Level" : "Nivel de Riesgo"} 
+                    angle={-90} 
+                    position="left" 
+                    style={{ textAnchor: 'middle', fill: '#4b5563', fontSize: 14, fontWeight: 500 }}
+                    offset={-25} 
+                  />
                 </YAxis>
                 <ZAxis 
                   type="number" 
@@ -100,13 +127,24 @@ const RiskAssessmentMatrix = () => {
                   name="Reliability" 
                   unit="%" 
                 />
-                <Tooltip content={<RiskMatrixTooltip />} />
-                <Legend 
-                  verticalAlign="bottom" 
-                  height={36} 
-                  formatter={(value, entry) => <span className="text-sm font-medium">{value}</span>} 
+                <Tooltip 
+                  content={<RiskMatrixTooltip />}
+                  cursor={cursorStyles.scatter}
                 />
-                <Scatter name={t('risk.routes')} data={filterData(riskData)}>
+                <Legend 
+                  verticalAlign="top" 
+                  height={36}
+                  align="center"
+                  wrapperStyle={{
+                    paddingBottom: '20px',
+                    fontSize: '12px'
+                  }}
+                  formatter={(value) => <span style={{ color: '#4b5563', fontWeight: 500 }}>{value}</span>} 
+                />
+                <Scatter 
+                  name={language === 'en' ? "Shipping Routes" : "Rutas de Envío"} 
+                  data={filterData(riskData)}
+                >
                   {
                     riskData.map((entry, index) => (
                       <Cell 
@@ -114,6 +152,7 @@ const RiskAssessmentMatrix = () => {
                         fill={getRiskColor(entry.riskLevel)} 
                         stroke={getRiskColor(entry.riskLevel)}
                         strokeWidth={1}
+                        fillOpacity={0.7}
                       />
                     ))
                   }
@@ -128,22 +167,32 @@ const RiskAssessmentMatrix = () => {
               className={`flex items-center space-x-2 px-3 py-1.5 rounded-md transition-colors ${activeRiskType === 'high' ? 'bg-red-100' : 'hover:bg-gray-100'}`}
             >
               <div className="w-3 h-3 rounded-full bg-red-500"></div>
-              <span className="text-sm">{t('risk.high')}</span>
+              <span className="text-sm">{language === 'en' ? 'High Risk' : 'Alto Riesgo'}</span>
             </button>
             <button 
               onClick={() => setActiveRiskType(activeRiskType === 'medium' ? null : 'medium')}
               className={`flex items-center space-x-2 px-3 py-1.5 rounded-md transition-colors ${activeRiskType === 'medium' ? 'bg-amber-100' : 'hover:bg-gray-100'}`}
             >
               <div className="w-3 h-3 rounded-full bg-amber-500"></div>
-              <span className="text-sm">{t('risk.medium')}</span>
+              <span className="text-sm">{language === 'en' ? 'Medium Risk' : 'Riesgo Medio'}</span>
             </button>
             <button 
               onClick={() => setActiveRiskType(activeRiskType === 'low' ? null : 'low')}
               className={`flex items-center space-x-2 px-3 py-1.5 rounded-md transition-colors ${activeRiskType === 'low' ? 'bg-green-100' : 'hover:bg-gray-100'}`}
             >
               <div className="w-3 h-3 rounded-full bg-green-500"></div>
-              <span className="text-sm">{t('risk.low')}</span>
+              <span className="text-sm">{language === 'en' ? 'Low Risk' : 'Bajo Riesgo'}</span>
             </button>
+          </div>
+          
+          <div className="mt-4 p-3 bg-slate-50 rounded border text-xs text-gray-600 flex items-start gap-2">
+            <InfoIcon className="h-4 w-4 text-blue-500 mt-0.5 shrink-0" />
+            <div>
+              {language === 'en' 
+                ? 'Bubble size represents reliability score. Larger bubbles indicate higher reliability.' 
+                : 'El tamaño de la burbuja representa la puntuación de fiabilidad. Las burbujas más grandes indican mayor fiabilidad.'
+              }
+            </div>
           </div>
         </CardContent>
       </Card>

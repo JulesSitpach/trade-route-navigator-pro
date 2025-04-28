@@ -1,14 +1,30 @@
 
 import React from 'react';
 import { Card, CardContent } from "@/components/ui/card";
-import { SeasonalityChart } from "@/components/ui/chart";
-import { LineChartIcon } from "lucide-react";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Label } from 'recharts';
+import { ChartContainer } from "@/components/ui/chart";
+import { LineChartIcon, AlertCircleIcon } from "lucide-react";
 import { useSeasonalityData } from "./seasonality/useSeasonalityData";
 import { useLanguage } from '@/contexts/LanguageContext';
+import { SeasonalityTooltip } from "./seasonality/SeasonalityTooltip";
+import { chartConfig } from "./chartConfig";
+import { cursorStyles } from "@/components/ui/chart/theme/commonStyles";
+import { getChartTheme } from '@/components/ui/chart/chartTheme';
 
 const SeasonalityGraph = () => {
   const { seasonalityData, loading, error } = useSeasonalityData();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
+  const theme = getChartTheme();
+
+  // Format data to ensure consistent month names and values
+  const enhancedData = seasonalityData.map(item => ({
+    ...item,
+    month: language === 'en' ? item.month : 
+      item.month.replace('Jan', 'Ene')
+               .replace('Apr', 'Abr')
+               .replace('Aug', 'Ago')
+               .replace('Dec', 'Dic')
+  }));
 
   return (
     <div className="space-y-4">
@@ -29,38 +45,122 @@ const SeasonalityGraph = () => {
               {t('seasonality.loading')}
             </div>
           ) : error ? (
-            <div className="text-center text-red-500 py-12">
-              {error}
+            <div className="text-center text-red-500 py-12 flex flex-col items-center gap-2">
+              <AlertCircleIcon className="h-6 w-6" />
+              <span>{error}</span>
             </div>
-          ) : seasonalityData.length === 0 ? (
+          ) : enhancedData.length === 0 ? (
             <div className="text-center text-muted-foreground py-12">
               {t('seasonality.no.data')}
             </div>
           ) : (
-            <SeasonalityChart 
-              data={seasonalityData}
-              title={t('seasonality.chart.title')}
-              subtitle={t('seasonality.chart.subtitle')}
-              legendProps={{
-                verticalAlign: "top",
-                align: "center",
-                wrapperStyle: {
-                  paddingBottom: '20px',
-                  display: 'flex',
-                  justifyContent: 'center'
-                }
-              }}
-            />
+            <div className="h-[400px]">
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart
+                  data={enhancedData}
+                  margin={{ top: 20, right: 30, bottom: 60, left: 20 }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" opacity={0.5} />
+                  <XAxis 
+                    dataKey="month" 
+                    tick={{ fontSize: 12 }}
+                    axisLine={{ stroke: '#9ca3af', strokeWidth: 1 }}
+                    tickLine={{ stroke: '#9ca3af' }}
+                  >
+                    <Label 
+                      value={language === 'en' ? "Month" : "Mes"} 
+                      position="insideBottom" 
+                      offset={-5}
+                      style={{ textAnchor: 'middle', fill: '#4b5563', fontSize: 14, fontWeight: 500 }}
+                    />
+                  </XAxis>
+                  <YAxis 
+                    yAxisId="left"
+                    tick={{ fontSize: 12 }}
+                    axisLine={{ stroke: '#9ca3af', strokeWidth: 1 }}
+                    tickLine={{ stroke: '#9ca3af' }}
+                  >
+                    <Label 
+                      value={language === 'en' ? "Freight Cost Index" : "Índice de Costo de Flete"} 
+                      position="insideLeft" 
+                      angle={-90}
+                      style={{ textAnchor: 'middle', fill: '#4b5563', fontSize: 14, fontWeight: 500 }}
+                      offset={-5}
+                    />
+                  </YAxis>
+                  <YAxis 
+                    yAxisId="right" 
+                    orientation="right"
+                    tick={{ fontSize: 12 }}
+                    axisLine={{ stroke: '#9ca3af', strokeWidth: 1 }}
+                    tickLine={{ stroke: '#9ca3af' }}
+                  >
+                    <Label 
+                      value={language === 'en' ? "Percentage (%)" : "Porcentaje (%)"} 
+                      position="insideRight" 
+                      angle={-90}
+                      style={{ textAnchor: 'middle', fill: '#4b5563', fontSize: 14, fontWeight: 500 }}
+                      offset={15}
+                    />
+                  </YAxis>
+                  <Tooltip 
+                    content={<SeasonalityTooltip />}
+                    cursor={cursorStyles.line}
+                  />
+                  <Legend 
+                    verticalAlign="top"
+                    align="center"
+                    height={36}
+                    wrapperStyle={{
+                      paddingBottom: '20px',
+                      display: 'flex',
+                      justifyContent: 'center',
+                      fontSize: '12px'
+                    }}
+                  />
+                  <Line 
+                    yAxisId="left" 
+                    type="monotone" 
+                    dataKey="freight" 
+                    stroke={theme.colors.lines?.freight || '#3b82f6'} 
+                    activeDot={{ r: 6 }} 
+                    name={language === 'en' ? "Freight" : "Flete"}
+                    strokeWidth={2}
+                    dot={{ strokeWidth: 2, r: 3 }}
+                  />
+                  <Line 
+                    yAxisId="right" 
+                    type="monotone" 
+                    dataKey="congestion" 
+                    stroke={theme.colors.lines?.cost || '#f59e0b'} 
+                    activeDot={{ r: 6 }} 
+                    name={language === 'en' ? "Congestion" : "Congestión"}
+                    strokeWidth={2}
+                    dot={{ strokeWidth: 2, r: 3 }}
+                  />
+                  <Line 
+                    yAxisId="right" 
+                    type="monotone" 
+                    dataKey="risk" 
+                    stroke={theme.colors.lines?.risk || '#ef4444'} 
+                    activeDot={{ r: 6 }} 
+                    name={language === 'en' ? "Risk" : "Riesgo"}
+                    strokeWidth={2}
+                    dot={{ strokeWidth: 2, r: 3 }}
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
           )}
         </CardContent>
       </Card>
 
-      {seasonalityData.length > 0 && (
-        <div className="text-sm mt-6">
+      {enhancedData.length > 0 && (
+        <div className="text-sm mt-6 p-4 border rounded-md bg-slate-50">
           <p className="font-medium mb-2">
             {t('seasonality.key.factors')}
           </p>
-          <ul className="list-disc pl-5 space-y-1 text-muted-foreground">
+          <ul className="list-disc pl-5 space-y-2 text-muted-foreground">
             <li>{t('seasonality.factor.q4')}</li>
             <li>{t('seasonality.factor.chinese.new.year')}</li>
             <li>{t('seasonality.factor.summer')}</li>

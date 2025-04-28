@@ -10,11 +10,11 @@ import SeasonalityGraph from './visualizations/SeasonalityGraph';
 import RiskAssessmentMatrix from './visualizations/RiskAssessmentMatrix';
 import SupplyChainFlowDiagram from './visualizations/SupplyChainFlowDiagram';
 import RegulatoryComplianceDashboard from './visualizations/RegulatoryComplianceDashboard';
-import { BarChart, PieChart, LineChart, ScatterChart, NetworkIcon } from 'lucide-react';
+import { BarChart, PieChart, LineChart, ScatterChart } from 'lucide-react';
 import { VisualizationsTabProps } from './visualizations/types/visualizationTypes';
 
 const VisualizationsTab = ({ data, routes }: VisualizationsTabProps) => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [activeTab, setActiveTab] = useState("costs");
 
   return (
@@ -27,8 +27,8 @@ const VisualizationsTab = ({ data, routes }: VisualizationsTabProps) => {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
-            <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 gap-2">
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
+            <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 gap-2 mb-2">
               <TabsTrigger value="costs" className="flex items-center gap-2">
                 <PieChart className="h-4 w-4" />
                 {t('cost.breakdown')}
@@ -47,7 +47,7 @@ const VisualizationsTab = ({ data, routes }: VisualizationsTabProps) => {
               </TabsTrigger>
             </TabsList>
 
-            <TabsContent value="costs">
+            <TabsContent value="costs" className="pt-2">
               <CostBreakdownChart 
                 productValue={parseFloat(data.product.productValue)}
                 originCountry={data.product.originCountry}
@@ -59,27 +59,27 @@ const VisualizationsTab = ({ data, routes }: VisualizationsTabProps) => {
               />
             </TabsContent>
 
-            <TabsContent value="routes">
+            <TabsContent value="routes" className="pt-2">
               <RouteComparisonTimeline routes={routes} />
             </TabsContent>
 
-            <TabsContent value="tariffs">
+            <TabsContent value="tariffs" className="pt-2">
               <TariffHeatmap />
             </TabsContent>
 
-            <TabsContent value="seasonality">
+            <TabsContent value="seasonality" className="pt-2">
               <SeasonalityGraph />
             </TabsContent>
           </Tabs>
           
-          <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="md:col-span-2">
+              <SupplyChainFlowDiagram />
+            </div>
             <div>
               <RiskAssessmentMatrix />
             </div>
             <div>
-              <SupplyChainFlowDiagram />
-            </div>
-            <div className="md:col-span-2">
               <RegulatoryComplianceDashboard />
             </div>
           </div>

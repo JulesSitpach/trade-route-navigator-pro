@@ -1,3 +1,4 @@
+
 import React from 'react';
 import {
   ScatterChart,
@@ -7,9 +8,13 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-  Cell
+  Cell,
+  Label
 } from "recharts";
 import { cursorStyles, tooltipStyles } from "@/components/ui/chart/theme/commonStyles";
+import { calculateBubbleSize } from "@/utils/chartUtils";
+import { TariffTooltip } from "./TariffTooltip";
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface TariffData {
   country: string;
@@ -24,6 +29,11 @@ interface TariffScatterChartProps {
 }
 
 const TariffScatterChart: React.FC<TariffScatterChartProps> = ({ data, getTariffColor }) => {
+  const { language } = useLanguage();
+  
+  // Extract volumes for bubble sizing calculation
+  const volumes = data.map(item => item.volume);
+  
   return (
     <div className="h-96">
       <ResponsiveContainer width="100%" height="100%">
@@ -31,51 +41,63 @@ const TariffScatterChart: React.FC<TariffScatterChartProps> = ({ data, getTariff
           margin={{
             top: 20,
             right: 20,
-            bottom: 20,
-            left: 20,
+            bottom: 60,
+            left: 40,
           }}
         >
-          <CartesianGrid />
+          <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" opacity={0.5} />
           <XAxis 
             type="category" 
             dataKey="country" 
             name="Country" 
             tick={{ fontSize: 12 }}
             tickLine={false}
-            axisLine={false}
-          />
+            axisLine={{ stroke: '#9ca3af', strokeWidth: 1 }}
+            interval={0}
+            angle={-45}
+            textAnchor="end"
+            height={80}
+          >
+            <Label 
+              value={language === 'en' ? "Country" : "País"} 
+              position="insideBottom" 
+              offset={-15}
+              style={{ textAnchor: 'middle', fill: '#4b5563', fontSize: 14, fontWeight: 500 }}
+            />
+          </XAxis>
           <YAxis
             type="number"
             dataKey="tariffRate"
             name="Tariff Rate (%)"
-            label={{ 
-              value: 'Tariff Rate (%)', 
-              angle: -90, 
-              position: 'insideLeft',
-              style: { textAnchor: 'middle' }
-            }}
-          />
+            domain={[0, 'dataMax + 2']}
+            axisLine={{ stroke: '#9ca3af', strokeWidth: 1 }}
+            tickLine={{ stroke: '#9ca3af' }}
+            tick={{ fontSize: 12 }}
+          >
+            <Label 
+              value={language === 'en' ? "Tariff Rate (%)" : "Tasa Arancelaria (%)"} 
+              position="insideLeft" 
+              angle={-90}
+              style={{ textAnchor: 'middle', fill: '#4b5563', fontSize: 14, fontWeight: 500 }}
+              offset={-20}
+            />
+          </YAxis>
           <Tooltip 
-            formatter={(value, name, props) => {
-              if (name === "tariffRate") return [`${value}%`, "Tariff Rate"];
-              if (name === "volume") return [`$${value}k`, "Trade Volume"];
-              return [value, name];
-            }}
-            labelFormatter={(value) => `Country: ${value}`}
+            content={<TariffTooltip />}
             cursor={cursorStyles.scatter}
-            wrapperStyle={tooltipStyles.wrapper}
-            contentStyle={tooltipStyles.contentStyle}
           />
           <Scatter name="Tariff Rates" data={data} fill="#8884d8">
             {data.map((entry, index) => {
               const color = getTariffColor(entry.tariffRate);
+              const size = calculateBubbleSize(entry.volume, volumes, { minRadius: 8, maxRadius: 25 });
               return (
                 <Cell 
                   key={`cell-${index}`} 
                   fill={color}
-                  // Add the fill property to the payload for the tooltip to use
-                  data-fill={color}
-                  radius={Math.sqrt(entry.volume) / 2}
+                  fillOpacity={0.7}
+                  stroke={color}
+                  strokeWidth={1}
+                  r={size}
                 />
               );
             })}

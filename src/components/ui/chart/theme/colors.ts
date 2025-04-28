@@ -20,13 +20,13 @@ export const lightColors: ChartColors = {
     '#f97316',  // Orange
   ],
   tariff: {
-    low: '#10b981',      // Green
-    medium: '#f59e0b',   // Amber
+    low: '#10b981',      // Emerald (green)
+    medium: '#f59e0b',   // Amber (yellow)
     high: '#ef4444',     // Red
   },
   risk: {
-    low: '#10b981',      // Green
-    medium: '#f59e0b',   // Amber
+    low: '#10b981',      // Emerald (green)
+    medium: '#f59e0b',   // Amber (yellow)
     high: '#ef4444',     // Red
     critical: '#b91c1c',  // Dark red
   },

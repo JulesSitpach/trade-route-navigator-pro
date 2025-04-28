@@ -32,6 +32,13 @@ export const analysisTranslations = {
   'risk.assessment.title': 'Matriz de Evaluación de Riesgos',
   'risk.assessment.description': 'Compare rutas basadas en factores de costo vs riesgo para encontrar su balance óptimo',
   'risk.assessment.visualization': 'Visualización de matriz de evaluación de riesgos',
+  'risk.cost': 'Costo (USD)',
+  'risk.level': 'Nivel de Riesgo',
+  'risk.matrix.help': 'Filtrar por nivel de riesgo usando los botones de abajo',
+  'risk.routes': 'Rutas de Envío',
+  'risk.high': 'Alto Riesgo',
+  'risk.medium': 'Riesgo Medio',
+  'risk.low': 'Bajo Riesgo',
   
   // Seasonality
   'seasonality.title': 'Análisis de Estacionalidad',
@@ -58,6 +65,11 @@ export const analysisTranslations = {
   'supplychain.step.warehouse': 'Almacén',
   'supplychain.step.distribution': 'Distribución',
   'supplychain.step.customer': 'Cliente',
+  'supplychain.click.info': 'Haga clic en cualquier nodo para ver información detallada',
+  
+  // Tariff Heatmap
+  'tariffheatmap.title': 'Comparación de Tasas Arancelarias',
+  'tariffheatmap.description': 'Compare tasas arancelarias entre diferentes países e identifique ubicaciones óptimas de abastecimiento',
   
   // Compliance
   'compliance.title': 'Panel de Cumplimiento Regulatorio',
