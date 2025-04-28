@@ -9,6 +9,7 @@ import CostBreakdownPie from "./components/CostBreakdownPie";
 import CostBreakdownLegend from "./components/CostBreakdownLegend";
 import CostBreakdownTooltip from "./components/CostBreakdownTooltip";
 import { enhancedColors } from '@/utils/chartUtils';
+import { chartConfig } from '@/components/ui/chart/config';
 
 // Enhanced vibrant colors for the chart segments
 const colorPalette = [
@@ -74,6 +75,7 @@ const CostBreakdownChart = ({
             <ChartContainer 
               height={400} 
               className="w-full"
+              config={chartConfig}
             >
               <ResponsiveContainer width="100%" height={400}>
                 <PieChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
