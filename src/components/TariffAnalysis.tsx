@@ -55,36 +55,36 @@ const TariffAnalysis = ({
       </div>
 
       <Tabs defaultValue="basic" className="space-y-4">
-        <TabsList className="w-full">
-          <TabsTrigger value="basic" className="flex items-center gap-2">
+        <TabsList className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6 bg-[#f5f7fa] p-2 rounded-lg w-full overflow-x-auto">
+          <TabsTrigger value="basic" className="flex items-center gap-2 px-4 py-3">
             <DollarSign className="h-4 w-4" />
             <span>{t('tariff.basic')}</span>
           </TabsTrigger>
-          <TabsTrigger value="hscode" className="flex items-center gap-2">
+          <TabsTrigger value="hscode" className="flex items-center gap-2 px-4 py-3">
             <FileSearch className="h-4 w-4" />
             <span>{t('tariff.hscode')}</span>
           </TabsTrigger>
-          <TabsTrigger value="countries" className="flex items-center gap-2">
+          <TabsTrigger value="countries" className="flex items-center gap-2 px-4 py-3">
             <Flag className="h-4 w-4" />
             <span>{t('tariff.countryComparison')}</span>
           </TabsTrigger>
-          <TabsTrigger value="origin" className="flex items-center gap-2">
+          <TabsTrigger value="origin" className="flex items-center gap-2 px-4 py-3">
             <FileText className="h-4 w-4" />
             <span>{t('tariff.rulesOfOrigin')}</span>
           </TabsTrigger>
-          <TabsTrigger value="engineering" className="flex items-center gap-2">
+          <TabsTrigger value="engineering" className="flex items-center gap-2 px-4 py-3">
             <Settings className="h-4 w-4" />
             <span>{t('tariff.engineering')}</span>
           </TabsTrigger>
-          <TabsTrigger value="programs" className="flex items-center gap-2">
+          <TabsTrigger value="programs" className="flex items-center gap-2 px-4 py-3">
             <ChartBar className="h-4 w-4" />
             <span>{t('tariff.specialPrograms')}</span>
           </TabsTrigger>
-          <TabsTrigger value="trends" className="flex items-center gap-2">
+          <TabsTrigger value="trends" className="flex items-center gap-2 px-4 py-3">
             <TrendingUp className="h-4 w-4" />
             <span>{t('tariff.historicalTrends')}</span>
           </TabsTrigger>
-          <TabsTrigger value="exclusions" className="flex items-center gap-2">
+          <TabsTrigger value="exclusions" className="flex items-center gap-2 px-4 py-3">
             <FileCheck className="h-4 w-4" />
             <span>{t('tariff.exclusionBreakdown')}</span>
           </TabsTrigger>

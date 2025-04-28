@@ -51,24 +51,24 @@ const TradeAnalysis = ({ data }: TradeAnalysisProps) => {
       <Disclaimer />
       
       <Tabs defaultValue="costs" className="space-y-6">
-        <TabsList className="grid w-full grid-cols-2 md:grid-cols-5 gap-4 bg-[#f5f7fa] p-2 rounded-lg">
-          <TabsTrigger value="costs" className="flex items-center gap-2 px-4 py-3 data-[state=active]:bg-[#3498DB] data-[state=active]:text-white">
+        <TabsList className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-6 bg-[#f5f7fa] p-2 rounded-lg w-full overflow-x-auto">
+          <TabsTrigger value="costs" className="flex items-center gap-2 px-4 py-3">
             <ChartBar className="h-4 w-4" />
             {t('analysis.costs')}
           </TabsTrigger>
-          <TabsTrigger value="routes" className="flex items-center gap-2 px-4 py-3 data-[state=active]:bg-[#3498DB] data-[state=active]:text-white">
+          <TabsTrigger value="routes" className="flex items-center gap-2 px-4 py-3">
             <RouteIcon className="h-4 w-4" />
             {t('analysis.routes')}
           </TabsTrigger>
-          <TabsTrigger value="tariffs" className="flex items-center gap-2 px-4 py-3 data-[state=active]:bg-[#3498DB] data-[state=active]:text-white">
+          <TabsTrigger value="tariffs" className="flex items-center gap-2 px-4 py-3">
             <FileText className="h-4 w-4" />
             {t('analysis.tariffs')}
           </TabsTrigger>
-          <TabsTrigger value="regulations" className="flex items-center gap-2 px-4 py-3 data-[state=active]:bg-[#3498DB] data-[state=active]:text-white">
+          <TabsTrigger value="regulations" className="flex items-center gap-2 px-4 py-3">
             <ScrollText className="h-4 w-4" />
             {t('analysis.regulations')}
           </TabsTrigger>
-          <TabsTrigger value="visualizations" className="flex items-center gap-2 px-4 py-3 data-[state=active]:bg-[#3498DB] data-[state=active]:text-white">
+          <TabsTrigger value="visualizations" className="flex items-center gap-2 px-4 py-3">
             <BarChart className="h-4 w-4" />
             {t('analysis.visualizations')}
           </TabsTrigger>
