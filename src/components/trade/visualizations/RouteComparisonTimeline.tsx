@@ -96,8 +96,8 @@ const RouteComparisonTimeline = ({ routes }: RouteComparisonTimelineProps) => {
                       fontSize: 12,
                       fill: '#4b5563', 
                       width: 100,
-                      angle: -30, 
-                      textAnchor: 'end'
+                      textAnchor: 'end',
+                      style: { transform: 'rotate(-30deg)' }
                     }}
                     axisLine={{ stroke: '#9ca3af', strokeWidth: 1 }}
                     tickLine={false}
