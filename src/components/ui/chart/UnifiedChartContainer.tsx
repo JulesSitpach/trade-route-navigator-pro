@@ -1,12 +1,12 @@
 
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { ResponsiveContainer } from 'recharts';
 import { useChartTheme } from './ChartThemeProvider';
 import { fontStyles } from '@/utils/fontStyles';
 import { cn } from '@/lib/utils';
 
 interface UnifiedChartContainerProps {
-  children: React.ReactNode;
+  children: React.ReactElement; // Changed from ReactNode to ReactElement
   title?: string;
   subtitle?: string;
   height?: number | string;
@@ -79,8 +79,7 @@ export const UnifiedChartContainer: React.FC<UnifiedChartContainerProps> = ({
         }}
       >
         <ResponsiveContainer width="100%" height="100%">
-          {/* The key fix: Ensure children is a valid React element */}
-          {React.Children.only(children)}
+          {children}
         </ResponsiveContainer>
       </div>
     </div>
