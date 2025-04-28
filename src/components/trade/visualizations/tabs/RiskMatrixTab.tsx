@@ -8,10 +8,10 @@ const RiskMatrixTab = () => {
   const { language } = useLanguage();
 
   return (
-    <Card className="border shadow-sm">
-      <CardHeader>
+    <Card className="border shadow-sm overflow-hidden">
+      <CardHeader className="bg-slate-50">
         <div className="flex items-center gap-2">
-          <AlertTriangleIcon className="h-5 w-5 text-muted-foreground" />
+          <AlertTriangleIcon className="h-5 w-5 text-secondary" />
           <CardTitle className="text-lg font-medium">
             {language === 'en' ? 'Risk Assessment Matrix' : 'Matriz de Evaluación de Riesgos'}
           </CardTitle>
@@ -23,7 +23,7 @@ const RiskMatrixTab = () => {
           }
         </CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="p-6">
         <RiskAssessmentMatrix />
       </CardContent>
     </Card>

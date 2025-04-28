@@ -50,25 +50,25 @@ const TradeAnalysis = ({ data }: TradeAnalysisProps) => {
       
       <Disclaimer />
       
-      <Tabs defaultValue="costs" className="space-y-4">
-        <TabsList className="grid w-full grid-cols-2 md:grid-cols-5 gap-2">
-          <TabsTrigger value="costs" className="flex items-center gap-2">
+      <Tabs defaultValue="costs" className="space-y-6">
+        <TabsList className="grid w-full grid-cols-2 md:grid-cols-5 gap-3">
+          <TabsTrigger value="costs" className="flex items-center gap-2 px-4 py-2">
             <ChartBar className="h-4 w-4" />
             {t('analysis.costs')}
           </TabsTrigger>
-          <TabsTrigger value="routes" className="flex items-center gap-2">
+          <TabsTrigger value="routes" className="flex items-center gap-2 px-4 py-2">
             <RouteIcon className="h-4 w-4" />
             {t('analysis.routes')}
           </TabsTrigger>
-          <TabsTrigger value="tariffs" className="flex items-center gap-2">
+          <TabsTrigger value="tariffs" className="flex items-center gap-2 px-4 py-2">
             <FileText className="h-4 w-4" />
             {t('analysis.tariffs')}
           </TabsTrigger>
-          <TabsTrigger value="regulations" className="flex items-center gap-2">
+          <TabsTrigger value="regulations" className="flex items-center gap-2 px-4 py-2">
             <ScrollText className="h-4 w-4" />
             {t('analysis.regulations')}
           </TabsTrigger>
-          <TabsTrigger value="visualizations" className="flex items-center gap-2">
+          <TabsTrigger value="visualizations" className="flex items-center gap-2 px-4 py-2">
             <BarChart className="h-4 w-4" />
             {t('analysis.visualizations')}
           </TabsTrigger>

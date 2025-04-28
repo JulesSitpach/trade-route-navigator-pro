@@ -23,14 +23,14 @@ const TabButtons = ({ activeTab, setActiveTab }: TabButtonsProps) => {
   ];
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mb-6">
+    <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
       {tabOptions.map((tab) => (
         <button
           key={tab.id}
           onClick={() => setActiveTab(tab.id)}
-          className={`flex items-center justify-center px-4 py-2 rounded-md text-sm font-medium transition-colors
+          className={`flex items-center justify-center px-4 py-2.5 rounded-md text-sm font-medium transition-all
             ${activeTab === tab.id 
-              ? 'bg-primary text-white' 
+              ? 'bg-secondary text-secondary-foreground shadow-sm border border-secondary/20' 
               : 'bg-muted hover:bg-muted/80 text-muted-foreground'}
           `}
         >

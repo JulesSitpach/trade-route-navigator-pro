@@ -24,15 +24,15 @@ const RiskAssessmentMatrix = () => {
         {t('risk.assessment.description')}
       </p>
       
-      <Card>
+      <Card className="border shadow-sm overflow-hidden">
         <CardContent className="p-6">
           <div className="flex items-center justify-end mb-4 gap-3">
             <div className="flex items-center space-x-1">
               <InfoIcon className="h-4 w-4 text-muted-foreground" />
               <span className="text-xs text-muted-foreground">
                 {language === 'en' 
-                  ? 'Filter by risk level using buttons below' 
-                  : 'Filtrar por nivel de riesgo usando botones abajo'
+                  ? 'Filter risks by category using the buttons below' 
+                  : 'Filtrar por categoría de riesgo usando botones abajo'
                 }
               </span>
             </div>

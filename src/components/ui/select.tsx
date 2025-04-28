@@ -1,3 +1,4 @@
+
 import * as React from "react"
 import * as SelectPrimitive from "@radix-ui/react-select"
 import { Check, ChevronDown, ChevronUp } from "lucide-react"
@@ -46,13 +47,9 @@ const SelectTrigger = React.forwardRef<
       }}
       className={cn(
         "flex h-10 w-full items-center justify-between rounded-md border border-input px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1",
-        hasValue ? "bg-[#e6f0ff]" : "bg-white",
+        hasValue ? "bg-secondary/10 border-secondary/20" : "bg-white",
         className
       )}
-      style={{
-        backgroundColor: hasValue ? "#e6f0ff" : "#ffffff"
-      }}
-      data-has-value={hasValue}
       {...props}
     >
       {children}
@@ -150,7 +147,7 @@ const SelectItem = React.forwardRef<
   <SelectPrimitive.Item
     ref={ref}
     className={cn(
-      "relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none focus:bg-blue-100 focus:text-blue-900 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 data-[state=checked]:bg-blue-100 data-[state=checked]:text-blue-900 data-[state=selected]:bg-blue-100 data-[state=selected]:text-blue-900 hover:bg-blue-100 hover:text-blue-900",
+      "relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none focus:bg-secondary/10 focus:text-secondary data-[disabled]:pointer-events-none data-[disabled]:opacity-50 data-[state=checked]:bg-secondary/10 data-[state=checked]:text-secondary data-[state=selected]:bg-secondary/10 data-[state=selected]:text-secondary hover:bg-secondary/10 hover:text-secondary",
       className
     )}
     {...props}
