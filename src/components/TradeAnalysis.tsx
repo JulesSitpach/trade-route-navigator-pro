@@ -1,5 +1,4 @@
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Route } from './trade/types';
 import { generateDynamicRoutes } from './trade/utils/routeGenerator';
 import AlternativeRoutes from './AlternativeRoutes';
@@ -10,6 +9,8 @@ import VisualizationsTab from './trade/VisualizationsTab';
 import Disclaimer from './trade/Disclaimer';
 import { ChartBar, Route as RouteIcon, FileText, ScrollText, BarChart } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
 
 interface TradeAnalysisProps {
   data: {
@@ -37,6 +38,7 @@ interface TradeAnalysisProps {
 
 const TradeAnalysis = ({ data }: TradeAnalysisProps) => {
   const { t } = useLanguage();
+  const [activeTab, setActiveTab] = useState("costs");
   
   const dynamicRoutes = generateDynamicRoutes({
     origin: data.product.originCountry,
@@ -44,53 +46,30 @@ const TradeAnalysis = ({ data }: TradeAnalysisProps) => {
     transportMode: data.shipping.transportMode || 'sea'
   });
 
-  return (
-    <div className="p-6">
-      <h2 className="text-xl font-semibold text-[#2C3E50] mb-6">{t('analysis.title')}</h2>
-      
-      <Disclaimer />
-      
-      <Tabs defaultValue="costs" className="space-y-6">
-        <TabsList className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-6 bg-[#f5f7fa] p-2 rounded-lg w-full overflow-x-auto">
-          <TabsTrigger value="costs" className="flex items-center gap-2 px-4 py-3">
-            <ChartBar className="h-4 w-4" />
-            {t('analysis.costs')}
-          </TabsTrigger>
-          <TabsTrigger value="routes" className="flex items-center gap-2 px-4 py-3">
-            <RouteIcon className="h-4 w-4" />
-            {t('analysis.routes')}
-          </TabsTrigger>
-          <TabsTrigger value="tariffs" className="flex items-center gap-2 px-4 py-3">
-            <FileText className="h-4 w-4" />
-            {t('analysis.tariffs')}
-          </TabsTrigger>
-          <TabsTrigger value="regulations" className="flex items-center gap-2 px-4 py-3">
-            <ScrollText className="h-4 w-4" />
-            {t('analysis.regulations')}
-          </TabsTrigger>
-          <TabsTrigger value="visualizations" className="flex items-center gap-2 px-4 py-3">
-            <BarChart className="h-4 w-4" />
-            {t('analysis.visualizations')}
-          </TabsTrigger>
-        </TabsList>
+  const tabs = [
+    { id: "costs", icon: <ChartBar className="h-4 w-4" />, label: t('analysis.costs') },
+    { id: "routes", icon: <RouteIcon className="h-4 w-4" />, label: t('analysis.routes') },
+    { id: "tariffs", icon: <FileText className="h-4 w-4" />, label: t('analysis.tariffs') },
+    { id: "regulations", icon: <ScrollText className="h-4 w-4" />, label: t('analysis.regulations') },
+    { id: "visualizations", icon: <BarChart className="h-4 w-4" />, label: t('analysis.visualizations') }
+  ];
 
-        <TabsContent value="costs">
-          <CostAnalysisTab data={data} />
-        </TabsContent>
-
-        <TabsContent value="routes">
-          <AlternativeRoutes routes={dynamicRoutes} />
-        </TabsContent>
-
-        <TabsContent value="tariffs">
+  const renderTabContent = () => {
+    switch(activeTab) {
+      case "costs":
+        return <CostAnalysisTab data={data} />;
+      case "routes":
+        return <AlternativeRoutes routes={dynamicRoutes} />;
+      case "tariffs":
+        return (
           <TariffAnalysis 
             productCategory={data.product.productCategory}
             originCountry={data.product.originCountry}
             destinationCountry={data.product.destinationCountry}
           />
-        </TabsContent>
-
-        <TabsContent value="regulations">
+        );
+      case "regulations":
+        return (
           <RegulationsTab 
             productCategory={data.product.productCategory}
             originCountry={data.product.originCountry}
@@ -98,12 +77,40 @@ const TradeAnalysis = ({ data }: TradeAnalysisProps) => {
             isDangerous={data.shipping.dangerousGoods === 'yes'}
             transportMode={data.shipping.transportMode}
           />
-        </TabsContent>
+        );
+      case "visualizations":
+        return <VisualizationsTab data={data} routes={dynamicRoutes} />;
+      default:
+        return null;
+    }
+  };
 
-        <TabsContent value="visualizations">
-          <VisualizationsTab data={data} routes={dynamicRoutes} />
-        </TabsContent>
-      </Tabs>
+  return (
+    <div className="p-6">
+      <h2 className="text-xl font-semibold text-[#2C3E50] mb-6">{t('analysis.title')}</h2>
+      
+      <Disclaimer />
+      
+      <div className="space-y-6">
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-6">
+          {tabs.map((tab) => (
+            <Button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              variant={activeTab === tab.id ? "default" : "filter"}
+              className={`flex items-center justify-center px-4 py-2.5 rounded-md text-sm font-medium transition-all
+                ${activeTab === tab.id && 'shadow-sm'}`}
+            >
+              {tab.icon}
+              <span className="ml-2">{tab.label}</span>
+            </Button>
+          ))}
+        </div>
+
+        <div className="mt-4">
+          {renderTabContent()}
+        </div>
+      </div>
     </div>
   );
 };

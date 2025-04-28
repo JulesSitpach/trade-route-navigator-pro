@@ -1,6 +1,5 @@
 
-import React from 'react';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import React, { useState } from 'react';
 import {
   ChartBar,
   FileSearch,
@@ -21,6 +20,7 @@ import { TariffEngineering } from './tariff/TariffEngineering';
 import { SpecialPrograms } from './tariff/SpecialPrograms';
 import { ExclusionInformation } from './tariff/ExclusionInformation';
 import { getTariffData } from '@/data/tariffData';
+import { Button } from "@/components/ui/button";
 
 interface TariffAnalysisProps {
   originCountry?: string;
@@ -36,10 +36,46 @@ const TariffAnalysis = ({
   hsCode = "8471.30.0100"
 }: TariffAnalysisProps) => {
   const { t, language } = useLanguage();
+  const [activeTab, setActiveTab] = useState("basic");
   const tariffData = getTariffData(language);
 
   // Calculate total rate
   const totalRate = tariffData.tariffRates.reduce((sum, item) => sum + item.rate, 0);
+
+  // Tab options with their icons and labels
+  const tabs = [
+    { id: "basic", icon: <DollarSign className="h-4 w-4" />, label: t('tariff.basic') },
+    { id: "hscode", icon: <FileSearch className="h-4 w-4" />, label: t('tariff.hscode') },
+    { id: "countries", icon: <Flag className="h-4 w-4" />, label: t('tariff.countryComparison') },
+    { id: "origin", icon: <FileText className="h-4 w-4" />, label: t('tariff.rulesOfOrigin') },
+    { id: "engineering", icon: <Settings className="h-4 w-4" />, label: t('tariff.engineering') },
+    { id: "programs", icon: <ChartBar className="h-4 w-4" />, label: t('tariff.specialPrograms') },
+    { id: "trends", icon: <TrendingUp className="h-4 w-4" />, label: t('tariff.historicalTrends') },
+    { id: "exclusions", icon: <FileCheck className="h-4 w-4" />, label: t('tariff.exclusionBreakdown') }
+  ];
+
+  const renderTabContent = () => {
+    switch(activeTab) {
+      case "basic":
+        return <BasicTariffInfo tariffRates={tariffData.tariffRates} totalRate={totalRate} />;
+      case "hscode":
+        return <HSCodeAnalysis hsCode={hsCode} alternativeHSCodes={tariffData.alternativeHSCodes} totalRate={totalRate} />;
+      case "countries":
+        return <CountryComparison countryComparisonData={tariffData.countryComparisonData} />;
+      case "origin":
+        return <RulesOfOrigin originRequirements={tariffData.originRequirements} />;
+      case "engineering":
+        return <TariffEngineering engineeringOptions={tariffData.engineeringOptions} />;
+      case "programs":
+        return <SpecialPrograms specialPrograms={tariffData.specialPrograms} />;
+      case "trends":
+        return <TariffTrends historicalData={tariffData.historicalData} />;
+      case "exclusions":
+        return <ExclusionInformation exclusionInfo={tariffData.exclusionInfo} />;
+      default:
+        return null;
+    }
+  };
 
   return (
     <div className="space-y-8">
@@ -54,78 +90,26 @@ const TariffAnalysis = ({
         </p>
       </div>
 
-      <Tabs defaultValue="basic" className="space-y-4">
-        <TabsList className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6 bg-[#f5f7fa] p-2 rounded-lg w-full overflow-x-auto">
-          <TabsTrigger value="basic" className="flex items-center gap-2 px-4 py-3">
-            <DollarSign className="h-4 w-4" />
-            <span>{t('tariff.basic')}</span>
-          </TabsTrigger>
-          <TabsTrigger value="hscode" className="flex items-center gap-2 px-4 py-3">
-            <FileSearch className="h-4 w-4" />
-            <span>{t('tariff.hscode')}</span>
-          </TabsTrigger>
-          <TabsTrigger value="countries" className="flex items-center gap-2 px-4 py-3">
-            <Flag className="h-4 w-4" />
-            <span>{t('tariff.countryComparison')}</span>
-          </TabsTrigger>
-          <TabsTrigger value="origin" className="flex items-center gap-2 px-4 py-3">
-            <FileText className="h-4 w-4" />
-            <span>{t('tariff.rulesOfOrigin')}</span>
-          </TabsTrigger>
-          <TabsTrigger value="engineering" className="flex items-center gap-2 px-4 py-3">
-            <Settings className="h-4 w-4" />
-            <span>{t('tariff.engineering')}</span>
-          </TabsTrigger>
-          <TabsTrigger value="programs" className="flex items-center gap-2 px-4 py-3">
-            <ChartBar className="h-4 w-4" />
-            <span>{t('tariff.specialPrograms')}</span>
-          </TabsTrigger>
-          <TabsTrigger value="trends" className="flex items-center gap-2 px-4 py-3">
-            <TrendingUp className="h-4 w-4" />
-            <span>{t('tariff.historicalTrends')}</span>
-          </TabsTrigger>
-          <TabsTrigger value="exclusions" className="flex items-center gap-2 px-4 py-3">
-            <FileCheck className="h-4 w-4" />
-            <span>{t('tariff.exclusionBreakdown')}</span>
-          </TabsTrigger>
-        </TabsList>
+      <div className="space-y-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+          {tabs.map((tab) => (
+            <Button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              variant={activeTab === tab.id ? "default" : "filter"}
+              className={`flex items-center justify-center px-4 py-2.5 rounded-md text-sm font-medium transition-all
+                ${activeTab === tab.id && 'shadow-sm'}`}
+            >
+              {tab.icon}
+              <span className="ml-2">{tab.label}</span>
+            </Button>
+          ))}
+        </div>
 
-        <TabsContent value="basic">
-          <BasicTariffInfo tariffRates={tariffData.tariffRates} totalRate={totalRate} />
-        </TabsContent>
-
-        <TabsContent value="hscode">
-          <HSCodeAnalysis 
-            hsCode={hsCode} 
-            alternativeHSCodes={tariffData.alternativeHSCodes} 
-            totalRate={totalRate} 
-          />
-        </TabsContent>
-
-        <TabsContent value="countries">
-          <CountryComparison countryComparisonData={tariffData.countryComparisonData} />
-        </TabsContent>
-
-        <TabsContent value="origin">
-          <RulesOfOrigin originRequirements={tariffData.originRequirements} />
-        </TabsContent>
-
-        <TabsContent value="engineering">
-          <TariffEngineering engineeringOptions={tariffData.engineeringOptions} />
-        </TabsContent>
-
-        <TabsContent value="programs">
-          <SpecialPrograms specialPrograms={tariffData.specialPrograms} />
-        </TabsContent>
-
-        <TabsContent value="trends">
-          <TariffTrends historicalData={tariffData.historicalData} />
-        </TabsContent>
-
-        <TabsContent value="exclusions">
-          <ExclusionInformation exclusionInfo={tariffData.exclusionInfo} />
-        </TabsContent>
-      </Tabs>
+        <div className="mt-4">
+          {renderTabContent()}
+        </div>
+      </div>
     </div>
   );
 };
