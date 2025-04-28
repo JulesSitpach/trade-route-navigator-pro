@@ -132,8 +132,8 @@ const VisualizationsTab = ({ data, routes }: VisualizationsTabProps) => {
             </h3>
             <p className="text-sm text-muted-foreground mb-4">
               {language === 'en' 
-                ? 'Visualize your product's supply chain from origin to destination' 
-                : 'Visualice la cadena de suministro de su producto desde el origen hasta el destino'
+                ? "Visualize your product's supply chain from origin to destination" 
+                : "Visualice la cadena de suministro de su producto desde el origen hasta el destino"
               }
             </p>
             <SupplyChainFlowDiagram />
