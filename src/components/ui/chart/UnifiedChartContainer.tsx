@@ -7,7 +7,7 @@ import { cn } from '@/lib/utils';
 import { defaultChartConfig } from './config';
 
 interface UnifiedChartContainerProps {
-  children: React.ReactElement; // Changed from ReactNode to ReactElement
+  children: ReactElement; // Changed from ReactNode to ReactElement
   title?: string;
   subtitle?: string;
   height?: number | string;

@@ -9,7 +9,7 @@ import CostBreakdownPie from "./components/CostBreakdownPie";
 import CostBreakdownLegend from "./components/CostBreakdownLegend";
 import CostBreakdownTooltip from "./components/CostBreakdownTooltip";
 import { enhancedColors } from '@/utils/chart/enhancedColors';
-import { chartConfig } from '@/components/ui/chart/config';
+import { defaultChartConfig } from '@/components/ui/chart/config';
 
 // Enhanced vibrant colors for the chart segments
 const colorPalette = [

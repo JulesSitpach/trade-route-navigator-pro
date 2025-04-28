@@ -11,8 +11,8 @@ export * from './chart/config';
 export { defaultChartConfig } from './chart/config';
 
 // Re-export hooks
-export { useChartTheme, useChartColors, useChartConfig } from '@/hooks/use-chart-theme';
-export { default as useChartConfigHook } from '@/hooks/use-chart-config';
+export { useChartTheme, useChartColors } from '@/hooks/use-chart-theme';
+export { default as useChartConfig } from '@/hooks/use-chart-config';
 
 // Export types
 export type { ChartThemeContextType } from './chart/ChartThemeProvider';

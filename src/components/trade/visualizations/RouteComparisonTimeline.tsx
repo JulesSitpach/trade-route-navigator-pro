@@ -11,7 +11,7 @@ import { tooltipStyles, cursorStyles } from "@/components/ui/chart/theme/commonS
 import { RouteComparisonTimelineProps } from './types/visualizationTypes';
 import { useLanguage } from "@/contexts/LanguageContext";
 import { enhancedColors } from '@/utils/chartUtils';
-import { chartConfig } from '@/components/ui/chart/config';
+import { defaultChartConfig } from '@/components/ui/chart/config';
 import { ChartContainer } from "@/components/ui/chart";
 
 const RouteComparisonTimeline = ({ routes }: RouteComparisonTimelineProps) => {

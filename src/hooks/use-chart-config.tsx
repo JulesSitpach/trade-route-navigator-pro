@@ -1,6 +1,13 @@
 
 import { useState, useCallback } from 'react';
-import { defaultChartConfig, createChartConfig } from '@/components/ui/chart/config';
+import { 
+  defaultChartConfig, 
+  createChartConfig, 
+  pieChartConfig, 
+  barChartConfig, 
+  lineChartConfig, 
+  areaChartConfig 
+} from '@/components/ui/chart/config';
 
 type ChartTheme = 'light' | 'dark';
 
@@ -12,9 +19,11 @@ export const useChartConfig = (initialOverrides = {}, theme: ChartTheme = 'light
   
   // Create a config with current overrides applied
   const config = createChartConfig({
+    ...defaultChartConfig,
     ...overrides,
     // Apply theme-specific adjustments
     colors: {
+      ...defaultChartConfig.colors,
       ...(theme === 'dark' ? {
         background: '#1e293b', // Dark background
         gridLines: '#334155',  // Darker grid lines
@@ -24,7 +33,7 @@ export const useChartConfig = (initialOverrides = {}, theme: ChartTheme = 'light
         tooltipBorder: '#475569',
         axisColor: '#94a3b8'
       } : {}),
-      ...overrides.colors
+      ...(overrides.colors || {})
     }
   });
   
@@ -35,15 +44,15 @@ export const useChartConfig = (initialOverrides = {}, theme: ChartTheme = 'light
       ...newOverrides,
       // Handle nested updates properly
       colors: {
-        ...prev.colors,
+        ...(prev.colors || {}),
         ...(newOverrides.colors || {})
       },
       typography: {
-        ...prev.typography,
+        ...(prev.typography || {}),
         ...(newOverrides.typography || {}),
         fontSize: {
-          ...(prev.typography?.fontSize || {}),
-          ...(newOverrides.typography?.fontSize || {})
+          ...((prev.typography && prev.typography.fontSize) || {}),
+          ...((newOverrides.typography && newOverrides.typography.fontSize) || {})
         }
       }
     }));
@@ -59,22 +68,22 @@ export const useChartConfig = (initialOverrides = {}, theme: ChartTheme = 'light
     switch (chartType) {
       case 'pie':
         return createChartConfig({
-          ...defaultChartConfig.pieChartConfig,
+          ...pieChartConfig,
           ...overrides
         });
       case 'bar':
         return createChartConfig({
-          ...defaultChartConfig.barChartConfig,
+          ...barChartConfig,
           ...overrides
         });
       case 'line':
         return createChartConfig({
-          ...defaultChartConfig.lineChartConfig,
+          ...lineChartConfig,
           ...overrides
         });
       case 'area':
         return createChartConfig({
-          ...defaultChartConfig.areaChartConfig,
+          ...areaChartConfig,
           ...overrides
         });
       default:
