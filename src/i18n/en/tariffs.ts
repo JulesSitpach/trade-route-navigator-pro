@@ -28,4 +28,13 @@ export const tariffTranslations = {
   'tariffheatmap.units': 'units',
   'tariffheatmap.tip': 'Strategy Tip',
   'tariffheatmap.advice': 'Consider diverting trade volume from high-tariff countries to low-tariff countries where possible to optimize costs. Evaluate trade agreements and special economic zones for potential tariff reductions.',
+  
+  // Visualization tabs
+  'supplychain.title': 'Supply Chain',
+  'riskmatrix.title': 'Risk Matrix',
+  'compliance.title': 'Compliance',
+  'seasonality.title': 'Seasonality',
+  'tariff.analysis': 'Tariff Analysis',
+  'route.comparison': 'Route Comparison',
+  'cost.breakdown': 'Cost Breakdown'
 };

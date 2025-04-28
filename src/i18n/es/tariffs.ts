@@ -28,4 +28,13 @@ export const tariffTranslations = {
   'tariffheatmap.units': 'unidades',
   'tariffheatmap.tip': 'Consejo Estratégico',
   'tariffheatmap.advice': 'Considere desviar el volumen comercial de países con altos aranceles a países con bajos aranceles cuando sea posible para optimizar costos. Evalúe acuerdos comerciales y zonas económicas especiales para posibles reducciones arancelarias.',
+  
+  // Visualization tabs
+  'supplychain.title': 'Cadena de Suministro',
+  'riskmatrix.title': 'Matriz de Riesgo',
+  'compliance.title': 'Cumplimiento',
+  'seasonality.title': 'Estacionalidad',
+  'tariff.analysis': 'Análisis de Aranceles',
+  'route.comparison': 'Comparación de Rutas',
+  'cost.breakdown': 'Desglose de Costos'
 };

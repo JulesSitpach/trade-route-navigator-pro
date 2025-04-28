@@ -89,17 +89,16 @@ const TariffAnalysis = ({
       </div>
 
       <div className="space-y-4">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+        <div className="flex flex-wrap gap-2">
           {tabs.map((tab) => (
             <Button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
               variant={activeTab === tab.id ? "default" : "outline"}
-              className={`flex items-center justify-center px-4 py-2.5 rounded-md text-sm font-medium transition-all
-                ${activeTab === tab.id && 'shadow-sm'}`}
+              className="flex items-center justify-center px-4 py-2 gap-2 rounded-md text-sm"
             >
               {tab.icon}
-              <span className="ml-2">{tab.label}</span>
+              <span>{tab.label}</span>
             </Button>
           ))}
         </div>
