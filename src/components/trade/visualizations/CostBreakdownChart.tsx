@@ -1,25 +1,14 @@
 
 import { Card, CardContent } from "@/components/ui/card";
-import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
-import { ChartContainer, ChartLegend, ChartLegendContent, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
+import { PieChart, ResponsiveContainer, Tooltip } from "recharts";
+import { ChartContainer, ChartLegend } from "@/components/ui/chart";
 import { Donut } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { calculateTariff } from '@/data/countryTariffData';
-import { calculateFreightCost } from '../data/calculations/freightCosts';
-import { calculateInlandTransportation } from '../data/calculations/inlandTransportation';
-import { formatCurrency } from '../data/utils/formatters';
-import { getCategoryColor } from '@/utils/chartUtils';
 import chartConfig from '@/components/ui/chart/config';
-
-interface CostBreakdownChartProps {
-  productValue: number;
-  originCountry: string;
-  destinationCountry: string;
-  productCategory: string;
-  transportMode: string;
-  quantity: number;
-  weight: number;
-}
+import { calculateCostBreakdown, CostBreakdownInput } from "./utils/costBreakdownCalculations";
+import CostBreakdownPie from "./components/CostBreakdownPie";
+import CostBreakdownLegend from "./components/CostBreakdownLegend";
+import CostBreakdownTooltip from "./components/CostBreakdownTooltip";
 
 const CostBreakdownChart = ({
   productValue,
@@ -29,107 +18,18 @@ const CostBreakdownChart = ({
   transportMode,
   quantity,
   weight
-}: CostBreakdownChartProps) => {
+}: CostBreakdownInput) => {
   const { language } = useLanguage();
 
-  const totalProductValue = productValue * quantity;
-  const importDutyRate = calculateTariff(originCountry, destinationCountry, productCategory);
-  const importDuty = (totalProductValue * importDutyRate) / 100;
-  
-  const freightCost = calculateFreightCost(weight, productValue, transportMode, quantity);
-  
-  const insuranceRate = 1.5;
-  const insuranceRateAdjustment = totalProductValue > 10000 ? 1.2 : 1;
-  const insurance = Math.max((totalProductValue * insuranceRate * insuranceRateAdjustment) / 100, 50);
-  
-  const documentationFees = transportMode === 'air' ? 95 : 125;
-  
-  const customsClearance = Math.max(175, totalProductValue * 0.01) * (totalProductValue > 50000 ? 1.2 : 1);
-  
-  const inlandTransportation = calculateInlandTransportation(
+  const chartData = calculateCostBreakdown({
+    productValue,
     originCountry,
     destinationCountry,
+    productCategory,
     transportMode,
     quantity,
-    weight,
-    totalProductValue,
-    productCategory
-  );
-  
-  // Fix error: Operator '>' cannot be applied to types 'string' and 'number'
-  // Convert transportMode to string before comparison
-  const warehouseDailyRate = transportMode === 'air' ? 1.5 : 4;
-  const estimatedDays = transportMode === 'air' ? 2 : 7;
-  const warehouseBaseCharge = transportMode === 'air' ? 75 : 100;
-  const quantityFactor = Math.min(Math.sqrt(quantity) * 1.2, quantity * 0.3);
-  
-  // Ensure totalProductValue is treated as a number in the comparison
-  const highValueAdjustment = totalProductValue > 20000 ? 1.15 : 1;
-  const warehouseCostRaw = warehouseBaseCharge + 
-    (warehouseDailyRate * estimatedDays * quantityFactor) * highValueAdjustment;
-    
-  // Make sure we're using string comparison for transportMode (which is a string type)
-  const transportModeStr = String(transportMode);
-  const warehouseCost = Math.min(warehouseCostRaw, transportModeStr === 'air' ? 800 : 2000);
-  
-  // Fix the other error: Operator '>' cannot be applied to types 'string' and 'number'
-  // Convert totalProductValue to number before comparison
-  const otherFeesRate = totalProductValue > 15000 ? 2.5 : 2.0;
-  const otherFees = (totalProductValue * otherFeesRate) / 100;
-
-  // Create categories that match our universal chart guidelines
-  const chartData = [
-    {
-      name: language === 'es' ? 'Arancel de Importación' : 'Import Duty',
-      value: importDuty,
-      category: 'importDuty'
-    },
-    {
-      name: language === 'es' ? 'Costo de Flete' : 'Freight Cost',
-      value: freightCost,
-      category: 'freight'
-    },
-    {
-      name: language === 'es' ? 'Seguro' : 'Insurance',
-      value: insurance,
-      category: 'insurance'
-    },
-    {
-      name: language === 'es' ? 'Tarifas de Documentación' : 'Documentation Fees',
-      value: documentationFees,
-      category: 'documentation'
-    },
-    {
-      name: language === 'es' ? 'Despacho Aduanero' : 'Customs Clearance',
-      value: customsClearance,
-      category: 'customs'
-    },
-    {
-      name: language === 'es' ? 'Transporte Terrestre' : 'Inland Transportation',
-      value: inlandTransportation,
-      category: 'shipping'
-    },
-    {
-      name: language === 'es' ? 'Almacenaje' : 'Warehousing',
-      value: warehouseCost,
-      category: 'warehousing'
-    },
-    {
-      name: language === 'es' ? 'Otros Impuestos y Tarifas' : 'Other Taxes and Fees',
-      value: otherFees,
-      category: 'customs'
-    }
-  ].filter(item => item.value > 0);
-
-  // Get colors based on our chart guidelines
-  const getItemColor = (category: string) => {
-    return getCategoryColor(category);
-  };
-
-  const renderLabel = (entry: any) => {
-    const percentage = ((entry.value / chartData.reduce((sum: number, item: any) => sum + item.value, 0)) * 100).toFixed(1);
-    return percentage > 5 ? `${percentage}%` : '';
-  };
+    weight
+  }, language);
 
   return (
     <div className="space-y-4">
@@ -158,43 +58,13 @@ const CostBreakdownChart = ({
               <ResponsiveContainer width="100%" height={400}>
                 <PieChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
                   <ChartLegend 
-                    content={<ChartLegendContent />}
+                    content={<CostBreakdownLegend chartData={chartData} />}
                     verticalAlign="top"
                     align="center"
                     layout="horizontal"
                   />
-                  <Tooltip 
-                    content={
-                      <ChartTooltipContent
-                        formatter={(value, name) => [
-                          formatCurrency(Number(value)), 
-                          name
-                        ]}
-                      />
-                    } 
-                  />
-                  <Pie
-                    data={chartData}
-                    cx="50%"
-                    cy="50%"
-                    labelLine={false}
-                    label={renderLabel}
-                    outerRadius={140}
-                    innerRadius={100}
-                    paddingAngle={2}
-                    dataKey="value"
-                    nameKey="name"
-                    cornerRadius={4}
-                  >
-                    {chartData.map((entry, index) => (
-                      <Cell 
-                        key={`cell-${index}`} 
-                        fill={getItemColor(entry.category)}
-                        stroke={getItemColor(entry.category)}
-                        strokeWidth={1}
-                      />
-                    ))}
-                  </Pie>
+                  <Tooltip content={<CostBreakdownTooltip />} />
+                  <CostBreakdownPie chartData={chartData} />
                 </PieChart>
               </ResponsiveContainer>
             </ChartContainer>
