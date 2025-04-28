@@ -36,13 +36,13 @@ const CostsTab = ({
       </CardHeader>
       <CardContent>
         <CostBreakdownChart 
-          productValue={parseFloat(productValue)}
+          productValue={parseFloat(productValue) || 0}
           originCountry={originCountry}
           destinationCountry={destinationCountry}
           productCategory={productCategory}
           transportMode={transportMode}
-          quantity={parseInt(quantity)}
-          weight={parseFloat(weight)}
+          quantity={parseInt(quantity) || 1}
+          weight={parseFloat(weight) || 0}
         />
       </CardContent>
     </Card>
