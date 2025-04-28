@@ -1,27 +1,14 @@
 
+import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { PieChart, ResponsiveContainer, Tooltip } from "recharts";
-import { ChartContainer, ChartLegend } from "@/components/ui/chart";
 import { PieChartIcon } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { calculateCostBreakdown, CostBreakdownInput } from "./utils/costBreakdownCalculations";
 import CostBreakdownPie from "./components/CostBreakdownPie";
 import CostBreakdownLegend from "./components/CostBreakdownLegend";
 import CostBreakdownTooltip from "./components/CostBreakdownTooltip";
-import { enhancedColors } from '@/utils/chart/enhancedColors';
-
-const colorPalette = [
-  enhancedColors.blue,      // Bright Blue
-  enhancedColors.purple,    // Purple
-  enhancedColors.red,       // Red
-  enhancedColors.orange,    // Orange
-  enhancedColors.teal,      // Teal
-  enhancedColors.green,     // Green
-  enhancedColors.darkOrange,// Dark Orange
-  enhancedColors.darkPurple,// Dark Purple
-  enhancedColors.darkBlue,  // Dark Blue
-  enhancedColors.turquoise  // Turquoise
-];
+import { CHART_COLORS } from "@/constants/chartStyles";
 
 const CostBreakdownChart = ({
   productValue,
@@ -46,7 +33,7 @@ const CostBreakdownChart = ({
   
   const chartData = rawChartData.map((item, index) => ({
     ...item,
-    color: colorPalette[index % colorPalette.length]
+    color: CHART_COLORS.primary[index % CHART_COLORS.primary.length]
   }));
 
   console.log("Cost Breakdown Chart Data:", chartData);
@@ -70,17 +57,15 @@ const CostBreakdownChart = ({
               }
             </div>
           ) : (
-            <ChartContainer height={400} className="w-full">
+            <div className="w-full" style={{ height: '400px' }}>
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
-                  <ChartLegend>
-                    <CostBreakdownLegend chartData={chartData} />
-                  </ChartLegend>
+                  <CostBreakdownLegend chartData={chartData} />
                   <Tooltip content={<CostBreakdownTooltip />} />
                   <CostBreakdownPie chartData={chartData} />
                 </PieChart>
               </ResponsiveContainer>
-            </ChartContainer>
+            </div>
           )}
         </CardContent>
       </Card>

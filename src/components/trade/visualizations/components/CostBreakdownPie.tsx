@@ -1,36 +1,25 @@
 
+import React from "react";
 import { Pie, Cell } from "recharts";
 import { CostBreakdownItem } from "../utils/costBreakdownCalculations";
-import { enhancedColors } from '@/utils/chart/enhancedColors';
+import { CHART_COLORS } from "@/constants/chartStyles";
 
 interface CostBreakdownPieProps {
   chartData: CostBreakdownItem[];
 }
 
 const CostBreakdownPie: React.FC<CostBreakdownPieProps> = ({ chartData }) => {
+  // Calculate total for percentages
+  const totalValue = chartData.reduce((sum, item) => sum + Number(item.value), 0);
+  
   const renderLabel = (entry: any) => {
     // Ensure we're working with numbers
     const value = Number(entry.value);
-    const totalValue = chartData.reduce((sum: number, item: any) => sum + Number(item.value), 0);
     const percentage = ((value / totalValue) * 100).toFixed(1);
     
     // Only show percentage label if it's greater than 5%
     return Number(percentage) > 5 ? `${percentage}%` : '';
   };
-
-  // Enhanced vibrant colors
-  const colorPalette = [
-    "#3498DB", // Bright Blue
-    "#9B59B6", // Purple
-    "#E74C3C", // Red
-    "#F39C12", // Orange
-    "#16A085", // Teal
-    "#27AE60", // Green
-    "#D35400", // Dark Orange
-    "#8E44AD", // Dark Purple
-    "#2980B9", // Dark Blue
-    "#1ABC9C"  // Turquoise
-  ];
 
   // Log to check that we're receiving the data correctly
   console.log("Pie Chart Data:", chartData);
@@ -51,8 +40,8 @@ const CostBreakdownPie: React.FC<CostBreakdownPieProps> = ({ chartData }) => {
       isAnimationActive={true}
     >
       {chartData.map((entry, index) => {
-        // Use a vibrant color palette instead of category-based colors
-        const fillColor = entry.color || colorPalette[index % colorPalette.length];
+        // Use our consistent color palette
+        const fillColor = entry.color || CHART_COLORS.primary[index % CHART_COLORS.primary.length];
         return (
           <Cell 
             key={`cell-${index}`} 

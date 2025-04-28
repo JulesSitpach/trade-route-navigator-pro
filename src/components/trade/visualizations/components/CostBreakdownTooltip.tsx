@@ -1,6 +1,6 @@
 
-import { formatCurrency } from '@/utils/chart/formatters';
 import React from 'react';
+import { TYPOGRAPHY, FORMATTERS } from '@/constants/chartStyles';
 
 const CostBreakdownTooltip = ({ active, payload }: any) => {
   if (!active || !payload || !payload.length) {
@@ -16,16 +16,21 @@ const CostBreakdownTooltip = ({ active, payload }: any) => {
       boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
       padding: '12px 16px',
       minWidth: '180px',
+      fontFamily: TYPOGRAPHY.fontFamily,
+      fontSize: TYPOGRAPHY.sizes.tooltip
     }}>
       <div className="text-sm font-semibold mb-2 pb-1 border-b border-gray-100" style={{
         color: data.payload?.color || data.fill || '#333',
         borderColor: `${data.payload?.color || data.fill || '#e2e8f0'}30`,
+        fontWeight: TYPOGRAPHY.weights.bold
       }}>
         {data.name}
       </div>
       <div className="flex items-center justify-between mb-1">
         <span className="text-gray-600 text-sm">Value:</span> 
-        <span className="text-sm font-semibold text-gray-800">{formatCurrency(Number(data.value))}</span>
+        <span className="text-sm font-semibold text-gray-800">
+          {FORMATTERS.currency(Number(data.value))}
+        </span>
       </div>
       {data.payload && data.payload.percentage && (
         <div className="flex items-center justify-between">
