@@ -52,124 +52,156 @@ const VisualizationsTab = ({ data, routes }: VisualizationsTabProps) => {
     );
   };
 
-  const getActiveTabContent = () => {
+  const renderTabContent = () => {
     switch(activeTab) {
       case "costs":
         return (
-          <div>
-            <h3 className="text-lg font-medium flex items-center mb-2">
-              <PieChart className="h-5 w-5 mr-2 text-muted-foreground" />
-              {t('cost.breakdown')}
-            </h3>
-            <p className="text-sm text-muted-foreground mb-4">
-              {t('analysis.costs.description')}
-            </p>
-            <CostBreakdownChart 
-              productValue={parseFloat(data.product.productValue)}
-              originCountry={data.product.originCountry}
-              destinationCountry={data.product.destinationCountry}
-              productCategory={data.product.productCategory}
-              transportMode={data.shipping.transportMode}
-              quantity={parseInt(data.shipping.quantity)}
-              weight={parseFloat(data.shipping.weight)}
-            />
-          </div>
+          <Card className="border shadow-sm">
+            <CardHeader>
+              <div className="flex items-center gap-2">
+                <PieChart className="h-5 w-5 text-muted-foreground" />
+                <CardTitle className="text-lg font-medium">{t('cost.breakdown')}</CardTitle>
+              </div>
+              <CardDescription>{t('analysis.costs.description')}</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <CostBreakdownChart 
+                productValue={parseFloat(data.product.productValue)}
+                originCountry={data.product.originCountry}
+                destinationCountry={data.product.destinationCountry}
+                productCategory={data.product.productCategory}
+                transportMode={data.shipping.transportMode}
+                quantity={parseInt(data.shipping.quantity)}
+                weight={parseFloat(data.shipping.weight)}
+              />
+            </CardContent>
+          </Card>
         );
       case "routes":
         return (
-          <div>
-            <h3 className="text-lg font-medium flex items-center mb-2">
-              <BarChart className="h-5 w-5 mr-2 text-muted-foreground" />
-              {t('route.comparison')}
-            </h3>
-            <p className="text-sm text-muted-foreground mb-4">
-              {language === 'en' 
-                ? 'Compare transit times across different shipping routes and methods' 
-                : 'Compare tiempos de tránsito entre diferentes rutas y métodos de envío'
-              }
-            </p>
-            <RouteComparisonTimeline routes={routes} />
-          </div>
+          <Card className="border shadow-sm">
+            <CardHeader>
+              <div className="flex items-center gap-2">
+                <BarChart className="h-5 w-5 text-muted-foreground" />
+                <CardTitle className="text-lg font-medium">{t('route.comparison')}</CardTitle>
+              </div>
+              <CardDescription>
+                {language === 'en' 
+                  ? 'Compare transit times across different shipping routes and methods' 
+                  : 'Compare tiempos de tránsito entre diferentes rutas y métodos de envío'
+                }
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <RouteComparisonTimeline routes={routes} />
+            </CardContent>
+          </Card>
         );
       case "tariffs":
         return (
-          <div>
-            <h3 className="text-lg font-medium flex items-center mb-2">
-              <ScatterChart className="h-5 w-5 mr-2 text-muted-foreground" />
-              {t('tariff.analysis')}
-            </h3>
-            <p className="text-sm text-muted-foreground mb-4">
-              {language === 'en' 
-                ? 'Analyze tariff rates across product categories and countries' 
-                : 'Analizar tarifas arancelarias entre categorías de productos y países'
-              }
-            </p>
-            <TariffHeatmap />
-          </div>
+          <Card className="border shadow-sm">
+            <CardHeader>
+              <div className="flex items-center gap-2">
+                <ScatterChart className="h-5 w-5 text-muted-foreground" />
+                <CardTitle className="text-lg font-medium">{t('tariff.analysis')}</CardTitle>
+              </div>
+              <CardDescription>
+                {language === 'en' 
+                  ? 'Analyze tariff rates across product categories and countries' 
+                  : 'Analizar tarifas arancelarias entre categorías de productos y países'
+                }
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <TariffHeatmap />
+            </CardContent>
+          </Card>
         );
       case "seasonality":
         return (
-          <div>
-            <h3 className="text-lg font-medium flex items-center mb-2">
-              <LineChart className="h-5 w-5 mr-2 text-muted-foreground" />
-              {t('seasonality.title')}
-            </h3>
-            <p className="text-sm text-muted-foreground mb-4">
-              {language === 'en' 
-                ? 'Track how shipping costs, transit times, and risks fluctuate throughout the year' 
-                : 'Seguimiento de cómo los costos de envío, tiempos de tránsito y riesgos fluctúan durante el año'
-              }
-            </p>
-            <SeasonalityGraph />
-          </div>
+          <Card className="border shadow-sm">
+            <CardHeader>
+              <div className="flex items-center gap-2">
+                <LineChart className="h-5 w-5 text-muted-foreground" />
+                <CardTitle className="text-lg font-medium">{t('seasonality.title')}</CardTitle>
+              </div>
+              <CardDescription>
+                {language === 'en' 
+                  ? 'Track how shipping costs, transit times, and risks fluctuate throughout the year' 
+                  : 'Seguimiento de cómo los costos de envío, tiempos de tránsito y riesgos fluctúan durante el año'
+                }
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <SeasonalityGraph />
+            </CardContent>
+          </Card>
         );
       case "supplychain":
         return (
-          <div>
-            <h3 className="text-lg font-medium flex items-center mb-2">
-              <NetworkIcon className="h-5 w-5 mr-2 text-muted-foreground" />
-              {language === 'en' ? 'Supply Chain Flow' : 'Flujo de Cadena de Suministro'}
-            </h3>
-            <p className="text-sm text-muted-foreground mb-4">
-              {language === 'en' 
-                ? "Visualize your product's supply chain from origin to destination" 
-                : "Visualice la cadena de suministro de su producto desde el origen hasta el destino"
-              }
-            </p>
-            <SupplyChainFlowDiagram />
-          </div>
+          <Card className="border shadow-sm">
+            <CardHeader>
+              <div className="flex items-center gap-2">
+                <NetworkIcon className="h-5 w-5 text-muted-foreground" />
+                <CardTitle className="text-lg font-medium">
+                  {language === 'en' ? 'Supply Chain Flow' : 'Flujo de Cadena de Suministro'}
+                </CardTitle>
+              </div>
+              <CardDescription>
+                {language === 'en' 
+                  ? "Visualize your product's supply chain from origin to destination" 
+                  : "Visualice la cadena de suministro de su producto desde el origen hasta el destino"
+                }
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <SupplyChainFlowDiagram />
+            </CardContent>
+          </Card>
         );
       case "riskmatrix":
         return (
-          <div>
-            <h3 className="text-lg font-medium flex items-center mb-2">
-              <AlertTriangleIcon className="h-5 w-5 mr-2 text-muted-foreground" />
-              {language === 'en' ? 'Risk Assessment Matrix' : 'Matriz de Evaluación de Riesgos'}
-            </h3>
-            <p className="text-sm text-muted-foreground mb-4">
-              {language === 'en' 
-                ? 'Analyze potential risks in your trade operations' 
-                : 'Analice riesgos potenciales en sus operaciones comerciales'
-              }
-            </p>
-            <RiskAssessmentMatrix />
-          </div>
+          <Card className="border shadow-sm">
+            <CardHeader>
+              <div className="flex items-center gap-2">
+                <AlertTriangleIcon className="h-5 w-5 text-muted-foreground" />
+                <CardTitle className="text-lg font-medium">
+                  {language === 'en' ? 'Risk Assessment Matrix' : 'Matriz de Evaluación de Riesgos'}
+                </CardTitle>
+              </div>
+              <CardDescription>
+                {language === 'en' 
+                  ? 'Analyze potential risks in your trade operations' 
+                  : 'Analice riesgos potenciales en sus operaciones comerciales'
+                }
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <RiskAssessmentMatrix />
+            </CardContent>
+          </Card>
         );
       case "compliance":
         return (
-          <div>
-            <h3 className="text-lg font-medium flex items-center mb-2">
-              <ClipboardCheckIcon className="h-5 w-5 mr-2 text-muted-foreground" />
-              {language === 'en' ? 'Regulatory Compliance' : 'Cumplimiento Regulatorio'}
-            </h3>
-            <p className="text-sm text-muted-foreground mb-4">
-              {language === 'en' 
-                ? 'View regulatory compliance status across your supply chain' 
-                : 'Ver estado de cumplimiento regulatorio en su cadena de suministro'
-              }
-            </p>
-            <RegulatoryComplianceDashboard />
-          </div>
+          <Card className="border shadow-sm">
+            <CardHeader>
+              <div className="flex items-center gap-2">
+                <ClipboardCheckIcon className="h-5 w-5 text-muted-foreground" />
+                <CardTitle className="text-lg font-medium">
+                  {language === 'en' ? 'Regulatory Compliance' : 'Cumplimiento Regulatorio'}
+                </CardTitle>
+              </div>
+              <CardDescription>
+                {language === 'en' 
+                  ? 'View regulatory compliance status across your supply chain' 
+                  : 'Ver estado de cumplimiento regulatorio en su cadena de suministro'
+                }
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <RegulatoryComplianceDashboard />
+            </CardContent>
+          </Card>
         );
       default:
         return null;
@@ -189,10 +221,7 @@ const VisualizationsTab = ({ data, routes }: VisualizationsTabProps) => {
 
       <div>
         {renderTabButtons()}
-
-        <div className="bg-card rounded-lg border p-6">
-          {getActiveTabContent()}
-        </div>
+        {renderTabContent()}
       </div>
     </div>
   );
