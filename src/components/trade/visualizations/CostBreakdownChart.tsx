@@ -1,6 +1,6 @@
 
 import { Card, CardContent } from "@/components/ui/card";
-import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
+import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
 import { ChartContainer, ChartLegend, ChartLegendContent, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 import { Donut } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -8,7 +8,7 @@ import { calculateTariff } from '@/data/countryTariffData';
 import { calculateFreightCost } from '../data/calculations/freightCosts';
 import { calculateInlandTransportation } from '../data/calculations/inlandTransportation';
 import { formatCurrency } from '../data/utils/formatters';
-import { chartConfig } from './chartConfig';
+import { getCategoryColor } from '@/utils/chartUtils';
 
 interface CostBreakdownChartProps {
   productValue: number;
@@ -67,49 +67,58 @@ const CostBreakdownChart = ({
   const otherFeesRate = totalProductValue > 15000 ? 2.5 : 2.0;
   const otherFees = (totalProductValue * otherFeesRate) / 100;
 
+  // Create categories that match our universal chart guidelines
   const chartData = [
     {
       name: language === 'es' ? 'Arancel de Importación' : 'Import Duty',
-      value: importDuty
+      value: importDuty,
+      category: 'importDuty'
     },
     {
       name: language === 'es' ? 'Costo de Flete' : 'Freight Cost',
-      value: freightCost
+      value: freightCost,
+      category: 'freight'
     },
     {
       name: language === 'es' ? 'Seguro' : 'Insurance',
-      value: insurance
+      value: insurance,
+      category: 'insurance'
     },
     {
       name: language === 'es' ? 'Tarifas de Documentación' : 'Documentation Fees',
-      value: documentationFees
+      value: documentationFees,
+      category: 'documentation'
     },
     {
       name: language === 'es' ? 'Despacho Aduanero' : 'Customs Clearance',
-      value: customsClearance
+      value: customsClearance,
+      category: 'customs'
     },
     {
       name: language === 'es' ? 'Transporte Terrestre' : 'Inland Transportation',
-      value: inlandTransportation
+      value: inlandTransportation,
+      category: 'shipping'
     },
     {
       name: language === 'es' ? 'Almacenaje' : 'Warehousing',
-      value: warehouseCost
+      value: warehouseCost,
+      category: 'warehousing'
     },
     {
       name: language === 'es' ? 'Otros Impuestos y Tarifas' : 'Other Taxes and Fees',
-      value: otherFees
+      value: otherFees,
+      category: 'customs'
     }
   ].filter(item => item.value > 0);
 
-  const colors = [
-    "#3498db", "#e74c3c", "#2ecc71", "#f39c12", "#9b59b6",
-    "#16a085", "#d35400", "#8e44ad", "#7f8c8d"
-  ];
+  // Get colors based on our chart guidelines
+  const getItemColor = (category: string) => {
+    return getCategoryColor(category);
+  };
 
   const renderLabel = (entry: any) => {
     const percentage = ((entry.value / chartData.reduce((sum: number, item: any) => sum + item.value, 0)) * 100).toFixed(1);
-    return `${percentage}%`;
+    return percentage > 5 ? `${percentage}%` : '';
   };
 
   return (
@@ -134,7 +143,6 @@ const CostBreakdownChart = ({
             <ChartContainer 
               height={400} 
               className="w-full"
-              config={chartConfig}
             >
               <ResponsiveContainer width="100%" height={400}>
                 <PieChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
@@ -144,7 +152,16 @@ const CostBreakdownChart = ({
                     align="center"
                     layout="horizontal"
                   />
-                  <ChartTooltip content={<ChartTooltipContent />} />
+                  <Tooltip 
+                    content={
+                      <ChartTooltipContent
+                        formatter={(value, name) => [
+                          formatCurrency(Number(value)), 
+                          name
+                        ]}
+                      />
+                    } 
+                  />
                   <Pie
                     data={chartData}
                     cx="50%"
@@ -159,7 +176,12 @@ const CostBreakdownChart = ({
                     cornerRadius={4}
                   >
                     {chartData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
+                      <Cell 
+                        key={`cell-${index}`} 
+                        fill={getItemColor(entry.category)}
+                        stroke={getItemColor(entry.category)}
+                        strokeWidth={1}
+                      />
                     ))}
                   </Pie>
                 </PieChart>

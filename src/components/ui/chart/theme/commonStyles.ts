@@ -11,6 +11,8 @@ export const tooltipStyles = {
     opacity: 1,  // Ensure full opacity
     fontSize: lightTheme.typography.fontSize.label,
     fontFamily: lightTheme.typography.fontFamily,
+    minWidth: '160px', // Minimum width for tooltip
+    maxWidth: '280px', // Maximum width for tooltip
   },
   contentStyle: {
     backgroundColor: '#FFFFFF',
@@ -35,6 +37,22 @@ export const tooltipStyles = {
     alignItems: 'center',
     gap: '8px',
     marginBottom: '4px',
+    minHeight: '24px', // Ensure touch-friendly target size
+  },
+  label: {
+    color: '#7F8C8D', // Dark Gray
+    fontSize: '12px',
+    marginRight: '4px',
+  },
+  value: {
+    color: '#2C3E50', // Navy Blue
+    fontSize: '13px',
+    fontWeight: 500,
+  },
+  unit: {
+    marginLeft: '2px',
+    fontSize: '12px',
+    color: '#7F8C8D', // Dark Gray
   },
 };
 
@@ -42,12 +60,15 @@ export const legendStyles = {
   container: {
     display: 'flex',
     justifyContent: 'center',
-    marginBottom: '16px'
+    marginBottom: '16px',
+    flexWrap: 'wrap' as const,
   },
   item: {
     display: 'flex',
     alignItems: 'center',
-    marginRight: '24px'
+    marginRight: '24px',
+    marginBottom: '8px',
+    minHeight: '24px', // Touch-friendly
   },
   icon: {
     width: '12px',
@@ -110,6 +131,7 @@ export const axisStyles = {
     fill: '#2C3E50', // Navy Blue
     fontSize: 13,
     fontWeight: 500,
+    padding: 8,
   },
 };
 
@@ -121,4 +143,10 @@ export const calculateBubbleSize = (value: number, minValue: number, maxValue: n
   
   const scale = (value - minValue) / (maxValue - minValue);
   return minRadius + scale * (maxRadius - minRadius);
+};
+
+// Helper function for generating responsive font sizes
+export const responsiveFontSize = (baseSize: number, minSize: number = 10, maxSize: number = 16) => {
+  const fontSize = Math.max(minSize, Math.min(baseSize, maxSize));
+  return `${fontSize}px`;
 };

@@ -5,6 +5,7 @@ import { typography } from './theme/typography';
 import { spacing } from './theme/spacing';
 import { LabelPosition } from 'recharts/types/component/Label';
 import { TextAnchor } from './types/textTypes';
+import { chartGridStyles } from './theme/commonStyles';
 
 // Light theme default configuration
 export const lightTheme: ChartTheme = {
@@ -12,15 +13,15 @@ export const lightTheme: ChartTheme = {
   typography,
   spacing,
   grid: {
-    stroke: '#e5e7eb',     // Gray 200
+    stroke: '#ECF0F1',     // Light Gray
     strokeDasharray: '4 4',
     opacity: 0.3,
   },
   tooltip: {
     background: '#ffffff',  // White
-    border: '#e5e7eb',      // Gray 200
+    border: '#BDC3C7',      // Mid Gray
     shadow: '0px 2px 8px rgba(0, 0, 0, 0.1)',
-    borderRadius: 4,
+    borderRadius: 6,
   },
   animation: {
     duration: 500,
@@ -30,7 +31,7 @@ export const lightTheme: ChartTheme = {
     fontFamily: 'Inter, system-ui, sans-serif',
     fontSize: 12,
     fontWeight: 500,
-    color: '#64748b',
+    color: '#2C3E50',  // Navy Blue
   },
 };
 
@@ -39,15 +40,15 @@ export const darkTheme: ChartTheme = {
   ...lightTheme,
   colors: darkColors,
   grid: {
-    stroke: '#374151',     // Gray 700
+    stroke: '#7F8C8D',     // Dark Gray
     strokeDasharray: '4 4',
     opacity: 0.4,
   },
   tooltip: {
-    background: '#1f2937',   // Gray 800
-    border: '#374151',       // Gray 700
+    background: '#2C3E50',   // Navy Blue
+    border: '#7F8C8D',       // Dark Gray
     shadow: '0px 2px 8px rgba(0, 0, 0, 0.25)',
-    borderRadius: 4,
+    borderRadius: 6,
   },
 };
 
@@ -88,18 +89,14 @@ export const chartElements = {
       style: {
         fontSize: theme.typography.fontSize.axis,
         fill: theme.colors.text,
-        fontWeight: theme.typography.fontWeight.normal,
+        fontWeight: theme.typography.fontWeight.medium,
         textAnchor: 'middle' as TextAnchor,
       },
       angle: options?.angle ?? defaultAngle,
     };
   },
   
-  grid: {
-    stroke: lightTheme.grid.stroke,
-    strokeDasharray: lightTheme.grid.strokeDasharray,
-    opacity: lightTheme.grid.opacity,
-  },
+  grid: chartGridStyles,
   
   axis: {
     line: {

@@ -2,12 +2,13 @@
 /* Tooltip Styles */
 .recharts-tooltip-wrapper {
   background-color: #ffffff !important;
-  border: 1px solid #e5e7eb !important;
+  border: 1px solid #BDC3C7 !important;
   border-radius: 6px !important;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
   opacity: 1 !important;
   padding: 10px 12px !important;
   font-family: "'Inter', -apple-system, BlinkMacSystemFont, sans-serif" !important;
+  min-height: 44px !important; /* Touch friendly */
 }
 
 /* Legend Styles */
@@ -21,26 +22,44 @@
 
 .recharts-legend-item {
   margin-right: 16px !important;
+  min-height: 24px !important; /* Touch friendly */
 }
 
 /* Chart Text Styles */
 .recharts-text {
   font-family: "'Inter', -apple-system, BlinkMacSystemFont, sans-serif" !important;
-  fill: #4b5563 !important;
+  fill: #2C3E50 !important; /* Navy Blue */
   font-size: 12px !important;
 }
 
 /* Grid Lines */
 .recharts-cartesian-grid-horizontal line,
 .recharts-cartesian-grid-vertical line {
-  stroke: #e5e7eb !important;
+  stroke: #ECF0F1 !important; /* Light Gray */
   stroke-dasharray: 4 4 !important;
   opacity: 0.3 !important;
 }
 
 /* Axis Lines */
 .recharts-cartesian-axis-line {
-  stroke: #9ca3af !important;
+  stroke: #BDC3C7 !important; /* Mid Gray */
   stroke-width: 1 !important;
 }
 
+/* Ensure minimum size for interactive elements */
+.recharts-dot,
+.recharts-bar-rectangle,
+.recharts-active-dot {
+  min-width: 8px !important;
+  min-height: 8px !important;
+}
+
+@media (max-width: 768px) {
+  .recharts-text.recharts-label {
+    font-size: 11px !important;
+  }
+  
+  .recharts-text.recharts-cartesian-axis-tick-value {
+    font-size: 10px !important;
+  }
+}

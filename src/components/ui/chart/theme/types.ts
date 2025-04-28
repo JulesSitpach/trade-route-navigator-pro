@@ -19,34 +19,44 @@ export interface ChartColors {
     high: string;
     critical: string;
   };
-  lines: {
+  lines?: {
     freight: string;
     cost: string;
     risk: string;
   };
+  categories?: {
+    shipping: string;
+    customs: string;
+    distribution: string;
+    importDuty: string;
+    freight: string;
+    insurance: string;
+    documentation: string;
+    warehousing: string;
+    [key: string]: string;
+  };
 }
 
-export interface ChartTypography {
+export interface Typography {
   fontFamily: string;
   fontSize: {
     title: number;
     subtitle: number;
     axis: number;
     label: number;
+    legend: number;
     tick: number;
   };
-  sizes: {
-    legend: number;
-    axis: number;
-    label: number;
-  };
   fontWeight: {
+    light: number;
     normal: number;
+    medium: number;
+    semibold: number;
     bold: number;
   };
 }
 
-export interface ChartSpacing {
+export interface Spacing {
   margin: {
     top: number;
     right: number;
@@ -54,36 +64,35 @@ export interface ChartSpacing {
     left: number;
   };
   padding: {
-    chart: number;
-    tooltip: number;
+    container: number;
     legend: number;
+    tooltip: number;
   };
   axisOffset: {
     x: number;
     y: number;
   };
-  chartMargin: {
-    top: number;
-    right: number;
-    bottom: number;
-    left: number;
-  };
 }
 
-export interface ChartGrid {
+export interface ChartGridConfig {
   stroke: string;
   strokeDasharray: string;
   opacity: number;
 }
 
-export interface ChartTooltip {
+export interface ChartTooltipConfig {
   background: string;
   border: string;
   shadow: string;
   borderRadius: number;
 }
 
-export interface ChartAxisTitle {
+export interface ChartAnimationConfig {
+  duration: number;
+  easing: string;
+}
+
+export interface AxisTitleConfig {
   fontFamily: string;
   fontSize: number;
   fontWeight: number;
@@ -92,13 +101,10 @@ export interface ChartAxisTitle {
 
 export interface ChartTheme {
   colors: ChartColors;
-  typography: ChartTypography;
-  spacing: ChartSpacing;
-  grid: ChartGrid;
-  tooltip: ChartTooltip;
-  animation: {
-    duration: number;
-    easing: string;
-  };
-  axisTitle: ChartAxisTitle;
+  typography: Typography;
+  spacing: Spacing;
+  grid: ChartGridConfig;
+  tooltip: ChartTooltipConfig;
+  animation: ChartAnimationConfig;
+  axisTitle: AxisTitleConfig;
 }

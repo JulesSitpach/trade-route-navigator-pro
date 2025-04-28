@@ -1,3 +1,4 @@
+
 import { getChartTheme, chartElements } from '@/components/ui/chart/chartTheme';
 import { Props as LabelProps } from 'recharts/types/component/Label';
 import { LabelPosition } from 'recharts/types/component/Label';
@@ -128,6 +129,41 @@ export const getTariffColor = (tariffRate: number): string => {
   return theme.colors.tariff.high;
 };
 
+// Category-based color getter
+export const getCategoryColor = (category: string): string => {
+  const theme = getChartTheme();
+  const categories = theme.colors.categories || {};
+  
+  if (category in categories) {
+    return categories[category as keyof typeof categories] || theme.colors.primary;
+  }
+  
+  // Default colors for common categories following the universal guidelines
+  switch (category.toLowerCase()) {
+    case 'shipping':
+    case 'transit':
+      return '#7C4DFF'; // Purple
+    case 'customs':
+      return '#FF9800'; // Orange
+    case 'distribution':
+      return '#FFC107'; // Yellow
+    case 'import duty':
+    case 'duty':
+      return '#03A9F4'; // Light Blue
+    case 'freight':
+    case 'freight cost':
+      return '#F44336'; // Red
+    case 'insurance':
+      return '#4CAF50'; // Green
+    case 'documentation':
+      return '#FFB300'; // Amber
+    case 'warehousing':
+      return '#795548'; // Brown
+    default:
+      return theme.colors.primary;
+  }
+};
+
 // Formatting utilities
 export const formatCurrency = (value: number): string => {
   return new Intl.NumberFormat('en-US', {
@@ -152,6 +188,7 @@ export default {
   calculateBubbleSize,
   getColorByThreshold,
   getTariffColor,
+  getCategoryColor,
   formatCurrency, 
   formatPercent,
   formatNumber,

@@ -31,10 +31,20 @@ export const lightColors: ChartColors = {
     critical: '#B03A2E', // Darker Error Red
   },
   lines: {
-    freight: '#3498DB',  // Teal Blue
-    cost: '#F39C12',     // Warning Amber
+    freight: '#F44336',  // Red - Freight Cost
+    cost: '#FF9800',     // Orange - Customs
     risk: '#E74C3C',     // Error Red
   },
+  categories: {
+    shipping: '#7C4DFF',     // Purple - Shipping/Transit
+    customs: '#FF9800',      // Orange - Customs
+    distribution: '#FFC107', // Yellow - Distribution
+    importDuty: '#03A9F4',   // Light Blue - Import Duty
+    freight: '#F44336',      // Red - Freight Cost
+    insurance: '#4CAF50',    // Green - Insurance
+    documentation: '#FFB300', // Amber - Documentation
+    warehousing: '#795548',   // Brown - Warehousing
+  }
 };
 
 export const darkColors: ChartColors = {

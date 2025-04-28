@@ -15,6 +15,7 @@ import { cursorStyles, tooltipStyles } from "@/components/ui/chart/theme/commonS
 import { calculateBubbleSize } from "@/utils/chartUtils";
 import { TariffTooltip } from "./TariffTooltip";
 import { useLanguage } from '@/contexts/LanguageContext';
+import { getChartTheme } from '@/components/ui/chart/chartTheme';
 
 interface TariffData {
   country: string;
@@ -30,6 +31,7 @@ interface TariffScatterChartProps {
 
 const TariffScatterChart: React.FC<TariffScatterChartProps> = ({ data, getTariffColor }) => {
   const { language } = useLanguage();
+  const theme = getChartTheme();
   
   // Extract volumes for bubble sizing calculation
   const volumes = data.map(item => item.volume);
@@ -45,14 +47,14 @@ const TariffScatterChart: React.FC<TariffScatterChartProps> = ({ data, getTariff
             left: 40,
           }}
         >
-          <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" opacity={0.5} />
+          <CartesianGrid strokeDasharray="3 3" stroke={theme.grid.stroke} opacity={0.5} />
           <XAxis 
             type="category" 
             dataKey="country" 
             name="Country" 
-            tick={{ fontSize: 12 }}
+            tick={{ fontSize: theme.typography.fontSize.axis }}
             tickLine={false}
-            axisLine={{ stroke: '#9ca3af', strokeWidth: 1 }}
+            axisLine={{ stroke: theme.colors.grid, strokeWidth: 1 }}
             interval={0}
             angle={-45}
             textAnchor="end"
@@ -62,7 +64,7 @@ const TariffScatterChart: React.FC<TariffScatterChartProps> = ({ data, getTariff
               value={language === 'en' ? "Country" : "País"} 
               position="insideBottom" 
               offset={-15}
-              style={{ textAnchor: 'middle', fill: '#4b5563', fontSize: 14, fontWeight: 500 }}
+              style={{ textAnchor: 'middle', fill: theme.colors.text, fontSize: 14, fontWeight: 500 }}
             />
           </XAxis>
           <YAxis
@@ -70,21 +72,22 @@ const TariffScatterChart: React.FC<TariffScatterChartProps> = ({ data, getTariff
             dataKey="tariffRate"
             name="Tariff Rate (%)"
             domain={[0, 'dataMax + 2']}
-            axisLine={{ stroke: '#9ca3af', strokeWidth: 1 }}
-            tickLine={{ stroke: '#9ca3af' }}
-            tick={{ fontSize: 12 }}
+            axisLine={{ stroke: theme.colors.grid, strokeWidth: 1 }}
+            tickLine={{ stroke: theme.colors.grid }}
+            tick={{ fontSize: theme.typography.fontSize.axis }}
           >
             <Label 
               value={language === 'en' ? "Tariff Rate (%)" : "Tasa Arancelaria (%)"} 
               position="insideLeft" 
               angle={-90}
-              style={{ textAnchor: 'middle', fill: '#4b5563', fontSize: 14, fontWeight: 500 }}
+              style={{ textAnchor: 'middle', fill: theme.colors.text, fontSize: 14, fontWeight: 500 }}
               offset={-20}
             />
           </YAxis>
           <Tooltip 
             content={<TariffTooltip />}
             cursor={cursorStyles.scatter}
+            wrapperStyle={tooltipStyles.wrapper}
           />
           <Scatter name="Tariff Rates" data={data} fill="#8884d8">
             {data.map((entry, index) => {
