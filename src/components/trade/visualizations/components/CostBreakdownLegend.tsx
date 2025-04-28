@@ -1,9 +1,9 @@
 
 import { ChartLegendContent } from "@/components/ui/chart";
 import { CostBreakdownItem } from "../utils/costBreakdownCalculations";
-import { formatCurrency } from '../../../trade/data/utils/formatters';
+import { formatCurrency } from '@/utils/chart/formatters';
 import React from 'react';
-import { enhancedColors } from '@/utils/chartUtils';
+import { enhancedColors } from '@/utils/chart/enhancedColors';
 
 interface CostBreakdownLegendProps {
   chartData: CostBreakdownItem[];

@@ -1,7 +1,7 @@
 
 import { Pie, Cell } from "recharts";
 import { CostBreakdownItem } from "../utils/costBreakdownCalculations";
-import { getCategoryColor } from '@/utils/chartUtils';
+import { enhancedColors } from '@/utils/chart/enhancedColors';
 
 interface CostBreakdownPieProps {
   chartData: CostBreakdownItem[];

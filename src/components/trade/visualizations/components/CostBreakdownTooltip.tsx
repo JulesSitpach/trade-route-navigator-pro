@@ -1,5 +1,5 @@
 
-import { formatCurrency } from '../../../trade/data/utils/formatters';
+import { formatCurrency } from '@/utils/chart/formatters';
 import React from 'react';
 
 const CostBreakdownTooltip = ({ active, payload }: any) => {
