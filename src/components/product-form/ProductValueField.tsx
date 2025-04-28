@@ -34,7 +34,7 @@ export const ProductValueField = ({
     <div className="space-y-2">
       <Label htmlFor="productValue" className="flex items-center gap-1">
         {t('product.value')}
-        <span className="text-red-500">{t('common:required')}</span>
+        <span className="text-red-500">*</span>
       </Label>
       <Input 
         id="productValue" 
@@ -46,7 +46,6 @@ export const ProductValueField = ({
           onValidate(e.target.value);
         }}
         className={cn(
-          "bg-white",
           error && "border-red-500 focus-visible:ring-red-500"
         )}
       />

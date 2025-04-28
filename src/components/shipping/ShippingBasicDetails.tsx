@@ -23,7 +23,7 @@ const ShippingBasicDetails = ({
     <div className="space-y-2">
       <Label htmlFor="quantity" className="flex items-center gap-1">
         {t('shipping:quantity')}
-        <span className="text-red-500">{t('common:required')}</span>
+        <span className="text-red-500">*</span>
       </Label>
       <Input 
         id="quantity" 

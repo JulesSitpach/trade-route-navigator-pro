@@ -47,7 +47,7 @@ const SelectTrigger = React.forwardRef<
       }}
       className={cn(
         "flex h-10 w-full items-center justify-between rounded-md border border-input px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1",
-        hasValue ? "bg-secondary/10 border-secondary/20" : "bg-white",
+        hasValue ? "bg-blue-100 border-blue-200" : "bg-white",
         className
       )}
       {...props}
