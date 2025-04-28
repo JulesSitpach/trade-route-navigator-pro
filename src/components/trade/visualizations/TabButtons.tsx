@@ -30,6 +30,7 @@ const TabButtons = ({ activeTab, setActiveTab }: TabButtonsProps) => {
           key={tab.id}
           onClick={() => setActiveTab(tab.id)}
           variant={activeTab === tab.id ? "default" : "outline"}
+          size="default"
           className="flex items-center justify-center px-4 py-2 gap-2 rounded-md text-sm"
         >
           {tab.icon}
