@@ -15,36 +15,12 @@ const SelectTrigger = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Trigger>,
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger>
 >(({ className, children, ...props }, ref) => {
-  const triggerRef = React.useRef<HTMLButtonElement>(null);
-  const [hasValue, setHasValue] = React.useState(false);
+  // Simplify the logic to detect if a value is selected
+  const hasValue = props.value !== undefined && props.value !== null && props.value !== '';
   
-  React.useEffect(() => {
-    if (props.value) {
-      setHasValue(true);
-    }
-  }, [props.value]);
-
-  React.useEffect(() => {
-    const checkContent = () => {
-      if (triggerRef.current) {
-        const valueSpan = triggerRef.current.querySelector('[data-radix-select-value]');
-        if (valueSpan) {
-          const hasRealContent = valueSpan.textContent && valueSpan.textContent.trim() !== '';
-          setHasValue(!!hasRealContent && props.value !== undefined);
-        }
-      }
-    };
-    
-    setTimeout(checkContent, 0);
-  }, [children, props.value]);
-
   return (
     <SelectPrimitive.Trigger
-      ref={(node) => {
-        if (node) triggerRef.current = node;
-        if (typeof ref === 'function') ref(node);
-        else if (ref) ref.current = node;
-      }}
+      ref={ref}
       className={cn(
         "flex h-10 w-full items-center justify-between rounded-md border border-input px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1",
         hasValue ? "bg-blue-100 border-blue-200" : "bg-white",
