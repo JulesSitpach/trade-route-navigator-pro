@@ -1,22 +1,21 @@
 
-import { ChartTypography } from './types';
+import { Typography } from './types';
 
-export const typography: ChartTypography = {
+export const typography: Typography = {
   fontFamily: 'Inter, system-ui, sans-serif',
   fontSize: {
     title: 16,
     subtitle: 14,
     axis: 14,
     label: 13,
+    legend: 14,
     tick: 12,
   },
-  sizes: {
-    legend: 14,
-    axis: 12,
-    label: 13,
-  },
   fontWeight: {
+    light: 300,
     normal: 400,
-    bold: 600,
+    medium: 500,
+    semibold: 600,
+    bold: 700,
   },
 };

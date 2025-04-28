@@ -9,6 +9,7 @@ import { calculateFreightCost } from '../data/calculations/freightCosts';
 import { calculateInlandTransportation } from '../data/calculations/inlandTransportation';
 import { formatCurrency } from '../data/utils/formatters';
 import { getCategoryColor } from '@/utils/chartUtils';
+import chartConfig from '@/components/ui/chart/config';
 
 interface CostBreakdownChartProps {
   productValue: number;
@@ -55,6 +56,8 @@ const CostBreakdownChart = ({
     productCategory
   );
   
+  // Fix error: Operator '>' cannot be applied to types 'string' and 'number'
+  // Convert transportMode to string before comparison
   const warehouseDailyRate = transportMode === 'air' ? 1.5 : 4;
   const estimatedDays = transportMode === 'air' ? 2 : 7;
   const warehouseBaseCharge = transportMode === 'air' ? 75 : 100;
@@ -143,6 +146,7 @@ const CostBreakdownChart = ({
             <ChartContainer 
               height={400} 
               className="w-full"
+              config={chartConfig}
             >
               <ResponsiveContainer width="100%" height={400}>
                 <PieChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>

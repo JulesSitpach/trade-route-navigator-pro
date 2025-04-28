@@ -1,7 +1,7 @@
 
-import { ChartSpacing } from './types';
+import { Spacing } from './types';
 
-export const spacing: ChartSpacing = {
+export const spacing: Spacing = {
   margin: {
     top: 40,
     right: 40,
@@ -9,18 +9,12 @@ export const spacing: ChartSpacing = {
     left: 80,
   },
   padding: {
-    chart: 16,
+    container: 16,
     tooltip: 12,
     legend: 8,
   },
   axisOffset: {
     x: 60,
     y: 60,
-  },
-  chartMargin: {
-    top: 40,
-    right: 40,
-    bottom: 100,
-    left: 80,
   },
 };
