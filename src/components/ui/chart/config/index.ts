@@ -3,28 +3,43 @@
  * Chart configuration exports
  */
 
-// Export all configurations from chartConfig
-export * from './chartConfig';
-export { default as defaultChartConfig } from './chartConfig';
+// Export base configuration
+export { defaultChartConfig, createChartConfig } from './baseConfig';
+export { default as defaultChartConfig } from './baseConfig';
 
-// Export specific chart type configurations
+// Export color configurations
 export { 
+  primaryColors, 
+  categoricalColors, 
+  sequentialColors, 
+  uiColors,
+  getColorByIndex 
+} from './colors';
+
+// Export typography configuration
+export { typography } from './typography';
+export { default as typography } from './typography';
+
+// Export spacing configuration
+export { spacing } from './spacing';
+export { default as spacing } from './spacing';
+
+// Export animation configuration
+export { animation } from './animation';
+export { default as animation } from './animation';
+
+// Export formatter utilities
+export { formatters } from './formatters';
+export { default as formatters } from './formatters';
+
+// Export chart type configurations
+export {
   pieChartConfig,
   barChartConfig,
   lineChartConfig,
-  areaChartConfig,
-  primaryColors,
-  categoricalColors,
-  sequentialColors,
-  typography,
-  spacing,
-  animation,
-  formatters,
-  uiColors
-} from './chartConfig';
-
-// Export helper functions
-export { getColorByIndex, createChartConfig } from './chartConfig';
+  areaChartConfig
+} from './chartTypes';
 
 // Create a chartConfig constant for easier imports
+import defaultChartConfig from './baseConfig';
 export const chartConfig = defaultChartConfig;

@@ -75,7 +75,7 @@ const RouteComparisonTimeline = ({ routes }: RouteComparisonTimelineProps) => {
             <ChartContainer 
               height={450}
               className="w-full"
-              config={chartConfig}
+              config={defaultChartConfig}
             >
               <ResponsiveContainer width="100%" height={400}>
                 <BarChart

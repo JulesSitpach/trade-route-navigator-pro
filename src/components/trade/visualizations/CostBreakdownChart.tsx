@@ -1,4 +1,3 @@
-
 import { Card, CardContent } from "@/components/ui/card";
 import { PieChart, ResponsiveContainer, Tooltip } from "recharts";
 import { ChartContainer, ChartLegend } from "@/components/ui/chart";
@@ -11,7 +10,6 @@ import CostBreakdownTooltip from "./components/CostBreakdownTooltip";
 import { enhancedColors } from '@/utils/chart/enhancedColors';
 import { defaultChartConfig } from '@/components/ui/chart/config';
 
-// Enhanced vibrant colors for the chart segments
 const colorPalette = [
   enhancedColors.blue,      // Bright Blue
   enhancedColors.purple,    // Purple
@@ -36,7 +34,6 @@ const CostBreakdownChart = ({
 }: CostBreakdownInput) => {
   const { language } = useLanguage();
 
-  // Get raw cost breakdown data
   const rawChartData = calculateCostBreakdown({
     productValue,
     originCountry,
@@ -47,13 +44,11 @@ const CostBreakdownChart = ({
     weight
   }, language);
   
-  // Enhance with vibrant colors
   const chartData = rawChartData.map((item, index) => ({
     ...item,
     color: colorPalette[index % colorPalette.length]
   }));
 
-  // Log the chart data to check if we're getting values
   console.log("Cost Breakdown Chart Data:", chartData);
 
   return (
@@ -78,7 +73,7 @@ const CostBreakdownChart = ({
             <ChartContainer 
               height={400} 
               className="w-full"
-              config={chartConfig}
+              config={defaultChartConfig}
             >
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>

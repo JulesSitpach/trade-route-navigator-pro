@@ -33,29 +33,40 @@ export const useChartConfig = (initialOverrides = {}, theme: ChartTheme = 'light
         tooltipBorder: '#475569',
         axisColor: '#94a3b8'
       } : {}),
-      ...(overrides.colors || {})
+      ...(overrides && typeof overrides === 'object' && 'colors' in overrides ? overrides.colors : {})
     }
   });
   
   // Function to update specific config parts
   const updateConfig = useCallback((newOverrides: any) => {
-    setOverrides(prev => ({
-      ...prev,
-      ...newOverrides,
-      // Handle nested updates properly
-      colors: {
-        ...(prev.colors || {}),
-        ...(newOverrides.colors || {})
-      },
-      typography: {
-        ...(prev.typography || {}),
-        ...(newOverrides.typography || {}),
-        fontSize: {
-          ...((prev.typography && prev.typography.fontSize) || {}),
-          ...((newOverrides.typography && newOverrides.typography.fontSize) || {})
+    setOverrides(prev => {
+      // Create safe nested updates to handle potentially missing properties
+      const prevColors = prev && typeof prev === 'object' && 'colors' in prev ? prev.colors : {};
+      const prevTypography = prev && typeof prev === 'object' && 'typography' in prev ? prev.typography : {};
+      const prevTypographyFontSize = prevTypography && typeof prevTypography === 'object' && 'fontSize' in prevTypography ? prevTypography.fontSize : {};
+      
+      const newColors = newOverrides && typeof newOverrides === 'object' && 'colors' in newOverrides ? newOverrides.colors : {};
+      const newTypography = newOverrides && typeof newOverrides === 'object' && 'typography' in newOverrides ? newOverrides.typography : {};
+      const newTypographyFontSize = newTypography && typeof newTypography === 'object' && 'fontSize' in newTypography ? newTypography.fontSize : {};
+
+      return {
+        ...prev,
+        ...newOverrides,
+        // Handle nested updates properly
+        colors: {
+          ...prevColors,
+          ...newColors
+        },
+        typography: {
+          ...prevTypography,
+          ...newTypography,
+          fontSize: {
+            ...prevTypographyFontSize,
+            ...newTypographyFontSize
+          }
         }
-      }
-    }));
+      };
+    });
   }, []);
   
   // Reset to defaults with only theme adjustments
