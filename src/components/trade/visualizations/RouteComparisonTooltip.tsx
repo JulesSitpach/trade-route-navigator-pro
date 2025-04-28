@@ -3,7 +3,7 @@ import React from 'react';
 import { Badge } from "@/components/ui/badge";
 import { tooltipStyles } from "@/components/ui/chart/theme/commonStyles";
 import { useLanguage } from '@/contexts/LanguageContext';
-import { enhancedColors } from '@/utils/chartUtils';
+import { enhancedColors } from '@/utils/chart/enhancedColors';
 
 interface RouteComparisonTooltipProps {
   active?: boolean;

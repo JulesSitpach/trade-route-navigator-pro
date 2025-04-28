@@ -9,7 +9,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { SeasonalityTooltip } from "./seasonality/SeasonalityTooltip";
 import { chartConfig } from "./chartConfig";
 import { cursorStyles } from "@/components/ui/chart/theme/commonStyles";
-import { enhancedColors } from '@/utils/chartUtils';
+import { enhancedColors } from '@/utils/chart/enhancedColors';
 
 const SeasonalityGraph = () => {
   const { seasonalityData, loading, error } = useSeasonalityData();

@@ -7,7 +7,7 @@ export * from './chart';
 export default chartUtils;
 
 // Re-export enhancedColors directly to maintain backward compatibility
-export const enhancedColors = chartUtils.enhancedColors;
+export { enhancedColors } from './chart';
 
 // Re-export chartCommonConfig directly to maintain backward compatibility
-export const chartCommonConfig = chartUtils.chartCommonConfig;
+export { chartCommonConfig } from './chart';

@@ -8,22 +8,33 @@ export * from './colorUtils';
 export * from './formatters';
 export * from './payloadUtils';
 
-// Re-export enhancedColors as default for backward compatibility
+// Import specific functions to re-export
 import { enhancedColors } from './enhancedColors';
 import chartCommonConfig from './config';
+import { createAxisTitle, getChartMargins } from './axisUtils';
+import { calculateBubbleSize } from './bubbleUtils';
+import { getColorByThreshold, getTariffColor, getCategoryColor } from './colorUtils';
+import { formatCurrency, formatPercent, formatNumber } from './formatters';
+import { getPayloadConfigFromPayload } from './payloadUtils';
 
 // Create a default export that matches the original structure
 export default {
   enhancedColors,
   chartCommonConfig,
-  createAxisTitle: require('./axisUtils').createAxisTitle,
-  getChartMargins: require('./axisUtils').getChartMargins,
-  calculateBubbleSize: require('./bubbleUtils').calculateBubbleSize,
-  getColorByThreshold: require('./colorUtils').getColorByThreshold,
-  getTariffColor: require('./colorUtils').getTariffColor,
-  getCategoryColor: require('./colorUtils').getCategoryColor,
-  formatCurrency: require('./formatters').formatCurrency,
-  formatPercent: require('./formatters').formatPercent,
-  formatNumber: require('./formatters').formatNumber,
-  getPayloadConfigFromPayload: require('./payloadUtils').getPayloadConfigFromPayload,
+  createAxisTitle,
+  getChartMargins,
+  calculateBubbleSize,
+  getColorByThreshold,
+  getTariffColor,
+  getCategoryColor,
+  formatCurrency,
+  formatPercent,
+  formatNumber,
+  getPayloadConfigFromPayload,
 };
+
+// Re-export enhancedColors directly to maintain backward compatibility
+export { enhancedColors };
+
+// Re-export chartCommonConfig directly to maintain backward compatibility
+export { chartCommonConfig };
