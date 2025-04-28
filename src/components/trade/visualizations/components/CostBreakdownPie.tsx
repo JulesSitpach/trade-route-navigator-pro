@@ -32,6 +32,9 @@ const CostBreakdownPie: React.FC<CostBreakdownPieProps> = ({ chartData }) => {
     "#1ABC9C"  // Turquoise
   ];
 
+  // Log to check that we're receiving the data correctly
+  console.log("Pie Chart Data:", chartData);
+
   return (
     <Pie
       data={chartData}
@@ -45,6 +48,7 @@ const CostBreakdownPie: React.FC<CostBreakdownPieProps> = ({ chartData }) => {
       dataKey="value"
       nameKey="name"
       cornerRadius={5}
+      isAnimationActive={true}
     >
       {chartData.map((entry, index) => {
         // Use a vibrant color palette instead of category-based colors

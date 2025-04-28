@@ -11,11 +11,13 @@ import { tooltipStyles, cursorStyles } from "@/components/ui/chart/theme/commonS
 import { RouteComparisonTimelineProps } from './types/visualizationTypes';
 import { useLanguage } from "@/contexts/LanguageContext";
 import { enhancedColors } from '@/utils/chartUtils';
+import { chartConfig } from '@/components/ui/chart/config';
+import { ChartContainer } from "@/components/ui/chart";
 
 const RouteComparisonTimeline = ({ routes }: RouteComparisonTimelineProps) => {
   const { language, t } = useLanguage();
   
-  // Enhanced colors for the stacked bars
+  // Enhanced colors for the stacked bars with better contrast
   const barColors = {
     shipping: enhancedColors.blue,    // Bright Blue
     customs: enhancedColors.purple,   // Purple
@@ -30,6 +32,7 @@ const RouteComparisonTimeline = ({ routes }: RouteComparisonTimelineProps) => {
     
     return {
       name: name,
+      fullRoute: route.path,
       shipping: route.transitTime,
       customs: customsClearance,
       distribution: localDelivery,
@@ -40,6 +43,9 @@ const RouteComparisonTimeline = ({ routes }: RouteComparisonTimelineProps) => {
 
   // Sort routes by total transit time for better comparison
   const sortedRouteData = [...routeData].sort((a, b) => a.totalDays - b.totalDays);
+
+  // Log route data to check if we have data
+  console.log("Route Comparison Data:", sortedRouteData);
 
   return (
     <div className="space-y-4">
@@ -61,13 +67,17 @@ const RouteComparisonTimeline = ({ routes }: RouteComparisonTimelineProps) => {
           {sortedRouteData.length === 0 ? (
             <div className="text-center text-muted-foreground py-12">
               {language === 'en' 
-                ? 'No route comparison data available' 
-                : 'No hay datos de comparación de rutas disponibles'
+                ? 'No route comparison data available. Please select origin and destination countries.' 
+                : 'No hay datos de comparación de rutas disponibles. Seleccione países de origen y destino.'
               }
             </div>
           ) : (
-            <div className="h-[450px]">
-              <ResponsiveContainer width="100%" height="100%">
+            <ChartContainer 
+              height={450}
+              className="w-full"
+              config={chartConfig}
+            >
+              <ResponsiveContainer width="100%" height={400}>
                 <BarChart
                   data={sortedRouteData}
                   margin={{
@@ -159,7 +169,7 @@ const RouteComparisonTimeline = ({ routes }: RouteComparisonTimelineProps) => {
                   />
                 </BarChart>
               </ResponsiveContainer>
-            </div>
+            </ChartContainer>
           )}
           
           {sortedRouteData.length > 0 && (

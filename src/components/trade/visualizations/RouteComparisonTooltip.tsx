@@ -3,6 +3,7 @@ import React from 'react';
 import { Badge } from "@/components/ui/badge";
 import { tooltipStyles } from "@/components/ui/chart/theme/commonStyles";
 import { useLanguage } from '@/contexts/LanguageContext';
+import { enhancedColors } from '@/utils/chartUtils';
 
 interface RouteComparisonTooltipProps {
   active?: boolean;
@@ -35,14 +36,36 @@ export const RouteComparisonTooltip: React.FC<RouteComparisonTooltipProps> = ({ 
   };
   
   return (
-    <div style={tooltipStyles.wrapper}>
-      <div style={tooltipStyles.title}>
+    <div style={{
+      ...tooltipStyles.wrapper,
+      backgroundColor: '#FFFFFF',
+      border: '1px solid #e2e8f0',
+      borderRadius: '8px',
+      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+      padding: '12px 16px',
+      minWidth: '220px',
+    }}>
+      <div style={{
+        ...tooltipStyles.title,
+        fontSize: '14px',
+        fontWeight: 600,
+        color: '#2C3E50',
+        marginBottom: '8px',
+        borderBottom: '1px solid #ECF0F1',
+        paddingBottom: '6px',
+      }}>
         {data?.fullRoute || label}
       </div>
-      <div className="space-y-1" style={tooltipStyles.content}>
+      <div className="space-y-2" style={tooltipStyles.content}>
         {payload.map((entry, index) => (
-          <div key={`item-${index}`} style={tooltipStyles.row}>
-            <span>{getTranslatedName(entry.name)}:</span>
+          <div key={`item-${index}`} style={{
+            ...tooltipStyles.row, 
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            marginBottom: '6px',
+          }}>
+            <span style={{ fontSize: '12px', color: entry.fill }}>{getTranslatedName(entry.name)}:</span>
             <Badge 
               variant="outline" 
               className="ml-2 font-medium text-xs"
@@ -56,14 +79,44 @@ export const RouteComparisonTooltip: React.FC<RouteComparisonTooltipProps> = ({ 
             </Badge>
           </div>
         ))}
-        <div style={{ ...tooltipStyles.row, marginTop: '8px', borderTop: '1px solid #f3f4f6', paddingTop: '8px' }}>
-          <span className="font-medium">
+        <div style={{ 
+          ...tooltipStyles.row, 
+          marginTop: '8px', 
+          borderTop: '1px solid #f3f4f6', 
+          paddingTop: '8px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+        }}>
+          <span className="font-medium" style={{ fontSize: '13px', color: '#2C3E50' }}>
             {t('common.total', 'Total')}:
           </span>
           <Badge variant="outline" className="ml-2 font-medium text-xs bg-gray-50">
             {total} {t('common.days', 'days')}
           </Badge>
         </div>
+        
+        {data?.cost && (
+          <div style={{ 
+            ...tooltipStyles.row, 
+            marginTop: '4px',
+            paddingTop: '4px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}>
+            <span className="font-medium" style={{ fontSize: '13px', color: '#2C3E50' }}>
+              {t('common.cost', 'Cost')}:
+            </span>
+            <Badge variant="outline" className="ml-2 font-medium text-xs" style={{
+              backgroundColor: `${enhancedColors.orange}15`,
+              color: enhancedColors.orange,
+              borderColor: `${enhancedColors.orange}30`
+            }}>
+              {data.cost}
+            </Badge>
+          </div>
+        )}
       </div>
     </div>
   );

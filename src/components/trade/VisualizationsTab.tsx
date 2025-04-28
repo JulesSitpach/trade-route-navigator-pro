@@ -15,18 +15,21 @@ const VisualizationsTab = ({ data, routes }: VisualizationsTabProps) => {
   const { t } = useLanguage();
   const [activeTab, setActiveTab] = useState("costs");
 
+  // Ensure we have all required data
+  console.log("Visualizations Tab Data:", { data, routes });
+
   const renderTabContent = () => {
     switch(activeTab) {
       case "costs":
         return (
           <CostsTab 
-            productValue={data.product.productValue}
-            originCountry={data.product.originCountry}
-            destinationCountry={data.product.destinationCountry}
-            productCategory={data.product.productCategory}
-            transportMode={data.shipping.transportMode}
-            quantity={data.shipping.quantity}
-            weight={data.shipping.weight}
+            productValue={data.product.productValue || "0"}
+            originCountry={data.product.originCountry || ""}
+            destinationCountry={data.product.destinationCountry || ""}
+            productCategory={data.product.productCategory || ""}
+            transportMode={data.shipping.transportMode || ""}
+            quantity={data.shipping.quantity || "1"}
+            weight={data.shipping.weight || "0"}
           />
         );
       case "routes":

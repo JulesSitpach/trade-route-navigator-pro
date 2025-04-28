@@ -3,6 +3,7 @@ import { ChartLegendContent } from "@/components/ui/chart";
 import { CostBreakdownItem } from "../utils/costBreakdownCalculations";
 import { formatCurrency } from '../../../trade/data/utils/formatters';
 import React from 'react';
+import { enhancedColors } from '@/utils/chartUtils';
 
 interface CostBreakdownLegendProps {
   chartData: CostBreakdownItem[];
@@ -10,16 +11,16 @@ interface CostBreakdownLegendProps {
 
 // Enhanced vibrant colors
 const colorPalette = [
-  "#3498DB", // Bright Blue
-  "#9B59B6", // Purple
-  "#E74C3C", // Red
-  "#F39C12", // Orange
-  "#16A085", // Teal
-  "#27AE60", // Green
-  "#D35400", // Dark Orange
-  "#8E44AD", // Dark Purple
-  "#2980B9", // Dark Blue
-  "#1ABC9C"  // Turquoise
+  enhancedColors.blue,     // Bright Blue
+  enhancedColors.purple,   // Purple
+  enhancedColors.red,      // Red
+  enhancedColors.orange,   // Orange
+  enhancedColors.teal,     // Teal
+  enhancedColors.green,    // Green
+  enhancedColors.darkOrange, // Dark Orange
+  enhancedColors.darkPurple, // Dark Purple
+  enhancedColors.darkBlue, // Dark Blue
+  enhancedColors.turquoise  // Turquoise
 ];
 
 const CostBreakdownLegend: React.FC<CostBreakdownLegendProps> = ({ chartData }) => {

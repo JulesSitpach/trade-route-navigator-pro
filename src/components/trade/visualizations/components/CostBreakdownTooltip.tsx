@@ -17,7 +17,12 @@ const CostBreakdownTooltip = ({ active, payload }: any) => {
       padding: '12px 16px',
       minWidth: '180px',
     }}>
-      <div className="text-sm font-semibold mb-2 pb-1 border-b border-gray-100">{data.name}</div>
+      <div className="text-sm font-semibold mb-2 pb-1 border-b border-gray-100" style={{
+        color: data.payload?.color || data.fill || '#333',
+        borderColor: `${data.payload?.color || data.fill || '#e2e8f0'}30`,
+      }}>
+        {data.name}
+      </div>
       <div className="flex items-center justify-between mb-1">
         <span className="text-gray-600 text-sm">Value:</span> 
         <span className="text-sm font-semibold text-gray-800">{formatCurrency(Number(data.value))}</span>

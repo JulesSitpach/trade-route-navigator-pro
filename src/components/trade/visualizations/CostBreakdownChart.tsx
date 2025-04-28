@@ -53,6 +53,9 @@ const CostBreakdownChart = ({
     color: colorPalette[index % colorPalette.length]
   }));
 
+  // Log the chart data to check if we're getting values
+  console.log("Cost Breakdown Chart Data:", chartData);
+
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-2">
@@ -67,8 +70,8 @@ const CostBreakdownChart = ({
           {chartData.length === 0 ? (
             <div className="text-center text-muted-foreground py-12">
               {language === 'en' 
-                ? 'No cost breakdown data available' 
-                : 'No hay datos de desglose de costos disponibles'
+                ? 'No cost breakdown data available. Please complete all required fields above.' 
+                : 'No hay datos de desglose de costos disponibles. Complete todos los campos requeridos arriba.'
               }
             </div>
           ) : (
@@ -77,7 +80,7 @@ const CostBreakdownChart = ({
               className="w-full"
               config={chartConfig}
             >
-              <ResponsiveContainer width="100%" height={400}>
+              <ResponsiveContainer width="100%" height="100%">
                 <PieChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
                   <ChartLegend>
                     <CostBreakdownLegend chartData={chartData} />
