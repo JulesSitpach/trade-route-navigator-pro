@@ -21,12 +21,12 @@ export default {
     extend: {
       colors: {
         'pro': {
-          'navy': '#0F1523',    // Even darker navy blue
-          'blue': '#3498db',    // Light blue
-          'red': '#e74c3c',     // Red/orange
-          'green': '#2ecc71',   // Green
-          'amber': '#f39c12',   // Yellow/amber
-          'gray': '#f5f7fa',    // Light gray background
+          'navy': '#2C3E50',    // Dark navy blue for headers
+          'blue': '#3498DB',    // Light blue for primary actions
+          'red': '#E74C3C',     // Red/orange
+          'green': '#27AE60',   // Green for success
+          'amber': '#F39C12',   // Yellow/amber for warnings
+          'gray': '#F5F7FA',    // Light gray background
         },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -34,36 +34,44 @@ export default {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {
-          DEFAULT: "#0F1523",
+          DEFAULT: "#2C3E50",
           foreground: "#ffffff",
         },
         secondary: {
-          DEFAULT: "#3498db",
+          DEFAULT: "#3498DB",
           foreground: "#ffffff",
         },
         destructive: {
-          DEFAULT: "#e74c3c",
+          DEFAULT: "#E74C3C",
           foreground: "#ffffff",
         },
         muted: {
-          DEFAULT: "#f5f7fa",
-          foreground: "#64748b",
+          DEFAULT: "#F5F7FA",
+          foreground: "#64748B",
         },
         accent: {
-          DEFAULT: "#f39c12",
+          DEFAULT: "#F39C12",
           foreground: "#ffffff",
         },
         popover: {
           DEFAULT: "#ffffff",
-          foreground: "#2c3e50",
+          foreground: "#2C3E50",
         },
         card: {
           DEFAULT: "#ffffff",
-          foreground: "#2c3e50",
+          foreground: "#2C3E50",
         },
         'custom-blue': {
-          DEFAULT: '#3498db',
-          hover: '#2980b9'
+          DEFAULT: '#3498DB',
+          hover: '#2980B9'
+        },
+        success: {
+          DEFAULT: '#27AE60',
+          foreground: '#ffffff',
+        },
+        warning: {
+          DEFAULT: '#F39C12',
+          foreground: '#ffffff',
         },
       },
       borderRadius: {

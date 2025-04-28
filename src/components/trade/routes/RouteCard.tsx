@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -65,7 +66,7 @@ const RouteCard = ({ route }: RouteCardProps) => {
             <div className="flex items-center gap-2">
               <h3 className="font-semibold">{route.path}</h3>
               {route.recommended && (
-                <Badge className="bg-green-100 text-green-800 hover:bg-green-200">
+                <Badge className="bg-[#27AE60] text-white hover:bg-[#27AE60]/90">
                   {t('route.recommended')}
                 </Badge>
               )}
@@ -77,20 +78,22 @@ const RouteCard = ({ route }: RouteCardProps) => {
             <Button variant="default">
               {t('route.select')}
             </Button>
-            <Button variant="outline">
+            
+            {/* Changed from outline to secondary for better visibility */}
+            <Button variant="secondary" className="text-gray-300">
               {t('route.compare')}
             </Button>
           </div>
         </div>
         
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <MetricCard icon={<Clock className="h-5 w-5 text-blue-500" />} 
+          <MetricCard icon={<Clock className="h-5 w-5 text-[#3498DB]" />} 
                      title={t('route.transitTime')} 
                      value={route.transitTime} />
-          <MetricCard icon={<DollarSign className="h-5 w-5 text-green-500" />} 
+          <MetricCard icon={<DollarSign className="h-5 w-5 text-[#27AE60]" />} 
                      title={t('route.cost')} 
                      value={route.cost} />
-          <MetricCard icon={<Shield className="h-5 w-5 text-amber-500" />} 
+          <MetricCard icon={<Shield className="h-5 w-5 text-[#F39C12]" />} 
                      title={t('route.risk')} 
                      value={getTranslatedRiskLevel(route.riskLevel)} />
           {route.carbonFootprint && (

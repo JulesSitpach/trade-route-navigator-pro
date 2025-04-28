@@ -15,7 +15,7 @@ const RiskAssessmentMatrix = () => {
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-2">
-        <AlertTriangleIcon className="h-5 w-5 text-amber-500" />
+        <AlertTriangleIcon className="h-5 w-5 text-[#F39C12]" />
         <h3 className="text-lg font-medium">
           {t('risk.assessment.title')}
         </h3>

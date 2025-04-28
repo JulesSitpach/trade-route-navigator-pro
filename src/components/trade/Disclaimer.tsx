@@ -7,12 +7,12 @@ const Disclaimer = () => {
   const { t } = useLanguage();
 
   return (
-    <Alert className="mb-6 bg-[#F1F0FB] border-[#9b87f5]">
-      <Info className="h-5 w-5 text-[#7E69AB]" />
-      <AlertTitle className="text-[#1A1F2C] font-medium">
+    <Alert className="mb-6 bg-[#EBF5FB] border-[#3498DB]">
+      <Info className="h-5 w-5 text-[#3498DB]" />
+      <AlertTitle className="text-[#2C3E50] font-medium">
         {t('disclaimer.title')}
       </AlertTitle>
-      <AlertDescription className="text-[#8E9196] mt-1">
+      <AlertDescription className="text-[#5D6D7E] mt-1">
         {t('disclaimer.message')}
       </AlertDescription>
     </Alert>

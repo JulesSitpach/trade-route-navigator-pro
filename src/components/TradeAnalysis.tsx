@@ -46,29 +46,29 @@ const TradeAnalysis = ({ data }: TradeAnalysisProps) => {
 
   return (
     <div className="p-6">
-      <h2 className="text-xl font-semibold text-gray-800 mb-6">{t('analysis.title')}</h2>
+      <h2 className="text-xl font-semibold text-[#2C3E50] mb-6">{t('analysis.title')}</h2>
       
       <Disclaimer />
       
       <Tabs defaultValue="costs" className="space-y-6">
-        <TabsList className="grid w-full grid-cols-2 md:grid-cols-5 gap-3">
-          <TabsTrigger value="costs" className="flex items-center gap-2 px-4 py-2">
+        <TabsList className="grid w-full grid-cols-2 md:grid-cols-5 gap-4 bg-[#f5f7fa] p-2 rounded-lg">
+          <TabsTrigger value="costs" className="flex items-center gap-2 px-4 py-3 data-[state=active]:bg-[#3498DB] data-[state=active]:text-white">
             <ChartBar className="h-4 w-4" />
             {t('analysis.costs')}
           </TabsTrigger>
-          <TabsTrigger value="routes" className="flex items-center gap-2 px-4 py-2">
+          <TabsTrigger value="routes" className="flex items-center gap-2 px-4 py-3 data-[state=active]:bg-[#3498DB] data-[state=active]:text-white">
             <RouteIcon className="h-4 w-4" />
             {t('analysis.routes')}
           </TabsTrigger>
-          <TabsTrigger value="tariffs" className="flex items-center gap-2 px-4 py-2">
+          <TabsTrigger value="tariffs" className="flex items-center gap-2 px-4 py-3 data-[state=active]:bg-[#3498DB] data-[state=active]:text-white">
             <FileText className="h-4 w-4" />
             {t('analysis.tariffs')}
           </TabsTrigger>
-          <TabsTrigger value="regulations" className="flex items-center gap-2 px-4 py-2">
+          <TabsTrigger value="regulations" className="flex items-center gap-2 px-4 py-3 data-[state=active]:bg-[#3498DB] data-[state=active]:text-white">
             <ScrollText className="h-4 w-4" />
             {t('analysis.regulations')}
           </TabsTrigger>
-          <TabsTrigger value="visualizations" className="flex items-center gap-2 px-4 py-2">
+          <TabsTrigger value="visualizations" className="flex items-center gap-2 px-4 py-3 data-[state=active]:bg-[#3498DB] data-[state=active]:text-white">
             <BarChart className="h-4 w-4" />
             {t('analysis.visualizations')}
           </TabsTrigger>

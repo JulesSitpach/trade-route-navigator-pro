@@ -2,6 +2,7 @@
 import { PieChart, BarChart, ScatterChart, LineChart, 
   NetworkIcon, AlertTriangleIcon, ClipboardCheckIcon } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { Button } from '@/components/ui/button';
 
 interface TabButtonsProps {
   activeTab: string;
@@ -25,18 +26,16 @@ const TabButtons = ({ activeTab, setActiveTab }: TabButtonsProps) => {
   return (
     <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
       {tabOptions.map((tab) => (
-        <button
+        <Button
           key={tab.id}
           onClick={() => setActiveTab(tab.id)}
+          variant={activeTab === tab.id ? "default" : "filter"}
           className={`flex items-center justify-center px-4 py-2.5 rounded-md text-sm font-medium transition-all
-            ${activeTab === tab.id 
-              ? 'bg-secondary text-secondary-foreground shadow-sm border border-secondary/20' 
-              : 'bg-muted hover:bg-muted/80 text-muted-foreground'}
-          `}
+            ${activeTab === tab.id && 'shadow-sm'}`}
         >
           {tab.icon}
           <span>{tab.label}</span>
-        </button>
+        </Button>
       ))}
     </div>
   );
