@@ -64,7 +64,7 @@ const RiskScatterChart: React.FC<RiskScatterChartProps> = ({
             name="Cost" 
             unit="$" 
             domain={['dataMin - 500', 'dataMax + 500']}
-            tickFormatter={(value) => `$${value}`}
+            tickFormatter={(value) => `$${value.toLocaleString()}`}
             axisLine={{ stroke: '#9ca3af', strokeWidth: 1 }}
             tick={{
               fontSize: 12,
@@ -118,7 +118,7 @@ const RiskScatterChart: React.FC<RiskScatterChartProps> = ({
               paddingBottom: '20px',
               fontSize: '12px'
             }}
-            formatter={(value) => <span style={{ color: '#4b5563', fontWeight: 500 }}>{value}</span>} 
+            formatter={(value) => <span style={{ color: '#4b5563', fontWeight: 500 }}>{language === 'en' ? value : value === "Shipping Routes" ? "Rutas de Envío" : value}</span>} 
           />
           <Scatter 
             name={language === 'en' ? "Shipping Routes" : "Rutas de Envío"} 

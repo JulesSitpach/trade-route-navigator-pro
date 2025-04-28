@@ -97,7 +97,7 @@ const TradeAnalysis = ({ data }: TradeAnalysisProps) => {
             <Button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              variant={activeTab === tab.id ? "default" : "filter"}
+              variant={activeTab === tab.id ? "default" : "outline"}
               className={`flex items-center justify-center px-4 py-2.5 rounded-md text-sm font-medium transition-all
                 ${activeTab === tab.id && 'shadow-sm'}`}
             >

@@ -11,7 +11,7 @@ interface RouteComparisonTooltipProps {
 }
 
 export const RouteComparisonTooltip: React.FC<RouteComparisonTooltipProps> = ({ active, payload, label }) => {
-  const { language, t } = useLanguage();
+  const { language } = useLanguage();
   
   if (!active || !payload || !payload.length) {
     return null;

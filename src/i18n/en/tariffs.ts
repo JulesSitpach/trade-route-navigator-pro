@@ -8,6 +8,8 @@ export const tariffTranslations = {
   'tariff.specialPrograms': 'Special Programs',
   'tariff.historicalTrends': 'Historical Trends',
   'tariff.exclusionBreakdown': 'Exclusion Breakdown',
+  'tariff.strategyInsight': 'Tariff Strategy Insight',
+  'tariff.strategyDescription': 'Based on your product classification and origin, we recommend exploring the First Sale Rule and Mexico assembly options to potentially reduce duties by up to 25%.',
   
   // Tariff Heatmap
   'tariffheatmap.title': 'Tariff Analysis by Country',

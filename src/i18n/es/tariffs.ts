@@ -8,6 +8,8 @@ export const tariffTranslations = {
   'tariff.specialPrograms': 'Programas Especiales',
   'tariff.historicalTrends': 'Tendencias Históricas',
   'tariff.exclusionBreakdown': 'Desglose de Exclusiones',
+  'tariff.strategyInsight': 'Información Estratégica de Aranceles',
+  'tariff.strategyDescription': 'Según la clasificación y origen de su producto, recomendamos explorar la Regla de Primera Venta y opciones de ensamblaje en México para potencialmente reducir aranceles hasta un 25%.',
   
   // Tariff Heatmap
   'tariffheatmap.title': 'Análisis de Aranceles por País',

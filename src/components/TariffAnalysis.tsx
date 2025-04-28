@@ -81,12 +81,10 @@ const TariffAnalysis = ({
     <div className="space-y-8">
       <div className="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6">
         <h4 className="text-blue-700 font-semibold mb-2">
-          {language === 'en' ? "Tariff Strategy Insight" : "Información Estratégica de Aranceles"}
+          {t('tariff.strategyInsight')}
         </h4>
         <p className="text-gray-700">
-          {language === 'en' 
-            ? "Based on your product classification and origin, we recommend exploring the First Sale Rule and Mexico assembly options to potentially reduce duties by up to 25%."
-            : "Según la clasificación y origen de su producto, recomendamos explorar la Regla de Primera Venta y opciones de ensamblaje en México para potencialmente reducir aranceles hasta un 25%."}
+          {t('tariff.strategyDescription')}
         </p>
       </div>
 
@@ -96,7 +94,7 @@ const TariffAnalysis = ({
             <Button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              variant={activeTab === tab.id ? "default" : "filter"}
+              variant={activeTab === tab.id ? "default" : "outline"}
               className={`flex items-center justify-center px-4 py-2.5 rounded-md text-sm font-medium transition-all
                 ${activeTab === tab.id && 'shadow-sm'}`}
             >

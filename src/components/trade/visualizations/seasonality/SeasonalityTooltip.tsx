@@ -15,10 +15,32 @@ export const SeasonalityTooltip: React.FC<SeasonalityTooltipProps> = ({ active, 
   if (active && payload && payload.length) {
     const data = payload[0].payload;
     
+    // Translate month names if in Spanish
+    const getTranslatedMonth = (month: string): string => {
+      if (language === 'en') return month;
+      
+      const monthTranslations: Record<string, string> = {
+        'January': 'Enero',
+        'February': 'Febrero',
+        'March': 'Marzo',
+        'April': 'Abril',
+        'May': 'Mayo',
+        'June': 'Junio',
+        'July': 'Julio',
+        'August': 'Agosto',
+        'September': 'Septiembre',
+        'October': 'Octubre',
+        'November': 'Noviembre',
+        'December': 'Diciembre'
+      };
+      
+      return monthTranslations[month] || month;
+    };
+    
     return (
       <div style={tooltipStyles.wrapper}>
         <div className="font-semibold text-sm text-gray-800 mb-2 border-b border-gray-100 pb-1">
-          {data.month}
+          {getTranslatedMonth(data.month)}
         </div>
         <div className="space-y-1">
           <div className="flex justify-between items-center">
