@@ -5,8 +5,8 @@ export interface CostBreakdownItem {
   name: string;
   value: number;
   category: string;
-  color: string; // Added color property
-  percentage?: number;
+  color: string;
+  percentage?: string;
 }
 
 export interface CostBreakdownInput {
@@ -23,7 +23,10 @@ export interface CostBreakdownInput {
 export function calculateCostBreakdown(input: CostBreakdownInput, language: string = 'en'): CostBreakdownItem[] {
   const { productValue, transportMode, weight, quantity } = input;
   
+  console.log("Calculating cost breakdown with inputs:", input);
+  
   if (!productValue || productValue <= 0) {
+    console.log("No valid product value provided, returning empty array");
     return [];
   }
 
@@ -48,8 +51,8 @@ export function calculateCostBreakdown(input: CostBreakdownInput, language: stri
   const documentationCost = baseDocumentation;
   const warehouseCost = baseWarehouse;
   
-  // Create and return the data array
-  return [
+  // Create the data array with results
+  const result = [
     {
       name: language === 'en' ? 'Freight' : 'Flete',
       value: Math.round(freightCost),
@@ -87,6 +90,10 @@ export function calculateCostBreakdown(input: CostBreakdownInput, language: stri
       color: getCategoryColor('warehouse')
     }
   ];
+
+  console.log("Generated cost breakdown data:", result);
+  
+  return result;
 }
 
 // Helper functions for cost calculations

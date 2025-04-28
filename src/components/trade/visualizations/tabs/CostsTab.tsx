@@ -24,6 +24,16 @@ const CostsTab = ({
   weight
 }: CostsTabProps) => {
   const { t } = useLanguage();
+  
+  console.log("CostsTab props:", {
+    productValue,
+    originCountry,
+    destinationCountry,
+    productCategory,
+    transportMode,
+    quantity,
+    weight
+  });
 
   return (
     <Card className="border shadow-sm">

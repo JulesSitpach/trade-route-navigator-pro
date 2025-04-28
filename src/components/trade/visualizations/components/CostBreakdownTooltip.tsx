@@ -8,6 +8,7 @@ const CostBreakdownTooltip = ({ active, payload }: any) => {
   }
   
   const data = payload[0];
+  
   return (
     <div className="bg-white p-3 border border-gray-200 shadow-lg rounded-md" style={{
       backgroundColor: '#FFFFFF',

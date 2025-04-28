@@ -21,6 +21,16 @@ const CostBreakdownChart = ({
 }: CostBreakdownInput) => {
   const { language } = useLanguage();
 
+  console.log("CostBreakdownChart inputs:", {
+    productValue,
+    originCountry,
+    destinationCountry,
+    productCategory,
+    transportMode,
+    quantity,
+    weight
+  });
+
   const rawChartData = calculateCostBreakdown({
     productValue,
     originCountry,
@@ -31,9 +41,14 @@ const CostBreakdownChart = ({
     weight
   }, language);
   
+  // Calculate total for percentages
+  const totalValue = rawChartData.reduce((sum, item) => sum + Number(item.value), 0);
+  
+  // Add percentage to each item
   const chartData = rawChartData.map((item, index) => ({
     ...item,
-    color: CHART_COLORS.primary[index % CHART_COLORS.primary.length]
+    color: item.color || CHART_COLORS.primary[index % CHART_COLORS.primary.length],
+    percentage: ((Number(item.value) / totalValue) * 100).toFixed(1)
   }));
 
   console.log("Cost Breakdown Chart Data:", chartData);

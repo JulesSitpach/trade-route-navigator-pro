@@ -22,7 +22,7 @@ const CostBreakdownPie: React.FC<CostBreakdownPieProps> = ({ chartData }) => {
   };
 
   // Log to check that we're receiving the data correctly
-  console.log("Pie Chart Data:", chartData);
+  console.log("Pie Chart Data being rendered:", chartData);
 
   return (
     <Pie
