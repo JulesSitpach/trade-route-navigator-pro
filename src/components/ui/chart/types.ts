@@ -1,4 +1,6 @@
 
+import React from 'react';
+
 export type ChartConfig = {
   [k in string]: {
     label?: React.ReactNode
@@ -9,7 +11,15 @@ export type ChartConfig = {
   )
 }
 
-export type ExtendedChartConfig = ChartConfig | {
+export type ExtendedChartConfig = {
+  [k in string]: {
+    label?: React.ReactNode
+    icon?: React.ComponentType
+  } & (
+    | { color?: string; theme?: never }
+    | { color?: never; theme: Record<"light" | "dark", string> }
+  )
+} | {
   colors: {
     background: string;
     gridLines: string;
@@ -72,3 +82,8 @@ export type AxisTitleConfig = {
 
 // Format: { THEME_NAME: CSS_SELECTOR }
 export const THEMES = { light: "", dark: ".dark" } as const
+
+// Type guard to check if an object is an ExtendedChartConfig with colors property
+export function isExtendedConfig(config: ChartConfig | ExtendedChartConfig): config is ExtendedChartConfig & {colors: any} {
+  return config && 'colors' in config && typeof config.colors === 'object';
+}

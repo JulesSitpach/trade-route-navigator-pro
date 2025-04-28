@@ -1,6 +1,6 @@
 
 import * as React from "react"
-import { ChartConfig, ExtendedChartConfig, THEMES } from "./types"
+import { ChartConfig, ExtendedChartConfig, THEMES, isExtendedConfig } from "./types"
 
 function getVarName(key: string) {
   return `--chart-${key.replace(/[A-Z]/g, "-$&").toLowerCase()}`
@@ -17,14 +17,15 @@ export function ChartStyle({
     return null
   }
 
-  const rules = Object.entries(config).flatMap(([key, value]) => {
-    // If it's from the expanded config (with colors, typography, etc.)
-    if (key === 'colors' || key === 'typography' || key === 'spacing' || 
-        key === 'animation' || key === 'formatters') {
-      return []
-    }
+  // If it's an extended config with colors property
+  if (isExtendedConfig(config)) {
+    // We don't generate styles for this type of config
+    // Those styles are applied directly via style props
+    return null;
+  }
 
-    // If it's a traditional ChartConfig entry
+  // Standard ChartConfig handling
+  const rules = Object.entries(config).flatMap(([key, value]) => {
     const label = typeof value === "object" && "label" in value ? value.label : key
     const color =
       typeof value === "object" && "color" in value && value.color

@@ -1,40 +1,28 @@
+export {}
 
-import { ChartConfig } from "./types"
+import { ChartConfig, ExtendedChartConfig, isExtendedConfig } from "./types";
 
 export function getPayloadConfigFromPayload(
-  config: ChartConfig,
-  payload: unknown,
+  config: ChartConfig | ExtendedChartConfig,
+  payload: any,
   key: string
 ) {
-  if (typeof payload !== "object" || payload === null) {
-    return undefined
+  if (!config) {
+    return null;
   }
-
-  const payloadPayload =
-    "payload" in payload &&
-    typeof payload.payload === "object" &&
-    payload.payload !== null
-      ? payload.payload
-      : undefined
-
-  let configLabelKey: string = key
-
-  if (
-    key in payload &&
-    typeof payload[key as keyof typeof payload] === "string"
-  ) {
-    configLabelKey = payload[key as keyof typeof payload] as string
-  } else if (
-    payloadPayload &&
-    key in payloadPayload &&
-    typeof payloadPayload[key as keyof typeof payloadPayload] === "string"
-  ) {
-    configLabelKey = payloadPayload[
-      key as keyof typeof payloadPayload
-    ] as string
+  
+  // Handle the ExtendedChartConfig case with colors
+  if (isExtendedConfig(config)) {
+    // For extended config, we create an ad-hoc compatible config item
+    if (payload && payload.color) {
+      return {
+        label: payload.name || key,
+        color: payload.color,
+      }
+    }
+    return null;
   }
-
-  return configLabelKey in config
-    ? config[configLabelKey]
-    : config[key as keyof typeof config]
+  
+  // Handle the standard ChartConfig case
+  return config[key as keyof typeof config] || config[payload?.dataKey as keyof typeof config] || null;
 }

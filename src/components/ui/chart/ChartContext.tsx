@@ -11,7 +11,10 @@ interface ChartContextType {
 
 const ChartContext = React.createContext<ChartContextType | null>(null)
 
-export const ChartProvider: React.FC<{children: React.ReactNode}> = ({ children }) => {
+export const ChartProvider: React.FC<{
+  children: React.ReactNode;
+  config?: ChartConfig | ExtendedChartConfig;
+}> = ({ children, config = {} }) => {
   const [theme, setTheme] = React.useState(chartTheme);
   
   const updateTheme = (newTheme: Partial<typeof chartTheme>) => {
@@ -22,7 +25,7 @@ export const ChartProvider: React.FC<{children: React.ReactNode}> = ({ children 
   };
   
   return (
-    <ChartContext.Provider value={{ theme, updateTheme, config: {} }}>
+    <ChartContext.Provider value={{ theme, updateTheme, config }}>
       {children}
     </ChartContext.Provider>
   );
