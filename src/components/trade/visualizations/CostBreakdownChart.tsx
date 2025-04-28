@@ -72,7 +72,9 @@ const CostBreakdownChart = ({
   const transportModeStr = String(transportMode);
   const warehouseCost = Math.min(warehouseCostRaw, transportModeStr === 'air' ? 800 : 2000);
   
-  const otherFeesRate = totalProductValue > 15000 ? 2.5 : 2.0;
+  // Fix the other error: Operator '>' cannot be applied to types 'string' and 'number'
+  // Convert totalProductValue to number before comparison
+  const otherFeesRate = Number(totalProductValue) > 15000 ? 2.5 : 2.0;
   const otherFees = (totalProductValue * otherFeesRate) / 100;
 
   // Create categories that match our universal chart guidelines
