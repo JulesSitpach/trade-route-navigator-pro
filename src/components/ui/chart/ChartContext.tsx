@@ -1,11 +1,12 @@
 
 import * as React from "react"
 import { chartTheme } from "./chartTheme"
-import { ChartContextProps } from "./types"
+import { ChartConfig, ExtendedChartConfig } from "./types"
 
-interface ChartContextType extends ChartContextProps {
+interface ChartContextType {
   theme: typeof chartTheme;
   updateTheme: (newTheme: Partial<typeof chartTheme>) => void;
+  config: ChartConfig | ExtendedChartConfig;
 }
 
 const ChartContext = React.createContext<ChartContextType | null>(null)

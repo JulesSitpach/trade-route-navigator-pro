@@ -9,8 +9,53 @@ export type ChartConfig = {
   )
 }
 
+export type ExtendedChartConfig = ChartConfig | {
+  colors: {
+    background: string;
+    gridLines: string;
+    text: string;
+    tooltipBackground: string;
+    tooltipText: string;
+    tooltipBorder: string;
+    axisColor: string;
+    primary: string[];
+    categorical: string[];
+    sequential: string[];
+    [key: string]: any;
+  };
+  typography: {
+    fontFamily: string;
+    fontSize: {
+      title: number;
+      axisLabel?: number;
+      tickLabel?: number;
+      legend?: number;
+      tooltip?: number;
+      subtitle?: number;
+      axis?: number;
+      label?: number;
+      tick?: number;
+    };
+    fontWeight: {
+      title?: number;
+      axisLabel?: number;
+      tickLabel?: number;
+      legend?: number;
+      tooltip?: number;
+      light?: number;
+      normal?: number;
+      medium?: number;
+      semibold?: number;
+      bold?: number;
+    };
+  };
+  spacing: any;
+  animation: any;
+  formatters: any;
+};
+
 export type ChartContextProps = {
-  config: ChartConfig
+  config: ChartConfig | ExtendedChartConfig;
 }
 
 export type AxisTitleConfig = {
@@ -27,4 +72,3 @@ export type AxisTitleConfig = {
 
 // Format: { THEME_NAME: CSS_SELECTOR }
 export const THEMES = { light: "", dark: ".dark" } as const
-

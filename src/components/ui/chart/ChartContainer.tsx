@@ -4,13 +4,13 @@ import * as RechartsPrimitive from "recharts"
 import { cn } from "@/lib/utils"
 import { ChartContext } from "./ChartContext"
 import { ChartStyle } from "./ChartStyle"
-import { ChartConfig } from "./types"
+import { ChartConfig, ExtendedChartConfig } from "./types"
 import { chartTheme } from "./chartTheme"
 import { fontStyles } from "@/utils/fontStyles"
 import { defaultChartConfig } from "./config"
 
 interface ChartContainerProps extends React.ComponentProps<"div"> {
-  config?: ChartConfig;
+  config?: ChartConfig | ExtendedChartConfig;
   children: React.ComponentProps<typeof RechartsPrimitive.ResponsiveContainer>["children"];
   aspectRatio?: string | number;
   minHeight?: number;

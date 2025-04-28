@@ -50,7 +50,7 @@ export const UnifiedChartContainer: React.FC<UnifiedChartContainerProps> = ({
       data-legend-position={legendPosition}
       style={{
         '--chart-font-family': theme.typography?.fontFamily || fontStyles.family,
-        '--chart-text-size': theme.typography?.fontSize?.tickLabel || fontStyles.sizes.axisLabel,
+        '--chart-text-size': theme.typography?.fontSize?.tick || fontStyles.sizes.axisLabel,
         width: widthStyle,
       } as React.CSSProperties}
     >
@@ -59,7 +59,7 @@ export const UnifiedChartContainer: React.FC<UnifiedChartContainerProps> = ({
           className="text-lg font-medium mb-2"
           style={{ 
             fontSize: theme.typography?.fontSize?.title || fontStyles.sizes.chartTitle,
-            fontWeight: theme.typography?.fontWeight?.title || fontStyles.weights.semibold
+            fontWeight: theme.typography?.fontWeight?.semibold || fontStyles.weights.semibold
           }}
         >
           {title}
