@@ -10,7 +10,10 @@ import SeasonalityGraph from './visualizations/SeasonalityGraph';
 import RiskAssessmentMatrix from './visualizations/RiskAssessmentMatrix';
 import SupplyChainFlowDiagram from './visualizations/SupplyChainFlowDiagram';
 import RegulatoryComplianceDashboard from './visualizations/RegulatoryComplianceDashboard';
-import { BarChart, PieChart, LineChart, ScatterChart } from 'lucide-react';
+import { 
+  BarChart, PieChart, LineChart, ScatterChart, 
+  NetworkIcon, AlertTriangleIcon, ClipboardCheckIcon
+} from 'lucide-react';
 import { VisualizationsTabProps } from './visualizations/types/visualizationTypes';
 
 const VisualizationsTab = ({ data, routes }: VisualizationsTabProps) => {
@@ -28,7 +31,7 @@ const VisualizationsTab = ({ data, routes }: VisualizationsTabProps) => {
         </CardHeader>
         <CardContent>
           <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-            <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 gap-2 mb-2">
+            <TabsList className="grid w-full grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-2 mb-2">
               <TabsTrigger value="costs" className="flex items-center gap-2">
                 <PieChart className="h-4 w-4" />
                 {t('cost.breakdown')}
@@ -44,6 +47,18 @@ const VisualizationsTab = ({ data, routes }: VisualizationsTabProps) => {
               <TabsTrigger value="seasonality" className="flex items-center gap-2">
                 <LineChart className="h-4 w-4" />
                 {t('seasonality.title')}
+              </TabsTrigger>
+              <TabsTrigger value="supplychain" className="flex items-center gap-2">
+                <NetworkIcon className="h-4 w-4" />
+                {language === 'en' ? 'Supply Chain' : 'Cadena de Suministro'}
+              </TabsTrigger>
+              <TabsTrigger value="riskmatrix" className="flex items-center gap-2">
+                <AlertTriangleIcon className="h-4 w-4" />
+                {language === 'en' ? 'Risk Matrix' : 'Matriz de Riesgo'}
+              </TabsTrigger>
+              <TabsTrigger value="compliance" className="flex items-center gap-2">
+                <ClipboardCheckIcon className="h-4 w-4" />
+                {language === 'en' ? 'Compliance' : 'Cumplimiento'}
               </TabsTrigger>
             </TabsList>
 
@@ -70,19 +85,19 @@ const VisualizationsTab = ({ data, routes }: VisualizationsTabProps) => {
             <TabsContent value="seasonality" className="pt-2">
               <SeasonalityGraph />
             </TabsContent>
-          </Tabs>
-          
-          <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="md:col-span-2">
+            
+            <TabsContent value="supplychain" className="pt-2">
               <SupplyChainFlowDiagram />
-            </div>
-            <div>
+            </TabsContent>
+            
+            <TabsContent value="riskmatrix" className="pt-2">
               <RiskAssessmentMatrix />
-            </div>
-            <div>
+            </TabsContent>
+            
+            <TabsContent value="compliance" className="pt-2">
               <RegulatoryComplianceDashboard />
-            </div>
-          </div>
+            </TabsContent>
+          </Tabs>
         </CardContent>
       </Card>
     </div>
