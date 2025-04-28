@@ -32,14 +32,18 @@ const CostBreakdownPie: React.FC<CostBreakdownPieProps> = ({ chartData }) => {
       nameKey="name"
       cornerRadius={4}
     >
-      {chartData.map((entry, index) => (
-        <Cell 
-          key={`cell-${index}`} 
-          fill={getCategoryColor(entry.category)}
-          stroke={getCategoryColor(entry.category)}
-          strokeWidth={1}
-        />
-      ))}
+      {chartData.map((entry, index) => {
+        // Use the color from the entry if available, otherwise get it from the category
+        const fillColor = entry.color || getCategoryColor(entry.category);
+        return (
+          <Cell 
+            key={`cell-${index}`} 
+            fill={fillColor}
+            stroke={fillColor}
+            strokeWidth={1}
+          />
+        );
+      })}
     </Pie>
   );
 };
