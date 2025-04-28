@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -10,28 +9,31 @@ import { TradeDataProvider } from "./contexts/TradeDataContext";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import "./i18n/config";
+import { ChartThemeProvider } from './components/ui/chart/ChartThemeProvider';
 
 const queryClient = new QueryClient();
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <ChartStyleEnforcer>
-        <LanguageProvider>
-          <TradeDataProvider>
-            <BrowserRouter>
-              <Toaster />
-              <Sonner />
-              <Routes>
-                <Route path="/" element={<Index />} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </BrowserRouter>
-          </TradeDataProvider>
-        </LanguageProvider>
-      </ChartStyleEnforcer>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
+function App() {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <ChartStyleEnforcer>
+          <LanguageProvider>
+            <TradeDataProvider>
+              <BrowserRouter>
+                <Toaster />
+                <Sonner />
+                <Routes>
+                  <Route path="/" element={<Index />} />
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </BrowserRouter>
+            </TradeDataProvider>
+          </LanguageProvider>
+        </ChartStyleEnforcer>
+      </TooltipProvider>
+    </QueryClientProvider>
+  );
+}
 
 export default App;

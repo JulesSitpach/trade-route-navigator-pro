@@ -1,0 +1,191 @@
+
+import React from 'react';
+import { Card, CardContent } from "@/components/ui/card";
+import { 
+  BarChart, Bar, XAxis, YAxis, 
+  CartesianGrid, Legend, Tooltip, ResponsiveContainer, Label 
+} from 'recharts';
+import { UnifiedChartContainer } from '@/components/ui/unified-chart';
+import { useChartTheme, useChartConfig, useChartColors } from '@/hooks/use-chart-theme';
+import { BarChartIcon, InfoIcon } from "lucide-react";
+import { RouteComparisonTooltip } from '../RouteComparisonTooltip';
+import { RouteComparisonTimelineProps } from '../types/visualizationTypes';
+import { useLanguage } from "@/contexts/LanguageContext";
+import { cursorStyles } from "@/components/ui/chart/theme/commonStyles";
+
+const UnifiedRouteComparisonTimeline = ({ routes }: RouteComparisonTimelineProps) => {
+  const { language, t } = useLanguage();
+  const { colors } = useChartTheme();
+  const chartConfig = useChartConfig();
+  
+  // Enhanced colors for the stacked bars with better contrast
+  const barColors = {
+    shipping: colors.blue,    // Bright Blue
+    customs: colors.purple,   // Purple
+    distribution: colors.green // Green
+  };
+  
+  const routeData = routes.map(route => {
+    // Ensure all required properties have default values
+    const name = route.name || route.path.split(' → ')[0] + ' to ' + route.path.split(' → ').pop();
+    const customsClearance = route.customsClearance || 4;
+    const localDelivery = route.localDelivery || 3;
+    
+    return {
+      name: name,
+      fullRoute: route.path,
+      shipping: route.transitTime,
+      customs: customsClearance,
+      distribution: localDelivery,
+      cost: `$${route.cost.toLocaleString()}`,
+      totalDays: (route.transitTime + customsClearance + localDelivery)
+    };
+  });
+
+  // Sort routes by total transit time for better comparison
+  const sortedRouteData = [...routeData].sort((a, b) => a.totalDays - b.totalDays);
+
+  return (
+    <div className="space-y-4">
+      <div className="flex items-center gap-2">
+        <BarChartIcon className="h-5 w-5 text-muted-foreground" />
+        <h3 className="text-lg font-medium">
+          {language === 'en' ? 'Route Comparison Timeline' : 'Línea de Tiempo de Comparación de Rutas'}
+        </h3>
+      </div>
+      <p className="text-sm text-muted-foreground">
+        {language === 'en' 
+          ? 'Compare transit times across different shipping routes and methods' 
+          : 'Compare tiempos de tránsito entre diferentes rutas y métodos de envío'
+        }
+      </p>
+      
+      <Card>
+        <CardContent className="p-6">
+          {sortedRouteData.length === 0 ? (
+            <div className="text-center text-muted-foreground py-12">
+              {language === 'en' 
+                ? 'No route comparison data available. Please select origin and destination countries.' 
+                : 'No hay datos de comparación de rutas disponibles. Seleccione países de origen y destino.'
+              }
+            </div>
+          ) : (
+            <UnifiedChartContainer height={450}>
+              <BarChart
+                data={sortedRouteData}
+                margin={{
+                  top: 20,
+                  right: 30,
+                  bottom: 60,
+                  left: 20,
+                }}
+                barSize={40}
+                barGap={6}
+              >
+                <CartesianGrid 
+                  strokeDasharray="4 4"
+                  stroke={chartConfig.grid.stroke}
+                  opacity={chartConfig.grid.opacity}
+                  vertical={false}
+                />
+                <Legend 
+                  layout="horizontal"
+                  verticalAlign="top"
+                  align="center"
+                  wrapperStyle={{
+                    paddingBottom: '20px',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    fontSize: '12px'
+                  }}
+                />
+                <XAxis 
+                  dataKey="name"
+                  tick={{
+                    fontSize: 12,
+                    fill: '#4b5563', 
+                    width: 100,
+                    textAnchor: 'end',
+                    style: { transform: 'rotate(-30deg)' }
+                  }}
+                  axisLine={chartConfig.axis.line}
+                  tickLine={false}
+                  height={60}
+                >
+                  <Label 
+                    value={language === 'en' ? "Shipping Routes" : "Rutas de Envío"} 
+                    position="insideBottom" 
+                    style={{ 
+                      textAnchor: 'middle', 
+                      fill: chartConfig.axis.title.fill, 
+                      fontSize: chartConfig.axis.title.fontSize, 
+                      fontWeight: chartConfig.axis.title.fontWeight 
+                    }}
+                    offset={-15}
+                  />
+                </XAxis>
+                <YAxis 
+                  tickLine={false}
+                  axisLine={chartConfig.axis.line}
+                  tick={chartConfig.axis.tick}
+                >
+                  <Label 
+                    value={language === 'en' ? "Transit Days" : "Días de Tránsito"} 
+                    angle={-90} 
+                    position="insideLeft" 
+                    style={{ 
+                      textAnchor: 'middle', 
+                      fill: chartConfig.axis.title.fill, 
+                      fontSize: chartConfig.axis.title.fontSize, 
+                      fontWeight: chartConfig.axis.title.fontWeight 
+                    }}
+                    offset={-10}
+                  />
+                </YAxis>
+                <Tooltip 
+                  content={<RouteComparisonTooltip />}
+                  cursor={cursorStyles.bar}
+                />
+                <Bar 
+                  dataKey="shipping" 
+                  stackId="a" 
+                  name={language === 'en' ? "Shipping" : "Envío"}
+                  fill={barColors.shipping}
+                  radius={[4, 4, 0, 0]}
+                />
+                <Bar 
+                  dataKey="customs" 
+                  stackId="a" 
+                  name={language === 'en' ? "Customs" : "Aduana"}
+                  fill={barColors.customs}
+                  radius={[0, 0, 0, 0]}
+                />
+                <Bar 
+                  dataKey="distribution" 
+                  stackId="a" 
+                  name={language === 'en' ? "Distribution" : "Distribución"}
+                  fill={barColors.distribution}
+                  radius={[0, 0, 4, 4]}
+                />
+              </BarChart>
+            </UnifiedChartContainer>
+          )}
+          
+          {sortedRouteData.length > 0 && (
+            <div className="mt-4 p-3 bg-slate-50 rounded border text-xs text-gray-600 flex items-start gap-2">
+              <InfoIcon className="h-4 w-4 text-blue-500 mt-0.5 shrink-0" />
+              <div>
+                {language === 'en' 
+                  ? 'Routes are sorted by total transit time. Hover over each segment to view detailed breakdown. For full route details, visit the Routes tab.'
+                  : 'Las rutas están ordenadas por tiempo total de tránsito. Coloque el cursor sobre cada segmento para ver el desglose detallado. Para detalles completos de rutas, visite la pestaña Rutas.'
+                }
+              </div>
+            </div>
+          )}
+        </CardContent>
+      </Card>
+    </div>
+  );
+};
+
+export default UnifiedRouteComparisonTimeline;
