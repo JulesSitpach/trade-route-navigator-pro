@@ -2,54 +2,54 @@
 import { ChartColors } from './types';
 
 export const lightColors: ChartColors = {
-  primary: '#4f46e5',      // Indigo
-  secondary: '#f59e0b',    // Amber
-  tertiary: '#10b981',     // Emerald
-  quaternary: '#ec4899',   // Pink
-  background: '#ffffff',   // White
-  text: '#374151',         // Gray 700
-  grid: '#e5e7eb',         // Gray 200
+  primary: '#3498DB',      // Teal Blue
+  secondary: '#F39C12',    // Warning Amber
+  tertiary: '#27AE60',     // Success Green
+  quaternary: '#9B59B6',   // Purple
+  background: '#FFFFFF',   // White
+  text: '#2C3E50',         // Navy Blue
+  grid: '#ECF0F1',         // Light Gray
   accent: [
-    '#4f46e5',  // Indigo
-    '#f59e0b',  // Amber
-    '#10b981',  // Emerald
-    '#ec4899',  // Pink
-    '#ef4444',  // Red
-    '#8b5cf6',  // Purple
-    '#3b82f6',  // Blue
-    '#f97316',  // Orange
+    '#3498DB',  // Teal Blue - Import/Export
+    '#F39C12',  // Warning Amber - Documentation
+    '#27AE60',  // Success Green - Insurance
+    '#E74C3C',  // Error Red - Freight/Shipping
+    '#9B59B6',  // Purple - Customs/Regulatory
+    '#16A085',  // Dark Teal - Transportation
+    '#D35400',  // Dark Orange - Warehousing
+    '#8E44AD',  // Dark Purple - Taxes/Fees
   ],
   tariff: {
-    low: '#10b981',      // Emerald (green)
-    medium: '#f59e0b',   // Amber (yellow)
-    high: '#ef4444',     // Red
+    low: '#27AE60',      // Success Green
+    medium: '#F39C12',   // Warning Amber
+    high: '#E74C3C',     // Error Red
   },
   risk: {
-    low: '#10b981',      // Emerald (green)
-    medium: '#f59e0b',   // Amber (yellow)
-    high: '#ef4444',     // Red
-    critical: '#b91c1c',  // Dark red
+    low: '#27AE60',      // Success Green
+    medium: '#F39C12',   // Warning Amber
+    high: '#E74C3C',     // Error Red
+    critical: '#B03A2E', // Darker Error Red
   },
   lines: {
-    freight: '#3b82f6',  // Blue
-    cost: '#f59e0b',     // Amber
-    risk: '#ef4444',     // Red
+    freight: '#3498DB',  // Teal Blue
+    cost: '#F39C12',     // Warning Amber
+    risk: '#E74C3C',     // Error Red
   },
 };
 
 export const darkColors: ChartColors = {
   ...lightColors,
-  background: '#1f2937',   // Gray 800
-  text: '#f3f4f6',         // Gray 100
-  grid: '#374151',         // Gray 700
+  background: '#2C3E50',   // Navy Blue
+  text: '#FFFFFF',         // White
+  grid: '#7F8C8D',         // Dark Gray
   accent: [
-    '#6366f1',  // Lighter Indigo
-    '#fbbf24',  // Lighter Amber
-    '#34d399',  // Lighter Emerald
-    '#f472b6',  // Lighter Pink
-    '#f87171',  // Lighter Red
-    '#a78bfa',  // Lighter Purple
-    '#60a5fa',  // Lighter Blue
-    '#fb923c',  // Lighter Orange
+    '#3498DB',  // Teal Blue - Import/Export
+    '#F39C12',  // Warning Amber - Documentation
+    '#27AE60',  // Success Green - Insurance
+    '#E74C3C',  // Error Red - Freight/Shipping
+    '#9B59B6',  // Purple - Customs/Regulatory
+    '#16A085',  // Dark Teal - Transportation
+    '#D35400',  // Dark Orange - Warehousing
+    '#8E44AD',  // Dark Purple - Taxes/Fees
   ],
 };

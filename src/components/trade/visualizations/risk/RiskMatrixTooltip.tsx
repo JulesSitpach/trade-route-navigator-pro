@@ -16,39 +16,39 @@ export const RiskMatrixTooltip: React.FC<RiskMatrixTooltipProps> = ({ active, pa
     
     const getRiskColor = (riskLevel: string) => {
       switch(riskLevel) {
-        case "high": return "#ef4444";
-        case "medium": return "#f59e0b";
-        case "low": return "#10b981";
-        default: return "#ccc";
+        case "high": return "#E74C3C";    // Error Red
+        case "medium": return "#F39C12";  // Warning Amber
+        case "low": return "#27AE60";     // Success Green
+        default: return "#BDC3C7";        // Mid Gray
       }
     };
 
     const riskColor = getRiskColor(data.riskLevel);
     
     return (
-      <div className="bg-white border border-gray-200 rounded-md shadow-sm p-3 max-w-[250px]">
-        <div className="font-semibold text-sm text-gray-800 mb-2 border-b border-gray-100 pb-1">
+      <div className="bg-white border border-[#BDC3C7] rounded-md shadow-sm p-3 max-w-[250px]">
+        <div className="font-semibold text-sm text-[#2C3E50] mb-2 border-b border-[#ECF0F1] pb-1">
           {data.label}
         </div>
         <div className="space-y-1">
           <div className="flex justify-between items-center">
-            <span className="text-xs text-gray-600">
+            <span className="text-xs text-[#7F8C8D]">
               {language === 'en' ? 'Route:' : 'Ruta:'}
             </span>
-            <span className="font-medium text-xs text-gray-800">
+            <span className="font-medium text-xs text-[#2C3E50]">
               {data.name}
             </span>
           </div>
           <div className="flex justify-between items-center">
-            <span className="text-xs text-gray-600">
+            <span className="text-xs text-[#7F8C8D]">
               {language === 'en' ? 'Cost:' : 'Costo:'}
             </span>
-            <span className="font-medium text-xs text-gray-800">
+            <span className="font-medium text-xs text-[#2C3E50]">
               ${data.x.toLocaleString()}
             </span>
           </div>
           <div className="flex justify-between items-center">
-            <span className="text-xs text-gray-600">
+            <span className="text-xs text-[#7F8C8D]">
               {language === 'en' ? 'Risk Level:' : 'Nivel de Riesgo:'}
             </span>
             <Badge 
@@ -64,10 +64,10 @@ export const RiskMatrixTooltip: React.FC<RiskMatrixTooltipProps> = ({ active, pa
             </Badge>
           </div>
           <div className="flex justify-between items-center">
-            <span className="text-xs text-gray-600">
+            <span className="text-xs text-[#7F8C8D]">
               {language === 'en' ? 'Reliability:' : 'Fiabilidad:'}
             </span>
-            <span className="font-medium text-xs text-gray-800">
+            <span className="font-medium text-xs text-[#2C3E50]">
               {data.z}%
             </span>
           </div>

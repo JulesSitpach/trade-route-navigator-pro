@@ -1,3 +1,4 @@
+
 import React, { useEffect, ReactNode } from 'react';
 import { tooltipStyles, legendStyles } from './theme/commonStyles';
 import { lightTheme } from './chartTheme';
@@ -14,13 +15,14 @@ export const ChartStyleEnforcer = ({ children }: ChartStyleEnforcerProps) => {
       document.querySelectorAll('.recharts-tooltip-wrapper').forEach(tooltip => {
         if (tooltip instanceof HTMLElement) {
           Object.assign(tooltip.style, {
-            backgroundColor: tooltipStyles.wrapper.backgroundColor,
-            border: tooltipStyles.wrapper.border,
+            backgroundColor: '#FFFFFF',
+            border: '1px solid #BDC3C7',
             borderRadius: '6px',
-            boxShadow: tooltipStyles.wrapper.boxShadow,
+            boxShadow: '0px 2px 8px rgba(0, 0, 0, 0.1)',
             opacity: "1",
             fontSize: `${lightTheme.typography.fontSize.label}px`,
             fontFamily: lightTheme.typography.fontFamily,
+            color: '#2C3E50', // Navy Blue text
           });
         }
       });
@@ -34,7 +36,8 @@ export const ChartStyleEnforcer = ({ children }: ChartStyleEnforcerProps) => {
             justifyContent: 'center',
             marginBottom: '16px',
             padding: `${legendStyles.wrapper.padding}px`,
-            gap: legendStyles.wrapper.gap
+            gap: legendStyles.wrapper.gap,
+            color: '#2C3E50', // Navy Blue text
           });
           
           // Style legend items
@@ -52,8 +55,16 @@ export const ChartStyleEnforcer = ({ children }: ChartStyleEnforcerProps) => {
           Object.assign(text.style, {
             fontFamily: lightTheme.typography.fontFamily,
             fontSize: `${lightTheme.typography.fontSize.tick}px`,
-            fill: lightTheme.colors.text,
+            fill: '#2C3E50', // Navy Blue text
           });
+        }
+      });
+      
+      // Style grid lines
+      document.querySelectorAll('.recharts-cartesian-grid line').forEach(line => {
+        if (line instanceof SVGElement) {
+          line.setAttribute('stroke', '#ECF0F1'); // Light Gray grid
+          line.setAttribute('stroke-opacity', '0.7');
         }
       });
     };

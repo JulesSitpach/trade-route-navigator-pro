@@ -10,19 +10,16 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-[#0FA0CE] text-white hover:bg-[#0FA0CE]/90",
-        destructive:
-          "bg-destructive text-destructive-foreground hover:bg-destructive/90",
-        outline:
-          "border border-input bg-[#F1F1F1] hover:bg-accent hover:text-accent-foreground",
-        secondary:
-          "bg-secondary text-secondary-foreground hover:bg-secondary/80",
-        ghost: "hover:bg-accent hover:text-accent-foreground",
-        link: "text-secondary underline-offset-4 hover:underline",
+        default: "bg-[#3498DB] text-white hover:bg-[#3498DB]/90",
+        destructive: "bg-[#E74C3C] text-white hover:bg-[#E74C3C]/90",
+        outline: "border border-[#BDC3C7] bg-[#ECF0F1] text-[#2C3E50] hover:bg-[#ECF0F1]/80",
+        secondary: "bg-[#ECF0F1] text-[#2C3E50] hover:bg-[#ECF0F1]/80",
+        ghost: "hover:bg-[#ECF0F1] hover:text-[#2C3E50]",
+        link: "text-[#3498DB] underline-offset-4 hover:underline",
         success: "bg-[#27AE60] text-white hover:bg-[#27AE60]/90",
         warning: "bg-[#F39C12] text-white hover:bg-[#F39C12]/90",
-        filter: "bg-muted text-muted-foreground hover:bg-muted/80 border border-border",
-        inactive: "bg-neutral-100 text-neutral-400 cursor-default",
+        filter: "bg-[#ECF0F1] text-[#7F8C8D] hover:bg-[#ECF0F1]/80 border border-[#BDC3C7]",
+        inactive: "bg-[#BDC3C7] text-[#7F8C8D] cursor-default",
       },
       size: {
         default: "h-10 px-4 py-2",

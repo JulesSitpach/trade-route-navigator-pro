@@ -1,9 +1,10 @@
+
 import { lightTheme } from '../chartTheme';
 
 export const tooltipStyles = {
   wrapper: {
-    backgroundColor: '#ffffff',   // Pure white
-    border: '1px solid rgba(229, 231, 235, 1)',  // Light gray border
+    backgroundColor: '#FFFFFF',   // White
+    border: '1px solid #BDC3C7',  // Mid Gray border
     borderRadius: '6px',
     boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)',
     padding: '10px 12px',
@@ -12,21 +13,21 @@ export const tooltipStyles = {
     fontFamily: lightTheme.typography.fontFamily,
   },
   contentStyle: {
-    backgroundColor: '#ffffff',
+    backgroundColor: '#FFFFFF',
     fontSize: '12px',
     opacity: 1
   },
   title: {
     fontSize: '14px',
     fontWeight: 600,
-    color: '#374151',
+    color: '#2C3E50', // Navy Blue
     marginBottom: '8px',
-    borderBottom: '1px solid #f3f4f6',
+    borderBottom: '1px solid #ECF0F1', // Light Gray
     paddingBottom: '4px',
   },
   content: {
     fontSize: '13px',
-    color: '#4b5563',
+    color: '#2C3E50', // Navy Blue
   },
   row: {
     display: 'flex',
@@ -56,7 +57,7 @@ export const legendStyles = {
   },
   text: {
     fontSize: '14px',
-    color: '#4b5563',
+    color: '#2C3E50', // Navy Blue
     fontWeight: 400
   },
   wrapper: {
@@ -71,42 +72,42 @@ export const legendStyles = {
 export const cursorStyles = {
   bar: { 
     fill: 'transparent',
-    stroke: '#e5e7eb', 
+    stroke: '#BDC3C7', // Mid Gray
     strokeDasharray: '3 3' 
   },
   line: { 
-    stroke: '#e5e7eb', 
+    stroke: '#BDC3C7', // Mid Gray
     strokeDasharray: '3 3' 
   },
   scatter: { 
     fill: 'transparent',
-    stroke: '#e5e7eb',
+    stroke: '#BDC3C7', // Mid Gray
     strokeDasharray: '3 3'
   },
   area: { 
     fill: 'transparent', 
-    stroke: '#e5e7eb', 
+    stroke: '#BDC3C7', // Mid Gray
     strokeDasharray: '3 3' 
   }
 };
 
 export const chartGridStyles = {
-  stroke: '#e5e7eb',
+  stroke: '#ECF0F1', // Light Gray
   strokeDasharray: '4 4',
-  opacity: 0.3,
+  opacity: 0.5,
 };
 
 export const axisStyles = {
   line: {
-    stroke: '#9ca3af',
+    stroke: '#7F8C8D', // Dark Gray
     strokeWidth: 1,
   },
   tick: {
-    fill: '#6b7280',
+    fill: '#2C3E50', // Navy Blue
     fontSize: 12,
   },
   label: {
-    fill: '#4b5563',
+    fill: '#2C3E50', // Navy Blue
     fontSize: 13,
     fontWeight: 500,
   },

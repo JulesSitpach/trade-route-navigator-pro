@@ -21,9 +21,9 @@ export const ProductDescriptionField = ({
   
   return (
     <div className="space-y-2">
-      <Label htmlFor="productDescription" className="flex items-center gap-1">
+      <Label htmlFor="productDescription" className="flex items-center gap-1 text-[#2C3E50]">
         {t('product.description')}
-        <span className="text-red-500">*</span>
+        <span className="text-[#E74C3C]">*</span>
       </Label>
       <Input 
         id="productDescription" 
@@ -34,11 +34,11 @@ export const ProductDescriptionField = ({
           onValidate(e.target.value);
         }}
         className={cn(
-          error && "border-red-500 focus-visible:ring-red-500"
+          error && "border-[#E74C3C] focus-visible:ring-[#E74C3C]"
         )}
       />
       {error && (
-        <p className="text-sm text-red-500 mt-1">{error}</p>
+        <p className="text-sm text-[#E74C3C] mt-1">{error}</p>
       )}
     </div>
   );
