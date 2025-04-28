@@ -79,7 +79,8 @@ export const UnifiedChartContainer: React.FC<UnifiedChartContainerProps> = ({
         }}
       >
         <ResponsiveContainer width="100%" height="100%">
-          {children}
+          {/* The key fix: Ensure children is a valid React element */}
+          {React.Children.only(children)}
         </ResponsiveContainer>
       </div>
     </div>
