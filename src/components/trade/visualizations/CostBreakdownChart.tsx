@@ -62,10 +62,15 @@ const CostBreakdownChart = ({
   const estimatedDays = transportMode === 'air' ? 2 : 7;
   const warehouseBaseCharge = transportMode === 'air' ? 75 : 100;
   const quantityFactor = Math.min(Math.sqrt(quantity) * 1.2, quantity * 0.3);
+  
+  // Ensure totalProductValue is treated as a number in the comparison
+  const highValueAdjustment = Number(totalProductValue) > 20000 ? 1.15 : 1;
   const warehouseCostRaw = warehouseBaseCharge + 
-    (warehouseDailyRate * estimatedDays * quantityFactor) * 
-    (totalProductValue > 20000 ? 1.15 : 1);
-  const warehouseCost = Math.min(warehouseCostRaw, transportMode === 'air' ? 800 : 2000);
+    (warehouseDailyRate * estimatedDays * quantityFactor) * highValueAdjustment;
+    
+  // Make sure we're using string comparison for transportMode (which is a string type)
+  const transportModeStr = String(transportMode);
+  const warehouseCost = Math.min(warehouseCostRaw, transportModeStr === 'air' ? 800 : 2000);
   
   const otherFeesRate = totalProductValue > 15000 ? 2.5 : 2.0;
   const otherFees = (totalProductValue * otherFeesRate) / 100;
