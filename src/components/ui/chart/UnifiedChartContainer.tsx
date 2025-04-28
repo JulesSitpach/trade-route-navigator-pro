@@ -4,6 +4,7 @@ import { ResponsiveContainer } from 'recharts';
 import { useChartTheme } from './ChartThemeProvider';
 import { fontStyles } from '@/utils/fontStyles';
 import { cn } from '@/lib/utils';
+import { defaultChartConfig } from './config';
 
 interface UnifiedChartContainerProps {
   children: React.ReactElement; // Changed from ReactNode to ReactElement
@@ -13,6 +14,7 @@ interface UnifiedChartContainerProps {
   width?: number | string;
   className?: string;
   legendPosition?: 'top' | 'bottom' | 'right';
+  config?: any;
 }
 
 export const UnifiedChartContainer: React.FC<UnifiedChartContainerProps> = ({
@@ -22,7 +24,8 @@ export const UnifiedChartContainer: React.FC<UnifiedChartContainerProps> = ({
   height = 400,
   width = '100%',
   className,
-  legendPosition = 'top'
+  legendPosition = 'top',
+  config = defaultChartConfig
 }) => {
   const { theme } = useChartTheme();
   
@@ -48,15 +51,18 @@ export const UnifiedChartContainer: React.FC<UnifiedChartContainerProps> = ({
       )}
       data-legend-position={legendPosition}
       style={{
-        '--chart-font-family': fontStyles.family,
-        '--chart-text-size': fontStyles.sizes.axisLabel,
+        '--chart-font-family': config.typography?.fontFamily || fontStyles.family,
+        '--chart-text-size': config.typography?.fontSize?.tickLabel || fontStyles.sizes.axisLabel,
         width: widthStyle,
       } as React.CSSProperties}
     >
       {title && (
         <h3 
           className="text-lg font-medium mb-2"
-          style={{ fontSize: fontStyles.sizes.chartTitle }}
+          style={{ 
+            fontSize: config.typography?.fontSize?.title || fontStyles.sizes.chartTitle,
+            fontWeight: config.typography?.fontWeight?.title || fontStyles.weights.semibold
+          }}
         >
           {title}
         </h3>
@@ -64,7 +70,9 @@ export const UnifiedChartContainer: React.FC<UnifiedChartContainerProps> = ({
       {subtitle && (
         <p 
           className="text-sm text-muted-foreground mb-4"
-          style={{ fontSize: fontStyles.sizes.tooltipBody }}
+          style={{ 
+            fontSize: config.typography?.fontSize?.subtitle || fontStyles.sizes.tooltipBody
+          }}
         >
           {subtitle}
         </p>

@@ -1,16 +1,17 @@
 
-import { ChartConfig } from "../types";
-import themeConfig from "./themeConfig";
-import riskConfig from "./riskConfig";
-import costConfig from "./costConfig";
-import routeConfig from "./routeConfig";
+/**
+ * Chart configuration exports
+ */
 
-export const chartConfig: ChartConfig = {
-  ...themeConfig,
-  ...riskConfig,
-  ...costConfig,
-  ...routeConfig,
-};
+// Export all configurations from chartConfig
+export * from './chartConfig';
+export { default as defaultChartConfig } from './chartConfig';
 
-export { themeConfig, riskConfig, costConfig, routeConfig };
-export default chartConfig;
+// Export specific chart type configurations
+export { pieChartConfig } from './chartConfig';
+export { barChartConfig } from './chartConfig';
+export { lineChartConfig } from './chartConfig';
+export { areaChartConfig } from './chartConfig';
+
+// Export helper functions
+export { getColorByIndex, createChartConfig } from './chartConfig';

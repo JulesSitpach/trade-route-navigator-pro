@@ -1,15 +1,15 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { ChartStyleEnforcer } from "@/components/ui/chart/ChartStyleEnforcer";
+import { ChartThemeProvider } from "./components/ui/chart/ChartThemeProvider";
 import { LanguageProvider } from "./contexts/LanguageContext";
 import { TradeDataProvider } from "./contexts/TradeDataContext";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import "./i18n/config";
-import { ChartThemeProvider } from './components/ui/chart/ChartThemeProvider';
 
 const queryClient = new QueryClient();
 
@@ -17,7 +17,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        <ChartStyleEnforcer>
+        <ChartThemeProvider initialMode="light">
           <LanguageProvider>
             <TradeDataProvider>
               <BrowserRouter>
@@ -30,7 +30,7 @@ function App() {
               </BrowserRouter>
             </TradeDataProvider>
           </LanguageProvider>
-        </ChartStyleEnforcer>
+        </ChartThemeProvider>
       </TooltipProvider>
     </QueryClientProvider>
   );
