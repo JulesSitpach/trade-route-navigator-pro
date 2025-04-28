@@ -64,7 +64,7 @@ const CostBreakdownChart = ({
   const quantityFactor = Math.min(Math.sqrt(quantity) * 1.2, quantity * 0.3);
   
   // Ensure totalProductValue is treated as a number in the comparison
-  const highValueAdjustment = Number(totalProductValue) > 20000 ? 1.15 : 1;
+  const highValueAdjustment = totalProductValue > 20000 ? 1.15 : 1;
   const warehouseCostRaw = warehouseBaseCharge + 
     (warehouseDailyRate * estimatedDays * quantityFactor) * highValueAdjustment;
     
@@ -74,7 +74,7 @@ const CostBreakdownChart = ({
   
   // Fix the other error: Operator '>' cannot be applied to types 'string' and 'number'
   // Convert totalProductValue to number before comparison
-  const otherFeesRate = Number(totalProductValue) > 15000 ? 2.5 : 2.0;
+  const otherFeesRate = totalProductValue > 15000 ? 2.5 : 2.0;
   const otherFees = (totalProductValue * otherFeesRate) / 100;
 
   // Create categories that match our universal chart guidelines
