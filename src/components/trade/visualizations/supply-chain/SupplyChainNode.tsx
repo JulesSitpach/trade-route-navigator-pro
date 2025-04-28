@@ -1,6 +1,7 @@
 
 import React from 'react';
-import { LucideIcon } from 'lucide-react';
+import { PackageIcon, ShipIcon, NetworkIcon, ClipboardCheckIcon, 
+         WarehouseIcon, TruckIcon, CircleDotIcon } from 'lucide-react';
 import { SupplyChainStep } from './types';
 
 interface SupplyChainNodeProps {
@@ -16,25 +17,47 @@ const SupplyChainNode: React.FC<SupplyChainNodeProps> = ({
   isActive, 
   onClick 
 }) => {
-  const Icon = step.icon;
-  
+  // Function to render the appropriate icon based on iconName
+  const renderIcon = () => {
+    switch(step.iconName) {
+      case 'package':
+        return <PackageIcon className="h-5 w-5" />;
+      case 'ship':
+        return <ShipIcon className="h-5 w-5" />;
+      case 'network':
+        return <NetworkIcon className="h-5 w-5" />;
+      case 'clipboard-check':
+        return <ClipboardCheckIcon className="h-5 w-5" />;
+      case 'warehouse':
+        return <WarehouseIcon className="h-5 w-5" />;
+      case 'truck':
+        return <TruckIcon className="h-5 w-5" />;
+      case 'circle-dot':
+        return <CircleDotIcon className="h-5 w-5" />;
+      default:
+        return <CircleDotIcon className="h-5 w-5" />;
+    }
+  };
+
   return (
-    <div className="flex flex-col items-center">
+    <div 
+      className={`flex flex-col items-center cursor-pointer transition-all ${isActive ? 'scale-110' : 'hover:scale-105'}`}
+      onClick={onClick}
+    >
       <div 
-        className={`w-14 h-14 rounded-full ${isActive ? 'bg-blue-100 border-2 border-blue-500' : 'bg-blue-50 border border-blue-300'} flex items-center justify-center mb-2 z-10 cursor-pointer transition-all hover:bg-blue-200`}
-        onClick={onClick}
+        className={`w-12 h-12 rounded-full flex items-center justify-center 
+                   ${isActive 
+                     ? 'bg-blue-500 text-white border-2 border-blue-600' 
+                     : 'bg-white border border-blue-300 text-blue-500'} 
+                   shadow-sm transition-all`}
       >
-        <div className="flex flex-col items-center justify-center">
-          {React.cloneElement(Icon, { className: `h-5 w-5 ${isActive ? 'text-blue-700' : 'text-blue-500'}` })}
-          <span className={`text-xs mt-0.5 ${isActive ? 'font-medium text-blue-700' : 'text-blue-500'}`}>{index + 1}</span>
-        </div>
+        {renderIcon()}
       </div>
-      <span className="text-xs font-medium text-center max-w-[80px]">
-        {step.label}
-      </span>
-      <span className="text-xs text-gray-500 mt-1">
-        {step.timeframe}
-      </span>
+      <div className="mt-2 text-[10px] sm:text-xs text-center">
+        <span className="inline-block bg-white px-1 rounded text-gray-700 whitespace-nowrap">
+          {index + 1}. {step.label}
+        </span>
+      </div>
     </div>
   );
 };

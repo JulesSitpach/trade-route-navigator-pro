@@ -1,6 +1,5 @@
 
 import { useState, useMemo } from 'react';
-import { PackageIcon, ShipIcon, NetworkIcon, ClipboardCheckIcon, WarehouseIcon, TruckIcon, CircleDotIcon } from "lucide-react";
 import { useLanguage } from '@/contexts/LanguageContext';
 import { SupplyChainStep } from './types';
 
@@ -14,7 +13,7 @@ export const useSupplyChainData = () => {
       id: 'manufacturer',
       labelKey: 'supplychain.step.manufacturer',
       label: t('supplychain.step.manufacturer'),
-      icon: <PackageIcon className="h-5 w-5" />,
+      iconName: 'package',
       timeframe: '1-2 days',
       risks: ['production delays', 'quality issues'],
       cost: '15-20%',
@@ -26,7 +25,7 @@ export const useSupplyChainData = () => {
       id: 'port-origin',
       labelKey: 'supplychain.step.port.origin',
       label: t('supplychain.step.port.origin'),
-      icon: <ShipIcon className="h-5 w-5" />,
+      iconName: 'ship',
       timeframe: '2-3 days',
       risks: ['port congestion', 'documentation issues'],
       cost: '5-8%',
@@ -38,7 +37,7 @@ export const useSupplyChainData = () => {
       id: 'transport',
       labelKey: 'supplychain.step.transport',
       label: t('supplychain.step.transport'),
-      icon: <NetworkIcon className="h-5 w-5" />,
+      iconName: 'network',
       timeframe: '14-30 days',
       risks: ['weather delays', 'route disruptions', 'piracy'],
       cost: '25-35%',
@@ -50,7 +49,7 @@ export const useSupplyChainData = () => {
       id: 'port-destination',
       labelKey: 'supplychain.step.port.destination',
       label: t('supplychain.step.port.destination'),
-      icon: <ShipIcon className="h-5 w-5" />,
+      iconName: 'ship',
       timeframe: '3-5 days',
       risks: ['customs clearance delays', 'inspection issues'],
       cost: '5-8%',
@@ -62,7 +61,7 @@ export const useSupplyChainData = () => {
       id: 'customs',
       labelKey: 'supplychain.step.customs',
       label: t('supplychain.step.customs'),
-      icon: <ClipboardCheckIcon className="h-5 w-5" />,
+      iconName: 'clipboard-check',
       timeframe: '2-7 days',
       risks: ['incomplete documentation', 'classification issues', 'tariff assessment'],
       cost: '10-15%',
@@ -74,7 +73,7 @@ export const useSupplyChainData = () => {
       id: 'warehouse',
       labelKey: 'supplychain.step.warehouse',
       label: t('supplychain.step.warehouse'),
-      icon: <WarehouseIcon className="h-5 w-5" />,
+      iconName: 'warehouse',
       timeframe: '1-2 days',
       risks: ['inventory management', 'storage capacity', 'damage'],
       cost: '5-8%',
@@ -86,7 +85,7 @@ export const useSupplyChainData = () => {
       id: 'distribution',
       labelKey: 'supplychain.step.distribution',
       label: t('supplychain.step.distribution'),
-      icon: <TruckIcon className="h-5 w-5" />,
+      iconName: 'truck',
       timeframe: '1-5 days',
       risks: ['last-mile delivery issues', 'local disruptions'],
       cost: '8-12%',
@@ -98,7 +97,7 @@ export const useSupplyChainData = () => {
       id: 'customer',
       labelKey: 'supplychain.step.customer',
       label: t('supplychain.step.customer'),
-      icon: <CircleDotIcon className="h-5 w-5" />,
+      iconName: 'circle-dot',
       timeframe: 'N/A',
       risks: ['order fulfillment', 'satisfaction', 'returns'],
       cost: '0-2%',
