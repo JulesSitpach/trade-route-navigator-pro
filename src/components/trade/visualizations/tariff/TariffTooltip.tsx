@@ -16,6 +16,13 @@ export const TariffTooltip: React.FC<TariffTooltipProps> = ({ active, payload })
     const data = payload[0].payload;
     const tariffColor = getTariffColor(data.tariffRate);
     
+    // Determine badge variant based on tariff rate
+    const getBadgeVariant = (rate: number) => {
+      if (rate < 5) return "success";
+      if (rate < 15) return "warning";
+      return "destructive";
+    };
+    
     return (
       <div className="bg-white border border-gray-200 rounded-md shadow-sm p-3 max-w-[250px]">
         <div className="font-semibold text-sm text-gray-800 mb-2 border-b border-gray-100 pb-1">
@@ -26,15 +33,7 @@ export const TariffTooltip: React.FC<TariffTooltipProps> = ({ active, payload })
             <span className="text-xs text-gray-600">
               {language === 'en' ? 'Tariff Rate:' : 'Tasa Arancelaria:'}
             </span>
-            <Badge 
-              variant="outline" 
-              className="ml-2 font-medium text-xs" 
-              style={{ 
-                backgroundColor: `${tariffColor}15`, 
-                color: tariffColor,
-                borderColor: `${tariffColor}30`
-              }}
-            >
+            <Badge variant={getBadgeVariant(data.tariffRate)}>
               {data.tariffRate}%
             </Badge>
           </div>

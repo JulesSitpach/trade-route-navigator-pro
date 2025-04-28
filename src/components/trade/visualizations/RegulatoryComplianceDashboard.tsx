@@ -142,7 +142,7 @@ const RegulatoryComplianceDashboard = () => {
               <Badge 
                 key={category.id}
                 variant={activeCategory === category.id ? "default" : "outline"}
-                className={`cursor-pointer ${activeCategory === category.id ? 'bg-blue-600' : 'hover:bg-blue-50'}`}
+                className={`cursor-pointer ${activeCategory === category.id ? '' : 'hover:bg-blue-50 hover:text-blue-700'}`}
                 onClick={() => setActiveCategory(category.id)}
               >
                 {category.label}
@@ -162,11 +162,9 @@ const RegulatoryComplianceDashboard = () => {
                     <span className="font-medium text-sm">{item.name}</span>
                   </div>
                   <Badge 
-                    variant="outline" 
-                    className={
-                      item.status === 'compliant' ? 'bg-green-50 text-green-700 border-green-200' :
-                      item.status === 'inProgress' ? 'bg-amber-50 text-amber-700 border-amber-200' :
-                      'bg-red-50 text-red-700 border-red-200'
+                    variant={
+                      item.status === 'compliant' ? 'success' :
+                      item.status === 'inProgress' ? 'warning' : 'destructive'
                     }
                   >
                     {item.status === 'compliant' ? 'Compliant' : 

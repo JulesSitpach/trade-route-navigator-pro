@@ -31,10 +31,7 @@ export const ExclusionInformation = ({ exclusionInfo }: ExclusionInformationProp
               {language === 'en' ? "Exclusion Available" : "Exclusión Disponible"}:
             </span>
             <Badge 
-              variant="outline" 
-              className={exclusionInfo.available 
-                ? "bg-green-50 text-green-700" 
-                : "bg-red-50 text-red-700"}
+              variant={exclusionInfo.available ? "success" : "destructive"}
             >
               {exclusionInfo.available 
                 ? (language === 'en' ? "Available" : "Disponible")

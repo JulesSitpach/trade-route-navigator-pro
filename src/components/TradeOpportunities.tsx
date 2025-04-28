@@ -44,15 +44,14 @@ const TradeOpportunities = ({ opportunities }: TradeOpportunitiesProps) => {
                 </div>
               </div>
               
-              <div className="flex gap-2">
+              <div className="flex flex-wrap gap-2">
                 {opportunity.tags.map((tag, tagIndex) => (
                   <Badge
                     key={tagIndex}
-                    variant="secondary"
-                    className={
-                      tag.toLowerCase().includes('risk') ? 'bg-green-100 text-green-800' :
-                      tag.toLowerCase().includes('usmca') ? 'bg-blue-100 text-blue-800' :
-                      'bg-gray-100 text-gray-800'
+                    variant={
+                      tag.toLowerCase().includes('risk') ? 'success' :
+                      tag.toLowerCase().includes('usmca') ? 'default' :
+                      'secondary'
                     }
                   >
                     {tag}
@@ -72,7 +71,7 @@ const TradeOpportunities = ({ opportunities }: TradeOpportunitiesProps) => {
               </div>
               
               <div>
-                <Button variant="default" className="bg-gray-800 hover:bg-gray-700">
+                <Button variant={opportunity.type === 'savings' ? "default" : "secondary"}>
                   {opportunity.type === 'savings' ? 'Calculate Details' : 'Explore Market'}
                 </Button>
               </div>
